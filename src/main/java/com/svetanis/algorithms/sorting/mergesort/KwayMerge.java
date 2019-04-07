@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableList;
 public final class KwayMerge {
 
   public static <C extends Comparable<C>> ImmutableList<C> merge(List<List<C>> lists) {
-    // Time Complexity: O(n log k)
+    // Time Complexity: O(n*k log k)
     
     Queue<Entry<C>> queue = init(lists);
 
