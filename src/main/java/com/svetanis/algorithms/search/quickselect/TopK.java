@@ -20,7 +20,7 @@ public final class TopK {
     int right = a.length - 1;
     int pivot = select(a, left, right, k);
     List<Integer> list = asList(toObject(a));
-    return newList(list.subList(0, pivot));
+    return newList(list.subList(0, pivot + 1));
   }
 
   private static int select(int[] a, int left, int right, int k) {
