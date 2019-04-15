@@ -10,10 +10,8 @@ import com.google.common.collect.ImmutableList;
 
 public final class NQueen {
 
-  private static int N = 4;
-
   // Time Complexity: O(n^n)
-  
+
   public static ImmutableList<ImmutableList<Integer>> queen(int n) {
     List<ImmutableList<Integer>> lists = newArrayList();
     Integer[] a = new Integer[n];
@@ -35,13 +33,11 @@ public final class NQueen {
     }
   }
 
-  // check if (row1, col1) is a valid spot for a queen by checking if there is a
-  // queen in the same column or diagonal. We don't need to check it for queens
-  // in the same row because the calling placeQueen only attempts to place one
-  // queen at a time. We know this row is empty
+  // check if (r, c) is a valid spot for a queen by checking
+  // if there is a queen in the same column or diagonal
+  // no need to check it for queens in the same row
   private static boolean isSafe(Integer[] a, int r, int c) {
     for (int row = 0; row < r; row++) {
-      // check if (row, col) invalidates (r, c) as a queen spot
       int col = a[row];
       // check if rows have a queen in the same column
       if (c == col) {
@@ -59,7 +55,7 @@ public final class NQueen {
   }
 
   public static void main(String[] args) {
-    List<ImmutableList<Integer>> lists = queen(N);
+    List<ImmutableList<Integer>> lists = queen(4);
     printBoards(lists);
     System.out.println(lists.size());
   }
