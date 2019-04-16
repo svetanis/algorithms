@@ -2,8 +2,7 @@ package com.svetanis.algorithms.recursive;
 
 public final class RegExMatcher {
 
-  // * --> Matches with 0 or more instances of any character or set of
-  // characters.
+  // * --> Matches with 0 or more instances of any char or set of chars
   // ? --> Matches with any one character.
 
   public static boolean match(String str, String regex) {
@@ -17,6 +16,10 @@ public final class RegExMatcher {
 
     if (j == m) {
       return i == n;
+    }
+
+    if (i > n) {
+      return false;
     }
 
     // make sure that the chars
@@ -58,5 +61,6 @@ public final class RegExMatcher {
     System.out.println(match("abcd", "*c*d")); // true
     System.out.println(match("abcd", "*?c*d")); // true
     System.out.println(match("ab", "ab*")); // true
+    System.out.println(match("a*a", "abaca")); // true
   }
 }
