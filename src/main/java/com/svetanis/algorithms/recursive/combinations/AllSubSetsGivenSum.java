@@ -18,7 +18,9 @@ public final class AllSubSetsGivenSum {
       }
       return;
     }
+    // exclude
     subset(in, i + 1, out, k, sum);
+    // include
     out[k] = in[i];
     subset(in, i + 1, out, k + 1, sum);
   }

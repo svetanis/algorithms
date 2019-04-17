@@ -8,7 +8,9 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
 
-public final class AllSubSetsGenerate {
+public final class AllUniqueSubSetsHashSet {
+
+  // Time Complexity: O(n * 2^n)
 
   public static ImmutableList<String> generate(String str) {
     Set<String> set = newHashSet();
@@ -31,7 +33,7 @@ public final class AllSubSetsGenerate {
   }
 
   public static void main(String[] args) {
-    String str = "xyz";
+    String str = "xxyz";
     printLines(generate(str));
   }
 }

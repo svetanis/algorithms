@@ -3,6 +3,7 @@ package com.svetanis.algorithms.recursive.combinations;
 import static com.svetanis.java.base.utils.Print.print;
 
 public final class AllSubSetsPrint {
+  
   // Time Complexity: O(n * 2^n)
 
   public static void subset(String str) {
@@ -16,7 +17,9 @@ public final class AllSubSetsPrint {
       print(out, 0, k - 1);
       return;
     }
+    // exclude
     subset(in, i + 1, out, k);
+    // include
     out[k] = in[i];
     subset(in, i + 1, out, k + 1);
   }

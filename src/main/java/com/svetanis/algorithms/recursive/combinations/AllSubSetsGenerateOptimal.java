@@ -10,6 +10,8 @@ import com.google.common.collect.ImmutableList;
 
 public final class AllSubSetsGenerateOptimal {
 
+  // Time Complexity: O(n * 2^n)
+
   public static ImmutableList<String> generate(String str) {
     int n = str.length();
     List<String> list = newArrayList();
