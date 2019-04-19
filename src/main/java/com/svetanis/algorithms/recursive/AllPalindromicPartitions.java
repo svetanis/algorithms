@@ -37,8 +37,9 @@ public final class AllPalindromicPartitions {
 
   private static boolean isPalindrome(String str, int left, int right) {
     while (left < right) {
-      if (str.charAt(left) != str.charAt(right))
+      if (str.charAt(left) != str.charAt(right)) {
         return false;
+      }
       left++;
       right--;
     }
