@@ -31,9 +31,6 @@ public final class AllExpressionsGivenTarget {
     }
 
     for (int i = index; i < n; i++) {
-      if (i != index && in.charAt(index) == '0') {
-        break;
-      }
 
       String substr = in.substring(index, i + 1);
       int num = parseInt(substr);
