@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math.fib;
+package com.svetanis.algorithms.dp.math.fib;
 
 public final class FibonacciDPSpaceOptimized {
 
