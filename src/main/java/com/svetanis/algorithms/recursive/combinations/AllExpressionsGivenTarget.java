@@ -9,6 +9,12 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+// You are given a string s of length n, containing only numerical characters ('0' - '9'). 
+// You are also given a non-negative number target.
+// You have to put between each pair of numerical characters, one of ("", "*", "+") operators 
+// such that the expression you get will evaluate to the target value.
+// You have to return ALL possible strings(expressions) that evaluate to target value.
+
 public final class AllExpressionsGivenTarget {
 
   // Time Complexity: O((3^(n - 1)) * n)

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.maxsum;
+package com.svetanis.algorithms.dp.sum.max.subarr;
 
 import com.svetanis.java.base.utils.Triplet;
 

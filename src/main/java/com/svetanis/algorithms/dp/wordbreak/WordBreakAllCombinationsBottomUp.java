@@ -13,6 +13,7 @@ import static com.svetanis.java.base.utils.Print.printLines;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 public final class WordBreakAllCombinationsBottomUp {
@@ -26,7 +27,7 @@ public final class WordBreakAllCombinationsBottomUp {
       for (int j = 0; j < i; j++) {
         String ss = str.substring(j, i);
         if (dict.contains(ss)) {
-          list.addAll(transform(checkedGet(map, j), s -> trim(s + " " + ss)));
+          list.addAll(transform(checkedGet(map, j), s -> trim(Joiner.on(" ").join(s, ss))));
         }
       }
       checkedPut(map, i, list);

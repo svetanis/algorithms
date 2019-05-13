@@ -28,10 +28,9 @@ public final class Partition {
 
   // larger elements to the left
   public static int reversePartition(int[] a, int left, int right, int index) {
-    int pivot = a[index];
-    // move pivot to end
-    swap(a, index, right);
     int i = left;
+    int pivot = a[index];
+    swap(a, index, right);     // move pivot to end
     for (int j = left; j < right; ++j) {
       if (a[j] > pivot) {
         swap(a, j, i);

@@ -8,9 +8,8 @@ public final class KthSmallestQuickSelectRandomized {
     // Time complexity: O(n)
     // Worst case: O(n^2)
 
-    int left = 0;
-    int right = a.length - 1;
-    return select(a, left, right, k);
+    int n = a.length;
+    return select(a, 0, n - 1, k);
   }
 
   private static int select(int[] a, int left, int right, int k) {

@@ -9,6 +9,7 @@ import static com.svetanis.java.base.utils.Print.printLines;
 
 import java.util.List;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
@@ -24,7 +25,7 @@ public final class WordBreakAllCombinationsBottomUpMultimap {
       for (int j = 0; j < i; j++) {
         String ss = str.substring(j, i);
         if (dict.contains(ss)) {
-          list.addAll(transform(mm.get(j), s -> trim(s + " " + ss)));
+          list.addAll(transform(mm.get(j), s -> trim(Joiner.on(" ").join(s, ss))));
         }
       }
       mm.putAll(i, list);

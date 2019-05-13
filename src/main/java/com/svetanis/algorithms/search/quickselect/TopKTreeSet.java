@@ -1,7 +1,7 @@
 package com.svetanis.algorithms.search.quickselect;
 
-import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Sets.newTreeSet;
+import static com.svetanis.java.base.collect.Lists.newList;
 
 import java.util.TreeSet;
 
@@ -21,7 +21,7 @@ public final class TopKTreeSet {
         ts.add(item);
       }
     }
-    return copyOf(ts);
+    return newList(ts);
   }
 
   public static void main(String[] args) {

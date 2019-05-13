@@ -10,9 +10,7 @@ public final class BinarySearchRecursive {
 
   public static int binarySearch(List<Integer> list, int x) {
     int n = size(list);
-    int left = 0;
-    int right = n - 1;
-    return binarySearch(list, left, right, x);
+    return binarySearch(list, 0, n - 1, x);
   }
 
   public static int binarySearch(List<Integer> list, int start, int end, int x) {
@@ -21,9 +19,7 @@ public final class BinarySearchRecursive {
 
   public static int binarySearch(int[] a, int x) {
     int n = a.length;
-    int left = 0;
-    int right = n - 1;
-    return binarySearch(a, left, right, x);
+    return binarySearch(a, 0, n - 1, x);
   }
 
   public static int binarySearch(int[] a, int start, int end, int x) {

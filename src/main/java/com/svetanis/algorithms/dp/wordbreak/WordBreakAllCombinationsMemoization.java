@@ -11,6 +11,7 @@ import static com.svetanis.java.base.utils.Print.printLines;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 public final class WordBreakAllCombinationsMemoization {
@@ -33,7 +34,7 @@ public final class WordBreakAllCombinationsMemoization {
       String ss = str.substring(left, right);
       if (dict.contains(ss)) {
         List<String> recursive = wb(str, dict, map, right);
-        list.addAll(transform(recursive, s -> trim(ss + " " + s)));
+        list.addAll(transform(recursive, s -> trim(Joiner.on(" ").join(ss, s))));
       }
     }
     map.put(left, list);

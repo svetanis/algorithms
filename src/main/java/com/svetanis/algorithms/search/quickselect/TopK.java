@@ -16,9 +16,8 @@ public final class TopK {
     // Time complexity: O(n)
     // Worst case: O(n^2)
 
-    int left = 0;
-    int right = a.length - 1;
-    int pivot = select(a, left, right, k);
+    int n = a.length;
+    int pivot = select(a, 0, n - 1, k);
     List<Integer> list = asList(toObject(a));
     return newList(list.subList(0, pivot + 1));
   }

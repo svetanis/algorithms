@@ -9,6 +9,7 @@ import static com.svetanis.java.base.utils.Print.printLines;
 
 import java.util.List;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 public final class WordBreakAllCombinationsRecursive {
@@ -28,7 +29,7 @@ public final class WordBreakAllCombinationsRecursive {
       String ss = str.substring(left, right);
       if (dict.contains(ss)) {
         List<String> remained = wb(str, dict, right);
-        list.addAll(transform(remained, s -> trim(ss + " " + s)));
+        list.addAll(transform(remained, s -> trim(Joiner.on(" ").join(ss, s))));
       }
     }
     return list;
