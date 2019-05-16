@@ -6,18 +6,20 @@ public final class FibonacciDPSpaceOptimized {
 
     if (n == 0) {
       return 0;
-    } else if (n == 1) {
+    } else if (n == 1 || n == 2) {
       return 1;
     }
 
-    int fib1 = 0;
+    int fib1 = 1;
     int fib2 = 1;
-    for (int i = 2; i <= n; i++) {
-      int fib = fib1 + fib2;
+    int fib = 1;
+    for (int i = 3; i <= n; i++) {
+      fib = fib1 + fib2;
       fib1 = fib2;
       fib2 = fib;
     }
-    return fib2;
+
+    return fib;
   }
 
   public static void main(String[] args) {
