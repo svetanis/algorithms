@@ -2,11 +2,10 @@ package com.svetanis.algorithms.sorting.mergesort.intersection;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
+import static com.svetanis.java.base.utils.Arrays.repeat;
 import static com.svetanis.java.base.utils.Maps.freqMap;
 import static com.svetanis.java.base.utils.Print.print;
 import static java.lang.Math.min;
-import static java.util.Arrays.asList;
-import static java.util.Arrays.fill;
 
 import java.util.List;
 import java.util.Map;
@@ -32,9 +31,7 @@ public final class IntersectionUnsortedHashingWithDuplicates {
         if (freq == 1) {
           list.add(str);
         } else {
-          String[] common = new String[freq];
-          fill(common, str);
-          list.addAll(asList(common));
+          list.addAll(repeat(str, freq));
         }
       }
     }
