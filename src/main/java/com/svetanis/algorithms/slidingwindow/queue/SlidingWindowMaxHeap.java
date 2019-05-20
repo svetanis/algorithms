@@ -12,40 +12,36 @@ public final class SlidingWindowMaxHeap {
 
   public static List<Integer> maxSlidingWindow(int[] a, int w) {
     // Time complexity: O(n log n)
-    
+
     int n = a.length;
-    
     PriorityQueue<Pair> queue = new PriorityQueue<>();
     List<Integer> list = newArrayList();
-    
     for (int i = 0; i < w; ++i) {
       queue.offer(new Pair(a[i], i));
     }
-    
     for (int i = w; i < n; ++i) {
       Pair p = queue.peek();
       list.add(p.value);
-
       while (p.index <= i - w) {
         queue.poll();
         p = queue.peek();
       }
-      
       queue.offer(new Pair(a[i], i));
     }
-
     // max element of last window
     list.add(queue.peek().value);
     return list;
   }
 
   public static void main(String[] args) {
-    int w = 3;
-    int[] a = { 1, 3, -1, -3, 5, 3, 6, 7 };
-    print(maxSlidingWindow(a, w));
+    int[] a1 = { 1, 3, -1, -3, 5, 3, 6, 7 };
+    print(maxSlidingWindow(a1, 3));
+
+    int[] a2 = { 6, 0, -6 };
+    print(maxSlidingWindow(a2, 2));
   }
 
-  private static class Pair implements Comparable<Pair>{
+  private static class Pair implements Comparable<Pair> {
     int value;
     int index;
 
@@ -53,7 +49,7 @@ public final class SlidingWindowMaxHeap {
       this.value = value;
       this.index = index;
     }
-    
+
     @Override
     public int compareTo(Pair other) {
       return other.value - this.value;
