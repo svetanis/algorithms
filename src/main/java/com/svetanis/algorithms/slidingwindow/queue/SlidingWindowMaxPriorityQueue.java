@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 
 // Sliding Window Maximum
 
-public final class SlidingWindowMaxHeap {
+public final class SlidingWindowMaxPriorityQueue {
 
   public static List<Integer> maxSlidingWindow(int[] a, int w) {
     // Time complexity: O(n log n)

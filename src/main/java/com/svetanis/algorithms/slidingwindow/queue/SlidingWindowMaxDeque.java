@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableList;
 // find the maximum for each and 
 // every contiguous subarray of size k.
 
-public final class SubArrayMaxOfSizeK {
+public final class SlidingWindowMaxDeque {
 
   private static ImmutableList<Integer> subArrayMax(int[] a, int w) {
     // Time complexity: O(n);
