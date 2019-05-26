@@ -1,6 +1,7 @@
-package com.svetanis.algorithms.recursive;
+package com.svetanis.algorithms.string.palindrome;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.svetanis.algorithms.string.palindrome.PalindromeIterative.isPalindrome;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.printLists;
 
@@ -33,17 +34,6 @@ public final class AllPalindromicPartitions {
         list.remove(list.size() - 1);
       }
     }
-  }
-
-  private static boolean isPalindrome(String str, int left, int right) {
-    while (left < right) {
-      if (str.charAt(left) != str.charAt(right)) {
-        return false;
-      }
-      left++;
-      right--;
-    }
-    return true;
   }
 
   public static void main(String[] args) {
