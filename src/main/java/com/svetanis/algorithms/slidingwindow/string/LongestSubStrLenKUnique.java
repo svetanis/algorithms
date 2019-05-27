@@ -27,6 +27,7 @@ public final class LongestSubStrLenKUnique {
     while (right < n) {
       char next = str.charAt(right);
       map.put(next, map.getOrDefault(next, 0) + 1);
+      
       while (map.size() > k) {
         char front = str.charAt(left);
         map.put(front, map.get(front) - 1);

@@ -29,6 +29,7 @@ public final class LongestSubStrKUniqueHashMap {
     int end = 0; // max window end
     int max = 0; // max window size
     Map<Character, Integer> map = newHashMap();
+    
     while (right < n) {
       char next = str.charAt(right);
       map.put(next, map.getOrDefault(next, 0) + 1);
