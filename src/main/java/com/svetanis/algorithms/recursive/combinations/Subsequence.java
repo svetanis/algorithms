@@ -1,12 +1,12 @@
 package com.svetanis.algorithms.recursive.combinations;
 
-//Given two strings str1 and str2, find if str1 is a subsequence of str2. 
-//A subsequence is a sequence that can be derived from another sequence by deleting some elements
-//without changing the order of the remaining elements
+// Given two strings str1 and str2, find if str1 is a subsequence of str2. 
+// A subsequence is a sequence that can be derived from another sequence 
+// by deleting some elements without changing the order of remaining elements
 
 public final class Subsequence {
 
-  public static boolean isSubsequence(String str1, String str2) {
+  public static boolean isSubSeq(String str1, String str2) {
     int n = str1.length();
     int m = str2.length();
     return isSubSeq(str1, str2, n, m);
@@ -31,8 +31,29 @@ public final class Subsequence {
     return isSubSeq(s1, s2, n, m - 1);
   }
 
+  public static boolean isSubSeqIterative(String s1, String s2) {
+    int n = s1.length();
+    int m = s2.length();
+
+    if (n == 0) {
+      return true;
+    }
+
+    if (m == 0) {
+      return false;
+    }
+
+    int count = 0;
+    for (int i = 0; i < m && count < n; i++) {
+      if (s1.charAt(count) == s2.charAt(i)) {
+        count++;
+      }
+    }
+    return count == n;
+  }
+
   public static void main(String[] args) {
-    System.out.println(isSubsequence("AXY", "ADXCPY")); // true
-    System.out.println(isSubsequence("AXY", "YADXCP")); // false
+    System.out.println(isSubSeq("AXY", "ADXCPY")); // true
+    System.out.println(isSubSeq("AXY", "YADXCP")); // false
   }
 }

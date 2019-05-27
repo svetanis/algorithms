@@ -15,7 +15,7 @@ public final class LongestSubStrAllUniqueHashMap {
     for(int left = 0, right = 0; right < n; right++) {
       char c = str.charAt(right);
       if(map.get(c) != null) {
-        left = max(map.get(c) + 1, left);
+        left = max(left, map.get(c) + 1);
       }
       if(unique.length() < right - left + 1) {
         unique = str.substring(left, right + 1);

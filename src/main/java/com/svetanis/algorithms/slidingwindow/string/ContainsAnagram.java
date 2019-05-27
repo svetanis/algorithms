@@ -13,7 +13,6 @@ public final class ContainsAnagram {
     // Time complexity: O(n)
 
     int n = str.length();
-    char[] chars = str.toCharArray();
     Map<Character, Integer> map = freqMap(pat.toCharArray());
     Queue<Character> queue = newLinkedList();
 
@@ -21,10 +20,9 @@ public final class ContainsAnagram {
 
     for (int left = 0; left < n; left++) {
       while (right < n) {
-        char c = chars[right];
+        char c = str.charAt(right);
         if (map.containsKey(c)) {
-          int freq = map.get(c);
-          map.put(c, freq - 1);
+          map.put(c, map.get(c) - 1);
           queue.offer(c);
         } else {
           while (!queue.isEmpty()) {
