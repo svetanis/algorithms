@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive;
+package com.svetanis.algorithms.string.regex;
 
 public final class RegExMatcher {
 
