@@ -16,15 +16,16 @@ public final class InterleavedBottomUpSpaceOptimized {
     boolean[] dp = new boolean[m + 1];
     for (int i = 0; i <= n; i++) {
       for (int j = 0; j <= m; j++) {
+        int len = i + j - 1;
         if (i == 0 && j == 0) {
           dp[j] = true;
         } else if (i == 0) {
-          dp[j] = dp[j - 1] && s2.charAt(j - 1) == s.charAt(i + j - 1);
+          dp[j] = dp[j - 1] && s2.charAt(j - 1) == s.charAt(len);
         } else if (j == 0) {
-          dp[j] = dp[j] && s1.charAt(i - 1) == s.charAt(i + j - 1);
+          dp[j] = dp[j] && s1.charAt(i - 1) == s.charAt(len);
         } else {
-          boolean one = dp[j] && s1.charAt(i - 1) == s.charAt(i + j - 1);
-          boolean two = dp[j - 1] && s2.charAt(j - 1) == s.charAt(i + j - 1);
+          boolean one = dp[j] && s1.charAt(i - 1) == s.charAt(len);
+          boolean two = dp[j - 1] && s2.charAt(j - 1) == s.charAt(len);
           dp[j] = one || two;
         }
       }

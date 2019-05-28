@@ -16,15 +16,16 @@ public final class InterleavedBottomUp {
     boolean[][] dp = new boolean[n + 1][m + 1];
     for (int i = 0; i <= n; i++) {
       for (int j = 0; j <= m; j++) {
+        int len = i + j - 1;
         if (i == 0 && j == 0) {
           dp[i][j] = true;
         } else if (i == 0) {
-          dp[i][j] = dp[i][j - 1] && s2.charAt(j - 1) == s.charAt(i + j - 1);
+          dp[i][j] = dp[i][j - 1] && s2.charAt(j - 1) == s.charAt(len);
         } else if (j == 0) {
-          dp[i][j] = dp[i - 1][j] && s1.charAt(i - 1) == s.charAt(i + j - 1);
+          dp[i][j] = dp[i - 1][j] && s1.charAt(i - 1) == s.charAt(len);
         } else {
-          boolean one = dp[i - 1][j] && s1.charAt(i - 1) == s.charAt(i + j - 1);
-          boolean two = dp[i][j - 1] && s2.charAt(j - 1) == s.charAt(i + j - 1);
+          boolean one = dp[i - 1][j] && s1.charAt(i - 1) == s.charAt(len);
+          boolean two = dp[i][j - 1] && s2.charAt(j - 1) == s.charAt(len);
           dp[i][j] = one || two;
         }
       }
