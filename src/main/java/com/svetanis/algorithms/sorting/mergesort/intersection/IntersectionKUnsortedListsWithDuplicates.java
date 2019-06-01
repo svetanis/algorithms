@@ -68,7 +68,7 @@ public final class IntersectionKUnsortedListsWithDuplicates {
     return newList(list);
   }
 
-  private static int getSmallestListIndex(List<List<Integer>> lists) {
+  public static int getSmallestListIndex(List<List<Integer>> lists) {
     int index = 0;
     int min = lists.get(0).size();
     for (int i = 1; i < lists.size(); ++i) {
