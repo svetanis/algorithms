@@ -1,5 +1,8 @@
 package com.svetanis.algorithms.dp.sum.given.subseq;
 
+//Given a set of non-negative integers, and a value sum, 
+//determine if there is a subset of the given set with sum equal to given sum.
+
 public final class GivenSumSubSeqTopDown {
   
   private static final int K = 9;

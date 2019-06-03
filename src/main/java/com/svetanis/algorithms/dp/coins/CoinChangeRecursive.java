@@ -1,11 +1,18 @@
 package com.svetanis.algorithms.dp.coins;
 
+// n - size of array of coins a
+// v - coin value
+// returns the count of ways we can sum
+// a[0 ... n-1] coins to get sum v
+
 public final class CoinChangeRecursive {
-  // n - size of array of coins S
-  // V - coin value
-  // returns the count of ways we can sum
-  // S[0 ... n-1] coins to get sum V
-  public static int count(int[] s, int n, int v) {
+
+  public static int count(int[] a, int v) {
+    int n = a.length;
+    return count(a, n, v);
+  }
+  
+  private static int count(int[] a, int n, int v) {
     // base case
     if (v == 0) {
       return 1;
@@ -21,17 +28,15 @@ public final class CoinChangeRecursive {
     }
 
     // return the sum of solutions
-    // 1. including S[n - 1]: count(S[], n, V - S[n-1])
-    int incl = count(s, n, v - s[n - 1]); 
-    // 2. excluding S[n - 1]: count(S[], n - 1, V)
-    int excl = count(s, n - 1, v);
+    // 1. include a[n - 1]: count(a[], n, v - a[n-1])
+    int incl = count(a, n, v - a[n - 1]); 
+    // 2. excluding a[n - 1]: count(a[], n - 1, v)
+    int excl = count(a, n - 1, v);
     return incl + excl; 
   }
 
   public static void main(String[] args) {
-    int v = 4;
     int[] coins = { 1, 2, 3 };
-    int n = coins.length;
-    System.out.println(count(coins, n, v));
+    System.out.println(count(coins, 4));
   }
 }

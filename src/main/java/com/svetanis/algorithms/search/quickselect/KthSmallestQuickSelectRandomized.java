@@ -13,18 +13,15 @@ public final class KthSmallestQuickSelectRandomized {
   }
 
   private static int select(int[] a, int left, int right, int k) {
-    if (left < right) {
-      int pivot = randomizedPartition(a, left, right);
-      int dist = pivot - left + 1;
-      if (dist == k) {
-        return a[pivot];
-      } else if (k < dist) {
-        return select(a, left, pivot, k);
-      } else {
-        return select(a, pivot + 1, right, k - dist);
-      }
+    int pivot = randomizedPartition(a, left, right);
+    int dist = pivot - left + 1;
+    if (dist == k) {
+      return a[pivot];
+    } else if (k < dist) {
+      return select(a, left, pivot, k);
+    } else {
+      return select(a, pivot + 1, right, k - dist);
     }
-    return -1;
   }
 
   public static void main(String[] args) {

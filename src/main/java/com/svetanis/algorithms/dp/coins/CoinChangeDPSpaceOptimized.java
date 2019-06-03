@@ -1,18 +1,18 @@
 package com.svetanis.algorithms.dp.coins;
 
-public final class CoinChangeDP {
+public final class CoinChangeDPSpaceOptimized {
 
-  // n - size of array of coins S
-  // V - coin value
-  // table[i] will be storing the number
+  // n - size of array of coins a
+  // v - coin value
+  // dp[i] will be storing the number
   // of solutions for value i.
   // we need n + 1 rows as the table is
   // constructed in bottom up manner
   // using the base case (n = 0)
 
-  public static int change(int[] s, int max) {
-    
-    int n = s.length;
+  public static int change(int[] a, int max) {
+
+    int n = a.length;
     int[] dp = new int[max + 1];
 
     // base case
@@ -20,13 +20,13 @@ public final class CoinChangeDP {
     dp[0] = 1;
 
     // pick all coins one by one and
-    // update the table[] values
+    // update the dp[] values
     // after the index greater than
     // or equal to the value of
     // the picked coin
     for (int i = 0; i < n; ++i) {
-      for (int v = s[i]; v <= max; ++v) {
-        dp[v] = (dp[v] + dp[v - s[i]]) % 1000007;
+      for (int v = a[i]; v <= max; v++) {
+        dp[v] = (dp[v] + dp[v - a[i]]) % 1000007;
       }
     }
     return dp[max] % 1000007;
