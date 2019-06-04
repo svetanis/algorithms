@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.heapsort;
+package com.svetanis.algorithms.search.quickselect.median;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
