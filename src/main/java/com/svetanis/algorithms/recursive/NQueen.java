@@ -36,18 +36,18 @@ public final class NQueen {
   // check if (r, c) is a valid spot for a queen by checking
   // if there is a queen in the same column or diagonal
   // no need to check it for queens in the same row
-  private static boolean isSafe(Integer[] a, int r, int c) {
-    for (int row = 0; row < r; row++) {
-      int col = a[row];
+  private static boolean isSafe(Integer[] a, int row, int col) {
+    for (int r = 0; r < row; r++) {
+      int c = a[r];
       // check if rows have a queen in the same column
-      if (c == col) {
+      if (col == c) {
         return false;
       }
       // check diagonals: if the distance between the columns equals
       // the distance between the rows, then they're in the same diagonal
-      int deltaRow = r - row;
-      int deltaCol = abs(col - c);
-      if (deltaCol == deltaRow) {
+      int dx = row - r;
+      int dy = abs(c - col);
+      if (dy == dx) {
         return false;
       }
     }
