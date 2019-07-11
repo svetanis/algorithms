@@ -4,6 +4,9 @@ import static com.svetanis.algorithms.dp.sum.given.subseq.GivenSumSubSeqBottomUp
 import static com.svetanis.java.base.utils.Arrays.sum;
 import static com.svetanis.java.base.utils.Nums.isOdd;
 
+// Partition problem is to determine whether a given set can be partitioned  
+// into two subsets such that the sum of elements in both subsets is same. 
+
 public final class BalancedPartitionDynamic {
 
   public static boolean isPartition(int[] a) {
