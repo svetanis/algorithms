@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.dp.interleaved;
 
-// Given two strings str1 and str2, write a function that prints all interleavings of the given two strings.
+// Given two strings str1 and str2, write a function 
+// that prints all interleavings of the given two strings.
 // https://leetcode.com/problems/interleaving-string/
 
 public final class InterleavedBottomUp {
