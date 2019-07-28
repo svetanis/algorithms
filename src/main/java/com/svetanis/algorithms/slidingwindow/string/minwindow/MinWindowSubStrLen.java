@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.string;
+package com.svetanis.algorithms.slidingwindow.string.minwindow;
 
 import static com.svetanis.java.base.utils.Maps.freqMap;
 import static java.lang.Integer.MAX_VALUE;

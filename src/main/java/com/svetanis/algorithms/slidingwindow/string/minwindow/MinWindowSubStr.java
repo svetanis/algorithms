@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.string;
+package com.svetanis.algorithms.slidingwindow.string.minwindow;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
