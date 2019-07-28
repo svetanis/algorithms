@@ -14,7 +14,7 @@ import java.util.Set;
 //        character and pop out all these characters from the hashset.
 //  3. Repeating step 2 and output the longest substring without dup after finishing the whole string.
 
-public final class LongestSubStrAllUnique {
+public final class LongestAllUniqueSubStr {
 
   public static String allUnique(String str) {
     // Time complexity: O(n)

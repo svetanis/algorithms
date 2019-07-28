@@ -1,10 +1,10 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public final class SlidingWindowMaxDeque {
     // Auxiliary Space: O(k)
 
     int n = a.length;
-    Deque<Integer> q = newLinkedList();
+    Deque<Integer> q = new ArrayDeque<>();
     List<Integer> list = newArrayList();
 
     for (int i = 0; i < w; ++i) {

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.string.encode;
+package com.svetanis.algorithms.string.encode;
 
 import static java.lang.Character.isDigit;
 

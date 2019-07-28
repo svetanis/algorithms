@@ -2,6 +2,7 @@ package com.svetanis.algorithms.slidingwindow.string;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
+import static com.svetanis.algorithms.slidingwindow.string.LongestSubStrKUniqueHashMap.countUnique;
 
 import com.google.common.base.Optional;
 
@@ -53,19 +54,6 @@ public final class LongestSubStrKUniqueCountArray {
       }
     }
     return k >= count;
-  }
-
-  private static int countUnique(String str) {
-    int k = 0;
-    int[] count = new int[MAX];
-    // count num of unique chars
-    for (char c : str.toCharArray()) {
-      if (count[c] == 0) {
-        k++;
-      }
-      count[c]++;
-    }
-    return k;
   }
 
   public static void main(String[] args) {

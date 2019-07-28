@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.string;
+package com.svetanis.algorithms.slidingwindow.string.anagram;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;

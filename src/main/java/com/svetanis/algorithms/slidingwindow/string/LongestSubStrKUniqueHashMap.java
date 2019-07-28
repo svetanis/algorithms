@@ -24,13 +24,12 @@ public final class LongestSubStrKUniqueHashMap {
     }
 
     int left = 0; // current start
-    int right = 0; // current end
     int start = 0; // max window start
     int end = 0; // max window end
     int max = 0; // max window size
     Map<Character, Integer> map = newHashMap();
-    
-    while (right < n) {
+
+    for (int right = 0; right < n; right++) {
       char next = str.charAt(right);
       map.put(next, map.getOrDefault(next, 0) + 1);
       while (map.size() > k) {
@@ -46,12 +45,11 @@ public final class LongestSubStrKUniqueHashMap {
         start = left;
         end = right;
       }
-      right++;
     }
     return of(str.substring(start, end + 1));
   }
 
-  private static int countUnique(String str) {
+  public static int countUnique(String str) {
     int k = 0;
     int[] count = new int[MAX];
     // count num of unique chars

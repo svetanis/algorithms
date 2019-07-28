@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.slidingwindow.string;
 
 import static com.google.common.collect.Maps.newHashMap;
+import static com.svetanis.algorithms.slidingwindow.string.LongestSubStrKUniqueHashMap.countUnique;
 import static java.lang.Math.max;
 
 import java.util.Map;
@@ -9,8 +10,6 @@ import java.util.Map;
 // that has exactly K unique characters. 
 
 public final class LongestSubStrLenKUnique {
-
-  private static final int MAX = 256;
 
   public static int kUnique(String str, int k) {
     // Time complexity: O(n)
@@ -42,19 +41,6 @@ public final class LongestSubStrLenKUnique {
       right++;
     }
     return max;
-  }
-
-  private static int countUnique(String str) {
-    int k = 0;
-    int[] count = new int[MAX];
-    // count num of unique chars
-    for (char c : str.toCharArray()) {
-      if (count[c] == 0) {
-        k++;
-      }
-      count[c]++;
-    }
-    return k;
   }
 
   public static void main(String[] args) {

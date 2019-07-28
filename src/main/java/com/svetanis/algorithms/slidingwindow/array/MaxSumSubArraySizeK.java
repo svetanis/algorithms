@@ -3,6 +3,9 @@ package com.svetanis.algorithms.slidingwindow.array;
 import static com.svetanis.java.base.utils.Arrays.sum;
 import static java.lang.Math.max;
 
+// Given an array of positive numbers and a positive number ‘k’, 
+// find the maximum sum of any contiguous subarray of size ‘k’.
+
 public final class MaxSumSubArraySizeK {
 
   public static int maxSum(int[] a, int k) {

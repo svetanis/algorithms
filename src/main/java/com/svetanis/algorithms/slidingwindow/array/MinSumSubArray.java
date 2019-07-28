@@ -1,32 +1,27 @@
 package com.svetanis.algorithms.slidingwindow.array;
 
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Math.min;
+
 public final class MinSumSubArray {
 
-  public static int minSum(int[] a, int x) {
+  public static int minSum(int[] a, int k) {
     // Time complexity: O(n)
 
     int n = a.length;
-    int min = n + 1;
+    int min = MAX_VALUE;
     int sum = 0;
     int left = 0;
-    int right = 0;
 
-    while (right < n) {
-      while (sum <= x && right < n) {
-        sum += a[right++];
-      }
-
-      // if currentSum becomes > x
-      while (sum > x && left < n) {
-        // update minLength if needed
-        if (right - left < min) {
-          min = right - left;
-        }
-        // remove starting elements
-        sum -= a[left++];
+    for (int right = 0; right < n; right++) {
+      sum += a[right];
+      while (sum >= k && left < n) {
+        min = min(min, right - left + 1);
+        sum -= a[left];
+        left++;
       }
     }
-    return min;
+    return min == MAX_VALUE ? 0 : min;
   }
 
   public static void main(String[] args) {
