@@ -15,12 +15,11 @@ public final class MinWindowSubStr {
     int n = s.length();
     int m = p.length();
 
-    Map<Character, Integer> map = freqMap(p);
-
     int left = 0;
     int matched = 0;
     int start = 0;
     int min = MAX_VALUE;
+    Map<Character, Integer> map = freqMap(p);
 
     for (int right = 0; right < n; right++) {
       char c = s.charAt(right);
@@ -30,6 +29,7 @@ public final class MinWindowSubStr {
           matched++;
         }
       }
+
       // shrink window
       while (matched == m) {
         if (min > right - left + 1) {
