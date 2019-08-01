@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.search.binary.math;
 
-public final class FloorSortedArrayRecursive {
+public final class FloorBinarySearchRecursive {
 
   public static int floor(int[] a, int x) {
     if (x < a[0]) {

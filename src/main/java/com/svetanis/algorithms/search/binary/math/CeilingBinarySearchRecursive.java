@@ -8,15 +8,13 @@ package com.svetanis.algorithms.search.binary.math;
 // then either array[mid] is ceiling of x
 // or ceiling lies in array[low ... mid - 1]
 
-public final class CeilingSortedArrayBinary {
+public final class CeilingBinarySearchRecursive {
 
   public static int ceil(int[] a, int x) {
     // Time Complexity: O(log n)
 
     int n = a.length;
-    int low = 0;
-    int high = n - 1;
-    return ceil(a, low, high, x);
+    return ceil(a, 0, n - 1, x);
   }
 
   public static int ceil(int[] a, int low, int high, int x) {
@@ -30,7 +28,7 @@ public final class CeilingSortedArrayBinary {
     }
 
     int mid = low + (high - low) / 2;
-    
+
     if (a[mid] == x) {
       return mid;
     } else if (x > a[mid]) {
