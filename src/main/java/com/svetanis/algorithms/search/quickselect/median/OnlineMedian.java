@@ -15,42 +15,48 @@ import java.util.Scanner;
 
 public final class OnlineMedian {
 
-  private static Queue<Integer> MIN = new PriorityQueue<Integer>();
-  private static Queue<Integer> MAX = new PriorityQueue<Integer>((a, b) -> b.compareTo(a));
+  private Queue<Integer> min;
+  private Queue<Integer> max;
 
-  public static void add(int x) {
-    if (!MAX.isEmpty() && x > MAX.peek()) {
-      MIN.offer(x);
+  public OnlineMedian() {
+    this.min = new PriorityQueue<Integer>();
+    this.max = new PriorityQueue<Integer>((a, b) -> b.compareTo(a));
+  }
+
+  public void add(int x) {
+    if (!max.isEmpty() && x > max.peek()) {
+      min.offer(x);
     } else {
-      MAX.offer(x);
+      max.offer(x);
     }
 
-    if (MIN.size() > MAX.size() + 1) {
-      MAX.offer(MIN.poll());
-    } else if (MAX.size() > MIN.size() + 1) {
-      MIN.offer(MAX.poll());
+    if (min.size() > max.size() + 1) {
+      max.offer(min.poll());
+    } else if (max.size() > min.size() + 1) {
+      min.offer(max.poll());
     }
   }
 
-  public static double getMedian() {
-    if (MIN.size() == MAX.size()) {
-      return 0.5 * (MIN.peek() + MAX.peek());
+  public double getMedian() {
+    if (min.size() == max.size()) {
+      return 0.5 * (min.peek() + max.peek());
     } else {
-      if (MAX.size() > MIN.size()) {
-        return MAX.peek();
+      if (max.size() > min.size()) {
+        return max.peek();
       } else {
-        return MIN.peek();
+        return min.peek();
       }
     }
   }
 
   public static void main(String args[]) {
+    OnlineMedian om = new OnlineMedian();
     Scanner in = new Scanner(System.in);
     int n = in.nextInt();
     for (int i = 0; i < n; i++) {
       int num = in.nextInt();
-      add(num);
-      System.out.println(getMedian());
+      om.add(num);
+      System.out.println(om.getMedian());
     }
     in.close();
   }
