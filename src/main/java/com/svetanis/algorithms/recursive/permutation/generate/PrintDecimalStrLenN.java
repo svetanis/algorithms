@@ -17,7 +17,7 @@ public final class PrintDecimalStrLenN {
       return;
     }
 
-    for (int i = 0; i <= n; i++) {
+    for (int i = 0; i <= 9; i++) {
       a[index] = i;
       generate(n, a, index + 1);
     }

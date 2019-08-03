@@ -11,7 +11,7 @@ import com.google.common.collect.ImmutableList;
 
 // Print all possible decimal strings of length n.
 
-public final class GenerateDecimalStrLenNBacktrack {
+public final class GenerateDecimalStrMutableBacktrack {
 
   public static ImmutableList<String> generate(int n) {
     List<String> lists = newArrayList();
@@ -26,7 +26,7 @@ public final class GenerateDecimalStrLenNBacktrack {
       return;
     }
 
-    for (int i = 0; i <= n; i++) {
+    for (int i = 0; i <= 9; i++) {
       list.add(i);
       generate(n, list, lists);
       list.remove(list.size() - 1);

@@ -11,7 +11,7 @@ import com.google.common.collect.ImmutableList;
 // Given a positive integer number N. 
 // The task is to generate all the binary strings of N bits. 
 
-public final class GenerateBinaryStrLenN {
+public final class GenerateDecimalStrImmutable {
 
   public static ImmutableList<String> generate(int n) {
     List<String> list = newArrayList();
@@ -24,12 +24,12 @@ public final class GenerateBinaryStrLenN {
       lists.add(str);
       return;
     }
-
-    generate(n - 1, str + "0", lists);
-    generate(n - 1, str + "1", lists);
+    for(int i = 0; i <= 9; i++) {
+      generate(n - 1, str + i, lists);
+    }
   }
 
   public static void main(String[] args) {
-    printLines(generate(2));
+    printLines(generate(3));
   }
 }

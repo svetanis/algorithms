@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-public final class PermutationsBacktracking {
+public final class PermutationsMutableBacktrack {
 
   public static ImmutableList<String> permute(String str) {
     // Time Complexity: O(n * n!)
