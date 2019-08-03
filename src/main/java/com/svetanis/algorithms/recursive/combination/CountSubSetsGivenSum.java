@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.combinations;
+package com.svetanis.algorithms.recursive.combination;
 
 public final class CountSubSetsGivenSum {
 

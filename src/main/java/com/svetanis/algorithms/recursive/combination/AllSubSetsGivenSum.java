@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.combinations;
+package com.svetanis.algorithms.recursive.combination;
 
 import static com.svetanis.java.base.utils.Arrays.sum;
 import static com.svetanis.java.base.utils.Print.print;

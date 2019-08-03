@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.combinations;
+package com.svetanis.algorithms.recursive.combination;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static com.svetanis.java.base.collect.Lists.newList;

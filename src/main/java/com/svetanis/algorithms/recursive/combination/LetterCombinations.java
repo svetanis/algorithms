@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string.permutation;
+package com.svetanis.algorithms.recursive.combination;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;

@@ -1,27 +1,27 @@
-package com.svetanis.algorithms.string.generate;
+package com.svetanis.algorithms.recursive.permutation.generate;
 
 import static com.svetanis.java.base.utils.Print.print;
 
 // Print all possible binary strings of length n.
 
-public final class PrintBinaryStrLenN {
+public final class PrintBinaryStrLenNSimple {
 
   public static void generate(int n) {
     int[] a = new int[n];
-    generate(n, a, 0);
+    generate(n, a);
   }
 
-  private static void generate(int n, int[] a, int i) {
-    if (i == n) {
+  private static void generate(int n, int[] a) {
+    if (n <= 0) {
       print(a);
       return;
     }
 
-    a[i] = 0;
-    generate(n, a, i + 1);
+    a[n - 1] = 0;
+    generate(n - 1, a);
 
-    a[i] = 1;
-    generate(n, a, i + 1);
+    a[n - 1] = 1;
+    generate(n - 1, a);
   }
 
   public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string.permutation;
+package com.svetanis.algorithms.recursive.permutation;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 
 //print N! permutation of the characters of the string in order
 
-public final class PermutationsRecursive {
+public final class PermutationsImmutable {
 
   public static ImmutableList<String> permute(String str) {
     List<String> list = newArrayList();
