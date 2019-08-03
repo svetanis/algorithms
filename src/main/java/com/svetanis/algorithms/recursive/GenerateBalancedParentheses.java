@@ -8,6 +8,9 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+// For a given number ‘N’, write a function to generate 
+// all combination of ‘N’ pairs of balanced parentheses.
+
 public final class GenerateBalancedParentheses {
 
   public static ImmutableList<String> generate(int n) {
