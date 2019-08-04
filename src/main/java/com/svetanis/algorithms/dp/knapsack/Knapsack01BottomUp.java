@@ -1,5 +1,6 @@
 package com.svetanis.algorithms.dp.knapsack;
 
+import static com.svetanis.algorithms.dp.knapsack.Knapsack01SpaceOptimized.build;
 import static java.lang.Math.max;
 
 //Given two integer arrays to represent weights and profits of ‘N’ items, 
@@ -16,23 +17,22 @@ public final class Knapsack01BottomUp {
   public static int knapsack(int[] w, int[] v, int max) {
     int n = w.length;
     int m = v.length;
-    if(max <= 0 || n == 0 || n != m) {
+    if (max <= 0 || n == 0 || n != m) {
       return 0;
     }
-    return knapsack(w, v, max, n);
+    Item[] items = build(v, w);
+    return knapsack(items, max, n);
   }
 
-  private static int knapsack(int[] w, int[] v, int max, int n) {
-
+  private static int knapsack(Item[] items, int max, int n) {
     int[][] dp = new int[n + 1][max + 1];
-
     for (int i = 0; i <= n; ++i) {
       for (int j = 0; j <= max; ++j) {
         if (i == 0 || j == 0) {
           dp[i][j] = 0;
-        } else if (w[i - 1] <= j) {
+        } else if (items[i - 1].weight <= j) {
           int excl = dp[i - 1][j];
-          int incl = dp[i - 1][j - w[i - 1]] + v[i - 1];
+          int incl = dp[i - 1][j - items[i - 1].weight] + items[i - 1].value;
           dp[i][j] = max(incl, excl);
         } else {
           dp[i][j] = dp[i - 1][j];

@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.dp.knapsack;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.svetanis.algorithms.dp.knapsack.Knapsack01SpaceOptimized.build;
 import static com.svetanis.java.base.utils.Print.print;
 import static java.lang.Math.max;
 
@@ -23,43 +24,42 @@ public final class Knapsack01BottomUpPath {
     if (max <= 0 || n == 0 || n != m) {
       return 0;
     }
-    return knapsack(w, v, max, n);
+    Item[] items = build(v, w);
+    return knapsack(items, max, n);
   }
 
-  private static int knapsack(int[] w, int[] v, int max, int n) {
-
+  private static int knapsack(Item[] items, int max, int n) {
     int[][] dp = new int[n + 1][max + 1];
-
     for (int i = 0; i <= n; ++i) {
       for (int j = 0; j <= max; ++j) {
         if (i == 0 || j == 0) {
           dp[i][j] = 0;
-        } else if (w[i - 1] <= j) {
+        } else if (items[i - 1].weight <= j) {
           int excl = dp[i - 1][j];
-          int incl = dp[i - 1][j - w[i - 1]] + v[i - 1];
+          int incl = dp[i - 1][j - items[i - 1].weight] + items[i - 1].value;
           dp[i][j] = max(incl, excl);
         } else {
           dp[i][j] = dp[i - 1][j];
         }
       }
     }
-    printSelected(dp, w, v, max);
+    printSelected(dp, items, max);
     return dp[n][max];
   }
 
-  private static void printSelected(int[][] dp, int[] w, int[] v, int max) {
-    int n = w.length;
+  private static void printSelected(int[][] dp, Item[] items, int max) {
+    int n = items.length;
     int profit = dp[n][max];
     List<Integer> list = newArrayList();
     for (int i = n - 1; i >= 0; i--) {
       if (profit != dp[i][max]) {
-        list.add(w[i]);
-        max -= w[i];
-        profit -= v[i];
+        list.add(items[i].weight);
+        max -= items[i].weight;
+        profit -= items[i].value;
       }
     }
     if (profit != 0) {
-      list.add(w[0]);
+      list.add(items[0].weight);
     }
     print(list);
   }

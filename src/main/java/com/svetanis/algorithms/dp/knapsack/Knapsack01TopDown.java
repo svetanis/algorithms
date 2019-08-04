@@ -1,5 +1,6 @@
 package com.svetanis.algorithms.dp.knapsack;
 
+import static com.svetanis.algorithms.dp.knapsack.Knapsack01SpaceOptimized.build;
 import static java.lang.Math.max;
 
 // Given two integer arrays to represent weights and profits of ‘N’ items, 
@@ -14,11 +15,17 @@ public final class Knapsack01TopDown {
   // Space Complexity: O(n*W)
 
   public static int knapsack(int[] w, int[] v, int max) {
+    int n = w.length;
+    int m = v.length;
+    if(max <= 0 || n == 0 || n != m) {
+      return 0;
+    }
+    Item[] items = build(v, w);
     Integer[][] dp = new Integer[v.length][max + 1];
-    return knapsack(w, v, max, v.length, dp);
+    return knapsack(items, max, v.length, dp);
   }
 
-  private static int knapsack(int[] w, int[] v, int max, int n, Integer[][] dp) {
+  private static int knapsack(Item[] items, int max, int n, Integer[][] dp) {
     // base case
     if (n == 1 || max <= 0) {
       return 0;
@@ -29,10 +36,10 @@ public final class Knapsack01TopDown {
     }
 
     int incl = 0;
-    if (w[n - 1] <= max) {
-      incl = knapsack(w, v, max - w[n - 1], n - 1, dp) + v[n - 1];
+    if (items[n - 1].weight <= max) {
+      incl = knapsack(items, max - items[n - 1].weight, n - 1, dp) + items[n - 1].value;
     }
-    int excl = knapsack(w, v, max, n - 1, dp);
+    int excl = knapsack(items, max, n - 1, dp);
     dp[n - 1][max] = max(incl, excl);
     return dp[n - 1][max];
   }

@@ -33,28 +33,13 @@ public final class Knapsack01SpaceOptimized {
     System.out.println(knapsack(max, items));
   }
 
-  private static Item[] build(int[] value, int[] weight) {
+  public static Item[] build(int[] value, int[] weight) {
     int n = value.length;
     Item[] items = new Item[n];
     for (int i = 0; i < n; i++) {
       items[i] = new Item(value[i], weight[i]);
     }
     return items;
-  }
-
-  private static class Item {
-    private int value;
-    private int weight;
-
-    public Item(int value, int weight) {
-      this.value = value;
-      this.weight = weight;
-    }
-
-    @Override
-    public String toString() {
-      return value + ", " + weight;
-    }
   }
 }
 
