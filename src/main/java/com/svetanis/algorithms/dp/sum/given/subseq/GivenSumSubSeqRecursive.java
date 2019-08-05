@@ -5,30 +5,30 @@ package com.svetanis.algorithms.dp.sum.given.subseq;
 
 public final class GivenSumSubSeqRecursive {
 
-  public static boolean isSum(int[] a, int k) {
+  public static boolean isSum(int[] a, int sum) {
     int n = a.length;
-    return isSum(a, n, k);
+    return isSum(a, sum, n);
   }
 
-  private static boolean isSum(int[] a, int n, int k) {
+  private static boolean isSum(int[] a, int sum, int n) {
     // Time complexity: (2^n)
 
-    if (k == 0) {
+    if (sum == 0) {
       return true;
     }
 
-    if (n == 0 && k != 0) {
+    if (n == 0 && sum != 0) {
       return false;
     }
 
-    if (a[n - 1] > k) {
-      return isSum(a, n - 1, k);
+    if (a[n - 1] > sum) {
+      return isSum(a, sum, n - 1);
     }
 
     // 1. include last element
-    boolean incl = isSum(a, n - 1, k - a[n - 1]);
+    boolean incl = isSum(a, sum - a[n - 1], n - 1);
     // 2. exclude last element
-    boolean excl = isSum(a, n - 1, k);
+    boolean excl = isSum(a, sum, n - 1);
     return incl || excl;
   }
 

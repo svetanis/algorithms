@@ -22,7 +22,7 @@ public final class GivenSumSubSeqBottomUp {
 
     // if sum is not 0 and set is empty,
     // then answer is false
-    for (int sum = 1; sum <= k; ++sum) {
+    for (int sum = 1; sum <= k; sum++) {
       dp[sum][0] = false;
     }
 
