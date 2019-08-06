@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.dp.sum.given.subseq;
 
-import static com.svetanis.algorithms.dp.sum.given.subseq.GivenSumSubSeqRecursive.isSum;
+import static com.svetanis.algorithms.dp.sum.given.subseq.SubSetSumRecursive.isSum;
 import static com.svetanis.java.base.utils.Arrays.sum;
 import static com.svetanis.java.base.utils.Nums.isOdd;
 
