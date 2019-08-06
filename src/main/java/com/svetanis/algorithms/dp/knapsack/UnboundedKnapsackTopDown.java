@@ -7,13 +7,13 @@ import static java.lang.Math.max;
 // Given two integer arrays to represent weights and profits of ‘N’ items, 
 // we need to find a subset of these items which will give us maximum profit 
 // such that their cumulative weight is not more than a given number ‘C’. 
-// Each item can only be selected once, which means either 
-// we put an item in the knapsack or we skip it.
+// We can assume an infinite supply of item quantities; 
+// therefore, each item can be selected multiple times.
 
-public final class Knapsack01TopDown {
+public final class UnboundedKnapsackTopDown {
 
   // Time Complexity: O(n*W)
-  // Space Complexity: O(n*W)
+  // Space Complexity: O(n*W + n)
 
   public static int knapsack(int[] w, int[] v, int max) {
     int n = w.length;
@@ -38,7 +38,7 @@ public final class Knapsack01TopDown {
     }
 
     if (dp[n][max] == null) {
-      int incl = items[n].value + knapsack(items, max - items[n].weight, n - 1, dp);
+      int incl = items[n].value + knapsack(items, max - items[n].weight, n, dp);
       int excl = knapsack(items, max, n - 1, dp);
       dp[n][max] = max(incl, excl);
     }
@@ -46,9 +46,9 @@ public final class Knapsack01TopDown {
   }
 
   public static void main(String[] args) {
-    int max = 10;
-    int[] weight = { 1, 2, 3, 8, 7, 4 };
-    int[] value = { 20, 5, 10, 40, 15, 25 };
+    int max = 8;
+    int[] weight = { 1, 3, 4, 5 };
+    int[] value = { 15, 50, 60, 90 };
     System.out.println(knapsack(weight, value, max));
   }
 }
