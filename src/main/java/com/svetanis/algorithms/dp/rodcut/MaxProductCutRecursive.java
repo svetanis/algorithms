@@ -8,11 +8,11 @@ import static com.svetanis.java.base.utils.Nums.max;
 
 // maxProd(n) : the maximum product for a rope of length n
 
-// maxProd(n) = max(i*(n-i), maxProdRec(n-i)*i) for all i in {1, 2, 3 .. n}
+// maxProd(n) = max(i * (n - i), i * maxProdRec(n - i)) where 1 <= i <= n
 
 public final class MaxProductCutRecursive {
 
-  public static int maxProduct(int n) {
+  public static int rodCut(int n) {
     if (n == 0 || n == 1) {
       return 0;
     }
@@ -20,12 +20,12 @@ public final class MaxProductCutRecursive {
     // and take the max of all
     int max = 0;
     for (int i = 1; i < n; i++) {
-      max = max(max, i * (n - i), maxProduct(n - i) * i);
+      max = max(max, i * (n - i), i * rodCut(n - i));
     }
     return max;
   }
 
   public static void main(String[] args) {
-    System.out.println(maxProduct(10));
+    System.out.println(rodCut(15));
   }
 }

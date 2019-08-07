@@ -1,6 +1,5 @@
 package com.svetanis.algorithms.dp.rodcut;
 
-import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Math.max;
 
 // Given a rod of length n inches and an array of prices 
@@ -14,28 +13,25 @@ import static java.lang.Math.max;
 
 // R(n) = max {price[i - 1] + rodCut(n - i) } where 1 <= i <= n
 
-public final class RodCuttingRecursive {
+public final class RodCuttingBottomUp {
 
-  // Time Complexity: O(n^n)
-  // Aux Space Complexity: O(1)
-  
+  // Time Complexity: O(n^2)
+  // Aux Space Complexity: O(n)
+
   public static int rodCut(int[] price, int n) {
-
-    // base case
-    if (n <= 0) {
-      return 0;
-    }
-
-    int max = MIN_VALUE;
+    int max = 0;
+    int[] dp = new int[n + 1];
     for (int i = 1; i <= n; i++) {
-      int cost = price[i - 1] + rodCut(price, n - i);
-      max = max(max, cost);
+      for (int j = 1; j <= i; j++) {
+        int cost = price[j - 1] + dp[i - j];
+        max = max(max, cost);
+      }
+      dp[i] = max;
     }
-    return max;
+    return dp[n];
   }
 
   public static void main(String[] args) {
-    // int[] len = {1, 2, 3, 4, 5, 6, 7, 8};
     int[] price = { 1, 5, 8, 9, 10, 17, 17, 20 };
     System.out.println(rodCut(price, 4));
   }

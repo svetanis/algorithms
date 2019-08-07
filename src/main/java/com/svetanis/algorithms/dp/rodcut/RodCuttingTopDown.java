@@ -14,12 +14,17 @@ import static java.lang.Math.max;
 
 // R(n) = max {price[i - 1] + rodCut(n - i) } where 1 <= i <= n
 
-public final class RodCuttingRecursive {
+public final class RodCuttingTopDown {
 
-  // Time Complexity: O(n^n)
-  // Aux Space Complexity: O(1)
-  
+  // Time Complexity: O(n^2)
+  // Aux Space Complexity: O(n)
+
   public static int rodCut(int[] price, int n) {
+    Integer[] dp = new Integer[price.length + 1];
+    return rodCut(price, n, dp);
+  }
+
+  private static int rodCut(int[] price, int n, Integer[] dp) {
 
     // base case
     if (n <= 0) {
@@ -27,11 +32,16 @@ public final class RodCuttingRecursive {
     }
 
     int max = MIN_VALUE;
+    if (dp[n] != null) {
+      return dp[n];
+    }
+
     for (int i = 1; i <= n; i++) {
       int cost = price[i - 1] + rodCut(price, n - i);
       max = max(max, cost);
     }
-    return max;
+    dp[n] = max;
+    return dp[n];
   }
 
   public static void main(String[] args) {
