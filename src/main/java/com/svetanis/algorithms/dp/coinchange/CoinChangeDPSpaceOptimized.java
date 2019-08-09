@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coins;
+package com.svetanis.algorithms.dp.coinchange;
 
 public final class CoinChangeDPSpaceOptimized {
 

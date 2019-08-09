@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coins;
+package com.svetanis.algorithms.dp.coinchange;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
