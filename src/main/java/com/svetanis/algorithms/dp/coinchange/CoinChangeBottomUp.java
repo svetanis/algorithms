@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.dp.coinchange;
 
-public final class CoinChangeDynamic {
+public final class CoinChangeBottomUp {
 
   // n - size of array of coins S
   // V - coin value
