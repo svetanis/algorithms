@@ -2,15 +2,24 @@ package com.svetanis.algorithms.dp.countways.stairs;
 
 public final class StaircaseFib {
 
+  // Given a stair with ‘n’ steps,
+  // implement a method to count
+  // how many possible ways are there
+  // to reach the top of the staircase,
+  // given that, at every step you can
+  // either take 1 step, 2 steps, or 3 steps.
+
   public static int countWays(int n) {
     return fibOptimal(n + 1);
   }
-  
+
   public static int fibOptimal(int n) {
 
     if (n == 0) {
       return 0;
-    } else if (n == 1) {
+    }
+
+    if (n == 1) {
       return 1;
     }
 
@@ -25,7 +34,6 @@ public final class StaircaseFib {
   }
 
   public static void main(String[] args) {
-    int s = 4;
-    System.out.println(countWays(s));
+    System.out.println(countWays(4));
   }
 }

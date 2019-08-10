@@ -28,7 +28,6 @@ public final class ClimbingStairs {
   }
 
   public static void main(String[] args) {
-    int s = 4;
-    System.out.println(count(s, 2));
+    System.out.println(count(4, 2));
   }
 }

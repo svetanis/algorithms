@@ -1,8 +1,7 @@
 package com.svetanis.algorithms.dp.countways.stairs;
 
-public final class StaircaseGenericDP {
+public final class StaircaseGenericBottomUp {
 
-  // DYNAMIC
   public static int count(int n, int m) {
     return countWays(n + 1, m);
   }
@@ -23,7 +22,6 @@ public final class StaircaseGenericDP {
   }
 
   public static void main(String[] args) {
-    int s = 4;
-    System.out.println(count(s, 2));
+    System.out.println(count(4, 2));
   }
 }

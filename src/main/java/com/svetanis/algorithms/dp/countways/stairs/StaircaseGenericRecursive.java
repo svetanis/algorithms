@@ -15,15 +15,14 @@ public final class StaircaseGenericRecursive {
     if (n <= 1) {
       return n;
     }
-    int result = 0;
+    int count = 0;
     for (int i = 1; i <= m && i <= n; i++) {
-      result += countWays(n - i, m);
+      count += countWays(n - i, m);
     }
-    return result;
+    return count;
   }
 
   public static void main(String[] args) {
-    int s = 4;
-    System.out.println(count(s, 2));
+    System.out.println(count(4, 2));
   }
 }
