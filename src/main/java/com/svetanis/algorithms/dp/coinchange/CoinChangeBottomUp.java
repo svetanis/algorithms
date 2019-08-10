@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.dp.coinchange;
 
+import static java.util.Arrays.fill;
+
 public final class CoinChangeBottomUp {
 
   // n - size of array of coins S
@@ -7,33 +9,25 @@ public final class CoinChangeBottomUp {
   // we need n + 1 rows as the table is
   // constructed in bottom up manner
   // using the base case 0 value case (n = 0)
-  public static int change(int[] s, int max) {
+  public static int change(int[] a, int max) {
 
-    int incl, excl;
-    int n = s.length;
+    int n = a.length;
     int[][] dp = new int[max + 1][n];
     // fill the entries for 0 value case
-    for (int i = 0; i < n; ++i) {
-      dp[0][i] = 1;
-    }
+    fill(dp[0], 1);
 
-    // fill rest of the table entries
-    // in bottom up manner
-    for (int v = 1; v < max + 1; ++v) {
+    for (int v = 1; v <= max; ++v) {
       for (int i = 0; i < n; ++i) {
-        // count of solutions including S[j]
-        if (v - s[i] >= 0) {
-          incl = dp[v - s[i]][i];
-        } else {
-          incl = 0;
+        int excl = 0;
+        if (i > 0) {
+          excl = dp[v][i - 1];
         }
 
-        // count of solutions excluding S[j]
-        if (i >= 1) {
-          excl = dp[v][i - 1];
-        } else {
-          excl = 0;
+        int incl = 0;
+        if (v >= a[i]) {
+          incl = dp[v - a[i]][i];
         }
+
         // total count
         dp[v][i] = incl + excl;
       }
@@ -42,8 +36,7 @@ public final class CoinChangeBottomUp {
   }
 
   public static void main(String[] args) {
-    int v = 4;
     int[] coins = { 1, 2, 3 };
-    System.out.println(change(coins, v));
+    System.out.println(change(coins, 4));
   }
 }

@@ -28,7 +28,7 @@ public final class CoinChangeRecursive {
       return 1;
     }
     // if V < 0 then no solution exists
-    if (v < 0) {
+    if (v < 0 || n < 0) {
       return 0;
     }
     // if there are no coins and V > 0,

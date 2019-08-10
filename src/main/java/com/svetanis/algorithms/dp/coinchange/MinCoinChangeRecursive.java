@@ -3,7 +3,7 @@ package com.svetanis.algorithms.dp.coinchange;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
 
-public final class MinNumOfCoinsRecursive {
+public final class MinCoinChangeRecursive {
 
   // Given a value V, if we want to make change for V cents,
   // and we have infinite supply of each of C = { C1, C2, .. , Cm} valued coins,
@@ -14,18 +14,20 @@ public final class MinNumOfCoinsRecursive {
   public static int minCoins(int[] a, int v) {
 
     int n = a.length;
-    int min = MAX_VALUE;
-
+    
     if (v == 0) {
       return 0;
     }
 
+    if (v < 0) {
+      return MAX_VALUE;
+    }
+
+    int min = MAX_VALUE;
     for (int i = 0; i < n; i++) {
-      if (a[i] <= v) {
-        int current = minCoins(a, v - a[i]);
-        if (current != MAX_VALUE) {
-          min = min(min, current + 1);
-        }
+      int coins = minCoins(a, v - a[i]);
+      if (coins != MAX_VALUE) {
+        min = min(min, coins + 1);
       }
     }
     return min;
