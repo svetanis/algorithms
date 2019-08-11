@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.knapsack;
+package com.svetanis.algorithms.dp.countways.robbery;
 
 import static java.lang.Math.max;
 
