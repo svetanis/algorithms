@@ -14,7 +14,8 @@ public final class LongestPalindromeSubSeqLcs {
   }
 
   public static void main(String[] args) {
-    String str = "ABBDCACB";
-    System.out.println(lps(str));
+    System.out.println(lps("abdbca"));
+    System.out.println(lps("cddpd"));
+    System.out.println(lps("pqr"));
   }
 }

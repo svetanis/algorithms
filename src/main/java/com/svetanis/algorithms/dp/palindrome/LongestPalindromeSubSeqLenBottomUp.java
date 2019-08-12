@@ -41,7 +41,8 @@ public final class LongestPalindromeSubSeqLenBottomUp {
   }
 
   public static void main(String[] args) {
-    String str = "GEEKS FOR GEEKS";
-    System.out.println(lps(str));
+    System.out.println(lps("abdbca"));
+    System.out.println(lps("cddpd"));
+    System.out.println(lps("pqr"));
   }
 }
