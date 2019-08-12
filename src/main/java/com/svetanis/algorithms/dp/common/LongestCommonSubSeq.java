@@ -5,12 +5,52 @@ import static java.lang.Math.max;
 public final class LongestCommonSubSeq {
 
   public static String lcs(String s1, String s2) {
-    int[][] dp = buildLengthDP(s1, s2);
+    int[][] dp = length(s1, s2);
     // start from the right-most-bottom-most
     // corner and one by one store chars in lcs[]
-    return reconstruct(s1, s2, dp);
+    return reconstruct(s1, s2, s1.length(), s2.length(), dp);
   }
 
+  private static String reconstruct(String s1, String s2, int n, int m, int[][] dp) {
+    if (n == 0 || m == 0) {
+      return "";
+    }
+
+    if (s1.charAt(n - 1) == s2.charAt(m - 1)) {
+      return reconstruct(s1, s2, n - 1, m - 1, dp) + s1.charAt(n - 1);
+    }
+
+    if (dp[n - 1][m] > dp[n][m - 1]) {
+      return reconstruct(s1, s2, n - 1, m, dp);
+    }
+    return reconstruct(s1, s2, n, m - 1, dp);
+  }
+
+  public static int[][] length(String s1, String s2) {
+    int n = s1.length();
+    int m = s2.length();
+    int[][] dp = new int[n + 1][m + 1];
+    for (int i = 0; i <= n; ++i) {
+      for (int j = 0; j <= m; ++j) {
+        if (i == 0 || j == 0) {
+          dp[i][j] = 0;
+        } else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+          dp[i][j] = 1 + dp[i - 1][j - 1];
+        } else {
+          dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+    }
+    return dp;
+  }
+
+  public static void main(String[] args) {
+    String s1 = "AGGTAB";
+    String s2 = "GXTXAYB";
+    System.out.println(lcs(s1, s2)); // GTAB
+  }
+
+  @Deprecated
   private static String reconstruct(String s1, String s2, int[][] dp) {
     int n = s1.length();
     int m = s2.length();
@@ -41,27 +81,4 @@ public final class LongestCommonSubSeq {
     return new String(lcs);
   }
 
-  public static int[][] buildLengthDP(String s1, String s2) {
-    int n = s1.length();
-    int m = s2.length();
-    int[][] dp = new int[n + 1][m + 1];
-    for (int i = 0; i <= n; ++i) {
-      for (int j = 0; j <= m; ++j) {
-        if (i == 0 || j == 0) {
-          dp[i][j] = 0;
-        } else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-          dp[i][j] = 1 + dp[i - 1][j - 1];
-        } else {
-          dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-        }
-      }
-    }
-    return dp;
-  }
-
-  public static void main(String[] args) {
-    String s1 = "AGGTAB";
-    String s2 = "GXTXAYB";
-    System.out.println(lcs(s1, s2));
-  }
 }

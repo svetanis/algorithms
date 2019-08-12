@@ -1,7 +1,7 @@
 package com.svetanis.algorithms.dp.common;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static com.svetanis.algorithms.dp.common.LongestCommonSubSeq.buildLengthDP;
+import static com.svetanis.algorithms.dp.common.LongestCommonSubSeq.length;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static java.lang.String.valueOf;
 
@@ -16,7 +16,7 @@ public final class LongestCommonSubSeqs {
   public static ImmutableList<String> lcs(String s1, String s2) {
     int n = s1.length();
     int m = s2.length();
-    DP = buildLengthDP(s1, s2);
+    DP = length(s1, s2);
     return newList(lcs(s1, s2, n, m));
   }
 
