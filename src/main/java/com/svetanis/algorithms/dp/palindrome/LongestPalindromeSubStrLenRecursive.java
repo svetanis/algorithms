@@ -2,10 +2,10 @@ package com.svetanis.algorithms.dp.palindrome;
 
 import static java.lang.Math.max;
 
-// Given a sequence, find the length of its Longest Palindromic Subsequence (LPS). 
-// In a palindromic subsequence, elements read the same backward and forward.
+// Given a string, find the length of its Longest Palindromic Substring (LPS). 
+// In a palindromic string, elements read the same backward and forward.
 
-public final class LongestPalindromeSubSeqLenRecursive {
+public final class LongestPalindromeSubStrLenRecursive {
 
   public static int lps(String str) {
     int n = str.length();
@@ -13,7 +13,7 @@ public final class LongestPalindromeSubSeqLenRecursive {
   }
 
   private static int lps(String str, int low, int high) {
-    // Time Complexity: O(2^n)
+    // Time Complexity: O(3^n)
 
     if (low > high) {
       return 0;
@@ -34,7 +34,10 @@ public final class LongestPalindromeSubSeqLenRecursive {
 
     // if the first and last chars match
     if (str.charAt(low) == str.charAt(high)) {
-      return lps(str, low + 1, high - 1) + 2;
+      int len = high - low - 1;
+      if (len == lps(str, low + 1, high - 1)) {
+        return len + 2;
+      }
     }
 
     // if first and last
@@ -45,7 +48,8 @@ public final class LongestPalindromeSubSeqLenRecursive {
   }
 
   public static void main(String[] args) {
-    String str = "GEEKS FOR GEEKS";
-    System.out.println(lps(str));
+    System.out.println(lps("abdbca")); // 3
+    System.out.println(lps("cddpd"));  // 3
+    System.out.println(lps("pqr"));    // 1
   }
 }
