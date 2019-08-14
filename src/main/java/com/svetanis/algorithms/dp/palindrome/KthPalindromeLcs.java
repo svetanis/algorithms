@@ -3,6 +3,9 @@ package com.svetanis.algorithms.dp.palindrome;
 import static com.svetanis.algorithms.dp.common.LongestCommonSubSeqLenDynamic.lcs;
 import static org.apache.commons.lang3.StringUtils.reverse;
 
+//Any string will be called K-palindromic if it can be transformed 
+//into a palindrome by removing at most ‘K’ characters from it.
+
 public final class KthPalindromeLcs {
 
   public static boolean isKthPalindrome(String str, int k) {
