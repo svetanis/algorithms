@@ -8,7 +8,7 @@ import static java.lang.Math.max;
 // we can just store two rows at a time and use them, 
 // in that way used space will reduce from dp[m+1][n+1] to dp[2][n+1]
 
-public final class LongestCommonSubSeqLenDynamicSpaceOptimized {
+public final class LongestCommonSubSeqLenSpaceOptimized {
 
   public static int lcs(String s1, String s2) {
     // Time Complexity: O(n*m)
