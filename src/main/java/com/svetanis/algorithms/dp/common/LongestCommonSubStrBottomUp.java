@@ -2,6 +2,10 @@ package com.svetanis.algorithms.dp.common;
 
 import static org.apache.commons.lang3.StringUtils.substring;
 
+// Given two strings ‘s1’ and ‘s2’, 
+// find the length of the longest substr 
+// which is common in both the strings.
+
 // return length and print common substring 
 // create a table to store lengths of longest common suffixes
 // of substrings. L[i][j] contains length of longest common
@@ -9,7 +13,7 @@ import static org.apache.commons.lang3.StringUtils.substring;
 // first column entries have no logical meaning, they are used
 // only simplicity of program
 
-public final class LongestCommonSubStr {
+public final class LongestCommonSubStrBottomUp {
 
   public static String lcs(String s1, String s2) {
     // Time Complexity: O(n*m)
@@ -17,38 +21,26 @@ public final class LongestCommonSubStr {
 
     int n = s1.length();
     int m = s2.length();
-    int[][] dp = new int[n + 1][m + 1];
-
     int max = 0;
-    int location = 0;
-
-    // following steps build dp[n][m]
-    // in bottom up fashion
-    for (int i = 0; i <= n; ++i) {
-      for (int j = 0; j <= m; ++j) {
-        if (i == 0 || j == 0) {
-          dp[i][j] = 0;
-        } else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-          dp[i][j] = dp[i - 1][j - 1] + 1;
+    int end = 0;
+    int[][] dp = new int[n + 1][m + 1];
+    for (int i = 1; i <= n; ++i) {
+      for (int j = 1; j <= m; ++j) {
+        if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+          dp[i][j] = 1 + dp[i - 1][j - 1];
           if (dp[i][j] > max) {
             max = dp[i][j];
-            location = i - 1;
+            end = i;
           }
-        } else {
-          dp[i][j] = 0;
         }
       }
     }
-    int start = location - max + 1;
-    int end = location + 1;
-    return substring(new String(s1), start, end);
+    int start = end - max;
+    return substring(s1, start, end);
   }
 
   public static void main(String[] args) {
-    String s1 = "OldSite:GeeksforGeeks.org";
-    String s2 = "NewSite:GeeksQuiz.com";
-    // s1 = "GeeksforGeeks";
-    // s2 = "GeeksQuiz";
-    System.out.println(lcs(s1, s2));
+    System.out.println(lcs("abdca", "cbda"));
+    System.out.println(lcs("passport", "ppsspt"));
   }
 }
