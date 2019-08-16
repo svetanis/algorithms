@@ -3,6 +3,11 @@ package com.svetanis.algorithms.dp.lis;
 import static java.lang.Math.max;
 import static java.util.Arrays.fill;
 
+//Given a number sequence, find the length 
+//of its Longest Increasing Subsequence (LIS). 
+//In an increasing subsequence, all the elements 
+//are in increasing order (from lowest to highest).
+
 public final class LisLenBottomUp {
 
   public static int lis(int[] a) {
