@@ -1,28 +1,27 @@
 package com.svetanis.algorithms.dp.lis;
 
-import static com.svetanis.java.base.utils.Arrays.max;
 import static java.lang.Math.max;
 import static java.util.Arrays.fill;
 
-public final class LisLenDynamic {
+public final class LisLenBottomUp {
 
   public static int lis(int[] a) {
     // Time Complexity: O(n^2)
 
     int n = a.length;
-    int[] len = new int[n];
-    fill(len, 1);
+    int[] dp = new int[n];
+    fill(dp, 1);
 
-    // compute optimized L values
-    // in bottom up manner
+    int max = 1;
     for (int i = 1; i < n; i++) {
       for (int j = 0; j < i; j++) {
         if (a[j] < a[i]) {
-          len[i] = max(len[i], len[j] + 1);
+          dp[i] = max(dp[i], dp[j] + 1);
+          max = max(max, dp[i]);
         }
       }
     }
-    return max(len);
+    return max;
   }
 
   public static void main(String[] args) {

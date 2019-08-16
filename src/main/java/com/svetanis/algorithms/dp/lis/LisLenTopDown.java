@@ -7,13 +7,15 @@ import static java.lang.Math.max;
 // In an increasing subsequence, all the elements 
 // are in increasing order (from lowest to highest).
 
-public final class LisLenRecursive {
+public final class LisLenTopDown {
 
   public static int lis(int[] a) {
-    return lis(a, 0, -1);
+    int n = a.length;
+    int[][] dp = new int[n][n + 1];
+    return lis(a, dp, 0, -1);
   }
 
-  private static int lis(int[] a, int index, int prev) {
+  private static int lis(int[] a, int[][] dp, int index, int prev) {
     int n = a.length;
 
     // base case
@@ -21,16 +23,20 @@ public final class LisLenRecursive {
       return 0;
     }
 
+    if (dp[index][prev + 1] != 0) {
+      return dp[index][prev + 1];
+    }
+
     // include
     int incl = 0;
     if (prev == -1 || a[index] > a[prev]) {
-      incl = 1 + lis(a, index + 1, index);
+      incl = 1 + lis(a, dp, index + 1, index);
     }
 
     // exclude
-    int excl = lis(a, index + 1, prev);
-
-    return max(incl, excl);
+    int excl = lis(a, dp, index + 1, prev);
+    dp[index][prev + 1] = max(incl, excl);
+    return dp[index][prev + 1];
   }
 
   public static void main(String[] args) {
