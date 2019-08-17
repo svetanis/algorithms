@@ -20,8 +20,8 @@ public final class LisLenBottomUp {
     int max = 1;
     for (int i = 1; i < n; i++) {
       for (int j = 0; j < i; j++) {
-        if (a[j] < a[i]) {
-          dp[i] = max(dp[i], dp[j] + 1);
+        if (a[j] < a[i] && dp[i] <= dp[j]) {
+          dp[i] = dp[j] + 1;
           max = max(max, dp[i]);
         }
       }
@@ -30,7 +30,11 @@ public final class LisLenBottomUp {
   }
 
   public static void main(String[] args) {
-    int[] a = { 10, 22, 9, 33, 21, 50, 41, 60, 80 };
-    System.out.println(lis(a));
+    int[] a1 = { 4, 2, 3, 6, 10, 1, 12 };
+    System.out.println(lis(a1));
+    
+    int[] a2 = { -4, 10, 3, 7, 15 };
+    System.out.println(lis(a2));
+
   }
 }
