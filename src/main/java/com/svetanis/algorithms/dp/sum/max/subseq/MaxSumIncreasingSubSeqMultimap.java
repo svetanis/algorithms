@@ -10,6 +10,10 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.svetanis.java.base.Pair;
 
+// Given a number sequence, 
+// find the increasing subsequence with the highest sum. 
+// Write a method that returns the highest sum.
+
 public class MaxSumIncreasingSubSeqMultimap {
 
   public static Pair<Integer, ImmutableList<Integer>> maxSum(int[] a) {

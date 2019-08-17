@@ -1,10 +1,13 @@
 package com.svetanis.algorithms.dp.sum.max.subseq;
 
-import static com.svetanis.java.base.utils.Arrays.max;
 import static java.lang.Math.max;
 import static java.lang.System.arraycopy;
 
-public final class MaxSumIncreasingSubSeqLen {
+// Given a number sequence, 
+// find the increasing subsequence with the highest sum. 
+// Write a method that returns the highest sum.
+
+public final class MaxSumIncreasingSubSeqLenBottomUp {
 
 // L[0] = {a[0]}
 // L[i] = {MaxSum(L[j])} + a[i], j < i, a[j] < a[i]
@@ -14,19 +17,18 @@ public final class MaxSumIncreasingSubSeqLen {
     // Time Complexity: O(n^2)
 
     int n = a.length;
-    int[] sum = new int[n];
-    arraycopy(a, 0, sum, 0, n);
-
-    // compute max sum values
-    // in bottom up manner
+    int[] dp = new int[n];
+    arraycopy(a, 0, dp, 0, n);
+    int max = a[0];
     for (int i = 1; i < n; i++) {
       for (int j = 0; j < i; j++) {
-        if (a[j] < a[i]) {
-          sum[i] = max(sum[i], sum[j] + a[i]);
+        if (a[i] > a[j]) {
+          dp[i] = max(dp[i], dp[j] + a[i]);
         }
       }
+      max = max(max, dp[i]);
     }
-    return max(sum);
+    return max;
   }
 
   public static void main(String[] args) {
