@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.common;
+package com.svetanis.algorithms.dp.common.lcs;
 
 import static java.lang.Math.max;
 

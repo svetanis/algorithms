@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.dp.palindrome;
 
-import static com.svetanis.algorithms.dp.common.LongestCommonSubSeqLenBottomUp.lcs;
+import static com.svetanis.algorithms.dp.common.lcs.LongestCommonSubSeqLenBottomUp.lcs;
 import static org.apache.commons.lang3.StringUtils.reverse;
 
 //Any string will be called K-palindromic if it can be transformed 

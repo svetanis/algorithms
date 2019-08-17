@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.dp.palindrome;
 
-import static com.svetanis.algorithms.dp.common.LongestCommonSubSeq.lcs;
+import static com.svetanis.algorithms.dp.common.lcs.LongestCommonSubSeq.lcs;
 import static org.apache.commons.lang3.StringUtils.reverse;
 
 public final class LongestPalindromeSubSeqLcs {
