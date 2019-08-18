@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.common;
+package com.svetanis.algorithms.dp.common.lrs;
 
 import static java.lang.Math.max;
 
@@ -8,30 +8,11 @@ import static java.lang.Math.max;
 // (i.e. none of the corresponding characters 
 // in the repeating subsequences have the same index).
 
-public final class LongestRepeatedSubSeqBottomUp {
+public final class LongestRepeatedSubSeqLenBottomUp {
 
-  public static String lcs(String s) {
-    int n = s.length();
-    int[][] dp = lcsLen(s);
-    int i = n;
-    int j = n;
-    StringBuilder sb = new StringBuilder();
-    while (i > 0 && j > 0) {
-      if (dp[i][j] == dp[i - 1][j - 1] + 1) {
-        sb.append(s.charAt(i - 1));
-        i--;
-        j--;
-      } else if (dp[i][j] == dp[i - 1][j]) {
-        i--;
-      } else {
-        j--;
-      }
-    }
-    return sb.reverse().toString();
-  }
-
-  private static int[][] lcsLen(String s) {
+  public static int lcs(String s) {
     // Time Complexity: O(n^2)
+    int max = 0;
     int n = s.length();
     int[][] dp = new int[n + 1][n + 1];
     for (int i = 1; i <= n; i++) {
@@ -43,9 +24,10 @@ public final class LongestRepeatedSubSeqBottomUp {
           int left = dp[i][j - 1];
           dp[i][j] = max(left, top);
         }
+        max = max(max, dp[i][j]);
       }
     }
-    return dp;
+    return max;
   }
 
   public static void main(String[] args) {
