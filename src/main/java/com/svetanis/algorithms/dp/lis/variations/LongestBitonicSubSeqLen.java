@@ -3,15 +3,26 @@ package com.svetanis.algorithms.dp.lis.variations;
 import static java.lang.Math.max;
 import static java.util.Arrays.fill;
 
+// Given a number sequence, find the length
+// of its Longest Bitonic Subsequence (LBS). 
+// A subsequence is considered bitonic if 
+// it is monotonically increasing and 
+// then monotonically decreasing.
+
 // lbs() returns the length of the 
 // Longest Bitonic Subsequence in arr[] of size n.
 // the function mainly creates two temporary arrays 
 // lis[] and lds[] and return the maximum lis[i] + lds[i] - 1
 
-// lis[i] - Longest Increasing SubSequence ending with array[i]
-// lds[i] - Longest Decreasing SubSequence starting with array[i]
+// lis[i] - Longest Increasing SubSequence ending with a[i]
+// lis[i] stores the length of the
+// Longest Increasing SubSeq ending with a[i]
 
-public final class LongestBitonicSubSequenceLength {
+// lds[i] - Longest Decreasing SubSequence starting with a[i]:
+// lds[i] stores the length of the
+// Longest Decreasing SubSeq starting from a[i]
+
+public final class LongestBitonicSubSeqLen {
 
   public static int lbs(int[] a) {
     // Time Complexity : O(n^2)

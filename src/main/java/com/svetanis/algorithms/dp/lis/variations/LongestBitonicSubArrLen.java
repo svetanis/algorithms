@@ -2,15 +2,25 @@ package com.svetanis.algorithms.dp.lis.variations;
 
 import static java.lang.Math.max;
 
-public final class LongestBitonicSubArrayLength {
+public final class LongestBitonicSubArrLen {
 
   public static int lbs(int[] a) {
-    // Time complexity: O(n) ;
+    // Time complexity: O(n)
     // Auxiliary space: O(n)
 
     int[] inc = incr(a);
     int[] dec = decr(a);
     return getMaxLen(inc, dec);
+  }
+
+  private static int getMaxLen(int[] inc, int[] dec) {
+    int n = inc.length;
+    // 3. find the length of max length bitonic sequence
+    int max = inc[0] + dec[0] - 1;
+    for (int i = 1; i < n; ++i) {
+      max = max(max, inc[i] + dec[i] - 1);
+    }
+    return max;
   }
 
   private static int[] incr(int[] a) {
@@ -45,16 +55,6 @@ public final class LongestBitonicSubArrayLength {
       }
     }
     return dec;
-  }
-
-  private static int getMaxLen(int[] inc, int[] dec) {
-    int n = inc.length;
-    // 3. find the length of max length bitonic sequence
-    int max = inc[0] + dec[0] - 1;
-    for (int i = 1; i < n; ++i) {
-      max = max(max, inc[i] + dec[i] - 1);
-    }
-    return max;
   }
 
   public static void main(String[] args) {
