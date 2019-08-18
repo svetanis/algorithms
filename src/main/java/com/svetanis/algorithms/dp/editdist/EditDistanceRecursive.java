@@ -2,6 +2,11 @@ package com.svetanis.algorithms.dp.editdist;
 
 import static java.lang.Math.min;
 
+// Given strings s1 and s2, we need to transform s1 into s2 
+// by deleting, inserting, or replacing characters. 
+// Write a function to calculate the count 
+// of the min number of edit operations.
+
 public final class EditDistanceRecursive {
 
   public static int editDist(String x, String y) {
@@ -25,7 +30,7 @@ public final class EditDistanceRecursive {
       return n;
     }
 
-    if(x.charAt(n - 1) == y.charAt(m - 1)) {
+    if (x.charAt(n - 1) == y.charAt(m - 1)) {
       return editDist(x, y, n - 1, m - 1);
     }
 
