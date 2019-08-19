@@ -6,9 +6,9 @@ package com.svetanis.algorithms.dp.interleaved;
 
 public final class InterleavedBottomUp {
 
-  public static boolean isInterleaved(String s1, String s2, String s) {
-    int n = s1.length();
-    int m = s2.length();
+  public static boolean isInterleaved(String x, String y, String s) {
+    int n = x.length();
+    int m = y.length();
     int k = s.length();
     if (k != n + m) {
       return false;
@@ -21,12 +21,12 @@ public final class InterleavedBottomUp {
         if (i == 0 && j == 0) {
           dp[i][j] = true;
         } else if (i == 0) {
-          dp[i][j] = dp[i][j - 1] && s2.charAt(j - 1) == s.charAt(len);
+          dp[i][j] = dp[i][j - 1] && y.charAt(j - 1) == s.charAt(len);
         } else if (j == 0) {
-          dp[i][j] = dp[i - 1][j] && s1.charAt(i - 1) == s.charAt(len);
+          dp[i][j] = dp[i - 1][j] && x.charAt(i - 1) == s.charAt(len);
         } else {
-          boolean one = dp[i - 1][j] && s1.charAt(i - 1) == s.charAt(len);
-          boolean two = dp[i][j - 1] && s2.charAt(j - 1) == s.charAt(len);
+          boolean one = dp[i - 1][j] && x.charAt(i - 1) == s.charAt(len);
+          boolean two = dp[i][j - 1] && y.charAt(j - 1) == s.charAt(len);
           dp[i][j] = one || two;
         }
       }
