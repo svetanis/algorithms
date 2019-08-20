@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.search.binary.rotated;
 
-public final class RotatedGivenElementDuplicates {
+public final class RotatedGivenElementDuplicatesRecursive {
 
   public static int search(int[] a, int k) {
     int n = a.length;
