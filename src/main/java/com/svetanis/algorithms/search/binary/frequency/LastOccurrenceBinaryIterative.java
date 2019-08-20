@@ -6,15 +6,15 @@ import static java.util.Arrays.sort;
 
 import com.google.common.base.Optional;
 
-public final class FirstOccurrenceBinaryIterative {
+public final class LastOccurrenceBinaryIterative {
 
-  public static Optional<Integer> firstOccurrence(int[] a, int k) {
+  public static Optional<Integer> lastOccurrence(int[] a, int k) {
     int n = a.length - 1;
     sort(a);
-    return firstOccurrence(a, 0, n - 1, k);
+    return lastOccurrence(a, 0, n - 1, k);
   }
 
-  private static Optional<Integer> firstOccurrence(int[] a, int left, int right, int k) {
+  private static Optional<Integer> lastOccurrence(int[] a, int left, int right, int k) {
     int index = -1;
     while (left <= right) {
       int mid = left + (right - left) / 2;
@@ -24,14 +24,17 @@ public final class FirstOccurrenceBinaryIterative {
         left = mid + 1;
       } else { // a[mid] == k) {
         index = mid;
-        right = mid - 1; // search left to find the first index
+        left = mid + 1; // search right to find the last index
       }
     }
     return index != -1 ? of(index) : absent();
   }
 
   public static void main(String[] args) {
-    int[] a = { 1, 30, 40, 50, 60, 70, 23, 20 };
-    System.out.println(firstOccurrence(a, 23));
+    int[] a = { 1, 30, 40, 50, 60, 60, 70, 23, 20 };
+    System.out.println(lastOccurrence(a, 60));
+
+    int[] a1 = { 2, 2, 3, 5, 6 };
+    System.out.println(lastOccurrence(a1, 2));
   }
 }

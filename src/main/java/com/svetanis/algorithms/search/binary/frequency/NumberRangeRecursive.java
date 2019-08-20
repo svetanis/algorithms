@@ -1,25 +1,21 @@
 package com.svetanis.algorithms.search.binary.frequency;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
 import static com.svetanis.algorithms.search.binary.frequency.FirstOccurrenceBinaryRecursive.firstOccurrence;
 import static com.svetanis.algorithms.search.binary.frequency.LastOccurrenceBinaryRecursive.lastOccurrence;
 
-import com.google.common.base.Optional;
 import com.svetanis.java.base.Pair;
 
-public final class NumberRange {
+public final class NumberRangeRecursive {
 
-  public static Optional<Pair<Integer, Integer>> count(int[] a, int x) {
+  public static Pair<Integer, Integer> count(int[] a, int x) {
     // Time Complexity: O(log n)
 
     int first = firstOccurrence(a, x);
-    int last = lastOccurrence(a, x);
-    if (first == -1 && last == -1) {
-      return absent();
-    } else {
-      return of(Pair.build(first, last));
+    if (first != -1) {
+      int last = lastOccurrence(a, x);
+      return Pair.build(first, last);
     }
+    return Pair.build(-1, -1);
   }
 
   public static void main(String[] args) {
@@ -29,6 +25,5 @@ public final class NumberRange {
     int[] a1 = { 1, 3, 8, 10, 15 };
     System.out.println(count(a1, 10));
     System.out.println(count(a1, 12));
-
   }
 }
