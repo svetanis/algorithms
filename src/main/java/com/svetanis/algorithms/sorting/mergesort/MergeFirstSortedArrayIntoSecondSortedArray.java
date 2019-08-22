@@ -23,7 +23,6 @@ public final class MergeFirstSortedArrayIntoSecondSortedArray {
     int k = n + m - 1; // current index of output part of largerArray
 
     ensureSize(larger, k + 1);
-    n = larger.size();
 
     while (j >= 0) {
       if (i >= 0 && larger.get(i) > smaller.get(j)) {
