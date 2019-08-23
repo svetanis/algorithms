@@ -4,6 +4,11 @@ import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+// Given three sorted arrays A, B and Cof not necessarily same sizes.
+// Calculate the min abs diff between the max and min number from the triplet a, b, c 
+// such that a, b, c belongs arrays A, B, C respectively.
+// i.e. minimize | max(a,b,c) - min(a,b,c) |.
+
 public final class MinimizeDifference {
 
   public static int minimize(int[] a, int[] b, int[] c) {
