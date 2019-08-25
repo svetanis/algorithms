@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.svetanis.java.base.utils.Arrays.max;
 import static com.svetanis.java.base.utils.Print.print;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public final class SlidingWindowMaxPriorityQueue {
     // Time complexity: O(n log n)
 
     int n = a.length;
+    if (w > n) {
+      return newArrayList(max(a));
+    }
     PriorityQueue<Pair> queue = new PriorityQueue<>();
     List<Integer> list = newArrayList();
     for (int i = 0; i < w; ++i) {
@@ -22,7 +26,7 @@ public final class SlidingWindowMaxPriorityQueue {
     for (int i = w; i < n; ++i) {
       Pair p = queue.peek();
       list.add(p.value);
-      while (p.index <= i - w) {
+      while (!queue.isEmpty() && p.index <= i - w) {
         queue.poll();
         p = queue.peek();
       }
@@ -39,6 +43,9 @@ public final class SlidingWindowMaxPriorityQueue {
 
     int[] a2 = { 6, 0, -6 };
     print(maxSlidingWindow(a2, 2));
+
+    int[] a3 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+    print(maxSlidingWindow(a3, 1));
   }
 
   private static class Pair implements Comparable<Pair> {
