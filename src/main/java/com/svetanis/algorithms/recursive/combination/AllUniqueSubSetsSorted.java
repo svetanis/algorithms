@@ -20,7 +20,7 @@ public final class AllUniqueSubSetsSorted {
 
   // Time Complexity: O(2^n)
 
-  public static List<ImmutableList<Integer>> generate(List<Integer> in) {
+  public static ImmutableList<ImmutableList<Integer>> generate(List<Integer> in) {
     List<Integer> out = newArrayList();
     List<ImmutableList<Integer>> lists = newArrayList();
     sort(in);
