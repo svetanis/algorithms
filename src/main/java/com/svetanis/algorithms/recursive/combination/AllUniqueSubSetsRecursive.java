@@ -16,36 +16,34 @@ public final class AllUniqueSubSetsRecursive {
 
   public static ImmutableList<String> generate(String str) {
     char[] in = str.toCharArray();
+    sort(in);
     List<Character> out = newArrayList();
     List<String> list = newArrayList();
-    sort(in);
-    subset(in, out, 0, list);
+    subset(new String(in), out, 0, list);
     return newList(list);
   }
 
-  private static void subset(char[] in, List<Character> out, int i, List<String> list) {
-
-    int n = in.length;
-
+  private static void subset(String str, List<Character> out, int i, List<String> list) {
+    int n = str.length();
     if (i >= n) {
       list.add(Joiner.on("").join(out));
       return;
     }
 
     // include current char
-    out.add(in[i]);
-    subset(in, out, i + 1, list);
+    out.add(str.charAt(i));
+    subset(str, out, i + 1, list);
 
     // backtrack
     out.remove(out.size() - 1);
 
     // skip adjacent duplicates
-    while (i < n - 1 && in[i] == in[i + 1]) {
+    while (i < n - 1 && str.charAt(i) == str.charAt(i + 1)) {
       i++;
     }
 
     // exclude current char
-    subset(in, out, i + 1, list);
+    subset(str, out, i + 1, list);
   }
 
   public static void main(String[] args) {
