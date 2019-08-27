@@ -14,19 +14,14 @@ import com.google.common.collect.ImmutableMap;
 
 public final class LetterCombinations {
 
-  private final Map<Character, String> map;
-
-  LetterCombinations() {
-    this.map = build();
-  }
-
   public ImmutableList<String> combinations(String digits) {
     List<String> list = newArrayList();
-    recursion(digits, 0, "", list);
+    Map<Character, String> map = build();
+    recursion(digits, 0, "", list, map);
     return newList(list);
   }
 
-  private void recursion(String digits, int start, String str, List<String> list) {
+  private void recursion(String digits, int index, String str, List<String> list, Map<Character, String> map) {
     int n = digits.length();
     if (str.length() > digits.length()) {
       return;
@@ -34,18 +29,18 @@ public final class LetterCombinations {
       list.add(str);
       return;
     }
-    for (int i = start; i < n; ++i) {
+    for (int i = index; i < n; ++i) {
       String letters = map.get(digits.charAt(i));
       for (int j = 0; j < letters.length(); ++j) {
-        recursion(digits, i + 1, str + letters.charAt(j), list);
+        recursion(digits, i + 1, str + letters.charAt(j), list, map);
       }
     }
   }
 
   private ImmutableMap<Character, String> build() {
     Map<Character, String> map = newHashMap();
-    map.put('0', " ");
-    map.put('1', "");
+    map.put('0', "0");
+    map.put('1', "1");
     map.put('2', "abc");
     map.put('3', "def");
     map.put('4', "ghi");

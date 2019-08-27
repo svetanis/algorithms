@@ -32,7 +32,7 @@ public final class PermutationsImmutable {
   }
 
   public static void main(String[] args) {
-    String str = "abc";
+    String str = "123";
     printLines(permute(str));
   }
 }
