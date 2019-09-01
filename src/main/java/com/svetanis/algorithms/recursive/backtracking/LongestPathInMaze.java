@@ -28,22 +28,22 @@ public final class LongestPathInMaze {
 
     visited[x][y] = 1;
 
-    // go right
+    // go down
     if (valid(maze, visited, x + 1, y)) {
       max = solveMaze(maze, visited, x + 1, y, dst, max, dist + 1);
     }
 
-    // go left
+    // go up
     if (valid(maze, visited, x - 1, y)) {
       max = solveMaze(maze, visited, x - 1, y, dst, max, dist + 1);
     }
 
-    // go up
+    // go right
     if (valid(maze, visited, x, y + 1)) {
       max = solveMaze(maze, visited, x, y + 1, dst, max, dist + 1);
     }
 
-    // go down
+    // go left
     if (valid(maze, visited, x, y - 1)) {
       max = solveMaze(maze, visited, x, y - 1, dst, max, dist + 1);
     }

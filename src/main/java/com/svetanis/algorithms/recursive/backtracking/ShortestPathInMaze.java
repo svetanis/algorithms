@@ -27,22 +27,22 @@ public final class ShortestPathInMaze {
 
     visited[x][y] = 1;
 
-    // go right
+    // go down
     if (valid(maze, visited, x + 1, y)) {
       min = solveMaze(maze, visited, x + 1, y, dst, min, dist + 1);
     }
 
-    // go left
+    // go up
     if (valid(maze, visited, x - 1, y)) {
       min = solveMaze(maze, visited, x - 1, y, dst, min, dist + 1);
     }
 
-    // go up
+    // go right
     if (valid(maze, visited, x, y + 1)) {
       min = solveMaze(maze, visited, x, y + 1, dst, min, dist + 1);
     }
 
-    // go down
+    // go left
     if (valid(maze, visited, x, y - 1)) {
       min = solveMaze(maze, visited, x, y - 1, dst, min, dist + 1);
     }
