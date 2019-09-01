@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive;
+package com.svetanis.algorithms.recursive.backtracking;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
@@ -7,6 +7,11 @@ import static java.lang.Math.abs;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+
+// the N queens puzzle is the problem of placing N chess queens
+// on an NxN chessboard so that no two queens threaten each other
+// thus, a solution requires that no two queens share the same
+// row, col, or diagonal
 
 public final class NQueen {
 
@@ -36,18 +41,18 @@ public final class NQueen {
   // check if (r, c) is a valid spot for a queen by checking
   // if there is a queen in the same column or diagonal
   // no need to check it for queens in the same row
-  private static boolean isSafe(Integer[] a, int row, int col) {
-    for (int r = 0; r < row; r++) {
-      int c = a[r];
+  private static boolean isSafe(Integer[] a, int r, int c) {
+    for (int row = 0; row < r; row++) {
+      int col = a[row];
       // check if rows have a queen in the same column
-      if (col == c) {
+      if (c == col) {
         return false;
       }
       // check diagonals: if the distance between the columns equals
       // the distance between the rows, then they're in the same diagonal
-      int dx = row - r;
-      int dy = abs(c - col);
-      if (dy == dx) {
+      int deltaRow = r - row;
+      int deltaCol = abs(col - c);
+      if (deltaCol == deltaRow) {
         return false;
       }
     }
