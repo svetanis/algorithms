@@ -3,6 +3,10 @@ package com.svetanis.algorithms.slidingwindow.array;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
 
+// Given an array of positive integers and a number ‘S,’ 
+// find the length of the smallest contiguous subarray 
+// whose sum is greater than or equal to ‘S’. 
+// Return 0 if no such subarray exists.
 public final class MinSumSubArray {
 
   public static int minSum(int[] a, int k) {
