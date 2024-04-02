@@ -2,7 +2,6 @@ package com.svetanis.algorithms.slidingwindow.array;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
-
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -12,11 +11,8 @@ import com.google.common.collect.ImmutableList;
 
 public final class AverageSubArray {
 
-	
   public static ImmutableList<Double> average(int[] a, int k) {
     // Time Complexity: O(n)
-    // Space Complexity: O(1)
-
     int left = 0;
 	double sum = 0.0;
     List<Double> list = newArrayList();
