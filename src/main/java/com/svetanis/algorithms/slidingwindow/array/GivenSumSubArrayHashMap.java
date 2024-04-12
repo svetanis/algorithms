@@ -6,7 +6,9 @@ import java.util.Map;
 
 import com.svetanis.java.base.Pair;
 
-// including negative integers
+// given an unsorted array of integers (including negative), 
+// find subarray which adds to a given number
+// if there are more than one, print any of them
 
 public class GivenSumSubArrayHashMap {
 

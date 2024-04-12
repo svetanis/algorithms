@@ -2,9 +2,13 @@ package com.svetanis.algorithms.slidingwindow.array;
 
 import com.svetanis.java.base.Pair;
 
+// given unsorted array of positive integers,
+// find a contiguous subarray which adds to 
+// a given number
+
 public class GivenSumSubArraySlidingWindow {
 
-  public static Pair<Integer, Integer> sum(int[] a, int k) {
+  public static Pair<Integer, Integer> sum(int[] a, int target) {
     // Time complexity: O(n)
 
     int n = a.length;
@@ -15,10 +19,10 @@ public class GivenSumSubArraySlidingWindow {
     // and if the currentSum exceeds the sum,
     // then remove starting element
     for (int i = 1; i <= n; ++i) {
-      while (sum > k && start < i - 1) {
+      while (sum > target && start < i - 1) {
         sum = sum - a[start++];
       }
-      if (sum == k) {
+      if (sum == target) {
         return Pair.build(start, i - 1);
       }
       if (i < n) {
