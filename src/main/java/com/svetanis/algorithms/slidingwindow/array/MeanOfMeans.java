@@ -1,8 +1,8 @@
 package com.svetanis.algorithms.slidingwindow.array;
 
-// You are given an array of n-elements you have to find the mean 
-// of the array as mean of all consecutive m-elements of array 
-// for all possible m-length array with consecutive elements. 
+// given an array of n-elements find the mean of the array 
+// as mean of all consecutive m-elements of array for all 
+// possible m-length array with consecutive elements. 
 
 public final class MeanOfMeans {
 
