@@ -3,7 +3,12 @@ package com.svetanis.algorithms.slidingwindow.array;
 import com.svetanis.java.base.utils.Arrays;
 import com.svetanis.java.base.utils.Triplet;
 
-public class MinAverageSubArray {
+// given an array of integers (positive and negative),
+// find the min average subarray of given length
+
+// subarray of given length has min average if it has min sum
+
+public final class MinAverageSubArray {
 
   // sliding window method
   public static Triplet<Integer, Integer, Double> minAverage(int[] a, int k) {

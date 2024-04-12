@@ -3,6 +3,9 @@ package com.svetanis.algorithms.slidingwindow.array;
 import com.svetanis.java.base.utils.Arrays;
 import com.svetanis.java.base.utils.Triplet;
 
+// given an array of integers (positive and negative),
+// find the max average subarray of given length
+
 public final class MaxAverageSubArray {
 
   public static Triplet<Integer, Integer, Double> maxAverage(int[] a, int k) {
