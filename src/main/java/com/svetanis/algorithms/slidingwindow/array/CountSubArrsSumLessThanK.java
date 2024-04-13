@@ -1,5 +1,8 @@
 package com.svetanis.algorithms.slidingwindow.array;
 
+// given array of integers and number k
+// find the number of subarrays with sum less than k
+
 public final class CountSubArrsSumLessThanK {
 
   public static int count(int[] a, int k) {
@@ -8,14 +11,16 @@ public final class CountSubArrsSumLessThanK {
     int n = a.length;
     int sum = 0;
     int count = 0;
-
-    for (int left = 0, right = 0; right < n; right++) {
+    int left = 0;
+    
+    for (int right = 0; right < n; right++) {
       sum += a[right];
       if (sum < k) {
         right++;
         count += (right - left);
       } else {
-        sum -= a[left++];
+        sum -= a[left];
+        left++;
       }
     }
     return count;
