@@ -1,5 +1,8 @@
 package com.svetanis.algorithms.slidingwindow.array;
 
+// given array of positive integers and number K
+// count subarrays with product less than K
+
 public final class CountSubArrsProductLessThanK {
 
   public static int count(int[] a, int k) {
@@ -8,8 +11,9 @@ public final class CountSubArrsProductLessThanK {
     int n = a.length;
     int prod = 1;
     int count = 0;
+    int left = 0;
 
-    for (int left = 0, right = 0; right < n; right++) {
+    for (int right = 0; right < n; right++) {
       prod *= a[right];
       while (left < right && prod > k) {
         prod /= a[left++];
