@@ -2,6 +2,10 @@ package com.svetanis.algorithms.slidingwindow.array;
 
 import static java.lang.Math.max;
 
+// given an array of integers
+// find the lenght of longest subarray
+// whose sum is at most K
+
 public final class LongestSubArrSumAtMostK {
 
   public static int sum(int[] a, int k) {
