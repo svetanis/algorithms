@@ -7,7 +7,8 @@ import static java.lang.Math.min;
 // find the length of the smallest contiguous subarray 
 // whose sum is greater than or equal to ‘S’. 
 // Return 0 if no such subarray exists.
-public final class MinSumSubArray {
+
+public final class MinSizeSubArraySum {
 
   public static int minSum(int[] a, int k) {
     // Time complexity: O(n)
