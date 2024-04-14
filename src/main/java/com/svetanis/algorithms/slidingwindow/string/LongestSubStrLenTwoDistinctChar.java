@@ -5,33 +5,27 @@ import static java.lang.Math.max;
 
 import java.util.Map;
 
-// Given an array of characters where each character represents a fruit tree. 
-// The farm has following restrictions:
-//	1. Each basket can have only one type of fruit. 
-//     There is no limit to how many fruit a basket can hold.
-//	2. You can start with any tree, but you can’t skip a tree once you have started.
-//	3. You will pick exactly one fruit from every tree until you cannot, 
-//     i.e., you will stop when you have to pick from a third fruit type.
-// Write a function to return the maximum number of fruits in both baskets.
+// Given a string, find the length of the longest 
+// substring that contains exactly two distinct char 
 
-public final class MaxFruitCountOfTwoTypes {
+public final class LongestSubStrLenTwoDistinctChar {
 
-  public static int maxLen(char[] arr) {
+  public static int maxLen(String str) {
     // Time complexity: O(n)
 
-    int n = arr.length;
+    int n = str.length();
+
     int left = 0; // current start
     int max = 0; // max window size
     Map<Character, Integer> map = newHashMap();
-
     for (int right = 0; right < n; right++) {
-      char next = arr[right];
+      char next = str.charAt(right);
       int freq = map.getOrDefault(next, 0) + 1;
       map.put(next, freq);
       // shrink the sliding window, until k
       // distinct chars left in frequency map
       while (map.size() > 2) {
-        char front = arr[left];
+        char front = str.charAt(left);
         map.put(front, map.get(front) - 1);
         if (map.get(front) == 0) {
           map.remove(front);
@@ -46,10 +40,13 @@ public final class MaxFruitCountOfTwoTypes {
   }
 
   public static void main(String[] args) {
-    char[] a1 = {'A','B','C','A','C'};
-    System.out.println(maxLen(a1));
+    String str1 = "ababababa";
+    System.out.println(maxLen(str1));
 
-    char[] a2 = {'A','B','B','B','C'};
-    System.out.println(maxLen(a2));
+    String str2 = "e";
+    System.out.println(maxLen(str2));
+
+    String str3 = "baabcbab";
+    System.out.println(maxLen(str3));
   }
 }
