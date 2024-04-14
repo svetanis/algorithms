@@ -31,7 +31,8 @@ public final class LongestSubStrKUniqueHashMap {
 
     for (int right = 0; right < n; right++) {
       char next = str.charAt(right);
-      map.put(next, map.getOrDefault(next, 0) + 1);
+      int freq = map.getOrDefault(next, 0) + 1;
+      map.put(next, freq);
       while (map.size() > k) {
         char front = str.charAt(left);
         map.put(front, map.get(front) - 1);
