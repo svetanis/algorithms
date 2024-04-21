@@ -2,10 +2,14 @@ package com.svetanis.algorithms.slidingwindow.string;
 
 import static com.svetanis.java.base.utils.Nums.isDivisible;
 
+// given a string and a number k
+// count substrings of length k 
+// whose sum of ASCII value of 
+// chars is divisible by k
+
 public final class CountSubStrsASCIISumDivisibleByK {
 
   public static int count(String str, int k) {
-    int n = str.length();
     int sum = 0;
     int count = 0;
 
@@ -17,7 +21,7 @@ public final class CountSubStrsASCIISumDivisibleByK {
       count++;
     }
 
-    for (int i = k; i < n; i++) {
+    for (int i = k; i < str.length(); i++) {
       sum -= str.charAt(i - k);
       sum += str.charAt(i);
 
