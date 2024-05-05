@@ -1,8 +1,8 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
-import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
+import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 
 import java.util.Deque;
@@ -38,7 +38,7 @@ public final class NegativeInEverySlidingWindow {
       }
     }
     list.addAll(getList(dq, a));
-    return copyOf(list);
+    return newList(list);
   }
   
   private static ImmutableList<Integer> getList(Deque<Integer> dq, int[] a) {
@@ -48,7 +48,7 @@ public final class NegativeInEverySlidingWindow {
     } else {
       list.add(a[dq.getFirst()]);
     }
-    return copyOf(list);
+    return newList(list);
   }
 
   public static void main(String[] args) {
