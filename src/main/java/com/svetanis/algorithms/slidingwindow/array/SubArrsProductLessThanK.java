@@ -22,6 +22,12 @@ public final class SubArrsProductLessThanK {
       while (left <= right && prod >= k) {
         prod /= a[left++];
       }
+      // since the product of all nums from 
+      // left to right is less than target
+      // therefore, all subarrays from left
+      // to right will have a product less
+      // than the target too
+      // to avoid duplicates start from a[right]
       List<Integer> list = newArrayList();
       for(int i = right; i >= left; i--) {
     	  list.add(0, a[i]);
