@@ -18,9 +18,9 @@ public final class MergeFirstSortedArrayIntoSecondSortedArray {
     int n = larger.length;
     int m = smaller.length;
 
-    int i = n - m - 1; // current index of input part of larger array
-    int j = m - 1;     // current index of smaller array
-    int k = n - 1;     // current index of output part of larger array
+    int i = m - 1; // current index of input part of larger array
+    int j = m - 1; // current index of smaller array
+    int k = n - 1; // current index of output part of larger array
 
     
     while (j >= 0) {
