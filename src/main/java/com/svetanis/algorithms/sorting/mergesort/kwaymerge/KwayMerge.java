@@ -11,13 +11,14 @@ import java.util.Queue;
 
 import com.google.common.collect.ImmutableList;
 
+// merge n sorted arrays such that resultant array is also sorted
+
 public final class KwayMerge {
 
   public static <C extends Comparable<C>> ImmutableList<C> merge(List<List<C>> lists) {
     // Time Complexity: O(n*k log k)
 
-    Queue<Entry<C>> queue = new PriorityQueue<>();
-    init(queue, lists);
+    Queue<Entry<C>> queue = init(lists);
     return merge(queue);
   }
   
@@ -38,8 +39,9 @@ public final class KwayMerge {
     return value;
   }
 
-  public static <C extends Comparable<C>> Queue<Entry<C>> init(Queue<Entry<C>> queue, List<List<C>> lists) {
-    for (List<C> list : lists) {
+  private static <C extends Comparable<C>> Queue<Entry<C>> init(List<List<C>> lists) {
+	  Queue<Entry<C>> queue = new PriorityQueue<>();
+	  for (List<C> list : lists) {
       Iterator<C> iter = list.iterator();
       if (iter.hasNext()) {
         queue.offer(new Entry<>(iter.next(), iter));

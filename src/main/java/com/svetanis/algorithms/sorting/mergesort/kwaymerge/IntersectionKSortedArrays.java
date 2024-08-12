@@ -2,11 +2,11 @@ package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
-import static com.svetanis.algorithms.sorting.mergesort.kwaymerge.KwayMerge.init;
 import static com.svetanis.algorithms.sorting.mergesort.kwaymerge.KwayMerge.nextSmallest;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.collect.Lists.transform;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -32,8 +32,7 @@ public final class IntersectionKSortedArrays {
 
   public static ImmutableList<Integer> merge(List<List<Integer>> lists) {
     int n = lists.size();
-    Queue<Entry<Integer>> queue = new PriorityQueue<>();
-    init(queue, lists);
+    Queue<Entry<Integer>> queue = init(lists);
     List<Integer> list = newArrayList();
     while (!queue.isEmpty()) {
       if (isUnival(queue, n)) {
@@ -45,6 +44,18 @@ public final class IntersectionKSortedArrays {
     }
     return newList(list);
   }
+
+  private static <C extends Comparable<C>> Queue<Entry<C>> init(List<List<C>> lists) {
+	  Queue<Entry<C>> queue = new PriorityQueue<>();
+	  for (List<C> list : lists) {
+      Iterator<C> iter = list.iterator();
+      if (iter.hasNext()) {
+        queue.offer(new Entry<>(iter.next(), iter));
+      }
+    }
+    return queue;
+  }
+
 
   public static <C extends Comparable<C>> boolean isUnival(Queue<Entry<C>> queue, int n) {
     List<C> list = transform(queue, e -> e.getValue());
