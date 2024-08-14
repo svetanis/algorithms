@@ -1,5 +1,9 @@
 package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Arrays.asList;
+
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -14,21 +18,21 @@ import java.util.Queue;
 public final class KSmallestInMSortedArrays {
 	// Time Complexity: O(k log m)
 
-	public static int kSmallest(int[][] a, int k) {
-		Queue<Node> pq = init(a);
-		return kSmallest(a, pq, k);
+	public static int kSmallest(List<List<Integer>> lists, int k) {
+		Queue<Node> pq = init(lists);
+		return kSmallest(lists, pq, k);
 	}
 
-	private static Queue<Node> init(int[][] a) {
+	private static Queue<Node> init(List<List<Integer>> lists) {
 		Queue<Node> pq = new PriorityQueue<>();
-		for (int i = 0; i < a.length; i++) {
-			Node node = new Node(a[i][0], i, 1);
-			pq.offer(node);
+		for (int i = 0; i < lists.size(); i++) {
+			int val = lists.get(i).get(0);
+			pq.offer(new Node(val, i, 1));
 		}
 		return pq;
 	}
 
-	private static int kSmallest(int[][] a, Queue<Node> pq, int k) {
+	private static int kSmallest(List<List<Integer>> lists, Queue<Node> pq, int k) {
 		// one by one get the min element
 		// from min heap and replace it
 		// with next element of its array
@@ -42,8 +46,9 @@ public final class KSmallestInMSortedArrays {
 			// replace the current root of heap
 			// the next element belongs to the
 			// same array as the current root
-			if (node.next < a[node.id].length) {
-				int val = a[node.id][node.next];
+			int size = lists.get(node.id).size();
+			if (node.next < size) {
+				int val = lists.get(node.id).get(node.next);
 				int next = node.next + 1;
 				pq.offer(new Node(val, node.id, next));
 			}
@@ -52,7 +57,10 @@ public final class KSmallestInMSortedArrays {
 	}
 
 	public static void main(String[] args) {
-		int[][] a = { { 2, 6, 8 }, { 3, 6, 7 }, { 1, 3, 4} };
-		System.out.println(kSmallest(a, 5));
+		List<List<Integer>> lists = newArrayList();
+		lists.add(asList(2, 6, 8));
+		lists.add(asList(3, 6, 7));
+		lists.add(asList(1, 3, 4));
+		System.out.println(kSmallest(lists, 5));
 	}
 }
