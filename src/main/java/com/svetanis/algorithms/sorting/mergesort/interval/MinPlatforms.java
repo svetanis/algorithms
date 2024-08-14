@@ -3,7 +3,13 @@ package com.svetanis.algorithms.sorting.mergesort.interval;
 import static java.lang.Math.max;
 import static java.util.Arrays.sort;
 
+// given a list of intervals representing
+// the arrival and departure times of trains,
+// find the min number of platforms required
+// for the train station so that no train has to wait
+
 public final class MinPlatforms {
+  // Time Complexity: O(n*log n)
 
   public static int count(int[] in, int[] out) {
     int n = in.length;

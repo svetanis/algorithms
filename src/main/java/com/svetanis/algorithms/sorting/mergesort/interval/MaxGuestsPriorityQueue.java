@@ -8,8 +8,13 @@ import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public final class MaxGuestsPriorityQueue {
+// given a list of intervals, find the point
+// where the max number of intervals overlap
 
+public final class MaxGuestsPriorityQueue {
+  // Time Complexity: O(n*log n)
+  // Space Complexity: O(n)
+	
   public static int maxGuests(List<Interval> intervals) {
     int max = 0;
     List<Interval> sorted = sort(intervals, comparing(i -> i.start));

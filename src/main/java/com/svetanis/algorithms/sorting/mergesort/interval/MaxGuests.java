@@ -4,7 +4,11 @@ import static java.util.Arrays.sort;
 
 import com.svetanis.java.base.Pair;
 
+// given a list of intervals, find the point
+// where the max number of intervals overlap
+
 public final class MaxGuests {
+  // Time Complexity: O(n*log n)
 
   public static Pair<Integer, Integer> count(int[] in, int[] out) {
     int n = in.length;

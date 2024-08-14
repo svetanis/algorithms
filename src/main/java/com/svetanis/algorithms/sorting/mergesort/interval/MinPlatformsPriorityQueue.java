@@ -8,11 +8,14 @@ import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.PriorityQueue;
 
-// Given a list of intervals representing the arrival and departure times of trains to a train station, 
-// find min number of platforms required for the train station so that no train has to wait.
+// given a list of intervals representing 
+// the arrival and departure times of trains, 
+// find min number of platforms required for 
+// the train station so that no train has to wait.
 
 public final class MinPlatformsPriorityQueue {
-
+  // Time Complexity: O(n*log n)
+	
   public static int minPlatforms(List<Interval> intervals) {
     int min = 0;
     List<Interval> sorted = sort(intervals, comparing(i -> i.start));
