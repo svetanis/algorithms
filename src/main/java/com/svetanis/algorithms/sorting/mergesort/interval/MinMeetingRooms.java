@@ -12,6 +12,8 @@ import java.util.PriorityQueue;
 // find the minimum number of rooms required to hold all the meetings.
 
 public final class MinMeetingRooms {
+  // Time Complexity: O(n*log n)
+  // Space Complexity: O(n)
 
   public static int minMeetingRooms(List<Interval> intervals) {
     int min = 0;

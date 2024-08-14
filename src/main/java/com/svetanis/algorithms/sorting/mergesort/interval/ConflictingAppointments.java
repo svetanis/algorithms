@@ -10,7 +10,8 @@ import java.util.List;
 // find out if a person can attend all the appointments.
 
 public final class ConflictingAppointments {
-
+  // Time Complexity: O(n * log n)
+	
   public static boolean conflict(List<Interval> intervals) {
     int n = intervals.size();
     List<Interval> sorted = sort(intervals, comparing(i -> i.start));

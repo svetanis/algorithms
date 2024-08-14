@@ -24,6 +24,8 @@ import com.google.common.collect.ImmutableList;
 //    with the next interval if it overlaps with ‘c’.
 
 public final class MergeIntervals {
+  // Time Complexity: O(n*log n)
+  // Space Complexity: O(n)
 
   public static ImmutableList<Interval> merge(List<Interval> intervals) {
     List<Interval> list = newArrayList();

@@ -12,6 +12,8 @@ import java.util.PriorityQueue;
 // find the minimum number of rooms required to hold all the meetings.
 
 public final class MaxCPULoad {
+  // Time Complexity: O(n*log n)
+  // Space Complexity: O(n)
 
   public static int minMeetingRooms(List<Job> jobs) {
     int max = 0;

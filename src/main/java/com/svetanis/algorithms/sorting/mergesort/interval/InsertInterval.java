@@ -25,6 +25,8 @@ import com.google.common.collect.ImmutableList;
 // 3. We will repeat the above two steps to merge ‘c’ with the next overlapping interval.
 
 public final class InsertInterval {
+  // Time Complexity: O(n)
+  // Space Complexity: O(n)
 
   public static ImmutableList<Interval> merge(List<Interval> intervals, Interval interval) {
     List<Interval> list = newArrayList();

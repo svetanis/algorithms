@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 // That is, the highest start time and the lowest end time will be the overlapping interval.
 
 public final class IntervalIntersection {
+  // Time Complexity: O(n + m)
 
   public static ImmutableList<Interval> merge(List<Interval> list1, List<Interval> list2) {
     int n = list1.size();
