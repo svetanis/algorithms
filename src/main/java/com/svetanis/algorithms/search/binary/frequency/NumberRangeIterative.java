@@ -1,19 +1,28 @@
 package com.svetanis.algorithms.search.binary.frequency;
 
-import com.svetanis.java.base.Pair;
+import static com.google.common.base.Optional.absent;
+import static com.google.common.base.Optional.of;
+
+import com.google.common.base.Optional;
+import com.svetanis.algorithms.sorting.mergesort.interval.Interval;
+
+// given an array of numbers sorted in ascending order
+// find the range of a given number k
+// the range of the k will be the first
+// and last position of the k in the array
 
 public final class NumberRangeIterative {
 
-  public static Pair<Integer, Integer> search(int[] a, int x) {
+  public static Optional<Interval> search(int[] a, int x) {
     // Time Complexity: O(log n)
 
     int n = a.length;
     int first = search(a, 0, n - 1, x, false);
     if (first != -1) {
       int last = search(a, 0, n - 1, x, true);
-      return Pair.build(first, last);
+      return of(new Interval(first, last));
     }
-    return Pair.build(-1, -1);
+    return absent();
   }
 
   private static int search(int[] a, int left, int right, int k, boolean maxIndex) {
