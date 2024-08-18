@@ -6,6 +6,7 @@ package com.svetanis.algorithms.search.binary;
 public final class MinDifferenceElement {
 
   public static int minDiff(int[] a, int key) {
+	// Time Complexity: O(log n)
     int n = a.length;
 
     if (key < a[0]) {
