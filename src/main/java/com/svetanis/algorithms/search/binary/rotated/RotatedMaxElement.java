@@ -31,16 +31,20 @@ public final class RotatedMaxElement {
       return -1;
     }
 
+    // base case 1: only one element
     if (left == right) {
       return a[left];
     }
 
+    // base case 2: only two elements
     if (right == left + 1) {
       return (a[left] > a[right]) ? a[left] : a[right];
     }
 
     int mid = left + (right - left) / 2;
 
+    // base case 3: a[mid] is greater than both of
+    // its adjacent elements a[mid - 1] & a[mid + 1]
     if (a[mid] > a[mid + 1] && a[mid] > a[mid - 1]) {
       return a[mid];
     }

@@ -15,12 +15,14 @@ import static com.svetanis.algorithms.search.binary.bitonic.BitonicMaxElement.ma
 public final class BitonicGivenValue {
 
   public static int search(int[] a, int k) {
-    int max = max(a);
-    int index = binarySearch(a, k, 0, max);
+	// Time Complexity: O(log n)
+	  
+    int pivot = max(a);
+    int index = binarySearch(a, 0, pivot, k);
     if (index != -1) {
       return index;
     }
-    return binarySearch(a, k, max, a.length - 1);
+    return binarySearch(a, pivot + 1, a.length - 1, k);
   }
 
   public static void main(String[] args) {

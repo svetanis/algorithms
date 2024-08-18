@@ -9,9 +9,10 @@ package com.svetanis.algorithms.search.binary.bitonic;
 public final class BitonicMinElement {
 
   public static int min(int[] a) {
-    int n = a.length;
+    // Time Complexity: O(log n)
+
     int start = 0;
-    int end = n - 1;
+    int end = a.length - 1;
     while (start < end) {
       int mid = start + (end - start) / 2;
       if (a[mid] > a[mid + 1]) {
