@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary;
+package com.svetanis.algorithms.search.binary.diff;
 
 // if mid element is not peak and 
 // its left neighbor is greater than it
