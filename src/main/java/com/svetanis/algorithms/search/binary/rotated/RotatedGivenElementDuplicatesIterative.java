@@ -17,12 +17,14 @@ public final class RotatedGivenElementDuplicatesIterative {
         return mid;
       }
 
-      // a[left ... mid] sorted
+      // if indexes left, mid and right are the same
+      // skip one number from both ends as k != a[mid]
       if (a[left] == a[mid] && a[right] == a[mid]) {
         left++;
         right--;
       } else if (a[left] <= a[mid]) {
-        if (k >= a[left] && k <= a[mid]) {
+    	// a[left ... mid] sorted
+        if (k >= a[left] && k < a[mid]) {
           right = mid - 1;
         } else { // k > a[mid]
           left = mid + 1;
@@ -52,12 +54,13 @@ public final class RotatedGivenElementDuplicatesIterative {
         return mid;
       }
 
-      // a[left ... mid] sorted
+      
       if (a.get(left) == a.get(mid) && a.get(right) == a.get(mid)) {
         left++;
         right--;
       } else if (a.get(left) <= a.get(mid)) {
-        if (k >= a.get(left) && k <= a.get(mid)) {
+    	// a[left ... mid] sorted
+        if (k >= a.get(left) && k < a.get(mid)) {
           right = mid - 1;
         } else { // k > a[mid]
           left = mid + 1;

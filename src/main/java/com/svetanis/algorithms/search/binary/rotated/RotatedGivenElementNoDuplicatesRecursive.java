@@ -19,9 +19,10 @@ public final class RotatedGivenElementNoDuplicatesRecursive {
       return mid;
     }
 
-    // a[left ... mid] sorted
+    
     if (a[left] <= a[mid]) {
-      if (k >= a[left] && k <= a[mid]) {
+      // a[left ... mid] sorted	
+      if (k >= a[left] && k < a[mid]) {
         return search(a, left, mid - 1, k);
       }
       return search(a, mid + 1, right, k);

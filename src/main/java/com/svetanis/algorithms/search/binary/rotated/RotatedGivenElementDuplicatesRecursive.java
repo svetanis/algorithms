@@ -17,10 +17,10 @@ public final class RotatedGivenElementDuplicatesRecursive {
     if (k == a[mid]) {
       return mid;
     }
-
-    // left is sorted
+    
     if (a[left] < a[mid]) {
-      if (k >= a[left] && k <= a[mid]) {
+      // left is sorted
+      if (k >= a[left] && k < a[mid]) {
         return search(a, left, mid - 1, k);
       } else {
         return search(a, mid + 1, right, k);

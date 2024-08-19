@@ -1,13 +1,35 @@
 package com.svetanis.algorithms.search.binary.rotated;
 
+// given a sorted array of integers in ascending order
+// and also rotated by some arbitrary number, 
+// find if a given key is present in it
+
+/*
+calculate the middle
+compare the numbers at indices start and middle. 
+
+there are two options:
+
+If arr[start] <= arr[middle], the numbers from start to middle
+are sorted in ascending order.
+Else, the numbers from middle+1 to end are sorted in ascending order.
+
+Once we know which part of the array is sorted, it is easy to adjust our ranges. 
+For example, if option-1 is true, there are two choices:
+
+By comparing the ‘key’ with the numbers at index start and middle 
+find out if the ‘key’ lies between indices start and middle; 
+if it does, skip the second part => end = middle -1.
+Else, skip the first part => start = middle + 1.
+*/
+
 public final class RotatedGivenElementNoDuplicatesIterative {
 
   public static int search(int[] a, int k) {
     // Time Complexity: O(log n)
 
-    int n = a.length;
     int left = 0;
-    int right = n - 1;
+    int right = a.length - 1;
 
     while (left <= right) {
       int mid = left + (right - left) / 2;
@@ -17,7 +39,7 @@ public final class RotatedGivenElementNoDuplicatesIterative {
 
       // a[left ... mid] sorted
       if (a[left] <= a[mid]) {
-        if (k >= a[left] && k <= a[mid]) {
+        if (k >= a[left] && k < a[mid]) {
           right = mid - 1;
         } else { // k > a[mid]
           left = mid + 1;
