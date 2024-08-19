@@ -18,10 +18,17 @@ public final class BitonicGivenValue {
 	// Time Complexity: O(log n)
 	  
     int pivot = max(a);
+    if (a[pivot] == k) {
+      return pivot;
+    } else if (k > a[pivot]) {
+      return -1;
+    }
+    
     int index = binarySearch(a, 0, pivot, k);
     if (index != -1) {
       return index;
     }
+    // do descending binary search
     return binarySearch(a, pivot + 1, a.length - 1, k);
   }
 
