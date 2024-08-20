@@ -1,26 +1,29 @@
 package com.svetanis.algorithms.search.binary;
 
-import java.util.Arrays;
+// given a sorted array and a target value
+// find the index if the target is found
+// if not, return the index where it would
+// be if it were inserted in order
 
-public final class BinarySearchInsertPosition {
+public final class BinarySearchInsertPositionIterative {
 
   public static int binary(int[] a, int x) {
     // O(log n)
-    Arrays.sort(a);
-    int start = 0;
-    int end = a.length - 1;
 
-    while (start <= end) {
-      int mid = start + (end - start) / 2;
+  	int left = 0;
+    int right = a.length - 1;
+
+    while (left <= right) {
+      int mid = left + (right - left) / 2;
       if (x > a[mid]) {
-        start = mid + 1;
+        left = mid + 1;
       } else if (x < a[mid]) {
-        end = mid - 1;
+        right = mid - 1;
       } else {
         return mid;
       }
     }
-    return start;
+    return left;
   }
 
   public static void main(String[] args) {
