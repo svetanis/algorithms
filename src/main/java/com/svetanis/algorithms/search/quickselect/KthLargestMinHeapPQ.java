@@ -11,11 +11,8 @@ public final class KthLargestMinHeapPQ {
 	public static int kthLargest(int[] a, int k) {
 		// Time Complexity: O(n log k)
 
-		Queue<Integer> pq = new PriorityQueue<Integer>(k, (x, y) -> x - y);
-		// put first k numbers in the min heap
-		for (int i = 0; i < k; i++) {
-			pq.add(a[i]);
-		}
+		Queue<Integer> pq = priorityQueue(a, k);
+
 		// for the remaining numbers of the array,
 		// if the number from the array is larger
 		// than the top (smallest) number of the heap,
@@ -28,6 +25,15 @@ public final class KthLargestMinHeapPQ {
 			}
 		}
 		return pq.peek();
+	}
+
+	private static Queue<Integer> priorityQueue(int[] a, int k) {
+		Queue<Integer> pq = new PriorityQueue<Integer>(k, (x, y) -> x - y);
+		// put first k numbers in the min heap
+		for (int i = 0; i < k; i++) {
+			pq.add(a[i]);
+		}
+		return pq;
 	}
 
 	public static int kthLargestSingleLoop(int[] a, int k) {
