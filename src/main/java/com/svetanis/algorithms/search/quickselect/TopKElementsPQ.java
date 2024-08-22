@@ -1,11 +1,15 @@
 package com.svetanis.algorithms.search.quickselect;
 
+import static com.svetanis.java.base.collect.Lists.newList;
+
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import com.google.common.collect.ImmutableList;
+
 public final class TopKElementsPQ {
 
-	public static Queue<Integer> topK(int a[], int k) {
+	public static ImmutableList<Integer> topK(int a[], int k) {
 		// Time Complexity: O(n log k)
 
 		Queue<Integer> pq = priorityQueue(a, k);
@@ -21,7 +25,7 @@ public final class TopKElementsPQ {
 				pq.add(a[i]);
 			}
 		}
-		return pq;
+		return newList(pq);
 	}
 
 	private static Queue<Integer> priorityQueue(int[] a, int k) {
