@@ -12,95 +12,109 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+// given an array of points in a 2D plane,
+// find K closest points to the origin
+
 public final class KClosestPoints {
 
-  public static ImmutableList<Point> select(List<Point> points, int k) {
-    // Time complexity: O(n)
-    // Worst case: O(n^2)
+	public static ImmutableList<Point> select(List<Point> points, int k) {
+		// Time complexity: O(n)
+		// Worst case: O(n^2)
 
-    Distance[] a = distances(points);
-    int pivot = select(a, 0, a.length - 1, k);
-    List<Point> list = newArrayList();
-    for (int i = 0; i <= pivot; i++) {
-      list.add(points.get(a[i].index));
-    }
-    return newList(list);
-  }
+		Distance[] a = distances(points);
+		int pivot = select(a, 0, a.length - 1, k);
+		List<Point> list = newArrayList();
+		for (int i = 0; i <= pivot; i++) {
+			list.add(points.get(a[i].index));
+		}
+		return newList(list);
+	}
 
-  private static int select(Distance[] a, int left, int right, int k) {
-    int index = randomIndex(left, right);
-    int pivot = partition(a, left, right, index);
-    int dist = pivot - left + 1;
-    if (dist == k) {
-      return pivot;
-    } else if (k < dist) {
-      return select(a, left, pivot, k);
-    } else {
-      return select(a, pivot + 1, right, k - dist);
-    }
-  }
+	private static int select(Distance[] a, int left, int right, int k) {
+		int index = randomIndex(left, right);
+		int pivot = partition(a, left, right, index);
+		int dist = pivot - left + 1;
+		if (dist == k) {
+			return pivot;
+		} else if (k < dist) {
+			return select(a, left, pivot, k);
+		} else {
+			return select(a, pivot + 1, right, k - dist);
+		}
+	}
 
-  // smaller elements to the left
-  public static int partition(Distance[] a, int left, int right, int index) {
-    int i = left;
-    swap(a, right, index);
-    Distance pivot = a[right];
-    for (int j = left; j < right; ++j) {
-      if (a[j].compareTo(pivot) < 1) {
-        swap(a, i, j);
-        i++;
-      }
-    }
-    // move pivot to its final place
-    swap(a, i, right);
-    return i;
-  }
+	// smaller elements to the left
+	public static int partition(Distance[] a, int left, int right, int index) {
+		int i = left;
+		swap(a, right, index);
+		Distance pivot = a[right];
+		for (int j = left; j < right; ++j) {
+			if (a[j].compareTo(pivot) < 1) {
+				swap(a, i, j);
+				i++;
+			}
+		}
+		// move pivot to its final place
+		swap(a, i, right);
+		return i;
+	}
 
-  public static void main(String[] args) {
-    List<Point> points = points();
-    print(select(points, 2));
-  }
+	public static void main(String[] args) {
+		List<Point> points1 = points1();
+		print(select(points1, 2));
 
-  private static Distance[] distances(List<Point> points) {
-    Distance[] a = new Distance[points.size()];
-    for (int i = 0; i < points.size(); i++) {
-      a[i] = new Distance(distToOrigin(points.get(i)), i);
-    }
-    return a;
-  }
+		List<Point> points2 = points2();
+		print(select(points2, 2));
+	}
 
-  private static ImmutableList<Point> points() {
-    List<Point> list = newArrayList();
-    list.add(new Point(1, 0));
-    list.add(new Point(2, 1));
-    list.add(new Point(0, 1));
-    return newList(list);
-  }
+	private static ImmutableList<Point> points1() {
+		List<Point> list = newArrayList();
+		list.add(new Point(1, 0));
+		list.add(new Point(2, 1));
+		list.add(new Point(0, 1));
+		return newList(list);
+	}
 
-  private static int distToOrigin(Point p) {
-    return dist(p, new Point(0, 0));
-  }
+	private static ImmutableList<Point> points2() {
+		List<Point> list = newArrayList();
+		list.add(new Point(1, 3));
+		list.add(new Point(3, 4));
+		list.add(new Point(2, -1));
+		return newList(list);
+	}
 
-  private static int dist(Point p1, Point p2) {
-    double dx = p1.getX() - p2.getX();
-    double dy = p1.getY() - p2.getY();
-    return new Double(pow(dx, 2) + pow(dy, 2)).intValue();
-  }
+	private static Distance[] distances(List<Point> points) {
+		Distance[] a = new Distance[points.size()];
+		for (int i = 0; i < points.size(); i++) {
+			a[i] = new Distance(distToOrigin(points.get(i)), i);
+		}
+		return a;
+	}
 
-  private static class Distance implements Comparable<Distance> {
+	private static int distToOrigin(Point p) {
+		return dist(p, new Point(0, 0));
+	}
 
-    private int dist;
-    private int index;
+	private static int dist(Point p1, Point p2) {
+		double dx = p1.getX() - p2.getX();
+		double dy = p1.getY() - p2.getY();
+		return new Double(pow(dx, 2) + pow(dy, 2)).intValue();
+	}
 
-    public Distance(int dist, int index) {
-      this.dist = dist;
-      this.index = index;
-    }
+	private static class Distance implements Comparable<Distance> {
 
-    @Override
-    public int compareTo(Distance other) {
-      return this.dist - other.dist;
-    }
-  }
+		private int dist;
+		private int index;
+
+		public Distance(int dist, int index) {
+			this.dist = dist;
+			this.index = index;
+		}
+
+		@Override
+		public int compareTo(Distance other) {
+			return this.dist - other.dist;
+		}
+	}
 
 }
