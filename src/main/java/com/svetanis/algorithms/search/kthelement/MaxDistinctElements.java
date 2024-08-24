@@ -10,10 +10,9 @@ import java.util.Queue;
 
 import com.google.common.collect.ImmutableMap;
 
-// given a sorted array and two integers k and target
-// find k closest numbers to target in the array
-// return the numbers in the sorted order
-// target is not necessarily present in the array
+// given an array of numbers and a number k
+// remove k numbers from the array such that 
+// we are left with max distinct numbers
 
 public final class MaxDistinctElements {
 
