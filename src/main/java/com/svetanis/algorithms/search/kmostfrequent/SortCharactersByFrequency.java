@@ -43,11 +43,13 @@ public final class SortCharactersByFrequency {
 	private static Queue<Character> sortedQueue(Map<Character, Integer> fm) {
 		Comparator<Character> c = (a, b) -> (fm.get(b) - fm.get(a));
 		Queue<Character> pq = new PriorityQueue<>(c);
+		// add all characters to the max heap
 		pq.addAll(fm.keySet());
 		return pq;
 	}
 
 	private static String sortedByFrequency(Queue<Character> pq, Map<Character, Integer> fm) {
+		// build a string, appending the most occurring chars first
 		StringBuilder sb = new StringBuilder();
 		while (!pq.isEmpty()) {
 			char c = pq.poll();
