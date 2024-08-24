@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.heapsort;
+package com.svetanis.algorithms.search.kmostfrequent;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.collect.Maps.newMap;

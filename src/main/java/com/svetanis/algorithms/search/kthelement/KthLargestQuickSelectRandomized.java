@@ -1,25 +1,16 @@
-package com.svetanis.algorithms.search.quickselect;
+package com.svetanis.algorithms.search.kthelement;
 
 import static com.svetanis.algorithms.sorting.quicksort.impl.Partition.reversePartition;
-import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Random.randomIndex;
-import static java.util.Arrays.asList;
-import static org.apache.commons.lang3.ArrayUtils.toObject;
 
-import java.util.List;
+public final class KthLargestQuickSelectRandomized {
 
-import com.google.common.collect.ImmutableList;
-
-public final class TopK {
-
-  public static ImmutableList<Integer> select(int[] a, int k) {
+  public static int select(int[] a, int k) {
     // Time complexity: O(n)
     // Worst case: O(n^2)
 
     int n = a.length;
-    int pivot = select(a, 0, n - 1, k);
-    List<Integer> list = asList(toObject(a));
-    return newList(list.subList(0, pivot + 1));
+    return select(a, 0, n - 1, k);
   }
 
   private static int select(int[] a, int left, int right, int k) {
@@ -27,7 +18,7 @@ public final class TopK {
     int pivot = reversePartition(a, left, right, random);
     int dist = pivot - left + 1;
     if (dist == k) {
-      return pivot;
+      return a[pivot];
     } else if (dist > k) {
       return select(a, left, pivot - 1, k);
     } else {

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect;
+package com.svetanis.algorithms.search.topk;
 
 import static com.google.common.collect.Sets.newTreeSet;
 import static com.svetanis.java.base.collect.Lists.newList;

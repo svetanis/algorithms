@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect;
+package com.svetanis.algorithms.search.kthelement;
 
 import static com.svetanis.algorithms.sorting.quicksort.impl.Partition.randomizedPartition;
 

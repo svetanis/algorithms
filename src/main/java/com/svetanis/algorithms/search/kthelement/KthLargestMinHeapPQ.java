@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect;
+package com.svetanis.algorithms.search.kthelement;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
