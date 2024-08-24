@@ -14,7 +14,11 @@ import java.util.Queue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+// given an unsorted array of numbers,
+// find the top k frequently occurring numbers in it
+
 public final class KMostFrequent {
+	// Time Complexity: O(n + n * log k)
 
 	public static ImmutableList<Integer> kMostFrequent(List<Integer> terms, int k) {
 		Map<Integer, Integer> map = frequencyMap(terms);
