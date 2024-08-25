@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.search.quickselect.median;
 
+import static com.svetanis.java.base.utils.Random.rand;
+
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
@@ -14,50 +16,73 @@ import java.util.Scanner;
 // we have seen so far. 
 
 public final class OnlineMedian {
+	// Time Complexity: O(n)
 
-  private Queue<Integer> min;
-  private Queue<Integer> max;
+	private Queue<Integer> min;
+	private Queue<Integer> max;
 
-  public OnlineMedian() {
-    this.min = new PriorityQueue<Integer>();
-    this.max = new PriorityQueue<Integer>((a, b) -> b.compareTo(a));
-  }
+	public OnlineMedian() {
+		this.min = new PriorityQueue<>((a, b) -> a - b);
+		this.max = new PriorityQueue<>((a, b) -> b - a);
+	}
 
-  public void add(int x) {
-    if (!max.isEmpty() && x > max.peek()) {
-      min.offer(x);
-    } else {
-      max.offer(x);
-    }
+	public double onlineMedian(int n) {
+		add(n);
+		return median();
+	}
 
-    if (min.size() > max.size() + 1) {
-      max.offer(min.poll());
-    } else if (max.size() > min.size() + 1) {
-      min.offer(max.poll());
-    }
-  }
+	public void add(int x) {
+		if (!max.isEmpty() && x > max.peek()) {
+			min.add(x);
+		} else {
+			max.add(x);
+		}
 
-  public double getMedian() {
-    if (min.size() == max.size()) {
-      return 0.5 * (min.peek() + max.peek());
-    } else {
-      if (max.size() > min.size()) {
-        return max.peek();
-      } else {
-        return min.peek();
-      }
-    }
-  }
+		if (min.size() > max.size() + 1) {
+			max.add(min.poll());
+		} else if (max.size() > min.size() + 1) {
+			min.add(max.poll());
+		}
+	}
 
-  public static void main(String args[]) {
-    OnlineMedian om = new OnlineMedian();
-    Scanner in = new Scanner(System.in);
-    int n = in.nextInt();
-    for (int i = 0; i < n; i++) {
-      int num = in.nextInt();
-      om.add(num);
-      System.out.println(om.getMedian());
-    }
-    in.close();
-  }
+	public double median() {
+		if (max.isEmpty()) {
+			return 0;
+		}
+		if (min.size() == max.size()) {
+			return 0.5 * (min.peek() + max.peek());
+		} else {
+			return max.size() > min.size() ? max.peek() : min.peek();
+		}
+	}
+
+	public static void main(String args[]) {
+		int n = 10;
+		int range = 7;
+		OnlineMedian m = new OnlineMedian();
+		for (int i = 0; i < n; i++) {
+			int random = rand(range);
+			System.out.println("randon--> " + random);
+			System.out.println("median--> " + m.onlineMedian(random));
+		}
+		// scan();
+	}
+
+	private void scan() {
+		OnlineMedian om = new OnlineMedian();
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		for (int i = 0; i < n; i++) {
+			int num = in.nextInt();
+			om.add(num);
+			System.out.println(om.median());
+		}
+		in.close();
+	}
+
+	// 5, 15, 1, 3 ...
+	// 5 -> 5
+	// 5, 15 -> 10
+	// 5, 15, 1 -> 5
+	// 5, 15, 1, 3 -> 4
 }
