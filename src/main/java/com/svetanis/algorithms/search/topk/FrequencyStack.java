@@ -18,6 +18,8 @@ import com.google.common.base.Joiner;
 // if there is a tie, return the number which was pushed later
 
 public final class FrequencyStack {
+	// Time Complexity: O(log n)
+	// Space Complexity: O(n)
 
 	private int sequence;
 	private Queue<Element> pq;
