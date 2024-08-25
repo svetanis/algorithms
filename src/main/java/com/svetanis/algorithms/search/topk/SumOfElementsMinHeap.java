@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.kthelement;
+package com.svetanis.algorithms.search.topk;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.min;

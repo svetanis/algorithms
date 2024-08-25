@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.kthelement;
+package com.svetanis.algorithms.search.topk;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.collect.Maps.newMap;
