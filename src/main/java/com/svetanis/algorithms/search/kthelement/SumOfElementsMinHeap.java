@@ -9,7 +9,7 @@ import java.util.Queue;
 // given an array, find the sum of all numbers
 // between the k1'th and k2'th smallest elements
 
-public final class SumOfElements {
+public final class SumOfElementsMinHeap {
 
 	public static int sum(int[] a, int k1, int k2) {
 		// Time Complexity: O(n * log n)
