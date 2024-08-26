@@ -3,9 +3,16 @@ package com.svetanis.algorithms.search.twoheaps;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-// given an array of numbers and a number k,
-// find the median of all the k sized sub-arrays
-// (or windows) of the array
+// given a set of investment projects
+// with their respective profits,
+// find the most profitable projects.
+
+// given an initial capital and are 
+// allowed to invest only in a fixed
+// number of projects. 
+
+// the goal is to choose projects 
+// that give the maximum profit
 
 public final class MaximizeCapital {
 
