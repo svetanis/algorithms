@@ -37,7 +37,19 @@ public final class OnlineMedian {
 		} else {
 			max.add(x);
 		}
+		rebalance();
+	}
 
+	public void remove(int x) {
+		if (!max.isEmpty() && x <= max.peek()) {
+			max.remove(x);
+		} else {
+			min.remove(x);
+		}
+		rebalance();
+	}
+
+	private void rebalance() {
 		if (min.size() > max.size() + 1) {
 			max.add(min.poll());
 		} else if (max.size() > min.size() + 1) {
