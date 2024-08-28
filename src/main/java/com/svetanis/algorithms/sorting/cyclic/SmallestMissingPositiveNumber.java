@@ -28,7 +28,7 @@ public final class SmallestMissingPositiveNumber {
 		int i = 0;
 		while (i < n) {
 			int j = a[i] - 1;
-			if (a[i] > 0 && a[i] < n && a[i] != a[j]) {
+			if (a[i] > 0 && a[i] <= n && a[i] != a[j]) {
 				swap(a, i, j);
 			} else {
 				i++;
