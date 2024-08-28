@@ -23,17 +23,17 @@ public final class SlidingWindowMedian {
 		if (k > n) {
 			return newList(new Double(minSelect(a)));
 		}
-		OnlineMedian on = new OnlineMedian();
+		OnlineMedian om = new OnlineMedian();
 		List<Double> list = newArrayList();
 		for (int i = 0; i < k; i++) {
-			on.add(a[i]);
+			om.add(a[i]);
 		}
-		list.add(on.median());
+		list.add(om.median());
 		for (int i = k; i < n; i++) {
 			int left = a[i - k];
-			on.remove(left);
-			on.add(a[i]);
-			list.add(on.median());
+			om.remove(left);
+			om.add(a[i]);
+			list.add(om.median());
 		}
 		// max element of last window
 		return newList(list);
