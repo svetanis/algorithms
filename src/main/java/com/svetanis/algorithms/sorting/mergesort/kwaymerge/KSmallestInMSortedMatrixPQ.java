@@ -7,7 +7,7 @@ import java.util.Queue;
 // and col is sorted in ascending order
 // find the k-th smallest element in the matrix
 
-public final class KSmallestInMSortedMatrix {
+public final class KSmallestInMSortedMatrixPQ {
 	// Time Complexity: O(min(k, n) + k * log n)
 	// Space Complexity: O(n)
 
