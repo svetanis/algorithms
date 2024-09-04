@@ -11,7 +11,8 @@ import com.google.common.collect.ImmutableList;
 // find all of its distinct subsets
 
 public final class Subsets {
-	// Time Complexity: O(2^n)
+	// Time Complexity:  O(n * 2^n)
+	// Space Complexity: O(n * 2^n)
 
 	public static ImmutableList<ImmutableList<Integer>> subsets(int[] a) {
 		List<ImmutableList<Integer>> lists = newArrayList();
