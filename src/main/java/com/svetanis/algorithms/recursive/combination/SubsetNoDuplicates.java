@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 // given a set of distinct elements,
 // find all of its distinct subsets
 
-public final class Subsets {
+public final class SubsetNoDuplicates {
 	// Time Complexity:  O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
