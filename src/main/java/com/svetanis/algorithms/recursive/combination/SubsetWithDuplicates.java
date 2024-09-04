@@ -2,6 +2,7 @@ package com.svetanis.algorithms.recursive.combination;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
+import static java.util.Arrays.sort;
 
 import java.util.List;
 
@@ -12,10 +13,11 @@ import com.google.common.collect.ImmutableList;
 // its distinct subsets
 
 public final class SubsetWithDuplicates {
-	// Time Complexity:  O(n * 2^n)
+	// Time Complexity: O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
 	public static ImmutableList<ImmutableList<Integer>> subsets(int[] a) {
+		sort(a);
 		List<ImmutableList<Integer>> lists = newArrayList();
 		lists.add(newList()); // add empty subset
 		int start = 0;
