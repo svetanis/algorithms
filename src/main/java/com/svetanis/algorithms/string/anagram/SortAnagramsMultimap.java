@@ -3,7 +3,6 @@ package com.svetanis.algorithms.string.anagram;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
 import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.collect.Lists.sort;
 import static com.svetanis.java.base.collect.Multimaps.newMultimap;
 import static com.svetanis.java.base.utils.Chars.sort;
 import static com.svetanis.java.base.utils.Print.printLines;
@@ -24,7 +23,7 @@ public final class SortAnagramsMultimap {
 
   private static ImmutableMultimap<String, String> asMultimap(List<String> list) {
     Multimap<String, String> mm = ArrayListMultimap.create();
-    for (String str : sort(list)) {
+    for (String str : list) {
       String key = sort(str);
       mm.put(key, str);
     }
