@@ -34,9 +34,18 @@ public final class LongestAllUniqueSubStrLen {
   }
 
   public static void main(String[] args) {
-    System.out.println(allUniqueSubStrLen("abcadbef"));
+    System.out.println(allUniqueSubStrLen("abcadbef")); 
     System.out.println(allUniqueSubStrLen("abac"));
     System.out.println(allUniqueSubStrLen("aaaaa"));
     System.out.println(allUniqueSubStrLen("abccdefgh"));
+    System.out.println();
+    System.out.println(allUniqueSubStrLen("aabccbb")); // 3 - abc
+    System.out.println(allUniqueSubStrLen("abbbb"));  // 2 - ab
+    System.out.println(allUniqueSubStrLen("abccde")); // 3 - abc & cde
+    System.out.println();
+    System.out.println(allUniqueSubStrLen("abcabcbb")); // 3 - abc
+    System.out.println(allUniqueSubStrLen("bbbbb")); // 1 - b
+    System.out.println(allUniqueSubStrLen("pwwkew")); // 3 - wke
+    
   }
 }
