@@ -4,39 +4,53 @@ package com.svetanis.algorithms.string.palindrome;
 
 public final class PalindromeIterative {
 
-  public static boolean palindrome(String str) {
-    int n = str.length();
-    for (int i = 0; i < n / 2 + 1; ++i) {
-      if (str.charAt(i) != str.charAt(n - i - 1)) {
-        return false;
-      }
-    }
-    return true;
-  }
+	public static boolean palindrome(String str) {
+		int n = str.length();
+		for (int i = 0; i < n / 2 + 1; ++i) {
+			if (str.charAt(i) != str.charAt(n - i - 1)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-  public static boolean isPalindrome(String str) {
-    int n = str.length();
-    int left = 0;
-    int right = n - 1;
-    return isPalindrome(str, left, right);
-  }
+	public static boolean palindrome2(String str) {
+		int left = 0;
+		int right = str.length() - 1;
+		while (left <= right) {
+			if (str.charAt(left) != str.charAt(right)) {
+				return false;
+			}
+			left++;
+			right--;
+		}
+		return true;
+	}
 
-  public static boolean isPalindrome(String str, int left, int right) {
-    char[] chars = str.toCharArray();
-    return isPalindrome(chars, left, right);
-  }
+	public static boolean isPalindrome(String str) {
+		int n = str.length();
+		int left = 0;
+		int right = n - 1;
+		return isPalindrome(str, left, right);
+	}
 
-  public static boolean isPalindrome(char[] chars, int left, int right) {
-    while (right > left) {
-      if (chars[left++] != chars[right--]) {
-        return false;
-      }
-    }
-    return true;
-  }
+	public static boolean isPalindrome(String str, int left, int right) {
+		char[] chars = str.toCharArray();
+		return isPalindrome(chars, left, right);
+	}
 
-  public static void main(String[] args) {
-    String str = "ABCDEDCBA";
-    System.out.println(isPalindrome(str));
-  }
+	public static boolean isPalindrome(char[] chars, int left, int right) {
+		while (right > left) {
+			if (chars[left++] != chars[right--]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+		String str = "ABCDEDCBA";
+		System.out.println(isPalindrome(str));
+		System.out.println(palindrome2(str));
+	}
 }
