@@ -3,10 +3,13 @@ package com.svetanis.algorithms.dp.maxprofit;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-// Given a binary matrix, find out the maximum size square sub-matrix with all 1s. 
+// maximize your profit by choosing a single day 
+// to buy one stock and choosing a different day 
+// in the future to sell that stock.
 
 public final class BestTimeBuySellStock {
-
+	// Time Complexity: O(n)
+	
 	public static int maxProfit(int[] prices) {
 		int max = 0; // max profit
 		int min = prices[0]; // min buying price
