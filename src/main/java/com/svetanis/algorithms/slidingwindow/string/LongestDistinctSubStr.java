@@ -13,7 +13,6 @@ public final class LongestDistinctSubStr {
 		// Time complexity: O(n)
 		// Space complexity: O(1)
 
-		int max = 0;
 		int left = 0;
 		String substr = "";
 		Set<Character> set = newHashSet();
@@ -29,8 +28,7 @@ public final class LongestDistinctSubStr {
 			// insert 'c' into the set
 			set.add(c);
 			// max length so far
-			if (right - left + 1 > max) {
-				max = right - left + 1;
+			if (right - left + 1 > substr.length()) {
 				substr = str.substring(left, right + 1).trim();
 			}
 		}
