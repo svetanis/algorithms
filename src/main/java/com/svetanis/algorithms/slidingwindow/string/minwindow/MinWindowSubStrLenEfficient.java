@@ -2,7 +2,6 @@ package com.svetanis.algorithms.slidingwindow.string.minwindow;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
-import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.utils.Maps.freqMap;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
@@ -16,40 +15,49 @@ import com.google.common.base.Optional;
 // the required substring can have some additional characters
 // and doesn't need to be a permutation of the pattern.
 
-public final class MinWindowSubStrLen {
+public final class MinWindowSubStrLenEfficient {
+	// Time complexity: O(n + m)
 
 	public static Optional<Integer> minWindow(String s, String p) {
-		// Time complexity: O(n + m)
 
 		int left = 0;
-		int count = 0;
+		int matched = 0;
 		int min = MAX_VALUE;
 		Map<Character, Integer> map = freqMap(p);
-		Map<Character, Integer> swm = newHashMap();
+
 		for (int right = 0; right < s.length(); right++) {
+			// 1. keep a running count of every
+			// matching instance of a char
 			char c = s.charAt(right);
-			// skip chars not in pattern
-			if (!map.containsKey(c)) {
-				continue;
-			}
-			swm.put(c, swm.getOrDefault(c, 0) + 1);
-			if (swm.get(c) <= map.get(c)) {
-				count++;
+			if (map.containsKey(c)) {
+				map.put(c, map.get(c) - 1);
+				// include '>' to account for duplicates in pattern
+				if (map.get(c) >= 0) {
+					matched++;
+				}
 			}
 
-			// if window constraint is satisfied
-			if (count == p.length()) {
-				// advance left index as far right as possible,
-				// stop when advancing breaks window constraint
-				while (!map.containsKey(s.charAt(left)) || 
-						swm.get(s.charAt(left)) > map.get(s.charAt(left))) {
-					char front = s.charAt(left);
-					if (map.containsKey(front) && swm.get(front) > map.get(front)) {
-						swm.put(front, swm.get(front) - 1);
-					}
-					left++;
-				}
+			// 2. whenever all the chars are matched,
+			// shrink the window from the beginning
+			while (matched == p.length()) {
+				// keep track of the smallest substr
+				// that has all the matching chars
 				min = min(min, right - left + 1);
+				// 3. stop the shrinking process as soon as
+				// a matched char removed from sliding window
+				char front = s.charAt(left++);
+				// redundant matching char (aa)
+				// when need only one
+				if (map.containsKey(front)) {
+					// second redundant: decrement the matched count
+					// when second char goes out of the window
+					if (map.get(front) == 0) {
+						matched--;
+					}
+					// first redundant: shrink window without
+					// decrementing the matched count
+					map.put(front, map.get(front) + 1);
+				}
 			}
 		}
 		return min == MAX_VALUE ? absent() : of(min);
