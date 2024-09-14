@@ -1,22 +1,25 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Arrays.max;
 import static com.svetanis.java.base.utils.Print.print;
 
 import java.util.List;
 import java.util.PriorityQueue;
 
+import com.google.common.collect.ImmutableList;
+
 // Sliding Window Maximum
 
 public final class SlidingWindowMaxPriorityQueue {
 
-	public static List<Integer> maxSlidingWindow(int[] a, int w) {
+	public static ImmutableList<Integer> maxSlidingWindow(int[] a, int w) {
 		// Time complexity: O(n log n)
 
 		int n = a.length;
 		if (w > n) {
-			return newArrayList(max(a));
+			return newList(max(a));
 		}
 		List<Integer> list = newArrayList();
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
@@ -32,7 +35,7 @@ public final class SlidingWindowMaxPriorityQueue {
 		}
 		// max element of last window
 		list.add(a[pq.peek()]);
-		return list;
+		return newList(list);
 	}
 
 	public static void main(String[] args) {
