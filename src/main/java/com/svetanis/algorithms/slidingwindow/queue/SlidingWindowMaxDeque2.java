@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableList;
 // find the maximum for each and 
 // every contiguous subarray of size k.
 
-public final class SlidingWindowMaxDeque {
+public final class SlidingWindowMaxDeque2 {
 
 	private static ImmutableList<Integer> subArrayMax(int[] a, int w) {
 		// Time complexity: O(n);
@@ -22,34 +22,27 @@ public final class SlidingWindowMaxDeque {
 
 		List<Integer> list = newArrayList();
 		Deque<Integer> dq = new ArrayDeque<>();
-		for (int i = 0; i < w; ++i) {
-			windowMax(dq, a, i);
-		}
-
-		for (int i = w; i < a.length; ++i) {
-			// max element of prev window
-			list.add(a[dq.peekFirst()]);
-
+		for (int i = 0; i < a.length; ++i) {
 			// remove the elements
 			// which are out of this window
 			while (!dq.isEmpty() && i - w + 1 > dq.peekFirst()) {
 				dq.pollFirst();
 			}
-			windowMax(dq, a, i);
-		}
-		// max element of last window
-		list.add(a[dq.peekFirst()]);
-		return newList(list);
-	}
+			// remove elements that are less than the
+			// current element since they are not useful
+			while (!dq.isEmpty() && a[dq.getLast()] <= a[i]) {
+				dq.pollLast();
+			}
+			// add current element's index to the deque
+			dq.addLast(i);
 
-	private static void windowMax(Deque<Integer> dq, int[] a, int i) {
-		// remove elements that are less than the
-		// current element since they are not useful
-		while (!dq.isEmpty() && a[dq.getLast()] <= a[i]) {
-			dq.pollLast();
+			// we've hit the size w, add the current max
+			// to the result
+			if (i >= w - 1) {
+				list.add(a[dq.peekFirst()]);
+			}
 		}
-		// add current element's index to the deque
-		dq.addLast(i);
+		return newList(list);
 	}
 
 	public static void main(String[] args) {

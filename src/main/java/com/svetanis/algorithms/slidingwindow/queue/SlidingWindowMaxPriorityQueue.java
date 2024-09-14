@@ -11,55 +11,38 @@ import java.util.PriorityQueue;
 
 public final class SlidingWindowMaxPriorityQueue {
 
-  public static List<Integer> maxSlidingWindow(int[] a, int w) {
-    // Time complexity: O(n log n)
+	public static List<Integer> maxSlidingWindow(int[] a, int w) {
+		// Time complexity: O(n log n)
 
-    int n = a.length;
-    if (w > n) {
-      return newArrayList(max(a));
-    }
-    PriorityQueue<Pair> queue = new PriorityQueue<>();
-    List<Integer> list = newArrayList();
-    for (int i = 0; i < w; ++i) {
-      queue.offer(new Pair(a[i], i));
-    }
-    for (int i = w; i < n; ++i) {
-      Pair p = queue.peek();
-      list.add(p.value);
-      while (!queue.isEmpty() && p.index <= i - w) {
-        queue.poll();
-        p = queue.peek();
-      }
-      queue.offer(new Pair(a[i], i));
-    }
-    // max element of last window
-    list.add(queue.peek().value);
-    return list;
-  }
+		int n = a.length;
+		if (w > n) {
+			return newArrayList(max(a));
+		}
+		List<Integer> list = newArrayList();
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		for (int i = 0; i < w; ++i) {
+			pq.offer(i);
+		}
+		for (int i = w; i < n; ++i) {
+			list.add(a[pq.peek()]);
+			while (!pq.isEmpty() && i - w + 1 > pq.peek()) {
+				pq.poll();
+			}
+			pq.offer(i);
+		}
+		// max element of last window
+		list.add(a[pq.peek()]);
+		return list;
+	}
 
-  public static void main(String[] args) {
-    int[] a1 = { 1, 3, -1, -3, 5, 3, 6, 7 };
-    print(maxSlidingWindow(a1, 3));
+	public static void main(String[] args) {
+		int[] a1 = { 1, 3, -1, -3, 5, 3, 6, 7 };
+		print(maxSlidingWindow(a1, 3)); // 3 3 5 5 6 7
 
-    int[] a2 = { 6, 0, -6 };
-    print(maxSlidingWindow(a2, 2));
+		int[] a2 = { 6, 0, -6 };
+		print(maxSlidingWindow(a2, 2)); // 6 0
 
-    int[] a3 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-    print(maxSlidingWindow(a3, 1));
-  }
-
-  private static class Pair implements Comparable<Pair> {
-    int value;
-    int index;
-
-    Pair(int value, int index) {
-      this.value = value;
-      this.index = index;
-    }
-
-    @Override
-    public int compareTo(Pair other) {
-      return other.value - this.value;
-    }
-  }
+		int[] a3 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+		print(maxSlidingWindow(a3, 1)); // 10 9 8 7 6 5 4 3 2 1
+	}
 }
