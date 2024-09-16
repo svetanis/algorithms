@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.backtracking;
+package com.svetanis.algorithms.backtracking;
 
 import static com.svetanis.java.base.utils.Print.print;
 import static java.util.Arrays.fill;

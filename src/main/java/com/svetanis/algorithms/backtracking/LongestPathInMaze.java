@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.backtracking;
+package com.svetanis.algorithms.backtracking;
 
 import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Math.max;

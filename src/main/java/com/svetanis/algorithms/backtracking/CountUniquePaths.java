@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.backtracking;
+package com.svetanis.algorithms.backtracking;
 
 // Find the total number of unique paths which the robot
 // can take in a given maze to reach the dst from given src

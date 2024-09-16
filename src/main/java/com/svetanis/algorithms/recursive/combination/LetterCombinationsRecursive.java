@@ -12,7 +12,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-public final class LetterCombinations {
+public final class LetterCombinationsRecursive {
 
   public ImmutableList<String> combinations(String digits) {
     List<String> list = newArrayList();
@@ -21,7 +21,8 @@ public final class LetterCombinations {
     return newList(list);
   }
 
-  private void recursion(String digits, int index, String str, List<String> list, Map<Character, String> map) {
+  private void recursion(String digits, int index, String str, 
+  		List<String> list, Map<Character, String> map) {
     int n = digits.length();
     if (str.length() > digits.length()) {
       return;
@@ -53,7 +54,7 @@ public final class LetterCombinations {
   }
 
   public static void main(String[] args) {
-    LetterCombinations lc = new LetterCombinations();
+    LetterCombinationsRecursive lc = new LetterCombinationsRecursive();
     List<String> combinations = lc.combinations("23");
     printLines(combinations);
   }

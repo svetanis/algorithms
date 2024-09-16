@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.backtracking;
+package com.svetanis.algorithms.backtracking;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;

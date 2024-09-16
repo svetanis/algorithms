@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.permutation.generate;
+package com.svetanis.algorithms.backtracking.combinatorial;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableList;
 // by 'a' and 'b' and return them in
 // a list of string in lexicographical order
 
-public final class LetterCombination {
+public final class LetterCombinationBacktrack {
 	// Time Complexity: O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
@@ -28,6 +28,7 @@ public final class LetterCombination {
 		return newList(lists);
 	}
 
+	// index is redundant and derived from list.size()
 	private static void dfs(int n, List<String> list, List<String> lists) {
 		if (list.size() == n) {
 			lists.add(Joiner.on("").join(list));
