@@ -25,7 +25,8 @@ public final class AllPalindromicPartitions {
 		return newList(lists);
 	}
 
-	private static void partitions(String s, int index, List<String> list, List<ImmutableList<String>> lists) {
+	private static void partitions(String s, int index, List<String> list, 
+			List<ImmutableList<String>> lists) {
 		if (index == s.length()) {
 			lists.add(newList(list));
 			return;
