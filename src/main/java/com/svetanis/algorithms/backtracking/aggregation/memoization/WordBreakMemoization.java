@@ -25,7 +25,7 @@ public final class WordBreakMemoization {
 	private static boolean dfs(int index, String s, Boolean[] memo, List<String> dict) {
 		// Time Complexity: O(n^2 * m)
 		// Space Complexity: O(n)
-		
+
 		if (memo[index] != null) {
 			return memo[index];
 		}
@@ -58,8 +58,8 @@ public final class WordBreakMemoization {
 			if (dict.contains(prefix)) {
 				result = result || dfs2(index + prefix.length(), s, memo, dict);
 			}
-			memo[i] = result;
 		}
+		memo[index] = result;
 		return result;
 	}
 
