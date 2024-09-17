@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive;
+package com.svetanis.algorithms.backtracking.additionalstates;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
@@ -31,12 +31,10 @@ public final class GenerateBalancedParenthesesIterative {
 					int open = p.open + 1;
 					queue.add(new Parentheses(s, open, p.close));
 				}
-
 				if (p.open > p.close) {
 					String s = p.str + ")";
 					int close = p.close + 1;
 					queue.add(new Parentheses(s, p.open, close));
-
 				}
 			}
 		}
