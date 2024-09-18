@@ -24,7 +24,8 @@ public final class PowerSet {
 		return newList(list);
 	}
 
-	private static void dfs(int index, List<Integer> nums, List<Integer> path, List<ImmutableList<Integer>> list) {
+	private static void dfs(int index, List<Integer> nums, List<Integer> path, 
+			List<ImmutableList<Integer>> list) {
 		list.add(newList(path));
 		for (int i = index; i < nums.size(); i++) {
 			path.add(nums.get(i));

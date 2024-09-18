@@ -35,7 +35,8 @@ public final class PowerSetRecursive {
 		return newList(lists);
 	}
 
-	private static void subsets(int[] a, int i, List<Integer> list, List<ImmutableList<Integer>> lists) {
+	private static void subsets(int[] a, int i, List<Integer> list, 
+			List<ImmutableList<Integer>> lists) {
 		if (i < 0) {
 			lists.add(newList(list));
 			return;
