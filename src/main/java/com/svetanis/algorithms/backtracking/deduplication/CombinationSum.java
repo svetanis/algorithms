@@ -35,7 +35,7 @@ public final class CombinationSum {
 		for (int i = index; i < candidates.size(); i++) {
 			int candidate = candidates.get(i);
 			if (sum + candidate <= target) {
-				path.add(candidates.get(i));
+				path.add(candidate);
 				int next = i == 0 ? 0 : i;
 				dfs(target, next, sum + candidate, candidates, path, list);
 				path.remove(path.size() - 1);
