@@ -6,8 +6,6 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
-import com.svetanis.java.base.utils.Print;
-
 // given a triangle. find
 // the min path sum from
 // top to bottom
@@ -33,7 +31,6 @@ public final class TriangleBottomUp {
 	public static int mps(List<List<Integer>> triangle) {
 		int n = triangle.size();
 		int[][] dp = init(triangle);
-		Print.print(dp);
 		// start with the second last row
 		// and build up
 		for (int r = n - 2; r >= 0; r--) {
@@ -44,7 +41,6 @@ public final class TriangleBottomUp {
 				dp[r][c] = val + min(left, top);
 			}
 		}
-		Print.print(dp);
 		return dp[0][0];
 	}
 
