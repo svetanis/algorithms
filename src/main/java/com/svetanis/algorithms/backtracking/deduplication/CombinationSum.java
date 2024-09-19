@@ -36,8 +36,7 @@ public final class CombinationSum {
 			int candidate = candidates.get(i);
 			if (sum + candidate <= target) {
 				path.add(candidate);
-				int next = i == 0 ? 0 : i;
-				dfs(target, next, sum + candidate, candidates, path, list);
+				dfs(target, i, sum + candidate, candidates, path, list);
 				path.remove(path.size() - 1);
 			}
 		}
