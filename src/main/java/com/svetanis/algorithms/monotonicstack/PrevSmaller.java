@@ -18,11 +18,11 @@ public final class PrevSmaller {
 
 		Deque<Integer> dq = new ArrayDeque<>();
 		for (int i = n - 1; i >= 0; i--) {
-			while (!dq.isEmpty() && a[i] < a[dq.peek()]) {
-				int top = dq.pop();
+			while (!dq.isEmpty() && a[i] < a[dq.peekLast()]) {
+				int top = dq.pollLast();
 				smaller[top] = a[i];
 			}
-			dq.push(i);
+			dq.add(i);
 		}
 		return smaller;
 	}

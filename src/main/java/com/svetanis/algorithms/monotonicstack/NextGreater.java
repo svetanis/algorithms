@@ -17,11 +17,11 @@ public final class NextGreater {
 
 		Deque<Integer> dq = new ArrayDeque<>();
 		for (int i = 0; i < n; i++) {
-			while (!dq.isEmpty() && a[i] > a[dq.peek()]) {
-				int top = dq.pop();
+			while (!dq.isEmpty() && a[i] > a[dq.peekLast()]) {
+				int top = dq.pollLast();
 				greater[top] = a[i];
 			}
-			dq.push(i);
+			dq.add(i);
 		}
 		return greater;
 	}
