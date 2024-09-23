@@ -6,7 +6,8 @@ import static java.lang.Math.max;
 // In a palindromic subsequence, elements read the same backward and forward.
 
 public final class LongestPalindromeSubSeqLenRecursive {
-
+	// Time Complexity: O(2^n)
+	
   public static int lps(String str) {
     int n = str.length();
     return lps(str, 0, n - 1);

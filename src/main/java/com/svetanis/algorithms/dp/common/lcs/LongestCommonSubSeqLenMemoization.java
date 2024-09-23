@@ -16,13 +16,15 @@ public final class LongestCommonSubSeqLenMemoization {
 
 	private static int lcs(String s1, String s2, int i, int j, Integer[][] memo) {
 		if (i == 0 || j == 0) {
+			memo[i][j] = 0;
 			return 0;
 		}
 		if (memo[i][j] != null) {
 			return memo[i][j];
 		}
 		if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-			return 1 + lcs(s1, s2, i - 1, j - 1, memo);
+			memo[i][j] = 1 + lcs(s1, s2, i - 1, j - 1, memo);
+			return memo[i][j];
 		}
 		int top = lcs(s1, s2, i - 1, j, memo);
 		int left = lcs(s1, s2, i, j - 1, memo);
