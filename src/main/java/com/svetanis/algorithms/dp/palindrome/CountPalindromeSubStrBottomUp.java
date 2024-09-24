@@ -44,5 +44,7 @@ public final class CountPalindromeSubStrBottomUp {
     System.out.println(lps("abdbca")); // 3
     System.out.println(lps("cddpd")); // 3
     System.out.println(lps("pqr")); // 1
+    System.out.println(lps("abc")); // 3
+    System.out.println(lps("aaa")); // 6    
   }
 }
