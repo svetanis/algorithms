@@ -14,14 +14,13 @@ import java.util.List;
 public final class FirstLargerThanTarget {
 	// Time Complexity: O(log n)
 
-	public static int vanilla(List<Integer> arr, int target) {
-		int n = arr.size();
+	public static int vanilla(List<Integer> list, int target) {
 		int left = 0;
-		int right = n - 1;
+		int right = list.size() - 1;
 		int boundary = -1;
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
-			if (arr.get(mid) >= target) {
+			if (list.get(mid) >= target) {
 				boundary = mid;
 				right = mid - 1;
 			} else {
@@ -31,15 +30,14 @@ public final class FirstLargerThanTarget {
 		return boundary;
 	}
 
-	public static int binary(List<Integer> arr, int target) {
-		int n = arr.size();
+	public static int binary(List<Integer> list, int target) {
 		int left = 0;
-		int right = n - 1;
+		int right = list.size() - 1;
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
-			if ((mid == 0 || arr.get(mid - 1) < target) && arr.get(mid) >= target) {
+			if ((mid == 0 || list.get(mid - 1) < target) && list.get(mid) >= target) {
 				return mid;
-			} else if (arr.get(mid) < target) {
+			} else if (list.get(mid) < target) {
 				left = mid + 1;
 			} else {
 				right = mid - 1;

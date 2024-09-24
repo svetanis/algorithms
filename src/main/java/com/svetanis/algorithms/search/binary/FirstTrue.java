@@ -18,14 +18,13 @@ import java.util.List;
 public final class FirstTrue {
 	// Time Complexity: O(log n)
 
-	public static int vanilla(List<Boolean> arr) {
-		int n = arr.size();
+	public static int vanilla(List<Boolean> list) {
 		int left = 0;
-		int right = n - 1;
+		int right = list.size() - 1;
 		int boundary = -1;
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
-			if (arr.get(mid)) {
+			if (list.get(mid)) {
 				boundary = mid;
 				right = mid - 1;
 			} else {
@@ -35,19 +34,18 @@ public final class FirstTrue {
 		return boundary;
 	}
 
-	public static int binary(List<Boolean> arr) {
-		int n = arr.size();
+	public static int binary(List<Boolean> list) {
 		int left = 0;
-		int right = n - 1;
+		int right = list.size() - 1;
 		while (left < right) {
 			int mid = left + (right - left) / 2;
-			if (arr.get(mid)) {
+			if (list.get(mid)) {
 				right = mid;
 			} else {
 				left = mid + 1;
 			}
 		}
-		return arr.get(left) ? left : -1;
+		return list.get(left) ? left : -1;
 	}
 
 	public static void main(String[] args) {
