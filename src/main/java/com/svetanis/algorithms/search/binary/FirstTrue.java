@@ -18,7 +18,7 @@ import java.util.List;
 public final class FirstTrue {
 	// Time Complexity: O(n log n)
 
-	public static int vanila(List<Boolean> arr) {
+	public static int vanilla(List<Boolean> arr) {
 		int n = arr.size();
 		int left = 0;
 		int right = n - 1;
@@ -51,12 +51,12 @@ public final class FirstTrue {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(vanila(asList(false, false, true, true, true))); // 2
-		System.out.println(vanila(asList(true))); // 0
-		System.out.println(vanila(asList(false, false, false))); // -1
-		System.out.println(vanila(asList(true, true, true, true, true))); // 0
-		System.out.println(vanila(asList(false, true))); // 1
-		System.out.println(vanila(asList(false, false, false, false, false, false, false, false, true))); // 8
+		System.out.println(vanilla(asList(false, false, true, true, true))); // 2
+		System.out.println(vanilla(asList(true))); // 0
+		System.out.println(vanilla(asList(false, false, false))); // -1
+		System.out.println(vanilla(asList(true, true, true, true, true))); // 0
+		System.out.println(vanilla(asList(false, true))); // 1
+		System.out.println(vanilla(asList(false, false, false, false, false, false, false, false, true))); // 8
 		System.out.println();
 		System.out.println(binary(asList(false, false, true, true, true))); // 2
 		System.out.println(binary(asList(true))); // 0
