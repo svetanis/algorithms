@@ -47,6 +47,6 @@ public final class PrimeFactors {
     print(primeFactors(315));
     print(primeFactors(789));
     print(primeFactors(20));
-
+    print(primeFactors(100));
   }
 }

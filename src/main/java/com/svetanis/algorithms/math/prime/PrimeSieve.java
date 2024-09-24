@@ -47,6 +47,7 @@ public final class PrimeSieve {
 
 	public static void main(String[] args) {
 		System.out.println(sieve(20));
+		System.out.println(sieve(100));
 	}
 }
 // 2, 3, 5, 7, 11, 13, 17, 19
