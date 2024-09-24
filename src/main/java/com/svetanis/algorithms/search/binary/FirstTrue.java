@@ -16,7 +16,7 @@ import java.util.List;
 // return -1
 
 public final class FirstTrue {
-	// Time Complexity: O(n log n)
+	// Time Complexity: O(log n)
 
 	public static int vanilla(List<Boolean> arr) {
 		int n = arr.size();
