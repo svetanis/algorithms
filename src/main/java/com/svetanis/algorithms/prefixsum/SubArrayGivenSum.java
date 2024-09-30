@@ -28,7 +28,7 @@ public final class SubArrayGivenSum {
 			sum += nums.get(i);
 			int diff = sum - target;
 			if (map.containsKey(diff)) {
-				return of(new Interval(map.get(diff), i + 1));
+				return of(new Interval(map.get(diff), i));
 			}
 			map.put(sum, i + 1);
 		}
@@ -37,12 +37,12 @@ public final class SubArrayGivenSum {
 
 	public static void main(String[] args) {
 		List<Integer> list = asList(1, -20, -3, 30, 5, 4);
-		System.out.println(subarraySum(7, list)); // 1, 4: -20, -3, 30
+		System.out.println(subarraySum(7, list)); // 1, 3: -20, -3, 30
 
 		List<Integer> list1 = asList(1, 3, -3, 8, 5, 7);
-		System.out.println(subarraySum(5, list1)); // 2, 4
+		System.out.println(subarraySum(5, list1)); // 2, 3
 
 		List<Integer> list2 = asList(1, 1, 1);
-		System.out.println(subarraySum(3, list2)); // 0, 3
+		System.out.println(subarraySum(3, list2)); // 0, 2
 	}
 }
