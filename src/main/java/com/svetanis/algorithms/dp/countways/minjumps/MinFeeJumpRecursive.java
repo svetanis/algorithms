@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.dp.countways.stairs;
+package com.svetanis.algorithms.dp.countways.minjumps;
 
 import static java.lang.Math.min;
 
-public final class MinFeeJumpTopDown {
+public final class MinFeeJumpRecursive {
 
   // Given a staircase with ‘n’ steps and
   // an array of ‘n’ numbers representing the fee
@@ -14,27 +14,21 @@ public final class MinFeeJumpTopDown {
   // You should assume that you are standing at the first step.
 
   public static int count(int[] a) {
-    int[] dp = new int[a.length];
-    return count(a, dp, 0);
+    return count(a, 0);
   }
 
-  private static int count(int[] a, int[] dp, int index) {
+  private static int count(int[] a, int index) {
     int n = a.length;
     // base case
     if (index > n - 1) {
       return 0;
     }
 
-    if (dp[index] != 0) {
-      return dp[index];
-    }
-
-    int one = count(a, dp, index + 1);
-    int two = count(a, dp, index + 2);
-    int three = count(a, dp, index + 3);
+    int one = count(a, index + 1);
+    int two = count(a, index + 2);
+    int three = count(a, index + 3);
     int min = min(one, min(two, three));
-    dp[index] = a[index] + min;
-    return dp[index];
+    return min + a[index];
   }
 
   public static void main(String[] args) {
