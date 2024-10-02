@@ -1,12 +1,7 @@
 package com.svetanis.algorithms.string.palindrome;
 
-import static com.svetanis.java.base.collect.Lists.filter;
-import static com.svetanis.java.base.collect.Lists.transform;
 import static java.lang.Character.isLetterOrDigit;
 import static java.lang.Character.toLowerCase;
-import static java.util.stream.Collectors.toList;
-
-import java.util.List;
 
 // a phrase is a palindrome if, after
 // converting all uppercase letters
@@ -16,17 +11,20 @@ import java.util.List;
 // alphanumeric characters include 
 // letters and numbers
 
-public final class ValidPalindrome {
+public final class ValidPalindromeSimple {
 	// Time Complexity: O(n)
 
 	public static boolean palindrome(String s) {
-		List<Character> chars = s.codePoints().mapToObj(c -> (char) c).collect(toList());
-		List<Character> filtered = filter(chars, c -> isLetterOrDigit(c));
-		List<Character> list = transform(filtered, c -> toLowerCase(c));
 		int left = 0;
-		int right = list.size() - 1;
+		int right = s.length() - 1;
 		while (left < right) {
-			if (list.get(left) != list.get(right)) {
+			char c1 = s.charAt(left);
+			char c2 = s.charAt(right);
+			if (!isLetterOrDigit(c1)) {
+				left++;
+			} else if (!isLetterOrDigit(c2)) {
+				right--;
+			} else if (toLowerCase(c1) != toLowerCase(c2)) {
 				return false;
 			} else {
 				left++;
