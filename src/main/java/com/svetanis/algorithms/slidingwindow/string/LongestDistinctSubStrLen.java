@@ -3,7 +3,9 @@ package com.svetanis.algorithms.slidingwindow.string;
 import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Math.max;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 // Given a string, find the length of the longest 
@@ -14,6 +16,24 @@ public final class LongestDistinctSubStrLen {
 	// Space complexity: O(1)
 
 	public static int ldl(String s) {
+		int left = 0;
+		int max = MIN_VALUE;
+		Map<Character, Integer> map = new HashMap<>();
+		for (int right = 0; right < s.length(); right++) {
+			char c = s.charAt(right);
+			map.put(c, map.getOrDefault(c, 0) + 1);
+			while (map.get(c) > 1) {
+				char first = s.charAt(left);
+				map.put(first, map.get(first) - 1);
+				left++;
+			}
+			// max length so far
+			max = max(max, right - left + 1);
+		}
+		return max;
+	}
+
+	public static int ldlSimple(String s) {
 		int left = 0;
 		int max = MIN_VALUE;
 		Set<Character> set = new HashSet<>();
