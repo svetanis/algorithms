@@ -64,6 +64,8 @@ public final class StringAnagrams {
 		list.add(Pair.build("abbcabc", "abc"));
 		list.add(Pair.build("BACDGABCDA", "ABCD"));
 		list.add(Pair.build("AAABABAA", "AABA"));
+		list.add(Pair.build("cbaebabacd", "abc"));
+		list.add(Pair.build("abab", "ab"));
 		return newList(list);
 	}
 
