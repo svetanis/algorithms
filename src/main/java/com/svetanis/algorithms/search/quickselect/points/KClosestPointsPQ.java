@@ -1,9 +1,9 @@
 package com.svetanis.algorithms.search.quickselect.points;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.svetanis.algorithms.search.quickselect.points.Distances.distances;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
-import static java.lang.Math.pow;
 
 import java.awt.Point;
 import java.util.List;
@@ -17,30 +17,31 @@ import com.google.common.collect.ImmutableList;
 
 public final class KClosestPointsPQ {
 
-	public static ImmutableList<Point> select(List<Point> points, int k) {
+	public static ImmutableList<Point> kClosest(List<Point> points, int k) {
 		// Time complexity: O(n * log k)
 		// Space complexity: O(k)
 
-		Distance[] distances = distances(points);
+		List<Distance> distances = distances(points);
 		Queue<Distance> pq = priorityQueue(distances, k);
 		// go through the remaining points of the input array,
 		// if a point is closer to the origin than the top point
-		// of the max heap, remove the top point from heap and
+		// of the max heap, remove the top point from heap and add
 		// the point from the input
-		for (int i = k; i < distances.length; i++) {
-			if (distances[k].dist < pq.peek().dist) {
+		for (int i = k; i < distances.size(); i++) {
+			Distance distance = distances.get(i);
+			if (distance.dist < pq.peek().dist) {
 				pq.poll();
-				pq.add(distances[i]);
+				pq.add(distance);
 			}
 		}
 		return kClosest(pq, points);
 	}
 
-	private static Queue<Distance> priorityQueue(Distance[] distances, int k) {
+	private static Queue<Distance> priorityQueue(List<Distance> distances, int k) {
 		Queue<Distance> pq = new PriorityQueue<>((d1, d2) -> d2.dist - d1.dist);
 		// put first k points in the max heap
 		for (int i = 0; i < k; i++) {
-			pq.add(distances[i]);
+			pq.add(distances.get(i));
 		}
 		return pq;
 	}
@@ -56,10 +57,13 @@ public final class KClosestPointsPQ {
 
 	public static void main(String[] args) {
 		List<Point> points1 = points1();
-		print(select(points1, 2));
-		
+		print(kClosest(points1, 2)); // [x=0, y=1], [x=1, y=0]
+
 		List<Point> points2 = points2();
-		print(select(points2, 2));		
+		print(kClosest(points2, 2)); // [x=2, y=-1], [x=1, y=3]
+
+		List<Point> points3 = points3();
+		print(kClosest(points3, 1)); // [x=1, y=1]
 	}
 
 	private static ImmutableList<Point> points1() {
@@ -70,7 +74,6 @@ public final class KClosestPointsPQ {
 		return newList(list);
 	}
 
-
 	private static ImmutableList<Point> points2() {
 		List<Point> list = newArrayList();
 		list.add(new Point(1, 3));
@@ -79,38 +82,11 @@ public final class KClosestPointsPQ {
 		return newList(list);
 	}
 
-	private static Distance[] distances(List<Point> points) {
-		Distance[] a = new Distance[points.size()];
-		for (int i = 0; i < points.size(); i++) {
-			a[i] = new Distance(distToOrigin(points.get(i)), i);
-		}
-		return a;
+	private static ImmutableList<Point> points3() {
+		List<Point> list = newArrayList();
+		list.add(new Point(1, 1));
+		list.add(new Point(2, 2));
+		list.add(new Point(3, 3));
+		return newList(list);
 	}
-
-	private static int distToOrigin(Point p) {
-		return dist(p, new Point(0, 0));
-	}
-
-	private static int dist(Point p1, Point p2) {
-		double dx = p1.getX() - p2.getX();
-		double dy = p1.getY() - p2.getY();
-		return new Double(pow(dx, 2) + pow(dy, 2)).intValue();
-	}
-
-	private static class Distance implements Comparable<Distance> {
-
-		private int dist;
-		private int index;
-
-		public Distance(int dist, int index) {
-			this.dist = dist;
-			this.index = index;
-		}
-
-		@Override
-		public int compareTo(Distance other) {
-			return this.dist - other.dist;
-		}
-	}
-
 }

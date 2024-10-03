@@ -1,11 +1,11 @@
 package com.svetanis.algorithms.search.quickselect.points;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.svetanis.algorithms.search.quickselect.points.Distances.distances;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 import static com.svetanis.java.base.utils.Random.randomIndex;
 import static com.svetanis.java.base.utils.Swap.swap;
-import static java.lang.Math.pow;
 
 import java.awt.Point;
 import java.util.List;
@@ -16,55 +16,57 @@ import com.google.common.collect.ImmutableList;
 // find K closest points to the origin
 
 public final class KClosestPoints {
+	// Time complexity: O(n)
+	// Worst case: O(n^2)
 
-	public static ImmutableList<Point> select(List<Point> points, int k) {
-		// Time complexity: O(n)
-		// Worst case: O(n^2)
-
-		Distance[] a = distances(points);
-		int pivot = select(a, 0, a.length - 1, k);
+	public static ImmutableList<Point> kClosest(List<Point> points, int k) {
+		List<Distance> distances = distances(points);
+		int pivot = select(distances, 0, distances.size() - 1, k);
 		List<Point> list = newArrayList();
 		for (int i = 0; i <= pivot; i++) {
-			list.add(points.get(a[i].index));
+			list.add(points.get(distances.get(i).index));
 		}
 		return newList(list);
 	}
 
-	private static int select(Distance[] a, int left, int right, int k) {
+	private static int select(List<Distance> distances, int left, int right, int k) {
 		int index = randomIndex(left, right);
-		int pivot = partition(a, left, right, index);
+		int pivot = partition(distances, left, right, index);
 		int dist = pivot - left + 1;
 		if (dist == k) {
 			return pivot;
 		} else if (k < dist) {
-			return select(a, left, pivot, k);
+			return select(distances, left, pivot, k);
 		} else {
-			return select(a, pivot + 1, right, k - dist);
+			return select(distances, pivot + 1, right, k - dist);
 		}
 	}
 
 	// smaller elements to the left
-	public static int partition(Distance[] a, int left, int right, int index) {
+	private static int partition(List<Distance> distances, int left, int right, int index) {
 		int i = left;
-		swap(a, right, index);
-		Distance pivot = a[right];
+		swap(distances, right, index);
+		Distance pivot = distances.get(right);
 		for (int j = left; j < right; ++j) {
-			if (a[j].compareTo(pivot) < 1) {
-				swap(a, i, j);
+			if (distances.get(j).compareTo(pivot) < 1) {
+				swap(distances, i, j);
 				i++;
 			}
 		}
 		// move pivot to its final place
-		swap(a, i, right);
+		swap(distances, i, right);
 		return i;
 	}
 
 	public static void main(String[] args) {
 		List<Point> points1 = points1();
-		print(select(points1, 2));
+		print(kClosest(points1, 2)); // [x=0, y=1], [x=1, y=0]
 
 		List<Point> points2 = points2();
-		print(select(points2, 2));
+		print(kClosest(points2, 2)); // [x=2, y=-1], [x=1, y=3]
+
+		List<Point> points3 = points3();
+		print(kClosest(points3, 1)); // [x=1, y=1]
 	}
 
 	private static ImmutableList<Point> points1() {
@@ -83,38 +85,12 @@ public final class KClosestPoints {
 		return newList(list);
 	}
 
-	private static Distance[] distances(List<Point> points) {
-		Distance[] a = new Distance[points.size()];
-		for (int i = 0; i < points.size(); i++) {
-			a[i] = new Distance(distToOrigin(points.get(i)), i);
-		}
-		return a;
-	}
-
-	private static int distToOrigin(Point p) {
-		return dist(p, new Point(0, 0));
-	}
-
-	private static int dist(Point p1, Point p2) {
-		double dx = p1.getX() - p2.getX();
-		double dy = p1.getY() - p2.getY();
-		return new Double(pow(dx, 2) + pow(dy, 2)).intValue();
-	}
-
-	private static class Distance implements Comparable<Distance> {
-
-		private int dist;
-		private int index;
-
-		public Distance(int dist, int index) {
-			this.dist = dist;
-			this.index = index;
-		}
-
-		@Override
-		public int compareTo(Distance other) {
-			return this.dist - other.dist;
-		}
+	private static ImmutableList<Point> points3() {
+		List<Point> list = newArrayList();
+		list.add(new Point(1, 1));
+		list.add(new Point(2, 2));
+		list.add(new Point(3, 3));
+		return newList(list);
 	}
 
 }
