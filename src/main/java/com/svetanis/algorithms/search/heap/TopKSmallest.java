@@ -11,11 +11,9 @@ import java.util.Queue;
 // return top 3 smallest number
 
 public final class TopKSmallest {
+	// Time Complexity: O(k log n)
 
-	public static List<Integer> topK(List<Integer> list) {
-		// Time Complexity: O(k log n)
-
-		int k = 3;
+	public static List<Integer> topK(int k, List<Integer> list) {
 		Queue<Integer> pq = new PriorityQueue<>();
 		for (int element : list) {
 			pq.add(element);
@@ -29,6 +27,6 @@ public final class TopKSmallest {
 
 	public static void main(String[] args) {
 		List<Integer> list = asList(3, 1, 2, 10, 33, 100, 20);
-		System.out.println(topK(list));
+		System.out.println(topK(3, list));
 	}
 }
