@@ -8,28 +8,27 @@ import java.util.Set;
 // substring, which has all distinct characters.
 
 public final class LongestDistinctSubStr {
+	// Time complexity: O(n)
+	// Space complexity: O(1)
 
-	public static String lds(String str) {
-		// Time complexity: O(n)
-		// Space complexity: O(1)
-
+	public static String lds(String s) {
 		int left = 0;
 		String substr = "";
 		Set<Character> set = newHashSet();
-		for (int right = 0; right < str.length(); right++) {
-			char c = str.charAt(right);
+		for (int right = 0; right < s.length(); right++) {
+			char c = s.charAt(right);
 			// if set already contains the char 'c'
 			// slide the left pointer to the right
 			// until the duplicate is removed
 			while (set.contains(c)) {
-				set.remove(str.charAt(left));
+				set.remove(s.charAt(left));
 				left++;
 			}
 			// insert 'c' into the set
 			set.add(c);
 			// max length so far
 			if (right - left + 1 > substr.length()) {
-				substr = str.substring(left, right + 1).trim();
+				substr = s.substring(left, right + 1);
 			}
 		}
 		return substr;
