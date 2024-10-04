@@ -64,6 +64,12 @@ public final class KClosestPointsQS {
 
 		List<Point> points3 = points3();
 		print(kClosest(points3, 1)); // [x=1, y=1]
+
+		List<Point> points4 = points4();
+		print(kClosest(points4, 1)); // [x=-2, y=2]
+
+		List<Point> points5 = points5();
+		print(kClosest(points5, 2)); // [x=2, y=4], [4, 4]
 	}
 
 	private static List<Point> points1() {
@@ -87,6 +93,22 @@ public final class KClosestPointsQS {
 		list.add(new Point(1, 1));
 		list.add(new Point(2, 2));
 		list.add(new Point(3, 3));
+		return list;
+	}
+
+	private static List<Point> points4() {
+		List<Point> list = newArrayList();
+		list.add(new Point(1, 3));
+		list.add(new Point(-2, 2));
+		return list;
+	}
+
+	private static List<Point> points5() {
+		List<Point> list = newArrayList();
+		list.add(new Point(4, 4));
+		list.add(new Point(2, 4));
+		list.add(new Point(8, 1));
+		list.add(new Point(3, -5));
 		return list;
 	}
 }

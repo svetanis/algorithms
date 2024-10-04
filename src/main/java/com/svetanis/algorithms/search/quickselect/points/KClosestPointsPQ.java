@@ -50,7 +50,7 @@ public final class KClosestPointsPQ {
 		List<Point> list = newArrayList();
 		while (!pq.isEmpty()) {
 			int index = pq.poll().index;
-			list.add(points.get(index));
+			list.add(0, points.get(index));
 		}
 		return newList(list);
 	}
@@ -64,6 +64,12 @@ public final class KClosestPointsPQ {
 
 		List<Point> points3 = points3();
 		print(kClosest(points3, 1)); // [x=1, y=1]
+
+		List<Point> points4 = points4();
+		print(kClosest(points4, 1)); // [x=-2, y=2]
+
+		List<Point> points5 = points5();
+		print(kClosest(points5, 2)); // [x=2, y=4], [4, 4]
 	}
 
 	private static ImmutableList<Point> points1() {
@@ -89,4 +95,21 @@ public final class KClosestPointsPQ {
 		list.add(new Point(3, 3));
 		return newList(list);
 	}
+
+	private static ImmutableList<Point> points4() {
+		List<Point> list = newArrayList();
+		list.add(new Point(1, 3));
+		list.add(new Point(-2, 2));
+		return newList(list);
+	}
+
+	private static ImmutableList<Point> points5() {
+		List<Point> list = newArrayList();
+		list.add(new Point(4, 4));
+		list.add(new Point(2, 4));
+		list.add(new Point(8, 1));
+		list.add(new Point(3, -5));
+		return newList(list);
+	}
+
 }
