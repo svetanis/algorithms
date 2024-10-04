@@ -16,7 +16,8 @@ import java.util.Queue;
 // next is index of next element to be stored from array
 
 public final class KSmallestInMSortedArrays {
-	// Time Complexity: O(k log m)
+	// Time Complexity: O(min(k, n) + k * log n)
+	// Space Complexity: O(n)
 
 	public static int kSmallest(List<List<Integer>> lists, int k) {
 		Queue<Node> pq = init(lists);
