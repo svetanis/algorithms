@@ -14,10 +14,10 @@ import com.google.common.collect.ImmutableList;
 // merge n sorted arrays such that resultant array is also sorted
 
 public final class KwayMerge {
+	// Time Complexity: O(n log k)
+	// Space Complexity: O(k)
 
   public static <C extends Comparable<C>> ImmutableList<C> merge(List<List<C>> lists) {
-    // Time Complexity: O(n*k log k)
-
     Queue<Entry<C>> queue = init(lists);
     return merge(queue);
   }

@@ -15,7 +15,8 @@ import java.util.Queue;
 // next is index of next element to be stored from array
 
 public final class MergeKSortedArrays {
-	// Time Complexity: O(n*k log k)
+	// Time Complexity: O(n log k)
+	// Space Complexity: O(k)
 
 	public static int[] merge(int[][] a) {
 		Queue<Node> pq = init(a);

@@ -20,7 +20,8 @@ import com.google.common.collect.ImmutableList;
 // next is index of next element to be stored from array
 
 public final class MergeKSorted {
-	// Time Complexity: O(n*k log k)
+	// Time Complexity: O(n log k)
+	// Space Complexity: O(k)
 
 	public static ImmutableList<Integer> merge(List<List<Integer>> lists) {
 		Queue<Node> pq = init(lists);
