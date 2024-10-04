@@ -1,5 +1,8 @@
 package com.svetanis.algorithms.search.kthelement;
 
+import static java.util.Arrays.asList;
+
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -12,15 +15,15 @@ public final class KthLargestStream {
 	private final int k;
 	private Queue<Integer> pq;
 
-	public KthLargestStream(int[] a, int k) {
+	public KthLargestStream(List<Integer> list, int k) {
 		this.k = k;
 		this.pq = new PriorityQueue<>((x, y) -> x - y);
-		buildPQ(a);
+		buildPQ(list);
 	}
 
-	private void buildPQ(int[] a) {
-		for (int i = 0; i < a.length; i++) {
-			add(a[i]);
+	private void buildPQ(List<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			add(list.get(i));
 		}
 	}
 
@@ -29,7 +32,7 @@ public final class KthLargestStream {
 		pq.add(num);
 		// if heap has more than k numbers,
 		// remove one number
-		if (pq.size() > k) {
+		while (pq.size() > k) {
 			pq.poll();
 		}
 		// return the kth largest number
@@ -37,8 +40,7 @@ public final class KthLargestStream {
 	}
 
 	public static void main(String[] args) {
-		int[] a = { 3, 1, 5, 12, 2, 11 };
-		KthLargestStream kls = new KthLargestStream(a, 4);
+		KthLargestStream kls = new KthLargestStream(asList(3, 1, 5, 12, 2, 11), 4);
 		System.out.println(kls.add(6));
 		System.out.println(kls.add(13));
 		System.out.println(kls.add(4));
