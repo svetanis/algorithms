@@ -9,8 +9,6 @@ import java.awt.Point;
 // rectangles in a 2D plane: the sum
 // of the areas of both rectangles minus
 // any overlapping area
-// https://algo.monster/liteproblems/223
-// https://t.me/easy_java_task/297
 
 public class RectangleArea {
 
