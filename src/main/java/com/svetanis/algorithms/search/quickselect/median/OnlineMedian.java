@@ -16,7 +16,8 @@ import java.util.Scanner;
 // we have seen so far. 
 
 public final class OnlineMedian {
-	// Time Complexity: O(n)
+	// Time Complexity: add - O(log n)
+	// Time Complexity: findMedian - O(1)
 
 	private Queue<Integer> min;
 	private Queue<Integer> max;
