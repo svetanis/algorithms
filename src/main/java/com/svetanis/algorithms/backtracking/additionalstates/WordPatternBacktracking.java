@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking.pruning;
+package com.svetanis.algorithms.backtracking.additionalstates;
 
 import java.util.HashMap;
 import java.util.HashSet;
