@@ -1,5 +1,6 @@
 package com.svetanis.algorithms.twopointers;
 
+import static com.svetanis.java.base.utils.Print.print;
 import static java.util.Arrays.asList;
 
 import java.util.List;
@@ -27,6 +28,24 @@ public final class MoveZeros {
 		}
 	}
 
+	public static void segregate(int[] a) {
+		// Time Complexity: O(n)
+		// Auxiliary Space: O(1)
+
+		int n = a.length;
+		int slow = 0;
+
+		for (int fast = 0; fast < n; fast++) {
+			if (a[fast] != 0) {
+				a[slow++] = a[fast];
+			}
+		}
+
+		while (slow < n) {
+			a[slow++] = 0;
+		}
+	}
+
 	public static void main(String[] args) {
 		List<Integer> list1 = asList(1, 0, 2, 0, 0, 7);
 		List<Integer> list2 = asList(3, 1, 0, 1, 3, 8, 9);
@@ -37,5 +56,9 @@ public final class MoveZeros {
 		System.out.println(list1);
 		System.out.println(list2);
 		System.out.println(list3);
+		
+		int[] a = { 1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0, 9 };
+		segregate(a);
+		print(a);
 	}
 }
