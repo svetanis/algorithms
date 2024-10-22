@@ -50,21 +50,6 @@ public final class ZigZagIterator {
 		return queue;
 	}
 
-	public boolean hasNext() {
-		return !queue.isEmpty();
-	}
-
-	public int next() {
-		Node node = queue.poll();
-		int size = lists.get(node.id).size();
-		if (node.next < size) {
-			int val = lists.get(node.id).get(node.next);
-			int next = node.next + 1;
-			queue.offer(new Node(val, node.id, next));
-		}
-		return node.val;
-	}
-
 	public ImmutableList<Integer> merge() {
 		List<Integer> list = newArrayList();
 		while (hasNext()) {
@@ -73,10 +58,26 @@ public final class ZigZagIterator {
 		return newList(list);
 	}
 
+	public boolean hasNext() {
+		return !queue.isEmpty();
+	}
+
+	public int next() {
+		Node node = queue.poll();
+		int id = node.id;
+		int next = node.next;
+		int size = lists.get(id).size();
+		if (next < size) {
+			int val = lists.get(id).get(next);
+			queue.offer(new Node(val, id, next + 1));
+		}
+		return node.val;
+	}
+
 	public static void main(String[] args) {
 		List<Integer> list1 = asList(1, 2);
 		List<Integer> list2 = asList(3, 4, 5, 6);
 		ZigZagIterator zzi = new ZigZagIterator(list1, list2);
-		System.out.println(zzi.merge());
+		System.out.println(zzi.merge()); // 1, 3, 2, 4, 5, 6
 	}
 }
