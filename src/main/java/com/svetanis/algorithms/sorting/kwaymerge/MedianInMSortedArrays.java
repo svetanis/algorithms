@@ -23,9 +23,11 @@ public final class MedianInMSortedArrays {
 		int n = 0;
 		Queue<Node> pq = new PriorityQueue<>();
 		for (int i = 0; i < lists.size(); i++) {
-			n += lists.get(i).size();
-			int val = lists.get(i).get(0);
-			pq.offer(new Node(val, i, 1));
+			if (lists.get(i).size() > 0) {
+				n += lists.get(i).size();
+				int val = lists.get(i).get(0);
+				pq.offer(new Node(val, i, 1));
+			}
 		}
 		if (isEven(n)) {
 			return onlineMedian(lists, pq);
@@ -46,17 +48,18 @@ public final class MedianInMSortedArrays {
 		while (!pq.isEmpty()) {
 			// get min element and store it in out
 			Node node = pq.poll();
+			int id = node.id;
+			int next = node.next;
 			om.add(node.val);
 			median = om.median();
 			// find the next element that will
 			// replace the current root of heap
 			// the next element belongs to the
 			// same array as the current root
-			int size = lists.get(node.id).size();
-			if (node.next < size) {
-				int val = lists.get(node.id).get(node.next);
-				int next = node.next + 1;
-				pq.offer(new Node(val, node.id, next));
+			int size = lists.get(id).size();
+			if (next < size) {
+				int val = lists.get(id).get(next);
+				pq.offer(new Node(val, id, next + 1));
 			}
 		}
 		return new Double(median).intValue();
@@ -72,17 +75,18 @@ public final class MedianInMSortedArrays {
 		while (!pq.isEmpty() && count < k) {
 			// get min element and store it in out
 			Node node = pq.poll();
+			int id = node.id;
+			int next = node.next;
 			current = node.val;
 			count++;
 			// find the next element that will
 			// replace the current root of heap
 			// the next element belongs to the
 			// same array as the current root
-			int size = lists.get(node.id).size();
-			if (node.next < size) {
-				int val = lists.get(node.id).get(node.next);
-				int next = node.next + 1;
-				pq.offer(new Node(val, node.id, next));
+			int size = lists.get(id).size();
+			if (next < size) {
+				int val = lists.get(id).get(next);
+				pq.offer(new Node(val, id, next + 1));
 			}
 		}
 		return current;
