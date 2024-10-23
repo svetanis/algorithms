@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
+package com.svetanis.algorithms.sorting.kwaymerge;
 
 import java.util.PriorityQueue;
 import java.util.Queue;

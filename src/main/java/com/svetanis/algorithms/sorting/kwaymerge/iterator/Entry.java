@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
+package com.svetanis.algorithms.sorting.kwaymerge.iterator;
 
 import java.util.Iterator;
 

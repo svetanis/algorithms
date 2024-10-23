@@ -1,11 +1,11 @@
-package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
+package com.svetanis.algorithms.sorting.kwaymerge.iterator;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.algorithms.sorting.mergesort.kwaymerge.IntersectionKSortedArrays.isUnival;
-import static com.svetanis.algorithms.sorting.mergesort.kwaymerge.KwayMerge.nextSmallest;
+import static com.svetanis.algorithms.sorting.kwaymerge.iterator.IntersectionKSortedArrays.isUnival;
 import static com.svetanis.java.base.collect.Lists.newList;
+import static java.util.Arrays.asList;
 
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +33,7 @@ Constraints:
 
 public final class SmallestCommonElementKSortedArrays {
 
-	public static Optional<Integer> merge(List<List<Integer>> lists) {
+	public static Optional<Integer> smallestCommon(List<List<Integer>> lists) {
 		int n = lists.size();
 		Queue<Entry<Integer>> queue = init(lists);
 		while (!queue.isEmpty()) {
@@ -56,17 +56,38 @@ public final class SmallestCommonElementKSortedArrays {
 		return queue;
 	}
 
+	private static <C extends Comparable<C>> C nextSmallest(Queue<Entry<C>> queue) {
+		Entry<C> entry = queue.poll();
+		C value = entry.getValue();
+		if (entry.readNext()) {
+			queue.offer(entry);
+		}
+		return value;
+	}
+
 	public static void main(String[] args) {
 		List<List<Integer>> lists = build();
-		System.out.println(merge(lists));
+		System.out.println(smallestCommon(lists)); // 10
+		List<List<Integer>> lists2 = build2();
+		System.out.println(smallestCommon(lists2)); // 1
+
 	}
 
 	private static ImmutableList<List<Integer>> build() {
 		List<List<Integer>> lists = newArrayList();
-		lists.add(newArrayList(1, 3, 5, 10, 20));
-		lists.add(newArrayList(2, 4, 5, 10, 10, 20));
-		lists.add(newArrayList(2, 4, 10));
+		lists.add(asList(1, 3, 5, 10, 20));
+		lists.add(asList(2, 4, 5, 10, 10, 20));
+		lists.add(asList(2, 4, 10, 20));
 		return newList(lists);
 	}
 
+	private static ImmutableList<List<Integer>> build2() {
+		List<List<Integer>> lists = newArrayList();
+		lists.add(asList(1, 3, 5, 7));
+		lists.add(asList(1, 1, 3, 5, 7));
+		lists.add(asList(1, 4, 7, 9));
+		lists.add(asList(1, 7));
+		lists.add(asList(1, 2, 3, 7));
+		return newList(lists);
+	}
 }

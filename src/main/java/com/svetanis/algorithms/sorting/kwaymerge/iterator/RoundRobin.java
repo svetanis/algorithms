@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
+package com.svetanis.algorithms.sorting.kwaymerge.iterator;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
-import static com.svetanis.algorithms.sorting.mergesort.kwaymerge.KwayMerge.merge;
+import static com.svetanis.algorithms.sorting.kwaymerge.iterator.KwayMerge.merge;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 
@@ -12,7 +12,7 @@ import java.util.Queue;
 
 import com.google.common.collect.ImmutableList;
 
-public final class RoundRobinIterator {
+public final class RoundRobin {
 
 	public static <C extends Comparable<C>> ImmutableList<C> roundRobin(List<List<C>> lists) {
 		// Time Complexity: O(n + k)

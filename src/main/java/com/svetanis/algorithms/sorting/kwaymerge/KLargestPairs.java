@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.kwaymerge;
+package com.svetanis.algorithms.sorting.kwaymerge;
 
 import static com.svetanis.java.base.collect.Lists.newList;
 import static java.util.stream.Collectors.toList;
