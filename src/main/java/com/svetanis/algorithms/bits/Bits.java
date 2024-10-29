@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.bits.xor;
+package com.svetanis.algorithms.bits;
 
 public class Bits {
 

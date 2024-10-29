@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.bits.xor;
 
-import static com.svetanis.algorithms.bits.xor.Bits.rightMostSetBit;
+import static com.svetanis.algorithms.bits.Bits.rightMostSetBit;
 
 import com.svetanis.java.base.Pair;
 

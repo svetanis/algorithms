@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.bits.xor;
 
-import static com.svetanis.algorithms.bits.xor.Bits.isPowerOfTwo;
+import static com.svetanis.algorithms.bits.Bits.isPowerOfTwo;
 
 // given a number with only one '1' and
 // all other '0's in its binary representation
