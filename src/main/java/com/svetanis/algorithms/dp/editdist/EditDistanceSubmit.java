@@ -48,10 +48,8 @@ public final class EditDistanceSubmit {
 		System.out.println(editDist("cat", "act")); // 2
 		System.out.println(editDist("COMBO", "COIN")); // 3
 		System.out.println(editDist("Anshuman", "Antihuman")); // 2
-
 		System.out.println(editDist("intention", "execution")); // 5
 		System.out.println(editDist("brainstorming", "imagination")); // 9
 		System.out.println(editDist("dj", "abcdef")); // 5
-
 	}
 }
