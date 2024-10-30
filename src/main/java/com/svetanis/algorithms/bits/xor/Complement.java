@@ -9,13 +9,27 @@ import static java.lang.Math.pow;
 
 public final class Complement {
 
-	public static int count(int n) {
-		// Time Complexity: O(bits)
+	public static int complement2(int num) {
+		if (num == 0) {
+			return 1;
+		}
+		int mask = num;
+		mask |= (mask >> 1);
+		mask |= (mask >> 2);
+		mask |= (mask >> 4);
+		mask |= (mask >> 8);
+		mask |= (mask >> 16);
+		return num ^ mask;
+	}
 
+	public static int complement(int n) {
+		// Time Complexity: O(bits)
+		if (n == 0) {
+			return 1;
+		}
 		int bits = countBits(n);
 		int powerOfTwo = new Double(pow(2, bits)).intValue();
 		int allBitsSet = powerOfTwo - 1;
-
 		return n ^ allBitsSet;
 	}
 
@@ -29,7 +43,8 @@ public final class Complement {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(count(8));
-		System.out.println(count(10));
+		System.out.println(complement(8));
+		System.out.println(complement(10));
+		System.out.println(complement2(2147483647));
 	}
 }
