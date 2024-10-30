@@ -21,19 +21,18 @@ public final class MinWindowSubStrLexSmallest {
 		int matched = 0;
 		int n = s.length();
 		int min = Integer.MAX_VALUE;
-		Map<Character, Integer> map = freqMap(p);
+		Map<Character, Integer> pc = freqMap(p);
+		Map<Character, Integer> wc = new HashMap<>();
 
 		for (int right = 0; right < s.length(); right++) {
 			char c = s.charAt(right);
-			if (map.containsKey(c)) {
-				map.put(c, map.get(c) - 1);
-				if (map.get(c) >= 0) {
-					matched++;
-				}
+			wc.put(c, wc.getOrDefault(c, 0) + 1);
+			if (pc.containsKey(c) && pc.get(c) == wc.get(c)) {
+				matched++;
 			}
 
 			// shrink window
-			while (matched == p.length()) {
+			while (matched == pc.size()) {
 				int windowSize = right - left + 1;
 				boolean equals = min == windowSize;
 				String substr = s.substring(left, right + 1);
@@ -43,13 +42,11 @@ public final class MinWindowSubStrLexSmallest {
 					start = left;
 				}
 				char front = s.charAt(left);
-				left++;
-				if (map.containsKey(front)) {
-					if (map.get(front) == 0) {
-						matched--;
-					}
-					map.put(front, map.get(front) + 1);
+				wc.put(front, wc.get(front) - 1);
+				if (pc.containsKey(front) && wc.get(front) < pc.get(front)) {
+					matched--;
 				}
+				left++;
 			}
 		}
 		return min > n ? "" : s.substring(start, start + min);
