@@ -7,18 +7,18 @@ import static java.lang.Math.min;
 // Write a function to calculate the count 
 // of the min number of edit operations.
 
-public final class EditDistanceRecursive {
+public final class EditDistanceSubmit {
 
 	public static int editDist(String x, String y) {
 		// Time complexity: O(n * m)
 
 		int n = x.length();
 		int m = y.length();
-		return editDist(x, y, n, m);
+		Integer[][] dp = new Integer[n + 1][m + 1];
+		return editDist(x, y, n, m, dp);
 	}
 
-	private static int editDist(String x, String y, int n, int m) {
-
+	private static int editDist(String x, String y, int n, int m, Integer[][] dp) {
 		// base cases
 		if (n == 0 && m == 0) {
 			return 0;
@@ -29,16 +29,18 @@ public final class EditDistanceRecursive {
 		if (m == 0) {
 			return n;
 		}
-
-		if (x.charAt(n - 1) == y.charAt(m - 1)) {
-			return editDist(x, y, n - 1, m - 1);
+		if (dp[n][m] != null) {
+			return dp[n][m];
 		}
-
-		int delete = 1 + editDist(x, y, n - 1, m);
-		int insert = 1 + editDist(x, y, n, m - 1);
-		int replace = 1 + editDist(x, y, n - 1, m - 1);
-
-		return min(min(delete, insert), replace);
+		if (x.charAt(n - 1) == y.charAt(m - 1)) {
+			dp[n][m] = editDist(x, y, n - 1, m - 1, dp);
+		} else {
+			int delete = 1 + editDist(x, y, n - 1, m, dp);
+			int insert = 1 + editDist(x, y, n, m - 1, dp);
+			int replace = 1 + editDist(x, y, n - 1, m - 1, dp);
+			dp[n][m] = min(min(delete, insert), replace);
+		}
+		return dp[n][m];
 	}
 
 	public static void main(String[] args) {
@@ -46,8 +48,10 @@ public final class EditDistanceRecursive {
 		System.out.println(editDist("cat", "act")); // 2
 		System.out.println(editDist("COMBO", "COIN")); // 3
 		System.out.println(editDist("Anshuman", "Antihuman")); // 2
+
 		System.out.println(editDist("intention", "execution")); // 5
 		System.out.println(editDist("brainstorming", "imagination")); // 9
 		System.out.println(editDist("dj", "abcdef")); // 5
+
 	}
 }

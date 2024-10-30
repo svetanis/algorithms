@@ -54,8 +54,12 @@ public final class EditDistanceTopDown {
   }
 
   public static void main(String[] args) {
-    System.out.println(editDist("Zeil", "trials"));
-    System.out.println(editDist("cat", "act"));
-    System.out.println(editDist("COMBO", "COIN"));
+		System.out.println(editDist("Zeil", "trials")); // 4
+		System.out.println(editDist("cat", "act")); // 2
+		System.out.println(editDist("COMBO", "COIN")); // 3
+		System.out.println(editDist("Anshuman", "Antihuman")); // 2
+		System.out.println(editDist("intention", "execution")); // 5
+		System.out.println(editDist("brainstorming", "imagination")); // 9
+		System.out.println(editDist("dj", "abcdef")); // 5
   }
 }
