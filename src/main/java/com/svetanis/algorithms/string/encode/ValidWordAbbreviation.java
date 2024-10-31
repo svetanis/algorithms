@@ -6,7 +6,8 @@ import static java.lang.Integer.parseInt;
 // 408. Valid Word Abbreviation
 
 public final class ValidWordAbbreviation {
-
+	// Time Complexity: O(n + m)
+	
 	public static boolean valid(String word, String abbreviation) {
 		int i = 0; // word index
 		int j = 0; // abbreviation index
