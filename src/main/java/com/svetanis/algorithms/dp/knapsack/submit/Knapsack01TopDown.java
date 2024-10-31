@@ -13,9 +13,8 @@ import java.util.List;
 // we put an item in the knapsack or we skip it.
 
 public final class Knapsack01TopDown {
-
-	// Time Complexity: O(2^n)
-	// Space Complexity: O(n)
+	// Time Complexity: O(n * w)
+	// Space Complexity: O(n * w)
 
 	public static int knapsack(List<Integer> weights, List<Integer> values, int max) {
 		int n = weights.size();
