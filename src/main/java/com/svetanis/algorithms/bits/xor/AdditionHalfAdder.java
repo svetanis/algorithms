@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.bits.xor;
 
+// 371. Sum of Two Integers
+
 public final class AdditionHalfAdder {
 
 	public static int add(int x, int y) {
