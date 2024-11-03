@@ -10,6 +10,8 @@ import java.util.Queue;
 // 2402. Meeting Rooms III
 
 public final class MostBookedMeetingRoom {
+	// Time Complexity: O(m log m)
+	// Space Complexity: O(n)
 
 	public static int mostBooked(int n, int[][] meetings) {
 		List<Interval> intervals = intervals(meetings);
