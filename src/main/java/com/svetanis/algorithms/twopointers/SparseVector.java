@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// given a sorted list of numbers,
-// remove duplicates and return
-// the new length. do it in-place
-// without using extra memory
+// 1570. Dot Product of Two Sparse Vectors
 
 public final class SparseVector {
+	// Time Complexity: O(min(k, l))
+	// k and l are number of non-zero elements
 
 	public SparseVector(List<Integer> list) {
 		this.map = build(list);
