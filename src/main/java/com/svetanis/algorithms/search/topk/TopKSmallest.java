@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.heap;
+package com.svetanis.algorithms.search.topk;
 
 import static java.util.Arrays.asList;
 
