@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.mincost;
+package com.svetanis.algorithms.dp.countways.stairs;
 
 // 746. Min Cost Climbing Stairs
 
