@@ -2,7 +2,7 @@ package com.svetanis.algorithms.dp.countways.stairs;
 
 // 746. Min Cost Climbing Stairs
 
-public final class MinCostClimbStairs {
+public final class MinCostClimbStairsMemoryOptimized {
 	// Time Complexity: O(n)
 
 	public static int minCost(int[] cost) {
