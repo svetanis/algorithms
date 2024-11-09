@@ -21,7 +21,21 @@ package com.svetanis.algorithms.dp.grid;
 public final class RobotOnGridBottomUp {
 	// Time Complexity: O(n * m)
 	// Space Complexity: O(n * m)
-	
+
+	public static int uniquePathsSimple(int m, int n) {
+		int[][] dp = new int[m + 1][n + 1];
+		dp[1][1] = 1;
+		for (int i = 1; i <= m; i++) {
+			for (int j = 1; j <= n; j++) {
+				if (i == 1 && j == 1) {
+					continue;
+				}
+				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+			}
+		}
+		return dp[m][n];
+	}
+
 	public static int countUniquePaths(int m, int n) {
 		int[][] dp = init(m, n);
 		for (int r = 1; r < m; r++) {
@@ -45,9 +59,9 @@ public final class RobotOnGridBottomUp {
 
 	public static void main(String[] args) {
 		// m rows and n columns
-		System.out.println(countUniquePaths(3, 2)); // 3
-		System.out.println(countUniquePaths(7, 3)); // 28
-		System.out.println(countUniquePaths(1, 1)); // 1
-		System.out.println(countUniquePaths(10, 5)); // 715
+		System.out.println(uniquePathsSimple(3, 2)); // 3
+		System.out.println(uniquePathsSimple(7, 3)); // 28
+		System.out.println(uniquePathsSimple(1, 1)); // 1
+		System.out.println(uniquePathsSimple(10, 5)); // 715
 	}
 }
