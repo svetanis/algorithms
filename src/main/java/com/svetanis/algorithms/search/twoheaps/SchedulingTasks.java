@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.topk;
+package com.svetanis.algorithms.search.twoheaps;
 
 import static com.google.common.collect.Lists.newLinkedList;
 import static com.google.common.collect.Maps.newHashMap;
