@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math;
+package com.svetanis.algorithms.math.geometry;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

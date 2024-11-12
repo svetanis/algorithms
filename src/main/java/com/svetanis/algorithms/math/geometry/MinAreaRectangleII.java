@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math;
+package com.svetanis.algorithms.math.geometry;
 
 import java.util.ArrayList;
 import java.util.HashSet;
