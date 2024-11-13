@@ -6,27 +6,21 @@ package com.svetanis.algorithms.dp.common;
 // write a method to count the number of times 
 // the pattern appears in the string as a subsequence.
 
-public final class SubSeqPatternMatchingBottomUp {
+public final class SubSeqPatternMatchingMemoryOptimized {
 	// Time Complexity: O(n * m)
 
 	public static int count(String str, String pat) {
-		int n = str.length();
 		int m = pat.length();
-
-		int[][] dp = new int[n + 1][m + 1];
-		for (int i = 0; i <= n; i++) {
-			dp[i][0] = 1;
-		}
-
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= m; j++) {
-				if (str.charAt(i - 1) == pat.charAt(j - 1)) {
-					dp[i][j] = dp[i - 1][j - 1]; // incl
+		int[] dp = new int[m + 1];
+		dp[0] = 1;
+		for (char c : str.toCharArray()) {
+			for (int j = m; j > 0; j--) {
+				if (c == pat.charAt(j - 1)) {
+					dp[j] += dp[j - 1];
 				}
-				dp[i][j] += dp[i - 1][j]; // excl
 			}
 		}
-		return dp[n][m];
+		return dp[m];
 	}
 
 	public static void main(String[] args) {
