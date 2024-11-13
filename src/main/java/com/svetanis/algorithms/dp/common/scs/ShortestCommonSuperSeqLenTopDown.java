@@ -14,6 +14,7 @@ import java.util.Map;
 // ‘s1’ and ‘s2’ as subsequences.
 
 public final class ShortestCommonSuperSeqLenTopDown {
+	// Time Complexity: O(n * m)
 
 	public static int scs(String s1, String s2) {
 		int n = s1.length();

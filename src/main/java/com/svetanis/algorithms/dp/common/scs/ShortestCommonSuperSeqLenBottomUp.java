@@ -33,8 +33,8 @@ public final class ShortestCommonSuperSeqLenBottomUp {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(scs("geek", "eke"));
-		System.out.println(scs("AGGTAB", "GXTXAYB"));
+		System.out.println(scs("geek", "eke")); // 5
+		System.out.println(scs("AGGTAB", "GXTXAYB")); // 9
 		System.out.println(scs("abac", "cab")); // 5
 		System.out.println(scs("aaaaaaaa", "aaaaaaaa")); // 8
 	}
