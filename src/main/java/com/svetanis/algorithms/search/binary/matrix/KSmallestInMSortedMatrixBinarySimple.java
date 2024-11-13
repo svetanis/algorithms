@@ -1,58 +1,44 @@
 package com.svetanis.algorithms.search.binary.matrix;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 //378. Kth Smallest Element in a Sorted Matrix
 
 // given an n x n matrix where each row
 // and col is sorted in ascending order
 // find the k-th smallest element in the matrix
 
-public final class KSmallestInMSortedMatrixBinary {
+public final class KSmallestInMSortedMatrixBinarySimple {
 	// Time Complexity: O(n * log(max - min))
 	// Space Complexity: O(1)
 
 	public static int kSmallest(int[][] matrix, int k) {
 		int n = matrix.length;
-		int start = matrix[0][0];
-		int end = matrix[n - 1][n - 1];
-		while (start < end) {
-			int mid = start + (end - start) / 2;
-			Result result = count(matrix, mid);
-			int count = result.count;
-			if (count == k) {
-				return result.start;
-			}
-			if (count < k) {
-				start = result.end;
+		int low = matrix[0][0];
+		int high = matrix[n - 1][n - 1];
+		while (low < high) {
+			int mid = low + (high - low) / 2;
+			if (countLessOrEqual(matrix, mid, k)) {
+				high = mid;
 			} else {
-				end = result.start;
+				low = mid + 1;
 			}
 		}
-		return start;
+		return low;
 	}
 
-	private static Result count(int[][] matrix, int mid) {
+	private static boolean countLessOrEqual(int[][] matrix, int mid, int k) {
 		int n = matrix.length;
 		int count = 0;
 		int row = n - 1;
 		int col = 0;
-		int left = matrix[0][0];
-		int right = matrix[n - 1][n - 1];
 		while (row >= 0 && col < n) {
 			if (matrix[row][col] > mid) {
-				// smallest number greater than mid
-				right = min(right, matrix[row][col]);
 				row--;
 			} else {
-				// largest number less than mid
-				left = max(left, matrix[row][col]);
 				col++;
 				count += row + 1;
 			}
 		}
-		return new Result(left, right, count);
+		return count >= k;
 	}
 
 	public static void main(String[] args) {
@@ -67,17 +53,5 @@ public final class KSmallestInMSortedMatrixBinary {
 
 		int[][] m4 = { { 1, 5, 9 }, { 10, 11, 13 }, { 12, 13, 15 } };
 		System.out.println(kSmallest(m4, 8)); // 13
-	}
-
-	private static final class Result {
-		private int start;
-		private int end;
-		private int count;
-
-		public Result(int start, int end, int count) {
-			this.start = start;
-			this.end = end;
-			this.count = count;
-		}
 	}
 }

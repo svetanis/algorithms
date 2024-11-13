@@ -3,6 +3,8 @@ package com.svetanis.algorithms.sorting.kwaymerge;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+// 378. Kth Smallest Element in a Sorted Matrix
+
 // given an n x n matrix where each row
 // and col is sorted in ascending order
 // find the k-th smallest element in the matrix
