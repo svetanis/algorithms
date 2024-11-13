@@ -3,42 +3,42 @@ package com.svetanis.algorithms.dp.palindrome;
 import static java.lang.Math.max;
 import static org.apache.commons.lang3.StringUtils.reverse;
 
+// 516. Longest Palindromic Subsequence
+
 public final class LongestPalindromeSubSeqLcs {
+	// Time Complexity: O(n^2)
+	// Space Complexity: (O(n^2)
 
 	public static String lps(String str) {
-		// Time Complexity: O(n^2)
-		// Space Complexity: (O(n^2)
 		int n = str.length();
 		String reversed = reverse(str);
-		Integer[][] memo = new Integer[n + 1][n + 1];
-		lcs(str, reversed, n, n, memo);
+		Integer[][] dp = new Integer[n + 1][n + 1];
+		lcs(str, reversed, n, n, dp);
 		// start from the right-most-bottom-most
 		// corner and one by one store chars in lcs[]
-		return reconstruct(str, reversed, memo, n, n);
+		return reconstruct(str, reversed, dp, n, n);
 	}
 
-	private static int lcs(String s1, String s2, int i, int j, 
-			Integer[][] memo) {
+	private static int lcs(String s1, String s2, int i, int j, Integer[][] dp) {
 		if (i == 0 || j == 0) {
-			memo[i][j] = 0;
+			dp[i][j] = 0;
 			return 0;
 		}
-		if (memo[i][j] != null) {
-			return memo[i][j];
+		if (dp[i][j] != null) {
+			return dp[i][j];
 		}
 		if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-			memo[i][j] = 1 + lcs(s1, s2, i - 1, j - 1, memo);
-			return memo[i][j];
+			dp[i][j] = 1 + lcs(s1, s2, i - 1, j - 1, dp);
+			return dp[i][j];
 		}
-		int top = lcs(s1, s2, i - 1, j, memo);
-		int left = lcs(s1, s2, i, j - 1, memo);
+		int top = lcs(s1, s2, i - 1, j, dp);
+		int left = lcs(s1, s2, i, j - 1, dp);
 		int max = max(top, left);
-		memo[i][j] = max;
+		dp[i][j] = max;
 		return max;
 	}
 
-	private static String reconstruct(String s1, String s2, 
-			Integer[][] dp, int n, int m) {
+	private static String reconstruct(String s1, String s2, Integer[][] dp, int n, int m) {
 		if (n == 0 || m == 0) {
 			return "";
 		}
