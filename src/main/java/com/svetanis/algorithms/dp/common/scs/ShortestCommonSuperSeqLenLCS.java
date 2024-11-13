@@ -2,6 +2,8 @@ package com.svetanis.algorithms.dp.common.scs;
 
 import static com.svetanis.algorithms.dp.common.lcs.LongestCommonSubSeqLenBottomUp.lcs;
 
+// 1092. Shortest Common Supersequence
+
 public final class ShortestCommonSuperSeqLenLCS {
 
   public static int scs(String s1, String s2) {
@@ -12,12 +14,9 @@ public final class ShortestCommonSuperSeqLenLCS {
   }
 
   public static void main(String[] args) {
-    String s1 = "geek";
-    String s2 = "eke";
-    System.out.println(scs(s1, s2));
-
-    String s3 = "AGGTAB";
-    String s4 = "GXTXAYB";
-    System.out.println(scs(s3, s4));
+		System.out.println(scs("geek", "eke"));
+		System.out.println(scs("AGGTAB", "GXTXAYB"));
+		System.out.println(scs("abac", "cab")); // 5
+		System.out.println(scs("aaaaaaaa", "aaaaaaaa")); // 8
   }
 }
