@@ -1,6 +1,6 @@
 package com.svetanis.algorithms.dp.lis;
 
-import static java.lang.Math.max;
+import java.util.Arrays;
 
 // 300. Longest Increasing Subsequence
 
@@ -9,34 +9,44 @@ import static java.lang.Math.max;
 // In an increasing subsequence, all the elements 
 // are in increasing order (from lowest to highest).
 
-public final class LisLenTopDown {
-  // Time Complexity: O(n^2)
+public final class LisLenDPBinarySearch {
+	// Time Complexity: O(n log n)
+
+	private final static int INF = Integer.MAX_VALUE;
 
 	public static int lis(int[] a) {
 		int n = a.length;
-		int[][] dp = new int[n][n + 1];
-		return lis(a, 0, -1, dp);
+		int[] dp = new int[n + 1];
+		Arrays.fill(dp, INF);
+		dp[0] = -INF;
+
+		for (int i = 0; i < n; i++) {
+			int index = upperBound(dp, a[i]);
+			if (dp[index - 1] < a[i] && a[i] < dp[index]) {
+				dp[index] = a[i];
+			}
+		}
+		int max = 0;
+		for (int i = 0; i <= n; i++) {
+			if (dp[i] < INF) {
+				max = i;
+			}
+		}
+		return max;
 	}
 
-	private static int lis(int[] a, int index, int prev, int[][] dp) {
-		int n = a.length;
-		// base case
-		if (index == n) {
-			return 0;
+	private static int upperBound(int[] a, int target) {
+		int low = 0;
+		int high = a.length;
+		while (low < high) {
+			int mid = low + (high - low) / 2;
+			if (a[mid] > target) {
+				high = mid;
+			} else {
+				low = mid + 1;
+			}
 		}
-		if (dp[index][prev + 1] != 0) {
-			return dp[index][prev + 1];
-		}
-
-		// include
-		int incl = 0;
-		if (prev == -1 || a[index] > a[prev]) {
-			incl = 1 + lis(a, index + 1, index, dp);
-		}
-		// exclude
-		int excl = lis(a, index + 1, prev, dp);
-		dp[index][prev + 1] = max(incl, excl);
-		return dp[index][prev + 1];
+		return low;
 	}
 
 	public static void main(String[] args) {
