@@ -16,10 +16,10 @@ public final class LargestDivisibleSubsetLenTopDown {
 		int n = nums.size();
 		Collections.sort(nums);
 		int[][] dp = new int[n][n + 1];
-		return lis(nums, 0, -1, dp);
+		return lds(nums, 0, -1, dp);
 	}
 
-	private static int lis(List<Integer> nums, int index, int prev, int[][] dp) {
+	private static int lds(List<Integer> nums, int index, int prev, int[][] dp) {
 		int n = nums.size();
 		// base case
 		if (index == n) {
@@ -32,10 +32,10 @@ public final class LargestDivisibleSubsetLenTopDown {
 		// include
 		int incl = 0;
 		if (prev == -1 || nums.get(index) % nums.get(prev) == 0) {
-			incl = 1 + lis(nums, index + 1, index, dp);
+			incl = 1 + lds(nums, index + 1, index, dp);
 		}
 		// exclude
-		int excl = lis(nums, index + 1, prev, dp);
+		int excl = lds(nums, index + 1, prev, dp);
 		dp[index][prev + 1] = max(incl, excl);
 		return dp[index][prev + 1];
 	}

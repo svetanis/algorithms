@@ -19,12 +19,12 @@ public final class LargestDivisibleSubsetLenMemoization {
 		Arrays.fill(dp, -1);
 		int max = 0;
 		for (int i = 0; i < n; i++) {
-			max = Math.max(max, lis(nums, i, dp));
+			max = Math.max(max, lds(nums, i, dp));
 		}
 		return max;
 	}
 
-	private static int lis(List<Integer> nums, int index, int[] dp) {
+	private static int lds(List<Integer> nums, int index, int[] dp) {
 		// base case: first num can always form a subset
 		if (index == 0) {
 			return 1;
@@ -39,7 +39,7 @@ public final class LargestDivisibleSubsetLenMemoization {
 			// extend prev chain
 			int prev = nums.get(i);
 			if (curr % prev == 0) {
-				int len = 1 + lis(nums, i, dp);
+				int len = 1 + lds(nums, i, dp);
 				max = Math.max(max, len);
 			}
 		}
