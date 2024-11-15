@@ -8,6 +8,8 @@ import java.util.List;
 // 368. Largest Divisible Subset
 
 public final class LargestDivisibleSubset {
+	// Time Complexity: O(n^2)
+	// Space Complexity: O(n)
 
 	public static List<Integer> lds(int[] a) {
 		Arrays.sort(a);
