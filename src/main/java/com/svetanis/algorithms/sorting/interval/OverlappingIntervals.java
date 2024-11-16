@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.interval;
+package com.svetanis.algorithms.sorting.interval;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;

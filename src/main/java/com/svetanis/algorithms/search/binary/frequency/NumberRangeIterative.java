@@ -4,7 +4,7 @@ import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
 
 import com.google.common.base.Optional;
-import com.svetanis.algorithms.sorting.mergesort.interval.Interval;
+import com.svetanis.algorithms.sorting.interval.Interval;
 
 // given an array of numbers sorted in ascending order
 // find the range of a given number k

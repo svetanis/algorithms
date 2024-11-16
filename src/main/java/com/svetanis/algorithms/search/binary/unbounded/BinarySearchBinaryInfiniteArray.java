@@ -5,7 +5,7 @@ import static com.google.common.base.Optional.of;
 import static java.lang.Integer.MAX_VALUE;
 
 import com.google.common.base.Optional;
-import com.svetanis.algorithms.sorting.mergesort.interval.Interval;
+import com.svetanis.algorithms.sorting.interval.Interval;
 
 // given an infinite sorted array (or an array with unknown size)
 // find the index of the given number k if it is present in the array

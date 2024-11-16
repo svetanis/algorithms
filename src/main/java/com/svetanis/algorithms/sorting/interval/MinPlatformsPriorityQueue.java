@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.interval;
+package com.svetanis.algorithms.sorting.interval;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.sort;
@@ -8,35 +8,36 @@ import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.PriorityQueue;
 
-// given a list of intervals, find the point
-// where the max number of intervals overlap
+// given a list of intervals representing 
+// the arrival and departure times of trains, 
+// find min number of platforms required for 
+// the train station so that no train has to wait.
 
-public final class MaxGuestsPriorityQueue {
+public final class MinPlatformsPriorityQueue {
   // Time Complexity: O(n*log n)
-  // Space Complexity: O(n)
 	
-  public static int maxGuests(List<Interval> intervals) {
-    int max = 0;
+  public static int minPlatforms(List<Interval> intervals) {
+    int min = 0;
     List<Interval> sorted = sort(intervals, comparing(i -> i.start));
     PriorityQueue<Interval> pq = new PriorityQueue<>(comparing(i -> i.end));
-    
     for (Interval interval : sorted) {
       while (!pq.isEmpty() && interval.start > pq.peek().end) {
         pq.poll();
       }
       pq.offer(interval);
-      max = max(max, pq.size());
+      min = max(min, pq.size());
     }
-    return max;
+    return min;
   }
 
   public static void main(String[] args) {
     List<Interval> list = newArrayList();
-    list.add(new Interval(1, 4));
-    list.add(new Interval(2, 5));
-    list.add(new Interval(10, 12));
-    list.add(new Interval(5, 9));
-    list.add(new Interval(5, 12));
-    System.out.println(maxGuests(list));
+    list.add(new Interval(900, 910));
+    list.add(new Interval(940, 1200));
+    list.add(new Interval(950, 1120));
+    list.add(new Interval(1100, 1130));
+    list.add(new Interval(1500, 1900));
+    list.add(new Interval(1800, 2000));
+    System.out.println(minPlatforms(list));
   }
 }

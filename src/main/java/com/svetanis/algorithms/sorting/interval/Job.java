@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.interval;
+package com.svetanis.algorithms.sorting.interval;
 
 public final class Job {
   protected int start;

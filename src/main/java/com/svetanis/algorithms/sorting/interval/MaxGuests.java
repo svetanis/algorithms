@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.mergesort.interval;
+package com.svetanis.algorithms.sorting.interval;
 
 import static java.util.Arrays.sort;
 
