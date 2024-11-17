@@ -5,22 +5,25 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
-// Partition problem is to determine whether a given set can be partitioned  
-// into two subsets such that the sum of elements in both subsets is same. 
+// 416. Partition Equal Subset Sum
+
+// Partition problem is to determine 
+// whether a given set can be partitioned  
+// into two subsets such that the sum 
+// of elements in both subsets is same. 
 
 public final class BalancedPartitionTopDown {
+	// Time Complexity: O(sum * n)
+	// Space Complexity: O(sum * n)
 
 	public static boolean canPartition(List<Integer> nums) {
-		// Time Complexity: O(sum * n)
-		// Space Complexity: O(sum * n)
-
 		int sum = nums.stream().mapToInt(Integer::intValue).sum();
 		// if sum is odd there can't be
 		// two subsets with equal sum
 		if (isOdd(sum)) {
 			return false;
 		}
-		return isSum(nums, sum/2);
+		return isSum(nums, sum / 2);
 	}
 
 	private static boolean isSum(List<Integer> nums, int sum) {
@@ -29,28 +32,20 @@ public final class BalancedPartitionTopDown {
 		return isSum(nums, 0, sum, dp);
 	}
 
-	private static boolean isSum(List<Integer> nums, int i, int sum, 
-			Boolean[][] dp) {
-		// Time complexity: O(n * sum)
-
+	private static boolean isSum(List<Integer> nums, int i, int sum, Boolean[][] dp) {
 		if (sum == 0) {
 			return true;
 		}
-
 		if (i >= nums.size() || sum < 0) {
 			return false;
 		}
-
 		if (dp[i][sum] != null) {
 			return dp[i][sum];
 		}
-
 		// 1. include a[i]
 		boolean incl = isSum(nums, i + 1, sum - nums.get(i), dp);
-
 		// 2. exclude a[i]
 		boolean excl = isSum(nums, i + 1, sum, dp);
-
 		dp[i][sum] = incl || excl;
 		return dp[i][sum];
 	}

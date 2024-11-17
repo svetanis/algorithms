@@ -5,15 +5,18 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
-// Partition problem is to determine whether a given set can be partitioned  
-// into two subsets such that the sum of elements in both subsets is same. 
+// 416. Partition Equal Subset Sum
+
+// Partition problem is to determine 
+// whether a given set can be partitioned  
+// into two subsets such that the sum 
+// of elements in both subsets is same. 
 
 public final class BalancedPartitionBottomUp {
+	// Time Complexity: O(sum * n)
+	// Space Complexity: O(sum * n)
 
 	public static boolean canPartition(List<Integer> nums) {
-		// Time Complexity: O(sum * n)
-		// Space Complexity: O(sum * n)
-
 		int sum = nums.stream().mapToInt(Integer::intValue).sum();
 		// if sum is odd there can't be
 		// two subsets with equal sum
