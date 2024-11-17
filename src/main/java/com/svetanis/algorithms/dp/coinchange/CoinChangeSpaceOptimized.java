@@ -4,6 +4,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 518. Coin Change II
+
 // Given a value N, if we want to make change for N cents, 
 // and we have infinite supply of each of S = { S1, S2, .. , Sm} valued coins,
 // how many ways can we make the change? The order of coins doesn’t matter.
@@ -17,6 +19,8 @@ import java.util.List;
 // using the base case (n = 0)
 
 public final class CoinChangeSpaceOptimized {
+	// Time Complexity: O(n * amount)
+	// Space Complexity: O(amount)
 
 	public static int count(List<Integer> list, int amount) {
 		int[] dp = new int[amount + 1];

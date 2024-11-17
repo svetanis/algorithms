@@ -5,6 +5,8 @@ import static java.util.Arrays.fill;
 
 import java.util.List;
 
+// 518. Coin Change II
+
 // n - size of array of coins S
 // V - coin value
 // we need n + 1 rows as the table is
@@ -12,6 +14,8 @@ import java.util.List;
 // using the base case 0 value case (n = 0)
 
 public final class CoinChangeBottomUp {
+	// Time Complexity: O(n * amount)
+	// Space Complexity: O(n * amount)
 
 	public static int count(List<Integer> list, int amount) {
 		int n = list.size();
