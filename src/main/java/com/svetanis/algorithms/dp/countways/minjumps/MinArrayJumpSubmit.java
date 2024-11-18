@@ -1,7 +1,5 @@
 package com.svetanis.algorithms.dp.countways.minjumps;
 
-import static java.lang.Math.min;
-
 // 45. Jump Game II
 
 // Given an array of positive numbers,
@@ -13,34 +11,25 @@ import static java.lang.Math.min;
 // If an element is 0,
 // then we cannot move through that element.
 
-public final class MinArrayJumpRecursive {
-
-	private static final int INF = Integer.MAX_VALUE;
+public final class MinArrayJumpSubmit {
+	// Time Complexity: O(n)
 
 	public static int count(int[] a) {
-		int min = count(a, 0);
-		return min == INF ? -1 : min;
-	}
-
-	private static int count(int[] a, int index) {
 		int n = a.length;
-		if (index == n - 1) {
-			return 0;
-		}
-		if (a[index] == 0) {
-			return INF;
-		}
-		int min = INF;
-		int start = index + 1;
-		int end = index + a[index];
-		while (start < n && start <= end) {
-			int jumps = count(a, start);
-			if (jumps != INF) {
-				min = min(min, jumps + 1);
+		int jumps = 0; // jumps counter
+		int jump = 0; // max reach for current position
+		int max = 0; // max reach of the last jump
+		for (int start = 0; start < n - 1; start++) {
+			jump = Math.max(jump, start + a[start]);
+			if (max == start) {
+				jumps++;
+				max = jump;
+				if (jump >= n - 1) {
+					break;
+				}
 			}
-			start++;
 		}
-		return min;
+		return jumps;
 	}
 
 	public static void main(String[] args) {
