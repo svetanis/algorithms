@@ -22,19 +22,21 @@ public final class SlidingWindowMaxPriorityQueue {
 			return newList(max(a));
 		}
 		List<Integer> list = newArrayList();
-		PriorityQueue<Integer> pq = new PriorityQueue<>((x,y) -> y - x);
+		PriorityQueue<Pair> pq = new PriorityQueue<>();
 		for (int i = 0; i < w; ++i) {
-			pq.offer(a[i]);
+			pq.offer(new Pair(a[i], i));
 		}
 		for (int i = w; i < n; ++i) {
-			list.add(pq.peek());
-			while (!pq.isEmpty() && a[i - w + 1] > pq.peek()) {
+			Pair p = pq.peek();
+			list.add(p.value);
+			while (!pq.isEmpty() && p.index <= i - w) {
 				pq.poll();
+				p = pq.peek();
 			}
-			pq.offer(a[i]);
+			pq.offer(new Pair(a[i], i));
 		}
 		// max element of last window
-		list.add(pq.peek());
+		list.add(pq.peek().value);
 		return newList(list);
 	}
 
@@ -47,5 +49,20 @@ public final class SlidingWindowMaxPriorityQueue {
 
 		int[] a3 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
 		print(maxSlidingWindow(a3, 1)); // 10 9 8 7 6 5 4 3 2 1
+	}
+	
+	private static class Pair implements Comparable<Pair>{
+		private int value;
+		private int index;
+		
+		Pair(int value, int index){
+			this.value = value;
+			this.index = index;
+		}
+		
+		@Override
+		public int compareTo(Pair other) {
+			return other.value - this.value;
+		}
 	}
 }
