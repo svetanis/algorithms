@@ -16,6 +16,7 @@ import java.util.Arrays;
 // sum(s1) = (sum(n) + k)/2
 
 public final class TargetSum {
+	// Time complexity: O(sum * n)
 
 	public static int count(int[] a, int k) {
 		int total = Arrays.stream(a).sum();
@@ -27,32 +28,25 @@ public final class TargetSum {
 		return countSubsets(a, target);
 	}
 
-	public static int countSubsets(int[] a, int sum) {
-		// Time complexity: O(sum * n)
-
+	private static int countSubsets(int[] a, int sum) {
 		int n = a.length;
-
 		// the value of subset[i][j] will be true
 		// if there is a subset of set[0 ... j - 1]
 		// with sum equal to i
 		int[][] dp = new int[sum + 1][n + 1];
-
 		// if sum is 0, then answer is true
 		for (int i = 0; i <= n; ++i) {
 			dp[0][i] = 1;
 		}
-
 		// if sum is not 0 and set is empty,
 		// then answer is false
 		for (int s = 1; s <= sum; s++) {
 			dp[s][0] = 0;
 		}
-
 		// fill the subset table in bottom up manner
 		for (int s = 1; s <= sum; ++s) {
 			for (int j = 1; j <= n; ++j) {
 				dp[s][j] = dp[s][j - 1];
-
 				if (s >= a[j - 1]) {
 					int incl = dp[s - a[j - 1]][j - 1];
 					int excl = dp[s][j - 1];
