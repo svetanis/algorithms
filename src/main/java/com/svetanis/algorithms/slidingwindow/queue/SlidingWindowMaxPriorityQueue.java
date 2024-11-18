@@ -22,19 +22,19 @@ public final class SlidingWindowMaxPriorityQueue {
 			return newList(max(a));
 		}
 		List<Integer> list = newArrayList();
-		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		PriorityQueue<Integer> pq = new PriorityQueue<>((x,y) -> y - x);
 		for (int i = 0; i < w; ++i) {
-			pq.offer(i);
+			pq.offer(a[i]);
 		}
 		for (int i = w; i < n; ++i) {
-			list.add(a[pq.peek()]);
-			while (!pq.isEmpty() && i - w + 1 > pq.peek()) {
+			list.add(pq.peek());
+			while (!pq.isEmpty() && a[i - w + 1] > pq.peek()) {
 				pq.poll();
 			}
-			pq.offer(i);
+			pq.offer(a[i]);
 		}
 		// max element of last window
-		list.add(a[pq.peek()]);
+		list.add(pq.peek());
 		return newList(list);
 	}
 
