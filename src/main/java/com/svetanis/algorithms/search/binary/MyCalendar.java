@@ -6,6 +6,8 @@ import java.util.TreeMap;
 // 729. My Calendar I
 
 public final class MyCalendar {
+	// Time Complexity: O(log n)
+	// Space Complexity: O(n)
 
 	public MyCalendar() {
 		this.map = new TreeMap<>();
