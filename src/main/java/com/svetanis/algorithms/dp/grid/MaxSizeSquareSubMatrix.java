@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.matrix;
+package com.svetanis.algorithms.dp.grid;
 
 import static java.lang.Math.min;
 
