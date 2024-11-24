@@ -1,38 +1,35 @@
 package com.svetanis.algorithms.dp.math.pascal;
 
+import com.svetanis.java.base.utils.Print;
+
+// 118. Pascal's Triangle
+
 public final class PascalTriangleDynamic {
+	// Time complexity: O(n^2)
+	// Auxilary space: O(n^2)
 
-  public static void pascal(int n) {
-    // Time complexity: O(n^2)
-    // Auxilary space: O(n^2)
+	public static int[][] pascal(int n) {
+		int[][] dp = new int[n][n];
+		for (int row = 0; row < n; ++row) {
+			// every row has number of
+			// integers equal to row number
+			for (int col = 0; col <= row; ++col) {
+				// first and last values
+				// in every row are 1
+				if (col == 0 || col == row) {
+					dp[row][col] = 1;
+				} else {
+					// other values are sum of values
+					// just above and left of above
+					dp[row][col] = dp[row - 1][col] + dp[row - 1][col - 1];
+				}
+			}
+		}
+		return dp;
+	}
 
-    // an auxiliary array to store
-    // generated pascal triangle
-    int[][] m = new int[n][n];
-
-    // iterate through every line
-    // and print integers in it
-    for (int line = 0; line < n; ++line) {
-      // every line has number of
-      // integers equal to line number
-      for (int i = 0; i <= line; ++i) {
-        // first and last values
-        // in every row are 1
-        if (i == 0 || i == line) {
-          m[line][i] = 1;
-        } else {
-          // other values are sum of values
-          // just above and left of above
-          m[line][i] = m[line - 1][i - 1] + m[line - 1][i];
-        }
-        System.out.print(m[line][i] + " ");
-      }
-      System.out.println();
-    }
-  }
-
-  public static void main(String[] args) {
-    int n = 7;
-    pascal(n);
-  }
+	public static void main(String[] args) {
+		int n = 7;
+		Print.print(pascal(n));
+	}
 }
