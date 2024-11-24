@@ -29,7 +29,7 @@ public final class PascalTriangleBottomUp {
 	}
 
 	public static void main(String[] args) {
-		int n = 7;
-		System.out.println(pascal(n));
+		System.out.println(pascal(5));
+		System.out.println(pascal(1));
 	}
 }
