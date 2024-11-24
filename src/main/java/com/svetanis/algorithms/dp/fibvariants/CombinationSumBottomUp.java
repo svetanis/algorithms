@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.fibvariants;
 
 // 377. Combination Sum IV
 

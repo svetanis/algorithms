@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.fibvariants;
 
 import java.util.HashMap;
 import java.util.Map;

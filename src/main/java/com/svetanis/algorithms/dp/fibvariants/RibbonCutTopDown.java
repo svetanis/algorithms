@@ -1,12 +1,16 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.fibvariants;
 
 import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Math.max;
 
-public final class RibbonCutRecursive {
+public final class RibbonCutTopDown {
 
   public static int ribbonCut(int[] a, int v) {
+    int[] dp = new int[v + 1];
+    return ribbonCut(a, v, dp, 0);
+  }
 
+  public static int ribbonCut(int[] a, int v, int[] dp, int j) {
     int n = a.length;
 
     if (v == 0) {
@@ -17,13 +21,18 @@ public final class RibbonCutRecursive {
       return MIN_VALUE;
     }
 
+    if (dp[j] == v) {
+      return dp[j];
+    }
+
     int max = MIN_VALUE;
     for (int i = 0; i < n; i++) {
-      int cuts = ribbonCut(a, v - a[i]);
+      int cuts = ribbonCut(a, v - a[i], dp, j + 1);
       if (cuts != MIN_VALUE) {
         max = max(max, cuts + 1);
       }
     }
+    dp[j] = max;
     return max;
   }
 
