@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.grid;
+package com.svetanis.algorithms.dp.math.pascal;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Math.min;

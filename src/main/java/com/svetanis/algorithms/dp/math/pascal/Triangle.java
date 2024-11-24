@@ -1,8 +1,10 @@
-package com.svetanis.algorithms.dp.grid;
+package com.svetanis.algorithms.dp.math.pascal;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 
 import java.util.List;
 
@@ -13,44 +15,46 @@ import java.util.List;
 // to adjacent numbers on
 // the row below
 
-// bottom-up: start from the smallest solution
-// start from the last row and build our way up
-// to the first row.
-
 // let dp[r][c] be the min path sum 
-// starting from r-th row and c-th column
+// to reach cell (r, c)
 // 
 // dp[r][c] = grid[r][c] + min(dp[r - 1][c], dp[r - 1][c - 1])
 // where (r - 1, c) is the cell on the top
 // and (r - 1, c - 1) is the cell at the top left
 
-public final class TriangleBottomUp {
+public final class Triangle {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(n^2)
 
 	public static int mps(List<List<Integer>> triangle) {
-		int n = triangle.size();
+		int m = triangle.size();
 		int[][] dp = init(triangle);
-		// start with the second last row
-		// and build up
-		for (int r = n - 2; r >= 0; r--) {
-			for (int c = 0; c <= r; c++) {
-				int top = dp[r + 1][c];
-				int left = dp[r + 1][c + 1];
+		for (int r = 1; r < m; r++) {
+			for (int c = 1; c < triangle.get(r).size(); c++) {
+				int top = dp[r - 1][c];
+				int left = dp[r - 1][c - 1];
 				int val = triangle.get(r).get(c);
 				dp[r][c] = val + min(left, top);
 			}
 		}
-		return dp[0][0];
+		return stream(dp[m - 1]).min().getAsInt();
 	}
 
 	private static int[][] init(List<List<Integer>> triangle) {
 		int n = triangle.size();
-		// initialize dp grid
+		// initialize dp grid and
 		int[][] dp = new int[n][n];
-		// and the last row
-		for (int c = 0; c < n; c++) {
-			dp[n - 1][c] = triangle.get(n - 1).get(c);
+		for (int r = 0; r < n; r++) {
+			for (int c = 0; c < n; c++) {
+				dp[r][c] = MAX_VALUE;
+			}
+		}
+		// base case at dp[0][0]
+		dp[0][0] = triangle.get(0).get(0);
+		// min path sum for the first column and diagonal
+		for (int r = 1; r < n; r++) {
+			dp[r][0] = dp[r - 1][0] + triangle.get(r).get(0);
+			dp[r][r] = dp[r - 1][r - 1] + triangle.get(r).get(r);
 		}
 		return dp;
 	}
