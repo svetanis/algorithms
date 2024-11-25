@@ -2,9 +2,12 @@ package com.svetanis.algorithms.dp.common.lcs;
 
 import static java.lang.Math.max;
 
+// 1143. Longest Common Subsequence
+
 // LONGEST COMMON SUBSEQUENCE LENGTH
 
-// in each iteration of outer loop we only, need values from all columns of previous row. 
+// in each iteration of outer loop we only, 
+// need values from all columns of previous row. 
 // we can just store two rows at a time and use them, 
 // in that way used space will reduce from dp[m+1][n+1] to dp[2][n+1]
 
@@ -38,8 +41,11 @@ public final class LongestCommonSubSeqLenSpaceOptimized {
   }
 
   public static void main(String[] args) {
-    String s1 = "AGGTAB";
-    String s2 = "GXTXAYB";
-    System.out.println(lcs(s1, s2));
+		System.out.println(lcs("abcde", "ace")); // 3
+		System.out.println(lcs("abc", "abc")); // 3
+		System.out.println(lcs("abc", "def")); // 0
+		System.out.println(lcs("abdca", "cbda")); // 3
+		System.out.println(lcs("passport", "ppsspt")); // 5
+    System.out.println(lcs("AGGTAB", "GXTXAYB")); // 4
   }
 }
