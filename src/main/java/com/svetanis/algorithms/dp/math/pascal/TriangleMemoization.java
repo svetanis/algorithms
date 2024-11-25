@@ -1,12 +1,13 @@
 package com.svetanis.algorithms.dp.math.pascal;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
 import static java.util.Arrays.asList;
-import static java.util.Arrays.fill;
 
+import java.util.Arrays;
 import java.util.List;
+
+// 120. Triangle
 
 // given a triangle. find
 // the min path sum from
@@ -19,32 +20,32 @@ public final class TriangleMemoization {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(n^2)
 
+	private final static int MAX = Integer.MAX_VALUE;
+
 	public static int mps(List<List<Integer>> triangle) {
-		int[][] memo = init(triangle.size());
-		return dfs(0, 0, memo, triangle);
+		int[][] dp = init(triangle.size());
+		return dfs(0, 0, dp, triangle);
 	}
 
 	private static int[][] init(int n) {
-		int[][] memo = new int[n][n];
+		int[][] dp = new int[n][n];
 		for (int r = 0; r < n; r++) {
-			fill(memo[r], MAX_VALUE);
+			Arrays.fill(dp[r], MAX);
 		}
-		return memo;
+		return dp;
 	}
 
-	private static int dfs(int r, int c, int[][] memo, 
-			List<List<Integer>> triangle) {
+	private static int dfs(int r, int c, int[][] dp, List<List<Integer>> triangle) {
 		if (r == triangle.size()) {
 			return 0;
 		}
-		if (memo[r][c] != MAX_VALUE) {
-			return memo[r][c];
+		if (dp[r][c] != MAX) {
+			return dp[r][c];
 		}
-		int left = dfs(r + 1, c, memo, triangle);
-		int right = dfs(r + 1, c + 1, memo, triangle);
+		int left = dfs(r + 1, c, dp, triangle);
+		int right = dfs(r + 1, c + 1, dp, triangle);
 		int min = triangle.get(r).get(c) + min(left, right);
-		memo[r][c] = min;
-		return min;
+		return dp[r][c] = min;
 	}
 
 	public static void main(String[] args) {
