@@ -6,15 +6,19 @@ package com.svetanis.algorithms.dp.interleaved;
 // write a function that prints all 
 // interleavings of the given two strings.
 
-public final class InterleavedRecursive {
-	// Time Complexity: O(2^(n + m))
-	// Space Complexity: O(n + m)
+public final class InterleavedSubmit {
+	// Time Complexity: O(n * m)
+	// Space Complexity: O(n * m)
 
 	public static boolean isInterleaved(String s1, String s2, String s) {
-		return isInterleaved(s1, s2, s, 0, 0, 0);
+		int n = s1.length();
+		int m = s2.length();
+
+		Boolean[][] dp = new Boolean[n + 1][m + 1];
+		return isInterleaved(dp, s1, s2, s, 0, 0, 0);
 	}
 
-	private static boolean isInterleaved(String x, String y, String s, int i, int j, int k) {
+	private static boolean isInterleaved(Boolean[][] dp, String x, String y, String s, int i, int j, int k) {
 		int n = x.length();
 		int m = y.length();
 		int p = s.length();
@@ -25,15 +29,17 @@ public final class InterleavedRecursive {
 		if (k == p) {
 			return false;
 		}
-
+		if (dp[i][j] != null) {
+			return dp[i][j];
+		}
 		boolean interleaved = false;
 		if (i < n && x.charAt(i) == s.charAt(k)) {
-			interleaved = interleaved || isInterleaved(x, y, s, i + 1, j, k + 1);
+			interleaved = interleaved || isInterleaved(dp, x, y, s, i + 1, j, k + 1);
 		}
 		if (j < m && y.charAt(j) == s.charAt(k)) {
-			interleaved = interleaved || isInterleaved(x, y, s, i, j + 1, k + 1);
+			interleaved = interleaved || isInterleaved(dp, x, y, s, i, j + 1, k + 1);
 		}
-		return interleaved;
+		return dp[i][j] = interleaved;
 	}
 
 	public static void main(String[] args) {

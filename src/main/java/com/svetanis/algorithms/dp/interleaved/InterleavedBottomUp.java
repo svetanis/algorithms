@@ -1,10 +1,14 @@
 package com.svetanis.algorithms.dp.interleaved;
 
-// Given two strings str1 and str2, write a function 
-// that prints all interleavings of the given two strings.
-// https://leetcode.com/problems/interleaving-string/
+// 97. Interleaving String
+
+// Given two strings str1 and str2, 
+// write a function that prints all 
+// interleavings of the given two strings.
 
 public final class InterleavedBottomUp {
+	// Time Complexity: O(n * m)
+	// Space Complexity: O(n * m)
 
   public static boolean isInterleaved(String x, String y, String s) {
     int n = x.length();
