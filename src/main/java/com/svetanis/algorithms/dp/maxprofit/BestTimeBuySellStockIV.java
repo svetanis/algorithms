@@ -16,10 +16,10 @@ public final class BestTimeBuySellStockIV {
 		for (int day = 1; day < prices.length; day++) {
 			int price = prices[day];
 			for (int count = k; count > 0; count--) {
-				// not holding a stock
+				// sell the stock today
 				int sell = dp[count][1] + price;
 				dp[count][0] = Math.max(dp[count][0], sell);
-				// holding a stock
+				// buy the stock today
 				int buy = dp[count - 1][0] - price;
 				dp[count][1] = Math.max(dp[count][1], buy);
 			}
