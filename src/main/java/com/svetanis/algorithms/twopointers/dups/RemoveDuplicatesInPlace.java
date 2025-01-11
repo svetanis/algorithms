@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.twopointers;
+package com.svetanis.algorithms.twopointers.dups;
 
 import static java.util.Arrays.asList;
 
