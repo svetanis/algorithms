@@ -4,7 +4,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
-// Leet 275. H-IndexII
+// 275. H-Index II
+
 // given an array of integers citations
 // where citations[i] is the number of
 // citations a researcher received for
