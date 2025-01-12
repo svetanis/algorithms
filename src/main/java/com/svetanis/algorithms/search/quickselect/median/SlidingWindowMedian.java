@@ -30,9 +30,8 @@ public final class SlidingWindowMedian {
 		}
 		list.add(om.median());
 		for (int i = k; i < n; i++) {
-			int left = a[i - k];
-			om.remove(left);
 			om.add(a[i]);
+			om.remove(a[i - k]);
 			list.add(om.median());
 		}
 		// max element of last window

@@ -6,6 +6,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
+// 295. Find Median from Data Stream
+
 // Design an algorithm for computing the running median of a sequence. 
 
 // We use two heaps, max heap, and min heap. 
