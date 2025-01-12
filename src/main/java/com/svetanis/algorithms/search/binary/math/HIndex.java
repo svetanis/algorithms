@@ -5,6 +5,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 274. H-Index
+
 // given an array of integers citations
 // where citations[i] is the number of
 // citations a researcher received for
@@ -14,7 +16,7 @@ import java.util.List;
 // h-index is defined as the max value 
 // of h such that the given researcher 
 // has published at least h papers that
-// have each been cited at least h himes
+// have each been cited at least h times
 
 public final class HIndex {
 	// Time Complexity: O(n log n)
