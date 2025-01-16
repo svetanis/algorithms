@@ -3,6 +3,8 @@ package com.svetanis.algorithms.string.palindrome;
 import static java.lang.Character.isLetterOrDigit;
 import static java.lang.Character.toLowerCase;
 
+// 125. Valid Palindrome
+
 // a phrase is a palindrome if, after
 // converting all uppercase letters
 // into lowercase letters and removing
