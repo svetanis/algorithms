@@ -5,6 +5,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 283. Move Zeros
+
 // given an array of integers, 
 // move all the 0s to the back
 // of the array while maintaining
@@ -56,7 +58,7 @@ public final class MoveZeros {
 		System.out.println(list1);
 		System.out.println(list2);
 		System.out.println(list3);
-		
+
 		int[] a = { 1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0, 9 };
 		segregate(a);
 		print(a);
