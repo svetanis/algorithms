@@ -2,6 +2,7 @@ package com.svetanis.algorithms.string.reverse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 // 151. Reverse Words in a String
@@ -31,8 +32,9 @@ public final class ReverseWordsSubmit {
 	public static String reverse(String s) {
 		String[] splitted = s.trim().split("\\s+");
 		List<String> words = Arrays.asList(splitted);
-		List<String> reversed = reverse(words);
-		return String.join(" ", reversed);
+		Collections.reverse(words);
+		// List<String> reversed = reverse(words);
+		return String.join(" ", words);
 	}
 
 	private static List<String> reverse(List<String> words) {
