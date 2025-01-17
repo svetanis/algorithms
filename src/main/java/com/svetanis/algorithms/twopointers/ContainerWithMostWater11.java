@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.twopointers;
 
 // 11. Container With Most Water
+// com.svetanis.algorithms.twopointers.MaxTrappingWater
 
 public final class ContainerWithMostWater11 {
 	// Time Complexity: O(n)
