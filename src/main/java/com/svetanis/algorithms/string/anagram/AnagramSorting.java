@@ -11,20 +11,16 @@ import com.google.common.collect.ImmutableList;
 import com.svetanis.java.base.Pair;
 
 public final class AnagramSorting {
+  // Time complexity: O(n log n)
 
-  public static boolean areAnagrams(String str1, String str2) {
-    // Time complexity: O(n log n)
-
-    if (str1.length() != str2.length()) {
+  public static boolean areAnagrams(String s1, String s2) {
+    if (s1.length() != s2.length()) {
       return false;
     }
-
-    char[] chars1 = str1.toCharArray();
-    char[] chars2 = str2.toCharArray();
-
+    char[] chars1 = s1.toCharArray();
+    char[] chars2 = s2.toCharArray();
     sort(chars1);
     sort(chars2);
-
     return Arrays.equals(chars1, chars2);
   }
 
