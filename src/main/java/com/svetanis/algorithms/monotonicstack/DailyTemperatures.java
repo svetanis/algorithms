@@ -1,10 +1,11 @@
 package com.svetanis.algorithms.monotonicstack;
 
 import static com.svetanis.java.base.utils.Print.print;
-import static java.util.Arrays.fill;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+// 739. Daily Temperatures
 
 // given an array of integers (temperatures)
 // represents the daily temperatures, return
@@ -15,21 +16,18 @@ import java.util.Deque;
 // keep 0 instead
 
 public final class DailyTemperatures {
+	// Time complexity: O(n)
 
 	public static int[] nextGreater(int[] a) {
-		// Time complexity: O(n)
-
 		int n = a.length;
 		int[] greater = new int[n];
-		fill(greater, 0);
-
 		Deque<Integer> dq = new ArrayDeque<>();
-		for (int i = 0; i < n; i++) {
-			while (!dq.isEmpty() && a[i] > a[dq.peekLast()]) {
-				int top = dq.pollLast();
-				greater[top] = i - top;
+		for (int index = 0; index < n; index++) {
+			while (!dq.isEmpty() && a[index] > a[dq.peek()]) {
+				int prev = dq.pop();
+				greater[prev] = index - prev;
 			}
-			dq.add(i);
+			dq.push(index);
 		}
 		return greater;
 	}
@@ -43,6 +41,5 @@ public final class DailyTemperatures {
 
 		int[] a3 = { 30, 60, 90 };
 		print(nextGreater(a3)); // 1, 1, 0
-
 	}
 }
