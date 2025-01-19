@@ -9,7 +9,6 @@ import java.util.Set;
 
 public final class LongestDistinctSubStr {
 	// Time complexity: O(n)
-	// Space complexity: O(1)
 
 	public static String lds(String s) {
 		int left = 0;
