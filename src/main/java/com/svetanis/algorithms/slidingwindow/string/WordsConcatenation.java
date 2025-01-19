@@ -11,6 +11,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 
+// 30. Substring with Concatenation of All Words
+
 // given a string and a list of words, 
 // find all the starting indices of substrings
 // in the given string that are a concatenation
@@ -20,12 +22,12 @@ import com.google.common.collect.ImmutableList;
 
 public final class WordsConcatenation {
 	// Time complexity: O(n * m * k)
+	// Space complexity: O(n + m)
 
 	public static ImmutableList<Integer> wordConcat(String s, List<String> words) {
 		int n = s.length();
 		int m = words.size();
 		int k = words.iterator().next().length();
-
 		List<Integer> list = newArrayList();
 		Map<String, Integer> freq = freqMap(words);
 		for (int i = 0; i <= n - m * k; i++) {
@@ -38,7 +40,6 @@ public final class WordsConcatenation {
 					break;
 				}
 				map.put(word, map.getOrDefault(word, 0) + 1);
-
 				// no need to process further if the word
 				// has higher frequency than required
 				if (map.get(word) > freq.getOrDefault(word, 0)) {
