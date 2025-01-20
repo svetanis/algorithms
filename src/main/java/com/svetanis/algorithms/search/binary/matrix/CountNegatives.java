@@ -1,28 +1,12 @@
 package com.svetanis.algorithms.search.binary.matrix;
 
+// 1351. Count Negative Numbers in a Sorted Matrix
+
 // count negative numbers in
 // colomn-wise/row-wise sorted matrix
 
 public final class CountNegatives {
 	// Time Complexity: O(n + m)
-
-	public static int countAccending(int[][] matrix) {
-		int n = matrix.length;
-		int m = matrix[0].length;
-		int count = 0;
-		int row = 0;
-		int col = m - 1;
-		// start with top right corner
-		while (isSafe(row, col, n, m)) {
-			if (matrix[row][col] < 0) {
-				count += col + 1;
-				row++;
-			} else {
-				col--;
-			}
-		}
-		return count;
-	}
 
 	public static int countDescending(int[][] matrix) {
 		int n = matrix.length;
@@ -31,7 +15,7 @@ public final class CountNegatives {
 		int row = 0;
 		int col = 0;
 		// start with top right corner
-		while (isSafe(row, col, n, m)) {
+		while (valid(row, col, n, m)) {
 			if (matrix[row][col] < 0) {
 				count += m - col;
 				row++;
@@ -48,7 +32,25 @@ public final class CountNegatives {
 		return count;
 	}
 
-	private static boolean isSafe(int row, int col, int n, int m) {
+	public static int countAccending(int[][] matrix) {
+		int n = matrix.length;
+		int m = matrix[0].length;
+		int count = 0;
+		int row = 0;
+		int col = m - 1;
+		// start with top right corner
+		while (valid(row, col, n, m)) {
+			if (matrix[row][col] < 0) {
+				count += col + 1;
+				row++;
+			} else {
+				col--;
+			}
+		}
+		return count;
+	}
+
+	private static boolean valid(int row, int col, int n, int m) {
 		return row >= 0 && row < n && col >= 0 && col < m;
 	}
 
@@ -62,5 +64,10 @@ public final class CountNegatives {
 		int[][] m3 = { { 5, 4, 2, 1 }, { 3, 2, 1, -1 }, { 2, -1, -2, -3 }, { 1, -2, -3, -5 }, };
 		System.out.println(countDescending(m3));
 
+		int[][] m4 = { { 4, 3, 2, -1 }, { 3, 2, 1, -1 }, { 1, 1, -1, -2 }, { -1, -1, -2, -3 } };
+		System.out.println(countDescending(m4)); // 8
+
+		int[][] m5 = { { 3, 2 }, { 1, 0 } };
+		System.out.println(countDescending(m5)); // 0
 	}
 }
