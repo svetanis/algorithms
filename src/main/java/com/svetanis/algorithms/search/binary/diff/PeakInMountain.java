@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.rotated;
+package com.svetanis.algorithms.search.binary.diff;
 
 import static java.util.Arrays.asList;
 
