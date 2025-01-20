@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.interval;
+package com.svetanis.algorithms.intervals;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.svetanis.algorithms.sorting.interval.Interval;
 
 // Given a list of intervals, merge all the overlapping intervals  
 // to produce a list that has only mutually exclusive intervals.
@@ -23,7 +24,7 @@ import com.google.common.collect.ImmutableList;
 // 3. We will keep repeating the above two steps to merge ‘c’ 
 //    with the next interval if it overlaps with ‘c’.
 
-public final class MergeIntervals {
+public final class MergeIntervals2 {
   // Time Complexity: O(n*log n)
   // Space Complexity: O(n)
 
