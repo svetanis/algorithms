@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.diff;
+package com.svetanis.algorithms.search.binary.peak;
 
 // given an array of distinct integers
 // find a local minima in it

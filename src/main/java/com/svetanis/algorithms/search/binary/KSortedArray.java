@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.diff;
+package com.svetanis.algorithms.search.binary;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.algorithms.search.binary.BinarySearchRecursive.binarySearch;

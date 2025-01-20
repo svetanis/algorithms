@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.diff;
+package com.svetanis.algorithms.search.binary;
 
 // Given an array of numbers sorted in ascending order, 
 // find the element in the array that has the min diff with the given ‘key’.

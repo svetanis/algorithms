@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.diff;
+package com.svetanis.algorithms.search.binary.peak;
 
 // 162. Find Peak Element
 
@@ -13,7 +13,7 @@ package com.svetanis.algorithms.search.binary.diff;
 // its right neighbor is greater than it
 // then right half must have a peak element
 
-public final class PeakElement162Recursive {
+public final class PeakInMountainRecursive {
 	// Time Complexity: O(log n)
 
 	private static int peak(int[] a) {

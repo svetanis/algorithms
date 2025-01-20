@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.diff;
+package com.svetanis.algorithms.search.binary.peak;
 
 // given an array of integers
 // find a peak element in it
