@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.interval;
+package com.svetanis.algorithms.intervals;
 
 public final class Job {
   protected int start;

@@ -7,7 +7,7 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Map;
 
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 
 // find the max length of a subarray 
 // from the given array, such that the

@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import com.google.common.collect.ImmutableList;
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 
 // given an array of intervals,
 // find the next interval of each interval

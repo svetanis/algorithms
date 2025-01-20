@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.interval;
+package com.svetanis.algorithms.intervals;
 
 import java.util.ArrayList;
 import java.util.HashMap;

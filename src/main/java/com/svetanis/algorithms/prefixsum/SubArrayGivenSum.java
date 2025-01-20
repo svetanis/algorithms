@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Optional;
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 
 // given an array of integers and
 // an integer target, find a subarray

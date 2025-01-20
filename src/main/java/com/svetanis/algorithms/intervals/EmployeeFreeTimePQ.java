@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import com.google.common.collect.ImmutableList;
-import com.svetanis.algorithms.sorting.interval.Interval;
 
 // 759. Employee Free Time
 

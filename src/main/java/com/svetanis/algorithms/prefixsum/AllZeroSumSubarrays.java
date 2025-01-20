@@ -9,7 +9,7 @@ import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 
 // locate subarrays that sum to zero
 

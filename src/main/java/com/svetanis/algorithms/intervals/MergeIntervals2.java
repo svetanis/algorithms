@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.svetanis.algorithms.sorting.interval.Interval;
 
 // Given a list of intervals, merge all the overlapping intervals  
 // to produce a list that has only mutually exclusive intervals.

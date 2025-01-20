@@ -6,7 +6,7 @@ import static com.svetanis.algorithms.search.binary.frequency.FirstOccurrenceBin
 import static com.svetanis.algorithms.search.binary.frequency.LastOccurrenceBinaryRecursive.lastOccurrence;
 
 import com.google.common.base.Optional;
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 
 // given an array of numbers sorted in ascending order
 // find the range of a given number k

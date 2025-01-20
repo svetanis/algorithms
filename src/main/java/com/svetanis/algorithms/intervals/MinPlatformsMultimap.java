@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.interval;
+package com.svetanis.algorithms.intervals;
 
 import static com.svetanis.java.base.collect.Lists.sort;
 import static java.lang.Integer.MIN_VALUE;

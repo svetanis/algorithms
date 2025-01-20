@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 import com.svetanis.java.base.Pair;
 
 // given m sorted arrays, find the smallest range

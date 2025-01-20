@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.svetanis.algorithms.sorting.interval.Interval;
-
 // 759. Employee Free Time
 
 public final class EmployeeFreeTime759 {

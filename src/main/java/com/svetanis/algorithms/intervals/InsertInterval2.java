@@ -9,7 +9,6 @@ import static java.lang.Math.min;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.svetanis.algorithms.sorting.interval.Interval;
 
 // Given a list of non-overlapping intervals sorted by their start time, 
 // insert a given interval at the correct position and merge all necessary 

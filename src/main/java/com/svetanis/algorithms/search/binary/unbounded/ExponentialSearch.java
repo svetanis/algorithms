@@ -3,7 +3,7 @@ package com.svetanis.algorithms.search.binary.unbounded;
 import static com.svetanis.algorithms.search.binary.BinarySearchRecursive.binarySearch;
 import static java.lang.Math.min;
 
-import com.svetanis.algorithms.sorting.interval.Interval;
+import com.svetanis.algorithms.intervals.Interval;
 
 // Exponential Search involves two steps:
 // 1. find range where element is present
