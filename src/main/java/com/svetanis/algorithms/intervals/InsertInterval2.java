@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.sorting.interval;
+package com.svetanis.algorithms.intervals;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
@@ -9,6 +9,7 @@ import static java.lang.Math.min;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.svetanis.algorithms.sorting.interval.Interval;
 
 // Given a list of non-overlapping intervals sorted by their start time, 
 // insert a given interval at the correct position and merge all necessary 
@@ -24,7 +25,7 @@ import com.google.common.collect.ImmutableList;
 //    c.end = max(a.end, b.end)
 // 3. We will repeat the above two steps to merge ‘c’ with the next overlapping interval.
 
-public final class InsertInterval {
+public final class InsertInterval2 {
   // Time Complexity: O(n)
   // Space Complexity: O(n)
 
