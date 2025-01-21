@@ -1,6 +1,8 @@
 package com.svetanis.algorithms.search.binary.math;
 
-// 367. given a positive integer n,
+// 367. Valid Perfect Square
+
+// given a positive integer n,
 // return true if n is a perfect square
 // or false otherwise
 
@@ -8,10 +10,10 @@ public final class IsPerfectSquare {
 	// Time Complexity: O(log n)
 
 	public static boolean isPerfectSquare(int n) {
-		int left = 1;
-		int right = n;
+		long left = 1;
+		long right = n;
 		while (left < right) {
-			int mid = left + (right - left) / 2;
+			long mid = left + (right - left) / 2;
 			if (mid * mid >= n) {
 				right = mid;
 			} else {
