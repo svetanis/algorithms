@@ -20,10 +20,9 @@ import com.svetanis.java.base.Pair;
 // target is not necessarily present in the array
 
 public final class KClosestToGivenNumber {
+	// Time Complexity: O(log n + k * log k)
 
 	public static ImmutableList<Integer> kClosest(int[] a, int k, int target) {
-		// Time Complexity: O(log n + k * log k)
-
 		int index = targetIndex(a, target);
 		int left = max(index - k, 0);
 		int right = max(index + k, a.length - 1);
