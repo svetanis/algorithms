@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.bits.xor;
 
+// 136. Single Number
+
 // in a non-empty array of integers,
 // every number appears twice except
 // for one, find that single number
@@ -8,23 +10,24 @@ package com.svetanis.algorithms.bits.xor;
 // XOR with zero returns the same number
 
 public final class SingleNumber {
+	// Time Complexity: O(n)
 
 	public static int single(int[] a) {
-		// Time Complexity: O(n)
-
 		int xor = 0;
-		for (int i = 0; i < a.length; i++) {
-			xor = xor ^ a[i];
+		for (int num : a) {
+			xor = xor ^ num;
 		}
 		return xor;
 	}
 
 	public static void main(String[] args) {
-		int[] a = { 1, 4, 2, 1, 3, 2, 3 };
-		System.out.println(single(a));
+		int[] a1 = { 2, 2, 1 };
+		System.out.println(single(a1)); // 1
 
-		int[] a2 = { 7, 9, 7 };
-		System.out.println(single(a2));
+		int[] a2 = { 4, 1, 2, 1, 2 };
+		System.out.println(single(a2)); // 4
 
+		int[] a3 = { 1 };
+		System.out.println(single(a3)); // 1
 	}
 }
