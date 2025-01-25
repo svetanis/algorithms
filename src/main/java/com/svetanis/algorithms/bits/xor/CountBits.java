@@ -9,13 +9,23 @@ public final class CountBits {
 	// Space Complexity: O(n)
 
 	public static int[] count(int n) {
-		int[] a = new int[n + 1];
-		a[0] = 0;
+		int[] dp = new int[n + 1];
+		dp[0] = 0;
 		for (int i = 1; i <= n; i++) {
 			int index = i & (i - 1);
-			a[i] = a[index] + 1;
+			dp[i] = dp[index] + 1;
 		}
-		return a;
+		return dp;
+	}
+
+	public static int[] count2(int n) {
+		int[] dp = new int[n + 1];
+		dp[0] = 0;
+		for (int i = 1; i <= n; i++) {
+			int index = i >> 1;
+			dp[i] = dp[index] + (i & 1);
+		}
+		return dp;
 	}
 
 	public static void main(String[] args) {
