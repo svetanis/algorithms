@@ -5,7 +5,7 @@ import java.util.List;
 
 // 54. Spiral Matrix
 
-public final class SpiralMatrix54 {
+public final class SpiralMatrix {
   // Time Complexity: O(n * m)
   // Space Complexity: O(n * m)
 
