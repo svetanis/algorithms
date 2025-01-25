@@ -1,14 +1,15 @@
-package com.svetanis.algorithms.bits.xor;
+package com.svetanis.algorithms.math.operations;
+
+// 371. Sum of Two Integers
 
 // given two integers a and b
 // sum the two integers without
 // using the operators + and -
 
 public final class SumTwoIntegersIterative {
+	// Time Complexity: O(n)
 
 	public static int sum(int x, int y) {
-		// Time Complexity: O(n)
-
 		while (y != 0) {
 			int carry = x & y;
 			x = x ^ y;
@@ -18,7 +19,7 @@ public final class SumTwoIntegersIterative {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(sum(2, 3));
-		System.out.println(sum(1, 2));
+		System.out.println(sum(1, 2)); // 3
+		System.out.println(sum(2, 3)); // 5
 	}
 }
