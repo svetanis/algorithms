@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.combination;
+package com.svetanis.algorithms.backtracking.combinations;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
@@ -11,9 +11,9 @@ import com.google.common.collect.ImmutableList;
 
 // Given a set of candidate numbers (C) and a target number (T), 
 // find all unique combinations in C where the candidate numbers sums to T. 
-// Each number in C may only be used ONCE in the combination.
+// The same repeated number may be chosen from C unlimited number of times.
 
-public final class AllUniqueCombinationsGivenSumWithoutRepetitions {
+public final class AllUniqueCombinationsGivenSumWithRepetitions {
   // Time Complexity: O(2^n)
 
   public static ImmutableList<ImmutableList<Integer>> generate(List<Integer> in, int k) {
@@ -36,14 +36,12 @@ public final class AllUniqueCombinationsGivenSumWithoutRepetitions {
       return;
     }
 
-    int prev = -1;
     for (int i = index; i < in.size(); i++) {
-      int curr = in.get(i);
-      if (prev != curr) {
-        out.add(curr);
-        subset(in, k, i + 1, sum + curr, out, lists);
-        out.remove(out.size() - 1); // backtrack
-        prev = curr;
+      out.add(in.get(i));
+      subset(in, k, i, sum + in.get(i), out, lists);
+      out.remove(out.size() - 1); // backtrack
+      while (i < in.size() - 1 && in.get(i).equals(in.get(i + 1))) {
+        i++;
       }
     }
   }
@@ -51,9 +49,11 @@ public final class AllUniqueCombinationsGivenSumWithoutRepetitions {
   public static void main(String[] args) {
     List<Integer> list = newArrayList(2, 3, 6, 7);
     printLines(generate(list, 7));
-    List<Integer> list2 = newArrayList(10, 1, 2, 7, 6, 1, 5);
-    printLines(generate(list2, 8));
+    List<Integer> list2 = newArrayList(8, 10, 6, 11, 1, 16, 8);
+    printLines(generate(list2, 28));
 
   }
 }
 
+// [2, 2, 3]
+// [7]

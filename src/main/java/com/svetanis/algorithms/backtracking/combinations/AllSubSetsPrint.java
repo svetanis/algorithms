@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.combination;
+package com.svetanis.algorithms.backtracking.combinations;
 
 import static com.svetanis.java.base.utils.Print.print;
 

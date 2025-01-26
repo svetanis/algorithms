@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.combination;
+package com.svetanis.algorithms.backtracking.combinations;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static com.svetanis.java.base.collect.Lists.newList;
