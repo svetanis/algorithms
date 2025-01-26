@@ -8,6 +8,8 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+// 78. Subsets
+
 // given a set of distinct integers,
 // return all possible subsets (power set)
 // the solutions set must not contain
@@ -17,20 +19,35 @@ public final class PowerSet {
 	// Time Complexity: O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
-	public static ImmutableList<ImmutableList<Integer>> powerSet(List<Integer> nums) {
-		List<Integer> path = new ArrayList<>();
-		List<ImmutableList<Integer>> list = new ArrayList<>();
-		dfs(0, nums, path, list);
-		return newList(list);
+	public List<List<Integer>> subsets(int[] a) {
+		List<Integer> list = new ArrayList<>();
+		List<List<Integer>> lists = new ArrayList<>();
+		dfs(0, a, list, lists);
+		return lists;
 	}
 
-	private static void dfs(int index, List<Integer> nums, List<Integer> path, 
-			List<ImmutableList<Integer>> list) {
-		list.add(newList(path));
+	private void dfs(int index, int[] a, List<Integer> list, List<List<Integer>> lists) {
+		lists.add(new ArrayList<>(list));
+		for (int i = index; i < a.length; i++) {
+			list.add(a[i]);
+			dfs(i + 1, a, list, lists);
+			list.remove(list.size() - 1);
+		}
+	}
+
+	public static ImmutableList<ImmutableList<Integer>> powerSet(List<Integer> nums) {
+		List<Integer> list = new ArrayList<>();
+		List<ImmutableList<Integer>> lists = new ArrayList<>();
+		dfs(0, nums, list, lists);
+		return newList(lists);
+	}
+
+	private static void dfs(int index, List<Integer> nums, List<Integer> list, List<ImmutableList<Integer>> lists) {
+		lists.add(newList(list));
 		for (int i = index; i < nums.size(); i++) {
-			path.add(nums.get(i));
-			dfs(i + 1, nums, path, list);
-			path.remove(path.size() - 1);
+			list.add(nums.get(i));
+			dfs(i + 1, nums, list, lists);
+			list.remove(list.size() - 1);
 		}
 	}
 
