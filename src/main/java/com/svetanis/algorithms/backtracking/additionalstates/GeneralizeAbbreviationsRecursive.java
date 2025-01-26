@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+// 320. Generalized Abbreviation
+
 // given a word, generate all of its
 // unique generalized abbreviations
 
