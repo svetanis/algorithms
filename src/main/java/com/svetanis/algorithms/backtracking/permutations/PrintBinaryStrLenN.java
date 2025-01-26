@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.permutation.generate;
+package com.svetanis.algorithms.backtracking.permutations;
 
 import static com.svetanis.java.base.utils.Print.print;
 

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking.additionalstates;
+package com.svetanis.algorithms.backtracking.permutations;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
@@ -25,25 +25,25 @@ public final class PermutationsBacktracking {
 	// Space Complexity: O(n * n!)
 
 	public static ImmutableList<String> permutations(String s) {
-		List<String> list = newArrayList();
-		List<Character> path = newArrayList();
+		List<String> permutations = newArrayList();
+		List<Character> permutation = newArrayList();
 		Set<Character> visited = newHashSet();
-		dfs(s, visited, path, list);
-		return newList(list);
+		dfs(s, visited, permutation, permutations);
+		return newList(permutations);
 	}
 
 	private static void dfs(String s, Set<Character> visited, 
-		List<Character> path,	List<String> list) {
-		if (path.size() == s.length()) {
-			list.add(Joiner.on("").join(path));
+			List<Character> permutation, List<String> permutations) {
+		if (permutation.size() == s.length()) {
+			permutations.add(Joiner.on("").join(permutation));
 			return;
 		}
 		for (char c : s.toCharArray()) {
 			if (!visited.contains(c)) {
-				path.add(c);
+				permutation.add(c);
 				visited.add(c);
-				dfs(s, visited, path, list);
-				path.remove(path.size() - 1);
+				dfs(s, visited, permutation, permutations);
+				permutation.remove(permutation.size() - 1);
 				visited.remove(c);
 			}
 		}
