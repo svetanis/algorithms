@@ -1,14 +1,10 @@
 package com.svetanis.algorithms.backtracking.deduplication;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static java.util.Arrays.sort;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-
-// 78. Subsets
+// 90. Subsets II
 
 // given a set, generate all distinct subsets
 // i.e. find distinct power set of a set
@@ -29,34 +25,33 @@ public final class PowerSetRecursive {
 	// Time Complexity: O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
-	public static ImmutableList<ImmutableList<Integer>> subsets(int[] a) {
-		sort(a);
-		List<ImmutableList<Integer>> lists = newArrayList();
-		List<Integer> list = newArrayList();
-		subsets(a, a.length - 1, list, lists);
-		return newList(lists);
+	public static List<List<Integer>> subsets(int[] a) {
+		Arrays.sort(a);
+		List<Integer> list = new ArrayList<>();
+		List<List<Integer>> lists = new ArrayList<>();
+		dfs(a, a.length - 1, list, lists);
+		return lists;
 	}
 
-	private static void subsets(int[] a, int i, List<Integer> list, 
-			List<ImmutableList<Integer>> lists) {
-		if (i < 0) {
-			lists.add(newList(list));
+	private static void dfs(int[] a, int index, List<Integer> list, List<List<Integer>> lists) {
+		if (index < 0) {
+			lists.add(new ArrayList<>(list));
 			return;
 		}
 		// include current element
 		// in the current subset
-		list.add(a[i]);
+		list.add(a[index]);
 		// and recurse
-		subsets(a, i - 1, list, lists);
+		dfs(a, index - 1, list, lists);
 		// exclude current element
 		// from the current subset
 		list.remove(list.size() - 1);
 		// remove adjacent duplicate elements
-		while (i > 0 && a[i] == a[i - 1]) {
-			i--;
+		while (index > 0 && a[index] == a[index - 1]) {
+			index--;
 		}
 		// recurse with excluded current element
-		subsets(a, i - 1, list, lists);
+		dfs(a, index - 1, list, lists);
 	}
 
 	public static void main(String[] args) {

@@ -11,8 +11,6 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
 
-// 78. Subsets
-
 // given a set, generate all distinct subsets
 // i.e. find distinct power set of a set
 
