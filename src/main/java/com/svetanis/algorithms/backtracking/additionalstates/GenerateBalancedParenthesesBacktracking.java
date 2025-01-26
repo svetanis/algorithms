@@ -23,8 +23,7 @@ public final class GenerateBalancedParenthesesBacktracking {
 		return newList(list);
 	}
 
-	private static void dfs(int n, int open, int close, List<Character> path, 
-			List<String> list) {
+	private static void dfs(int n, int open, int close, List<Character> path, List<String> list) {
 		if (path.size() == 2 * n) {
 			list.add(Joiner.on("").join(path));
 			return;
