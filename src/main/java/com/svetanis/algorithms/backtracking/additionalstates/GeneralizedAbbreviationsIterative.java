@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive;
+package com.svetanis.algorithms.backtracking.additionalstates;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
