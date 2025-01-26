@@ -16,28 +16,27 @@ import com.google.common.collect.ImmutableList;
 // Entries should be sorted within themselves.
 
 public final class AllUniqueCombinationsSizeKFromArray {
-
   // Time Complexity: O(2^n)
 
-  public static ImmutableList<ImmutableList<Integer>> generate(List<Integer> in, int k) {
-    List<Integer> out = newArrayList();
-    List<ImmutableList<Integer>> lists = newArrayList();
+  public static ImmutableList<ImmutableList<Integer>> combinations(List<Integer> in, int k) {
+    List<Integer> combination = newArrayList();
+    List<ImmutableList<Integer>> combinations = newArrayList();
     sort(in);
-    subset(in, k, 0, out, lists);
-    return newList(lists);
+    dfs(in, k, 0, combination, combinations);
+    return newList(combinations);
   }
 
-  private static void subset(List<Integer> in, int k, int index, //
-      List<Integer> out, List<ImmutableList<Integer>> lists) {
-    if (out.size() == k) {
-      lists.add(newList(out));
+  private static void dfs(List<Integer> list, int k, int index, //
+      List<Integer> combination, List<ImmutableList<Integer>> combinations) {
+    if (combination.size() == k) {
+      combinations.add(newList(combination));
       return;
     }
-    for (int i = index; i < in.size(); i++) {
-      out.add(in.get(i));
-      subset(in, k, i + 1, out, lists);
-      out.remove(out.size() - 1); // backtrack
-      while (i < in.size() - 1 && in.get(i).equals(in.get(i + 1))) {
+    for (int i = index; i < list.size(); i++) {
+      combination.add(list.get(i));
+      dfs(list, k, i + 1, combination, combinations);
+      combination.remove(combination.size() - 1); // backtrack
+      while (i < list.size() - 1 && list.get(i).equals(list.get(i + 1))) {
         i++;
       }
     }
@@ -45,10 +44,10 @@ public final class AllUniqueCombinationsSizeKFromArray {
 
   public static void main(String[] args) {
     List<Integer> list = newArrayList(1, 2, 3);
-    printLines(generate(list, 2));
+    printLines(combinations(list, 2));
 
     List<Integer> list1 = newArrayList(1, 2, 1);
-    printLines(generate(list1, 2));
+    printLines(combinations(list1, 2));
   }
 }
 

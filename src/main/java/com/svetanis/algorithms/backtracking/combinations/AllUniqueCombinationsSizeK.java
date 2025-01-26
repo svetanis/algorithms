@@ -1,12 +1,11 @@
 package com.svetanis.algorithms.backtracking.combinations;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.printLines;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
+// 77. Combinations
 
 // Given two integers n and k, 
 // return all possible combinations of k numbers out of 1 2 3 ... n.
@@ -16,32 +15,49 @@ import com.google.common.collect.ImmutableList;
 // Entries should be sorted within themselves.
 
 public final class AllUniqueCombinationsSizeK {
+	// Time Complexity: O(2^n)
 
-  // Time Complexity: O(2^n)
+	public static List<List<Integer>> combinations(int n, int k) {
+		List<Integer> combination = new ArrayList<>();
+		List<List<Integer>> combinations = new ArrayList<>();
+		dfs(n, k, 1, combination, combinations);
+		return combinations;
+	}
 
-  public static ImmutableList<ImmutableList<Integer>> generate(int n, int k) {
-    List<Integer> out = newArrayList();
-    List<ImmutableList<Integer>> lists = newArrayList();
-    subset(n, k, 1, out, lists);
-    return newList(lists);
-  }
+	private static void dfs(int n, int k, int index, //
+			List<Integer> combination, List<List<Integer>> combinations) {
+		if (combination.size() == k) {
+			combinations.add(new ArrayList<>(combination));
+			return;
+		}
+		for (int i = index; i <= n; i++) {
+			combination.add(i);
+			dfs(n, k, i + 1, combination, combinations);
+			combination.remove(combination.size() - 1); // backtrack
+		}
+	}
 
-  private static void subset(int n, int k, int index, //
-      List<Integer> out, List<ImmutableList<Integer>> lists) {
-    if (out.size() == k) {
-      lists.add(newList(out));
-      return;
-    }
-    for (int i = index; i <= n; i++) {
-      out.add(i);
-      subset(n, k, i + 1, out, lists);
-      out.remove(out.size() - 1); // backtrack
-    }
-  }
+	private static void dfs2(int n, int k, int index, List<Integer> combination, List<List<Integer>> combinations) {
+		if (combination.size() == k) {
+			combinations.add(new ArrayList<>(combination));
+			return;
+		}
+		if (index > n) {
+			return;
+		}
+		combination.add(index);
+		dfs2(n, k, index + 1, combination, combinations);
+		combination.remove(combination.size() - 1);
+		dfs2(n, k, index + 1, combination, combinations);
+	}
 
-  public static void main(String[] args) {
-    printLines(generate(5, 3));
-  }
+	public static void main(String[] args) {
+		printLines(combinations(5, 3));
+		System.out.println(combinations(4, 2));
+		// [1,2] [1,3] [1,4] [2,3] [2,4] [3,4]
+		System.out.println(combinations(1, 1));
+
+	}
 }
 
 // [1, 2, 3]
