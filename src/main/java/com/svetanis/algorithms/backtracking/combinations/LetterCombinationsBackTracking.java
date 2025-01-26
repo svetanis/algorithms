@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking.combinatorial;
+package com.svetanis.algorithms.backtracking.combinations;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
@@ -8,10 +8,12 @@ import static com.svetanis.java.base.utils.Print.printLines;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+// 17. Letter Combinations of a Phone Number
 
 // given a phone number that contains digits 2-9
 // find all possible letter combinations the 
@@ -24,6 +26,9 @@ public final class LetterCombinationsBackTracking {
 	private final static ImmutableMap<Character, String> DIGITS = build();
 
 	public static ImmutableList<String> combinations(String s) {
+		if (s.isEmpty()) {
+			return newList();
+		}
 		List<String> result = newArrayList();
 		List<Character> list = newArrayList();
 		dfs(s, list, result);
@@ -33,7 +38,8 @@ public final class LetterCombinationsBackTracking {
 	// index is redundant and derived from list.size()
 	private static void dfs(String s, List<Character> list, List<String> result) {
 		if (list.size() == s.length()) {
-			String joined = Joiner.on("").join(list);
+			// String joined = Joiner.on("").join(list);
+			String joined = list.stream().map(e -> e.toString()).collect(Collectors.joining());
 			result.add(joined);
 			return;
 		}
@@ -64,5 +70,6 @@ public final class LetterCombinationsBackTracking {
 	public static void main(String[] args) {
 		printLines(combinations("23"));
 		printLines(combinations("56"));
+		printLines(combinations(""));
 	}
 }
