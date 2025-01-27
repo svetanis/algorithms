@@ -1,34 +1,29 @@
 package com.svetanis.algorithms.search.kmostfrequent;
 
-import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.collect.Maps.newMap;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-
 public final class KMostFrequentTerms {
 
-	public static ImmutableList<String> kMostFrequent(List<String> terms, int k) {
-		Map<String, Integer> map = frequencyMap(terms);
+	public static List<String> kMostFrequent(List<String> words, int k) {
+		Map<String, Integer> map = frequencyMap(words);
 		Queue<Map.Entry<String, Integer>> pq = priorityQueue(map, k);
 		return kMostFrequent(pq);
 	}
 
-	private static ImmutableList<String> kMostFrequent(Queue<Map.Entry<String, Integer>> pq) {
-		List<String> list = newArrayList();
+	private static List<String> kMostFrequent(Queue<Map.Entry<String, Integer>> pq) {
+		List<String> list = new ArrayList<>();
 		while (!pq.isEmpty()) {
 			list.add(pq.poll().getKey());
 		}
-		return newList(list);
+		return list;
 	}
 
 	private static Queue<Map.Entry<String, Integer>> priorityQueue(Map<String, Integer> map, int k) {
@@ -38,7 +33,7 @@ public final class KMostFrequentTerms {
 		Comparator<Map.Entry<String, Integer>> c = (e1, e2) -> e1.getValue() - e2.getValue();
 		Queue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(c);
 		for (Map.Entry<String, Integer> entry : map.entrySet()) {
-			pq.add(entry);
+			pq.offer(entry);
 			if (pq.size() > k) {
 				pq.poll();
 			}
@@ -46,13 +41,13 @@ public final class KMostFrequentTerms {
 		return pq;
 	}
 
-	private static ImmutableMap<String, Integer> frequencyMap(List<String> terms) {
-		Map<String, Integer> map = newHashMap();
+	private static Map<String, Integer> frequencyMap(List<String> terms) {
+		Map<String, Integer> map = new HashMap<>();
 		for (String term : terms) {
 			int freq = map.getOrDefault(term, 0);
 			map.put(term, freq + 1);
 		}
-		return newMap(map);
+		return map;
 	}
 
 	public static void main(String[] args) {
@@ -64,7 +59,7 @@ public final class KMostFrequentTerms {
 		System.out.println(kMostFrequent(list2, k));
 	}
 
-	private static ImmutableList<String> build2() {
+	private static List<String> build2() {
 		List<String> list = newArrayList();
 		list.add("Fee");
 		list.add("Fi");
@@ -80,10 +75,10 @@ public final class KMostFrequentTerms {
 		list.add("Fo");
 		list.add("Fum");
 		list.add("Fee");
-		return copyOf(list);
+		return list;
 	}
 
-	private static ImmutableList<String> build1() {
+	private static List<String> build1() {
 		List<String> list = newArrayList();
 		list.add("ability");
 		list.add("abortion");
@@ -105,7 +100,7 @@ public final class KMostFrequentTerms {
 		list.add("absent");
 		list.add("abraham");
 		list.add("able");
-		return copyOf(list);
+		return list;
 	}
 
 }
