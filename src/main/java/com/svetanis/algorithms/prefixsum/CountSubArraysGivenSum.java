@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// 560. Subarray Sum Equals K
+
 // given an array of integers and
 // an integer target, find a subarray
 // that sums to target and find 
@@ -21,12 +23,10 @@ public final class CountSubArraysGivenSum {
 		map.put(0, 1);
 		int sum = 0;
 		int count = 0;
-		for (int i = 0; i < nums.size(); i++) {
-			sum += nums.get(i);
+		for (int num : nums) {
+			sum += num;
 			int diff = sum - target;
-			if (map.containsKey(diff)) {
-				count += map.get(diff);
-			}
+			count += map.getOrDefault(diff, 0);
 			int freq = map.getOrDefault(sum, 0);
 			map.put(sum, freq + 1);
 		}
