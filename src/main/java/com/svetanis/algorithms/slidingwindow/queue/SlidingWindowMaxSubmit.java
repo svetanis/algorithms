@@ -1,31 +1,28 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
 
-import com.google.common.collect.ImmutableList;
+// 239. Sliding Window Maximum
 
 // Given an array and an integer k, 
 // find the maximum for each and 
 // every contiguous subarray of size k.
 
-public final class SlidingWindowMaxDeque2 {
+public final class SlidingWindowMaxSubmit {
+	// Time complexity: O(n)
+	// Auxiliary Space: O(k)
 
-	private static ImmutableList<Integer> subArrayMax(int[] a, int w) {
-		// Time complexity: O(n);
-		// Auxiliary Space: O(k)
-
-		List<Integer> list = newArrayList();
+	private static int[] subArrayMax(int[] a, int k) {
+		int n = a.length;
+		int[] result = new int[n - k + 1];
 		Deque<Integer> dq = new ArrayDeque<>();
-		for (int i = 0; i < a.length; ++i) {
+		for (int i = 0, j = 0; i < a.length; ++i) {
 			// remove the elements
 			// which are out of this window
-			while (!dq.isEmpty() && i - w + 1 > dq.peekFirst()) {
+			while (!dq.isEmpty() && i - k + 1 > dq.peekFirst()) {
 				dq.pollFirst();
 			}
 			// remove elements that are less than the
@@ -38,11 +35,11 @@ public final class SlidingWindowMaxDeque2 {
 
 			// we've hit the size w, add the current max
 			// to the result
-			if (i >= w - 1) {
-				list.add(a[dq.peekFirst()]);
+			if (i >= k - 1) {
+				result[j++] = a[dq.peekFirst()];
 			}
 		}
-		return newList(list);
+		return result;
 	}
 
 	public static void main(String[] args) {
