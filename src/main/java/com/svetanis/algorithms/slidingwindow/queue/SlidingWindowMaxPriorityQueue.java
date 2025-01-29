@@ -10,13 +10,12 @@ import java.util.PriorityQueue;
 
 import com.google.common.collect.ImmutableList;
 
-// Sliding Window Maximum
+// 239. Sliding Window Maximum
 
 public final class SlidingWindowMaxPriorityQueue {
+	// Time complexity: O(n log n)
 
 	public static ImmutableList<Integer> maxSlidingWindow(int[] a, int w) {
-		// Time complexity: O(n log n)
-
 		int n = a.length;
 		if (w > n) {
 			return newList(max(a));
@@ -50,16 +49,16 @@ public final class SlidingWindowMaxPriorityQueue {
 		int[] a3 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
 		print(maxSlidingWindow(a3, 1)); // 10 9 8 7 6 5 4 3 2 1
 	}
-	
-	private static class Pair implements Comparable<Pair>{
+
+	private static class Pair implements Comparable<Pair> {
 		private int value;
 		private int index;
-		
-		Pair(int value, int index){
+
+		Pair(int value, int index) {
 			this.value = value;
 			this.index = index;
 		}
-		
+
 		@Override
 		public int compareTo(Pair other) {
 			return other.value - this.value;
