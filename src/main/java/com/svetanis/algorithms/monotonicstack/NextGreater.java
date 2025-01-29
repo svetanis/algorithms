@@ -7,21 +7,19 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public final class NextGreater {
+	// Time complexity: O(n)
 
 	public static int[] nextGreater(int[] a) {
-		// Time complexity: O(n)
-
 		int n = a.length;
 		int[] greater = new int[n];
 		fill(greater, -1);
-
 		Deque<Integer> dq = new ArrayDeque<>();
 		for (int i = 0; i < n; i++) {
 			while (!dq.isEmpty() && a[i] > a[dq.peekLast()]) {
 				int top = dq.pollLast();
 				greater[top] = a[i];
 			}
-			dq.add(i);
+			dq.addLast(i);
 		}
 		return greater;
 	}
@@ -41,5 +39,8 @@ public final class NextGreater {
 
 		int[] a5 = { 3, 2, 1 };
 		print(nextGreater(a5)); // -1, -1, -1
+
+		int[] a6 = { 5, 2, 4, 6, 1 };
+		print(nextGreater(a6)); // 6, 4, 6, -1, -1
 	}
 }

@@ -8,11 +8,12 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
+// 503. Next Greater Element II
+
 public final class NextGreaterCircular {
+	// Time complexity: O(n)
 
 	public static List<Integer> nextGreater(List<Integer> list) {
-		// Time complexity: O(n)
-
 		int n = list.size();
 		Integer[] greater = new Integer[n];
 		fill(greater, -1);
