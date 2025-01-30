@@ -11,11 +11,10 @@ import java.util.Queue;
 import com.google.common.collect.ImmutableList;
 
 public final class ApproximateSort {
+  // Time Complexity: O(n log k)
+  // Auxiliary Space: O(n)
 
   public static ImmutableList<Integer> sort(int[] a, int k) {
-    // Time Complexity: O(n log k)
-    // Auxiliary Space: O(n)
-
     int n = a.length;
     Queue<Integer> queue = init(a, k);
     List<Integer> list = newArrayList();
