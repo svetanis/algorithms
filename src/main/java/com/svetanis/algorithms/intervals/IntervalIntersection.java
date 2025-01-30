@@ -22,7 +22,7 @@ import com.google.common.collect.ImmutableList;
 public final class IntervalIntersection {
   // Time Complexity: O(n + m)
 
-  public static ImmutableList<Interval> merge(List<Interval> list1, List<Interval> list2) {
+  public static ImmutableList<Interval> intersection(List<Interval> list1, List<Interval> list2) {
     int n = list1.size();
     int m = list2.size();
 
@@ -62,7 +62,7 @@ public final class IntervalIntersection {
     list2.add(new Interval(2, 3));
     list2.add(new Interval(5, 7));
 
-    print(merge(list1, list2)); // [2, 3] [5, 6] [7, 7]
+    print(intersection(list1, list2)); // [2, 3] [5, 6] [7, 7]
 
     List<Interval> list3 = newArrayList();
     list3.add(new Interval(1, 3));
@@ -72,6 +72,6 @@ public final class IntervalIntersection {
     List<Interval> list4 = newArrayList();
     list4.add(new Interval(5, 10));
 
-    print(merge(list3, list4)); // [5, 7] [9, 10]
+    print(intersection(list3, list4)); // [5, 7] [9, 10]
   }
 }
