@@ -8,9 +8,6 @@ import com.svetanis.java.base.utils.Print;
 
 // 56. Merge Intervals
 
-// com.svetanis.algorithms.intervals.MergeIntervals
-// com.svetanis.algorithms.sorting.interval.MergeIntervals
-
 // given a collection of intervals
 // merge all overlapping intervals
 
