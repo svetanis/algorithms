@@ -10,7 +10,8 @@ import com.svetanis.java.base.utils.Print;
 // Given two lists of intervals, find the intersection of these two lists. 
 // Each list consists of disjoint intervals sorted on their start time.
 
-// whenever the two intervals overlap, one of the interval’s start time lies within the other interval
+// whenever the two intervals overlap, one of the interval’s 
+// start time lies within the other interval
 // the overlapping interval will be equal to:
 //  start = max(a.start, b.start)
 //  end = min(a.end, b.end) 
