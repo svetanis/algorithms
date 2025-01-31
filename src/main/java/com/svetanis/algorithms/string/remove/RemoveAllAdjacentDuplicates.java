@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.remove;
 
 // 1047. Remove All Adjacent Duplicates In String
 

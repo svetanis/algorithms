@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.remove;
 
 // 2390. Removing Stars From a String
 
