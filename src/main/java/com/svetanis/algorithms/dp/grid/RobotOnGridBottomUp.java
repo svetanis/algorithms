@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.dp.grid;
 
 // 62. Unique Paths
+
 // a robot starts its journey at
 // the top-left corner of a grid
 // that measures m x n
@@ -26,12 +27,12 @@ public final class RobotOnGridBottomUp {
 	public static int uniquePathsSimple(int m, int n) {
 		int[][] dp = new int[m + 1][n + 1];
 		dp[1][1] = 1;
-		for (int i = 1; i <= m; i++) {
-			for (int j = 1; j <= n; j++) {
-				if (i == 1 && j == 1) {
+		for (int r = 1; r <= m; r++) {
+			for (int c = 1; c <= n; c++) {
+				if (r == 1 && c == 1) {
 					continue;
 				}
-				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+				dp[r][c] = dp[r - 1][c] + dp[r][c - 1];
 			}
 		}
 		return dp[m][n];
