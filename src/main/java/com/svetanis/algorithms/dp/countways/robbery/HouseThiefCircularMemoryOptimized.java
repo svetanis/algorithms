@@ -2,19 +2,7 @@ package com.svetanis.algorithms.dp.countways.robbery;
 
 // 213. House Robber II
 
-// Given a number array representing 
-// the wealth of ‘n’ houses, determine 
-// the maximum amount of money the thief 
-// can steal without alerting the security system.
-// all houses at this place are arranged in a circle. 
-// That means the first house is the neighbor of the last one.
-// There are two cases here 
-// 1) 1st element is included and last is not included 
-// 2) 1st is not included and last is included. 
-// Therefore, we can use the similar dynamic programming approach 
-// to scan the array twice and get the larger value.
-
-public final class HouseThiefCircularRecursive {
+public final class HouseThiefCircularMemoryOptimized {
 
 	public static int maxProfit(int[] a) {
 		if (a == null || a.length == 0) {
@@ -30,14 +18,14 @@ public final class HouseThiefCircularRecursive {
 	}
 
 	private static int maxProfit(int[] a, int start, int end) {
-		if (start > end) {
-			return 0;
+		int inclPrev = 0;
+		int exclPrev = 0;
+		for (int i = start; i <= end; i++) {
+			int inclCurr = exclPrev + a[i];
+			exclPrev = Math.max(inclPrev, exclPrev);
+			inclPrev = inclCurr;
 		}
-		// include
-		int incl = a[start] + maxProfit(a, start + 2, end);
-		// exclude
-		int excl = maxProfit(a, start + 1, end);
-		return Math.max(incl, excl);
+		return Math.max(inclPrev, exclPrev);
 	}
 
 	public static void main(String[] args) {
