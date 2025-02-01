@@ -1,6 +1,8 @@
 package com.svetanis.algorithms.dp.coinchange;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 // 322. Coin Change
 
@@ -17,19 +19,63 @@ public final class MinCoinChangeSubmit {
 
 	private static final int INF = 1 << 30;
 
-	public static int minCoinChange(int[] coins, int amount) {
-		if (amount == 0) {
+	// 11 ms
+	public static int minCoinChange(int[] coins, int target) {
+		if (target == 0) {
 			return 0;
 		}
-		int[] dp = new int[amount + 1];
+		int[] dp = new int[target + 1];
 		Arrays.fill(dp, INF);
 		dp[0] = 0;
 		for (int coin : coins) {
-			for (int sum = coin; sum <= amount; sum++) {
+			for (int sum = coin; sum <= target; sum++) {
 				dp[sum] = Math.min(dp[sum], dp[sum - coin] + 1);
 			}
 		}
-		return dp[amount] >= INF ? -1 : dp[amount];
+		return dp[target] >= INF ? -1 : dp[target];
+	}
+
+	// 16ms
+	public static int bottomUp2(int[] coins, int target) {
+		if (target == 0) {
+			return 0;
+		}
+		int[] dp = new int[target + 1];
+		Arrays.fill(dp, INF);
+		dp[0] = 0;
+		for (int sum = 1; sum <= target; sum++) {
+			for (int coin : coins) {
+				if (coin <= sum) {
+					dp[sum] = Math.min(dp[sum], dp[sum - coin] + 1);
+				}
+			}
+		}
+		return dp[target] >= INF ? -1 : dp[target];
+	}
+
+	// too slow ***************************************************
+	public static int topDown(int[] coins, int target) {
+		Map<Integer, Integer> map = new HashMap<>();
+		int result = dfs(coins, target, map);
+		return result == INF ? -1 : result;
+	}
+
+	private static int dfs(int[] coins, int target, Map<Integer, Integer> map) {
+		if (target == 0) {
+			return 0;
+		}
+		if (map.containsKey(target)) {
+			return map.get(target);
+		}
+		int min = INF;
+		for (int coin : coins) {
+			if (coin <= target) {
+				int change = dfs(coins, target - coin, map);
+				min = Math.min(min, 1 + change);
+			}
+		}
+		map.put(target, min);
+		return min;
 	}
 
 	public static void main(String[] args) {
