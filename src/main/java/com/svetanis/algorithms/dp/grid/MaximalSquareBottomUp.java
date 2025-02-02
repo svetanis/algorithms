@@ -6,7 +6,7 @@ import static java.lang.Math.min;
 
 // 221. Maximal Square
 
-public final class MaximalSquareSubmit {
+public final class MaximalSquareBottomUp {
 	// Time Complexity: O(n * m)
 	// Space Complexity: O(n * m)
 
