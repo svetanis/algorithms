@@ -5,6 +5,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 252. Meeting Rooms
+
 // Given an array of meeting time intervals 
 // consisting of start and end times
 // find if a person could attend all meetings.
