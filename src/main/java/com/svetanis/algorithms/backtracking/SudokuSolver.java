@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive;
+package com.svetanis.algorithms.backtracking;
 
 import static com.svetanis.java.base.utils.IntWrapper.newIntWrapper;
 import static com.svetanis.java.base.utils.Print.print;
