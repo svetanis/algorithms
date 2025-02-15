@@ -10,18 +10,15 @@ public final class CountSubArrsProductLessThanK {
 	// Space Complexity: O(1)
 
 	public static int count(int[] a, int k) {
-		int n = a.length;
 		int prod = 1;
 		int count = 0;
 		int left = 0;
-		for (int right = 0; right < n; right++) {
+		for (int right = 0; right < a.length; right++) {
 			prod *= a[right];
-			while (left < right && prod >= k) {
+			while (left <= right && prod >= k) {
 				prod /= a[left++];
 			}
-			if (prod < k) {
-				count += (right - left + 1);
-			}
+			count += (right - left + 1);
 		}
 		return count;
 	}
