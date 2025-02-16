@@ -10,7 +10,7 @@ import static java.lang.Math.min;
 // is a palindrome. 
 // find minimum number of cuts.
 
-public final class PalindromePartitionTopDownOptimized {
+public final class PalindromePartitionMinCutsTopDownOptimized {
 	// Time Complexity: O(n^2)
 
 	public static int palindromePartition(String s) {

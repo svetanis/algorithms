@@ -10,7 +10,7 @@ import java.util.Arrays;
 // is a palindrome. 
 // find minimum number of cuts.
 
-public final class PalindromePartitionBottomUp {
+public final class PalindromePartitionMinCutsBottomUp {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(n^2)
 

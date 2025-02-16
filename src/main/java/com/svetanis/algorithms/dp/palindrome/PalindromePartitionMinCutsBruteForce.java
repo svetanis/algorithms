@@ -8,7 +8,7 @@ import static java.lang.Math.min;
 // is a palindrome. 
 // find minimum number of cuts.
 
-public final class PalindromePartitionBruteForce {
+public final class PalindromePartitionMinCutsBruteForce {
 	// Time Complexity: O(2^n)
 
 	public static int palindromePartition(String s) {
