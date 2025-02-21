@@ -1,8 +1,6 @@
 package com.svetanis.algorithms.bits.xor;
 
-import static com.svetanis.algorithms.bits.Bits.rightMostSetBit;
-
-import com.svetanis.java.base.Pair;
+// 260. Single Number III
 
 // in a non-empty array of integers,
 // every number appears exactly twice
@@ -11,17 +9,16 @@ import com.svetanis.java.base.Pair;
 // only once
 
 public final class TwoSingleNumbers {
+	// Time Complexity: O(n)
 
-	public static Pair<Integer, Integer> single(int[] a) {
-		// Time Complexity: O(n)
-
+	public static int[] single(int[] a) {
 		// XOR of all the numbers
 		int xor = 0;
 		for (int i = 0; i < a.length; i++) {
 			xor = xor ^ a[i];
 		}
 		// rightmost bit that is 1
-		int rmb = rightMostSetBit(xor);
+		int rmb = xor & ~(xor - 1);
 		int x = 0, y = 0;
 		for (int i = 0; i < a.length; i++) {
 			// the rmb is set
@@ -31,15 +28,23 @@ public final class TwoSingleNumbers {
 				y ^= a[i];
 			}
 		}
-		return Pair.build(x, y);
+		return new int[] { x, y };
 	}
 
 	public static void main(String[] args) {
-		int[] a = { 1, 4, 2, 1, 3, 5, 6, 2, 3, 5 };
-		System.out.println(single(a));
+		int[] a1 = { 1, 2, 1, 3, 2, 5 };
+		System.out.println(single(a1)); // [3,5]
 
-		int[] a2 = { 2, 1, 3, 2 };
-		System.out.println(single(a2));
+		int[] a2 = { -1, 0 };
+		System.out.println(single(a2)); // [-1,0]
 
+		int[] a3 = { 0, 1 };
+		System.out.println(single(a3)); // [1,0]
+
+		int[] a4 = { 1, 4, 2, 1, 3, 5, 6, 2, 3, 5 };
+		System.out.println(single(a4));
+
+		int[] a5 = { 2, 1, 3, 2 };
+		System.out.println(single(a5));
 	}
 }
