@@ -31,20 +31,28 @@ public final class MoveZeros {
 	}
 
 	public static void segregate(int[] a) {
-		// Time Complexity: O(n)
-		// Auxiliary Space: O(1)
-
 		int n = a.length;
 		int slow = 0;
-
 		for (int fast = 0; fast < n; fast++) {
 			if (a[fast] != 0) {
 				a[slow++] = a[fast];
 			}
 		}
-
 		while (slow < n) {
 			a[slow++] = 0;
+		}
+	}
+
+	public static void moveZeros(int[] a) {
+		int n = a.length;
+		int slow = 0;
+		for (int fast = 0; fast < n; fast++) {
+			if (a[fast] != 0) {
+				int temp = a[slow];
+				a[slow] = a[fast];
+				a[fast] = temp;
+				slow++;
+			}
 		}
 	}
 
