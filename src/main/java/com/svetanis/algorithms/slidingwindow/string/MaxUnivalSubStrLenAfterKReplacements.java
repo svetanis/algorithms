@@ -22,7 +22,7 @@ public final class MaxUnivalSubStrLenAfterKReplacements {
 			char c = s.charAt(right);
 			map.put(c, map.getOrDefault(c, 0) + 1);
 			count = Math.max(count, map.get(c));
-			if (right - left + 1 - count > k) {
+			while (right - left + 1 - count > k) {
 				char front = s.charAt(left);
 				map.put(front, map.get(front) - 1);
 				left++;
