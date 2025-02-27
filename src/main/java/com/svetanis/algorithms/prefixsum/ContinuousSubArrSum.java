@@ -16,6 +16,9 @@ public final class ContinuousSubArrSum {
 		for(int i = 0; i < a.length; i++) {
 			sum += a[i];
 			int remainder = sum % k;
+			if(remainder < 0) {
+				remainder += k;
+			}
 			if(map.containsKey(remainder) && i - map.get(remainder) >= 2) {
 				return true;
 			}
