@@ -7,7 +7,9 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Map;
 
-// 2461. Given an array of positive numbers and a positive number ‘k’, 
+// 2461. Maximum Sum of Distinct Subarrays With Length K
+
+// Given an array of positive numbers and a positive number ‘k’, 
 // find the maximum sum of any contiguous subarray such that 
 // 1. the length of the subarray is k
 // 2. all the elements of the subarray are distinct
