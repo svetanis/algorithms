@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect.points;
+package com.svetanis.algorithms.search.quickselect.points.pq;
 
 public final class Distance implements Comparable<Distance> {
 

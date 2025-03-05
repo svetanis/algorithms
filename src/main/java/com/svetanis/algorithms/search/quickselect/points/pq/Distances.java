@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect.points;
+package com.svetanis.algorithms.search.quickselect.points.pq;
 
 import static java.lang.Math.pow;
 

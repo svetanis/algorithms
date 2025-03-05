@@ -1,7 +1,7 @@
-package com.svetanis.algorithms.search.quickselect.points;
+package com.svetanis.algorithms.search.quickselect.points.pq;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.algorithms.search.quickselect.points.Distances.distances;
+import static com.svetanis.algorithms.search.quickselect.points.pq.Distances.distances;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 
