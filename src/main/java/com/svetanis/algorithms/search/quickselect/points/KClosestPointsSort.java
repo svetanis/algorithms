@@ -6,7 +6,7 @@ import com.svetanis.java.base.utils.Print;
 
 // 973. K Closest Points to Origin
 
-public final class KClosestPoints973 {
+public final class KClosestPointsSort {
 	// Time complexity: O(n * log n)
 	// Space complexity: O(n)
 
