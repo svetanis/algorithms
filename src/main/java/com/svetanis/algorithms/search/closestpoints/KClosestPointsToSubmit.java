@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect.points;
+package com.svetanis.algorithms.search.closestpoints;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.utils.Print.print;

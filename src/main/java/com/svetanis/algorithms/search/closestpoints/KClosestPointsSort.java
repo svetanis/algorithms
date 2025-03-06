@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect.points;
+package com.svetanis.algorithms.search.closestpoints;
 
 import java.util.Arrays;
 
