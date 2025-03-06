@@ -1,7 +1,7 @@
-package com.svetanis.algorithms.search.quickselect.median;
+package com.svetanis.algorithms.search.median;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.algorithms.search.quickselect.median.MedianUnsortedMinSelect.minSelect;
+import static com.svetanis.algorithms.search.median.MedianUnsortedMinSelect.minSelect;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.print;
 

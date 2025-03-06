@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import com.svetanis.algorithms.search.quickselect.median.OnlineMedian;
+import com.svetanis.algorithms.search.median.OnlineMedian;
 
 // given m sorted arrays, find the
 // median number among all arrays

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect.median;
+package com.svetanis.algorithms.search.median;
 
 import static com.svetanis.java.base.utils.Random.rand;
 

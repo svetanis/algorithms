@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.quickselect.median;
+package com.svetanis.algorithms.search.median;
 
 // since there are 2n elements, 
 
