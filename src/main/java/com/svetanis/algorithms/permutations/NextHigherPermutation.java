@@ -16,10 +16,9 @@ import static java.lang.String.valueOf;
 // Finally, we get “DEABCF”.
 
 public final class NextHigherPermutation {
+  // Time complexity: O(n * n!)
 
   public static String nextHigher(String str) {
-    // Time complexity: O(n * n!)
-
     char[] chars = str.toCharArray();
 
     if (nextHigher(chars)) {
