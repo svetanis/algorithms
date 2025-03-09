@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string.permutation;
+package com.svetanis.algorithms.permutations;
 
 import static com.svetanis.algorithms.string.reverse.ReverseStringSwap.reverse;
 import static com.svetanis.java.base.utils.Swap.swap;

@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.string.permutation;
+package com.svetanis.algorithms.permutations;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.algorithms.string.permutation.NextHigherPermutation.ceiling;
-import static com.svetanis.algorithms.string.permutation.NextHigherPermutation.smaller;
+import static com.svetanis.algorithms.permutations.NextHigherPermutation.ceiling;
+import static com.svetanis.algorithms.permutations.NextHigherPermutation.smaller;
 import static com.svetanis.algorithms.string.reverse.ReverseStringSwap.reverse;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.utils.Print.printLines;

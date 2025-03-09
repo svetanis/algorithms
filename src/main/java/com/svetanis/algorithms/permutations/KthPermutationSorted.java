@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.string.permutation;
+package com.svetanis.algorithms.permutations;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
-import static com.svetanis.algorithms.string.permutation.NextHigherPermutation.nextHigher;
+import static com.svetanis.algorithms.permutations.NextHigherPermutation.nextHigher;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.sort;
 
