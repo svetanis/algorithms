@@ -3,7 +3,7 @@ package com.svetanis.algorithms.string;
 // 748. Shortest Completing Word
 
 public final class ShortestCompletingWord {
-	// Time Complexity: O(n)
+	// Time Complexity: O(m + k * n)
 
 	public static String scw(String license, String[] words) {
 		String s = "";
