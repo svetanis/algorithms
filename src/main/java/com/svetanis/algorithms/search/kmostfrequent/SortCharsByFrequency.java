@@ -10,6 +10,8 @@ import java.util.Queue;
 
 import com.google.common.collect.ImmutableMap;
 
+// 451. Sort Characters By Frequency
+
 // given a string s, sort it in decreasing order
 // based on the frequency of the characters
 
@@ -22,7 +24,7 @@ import com.google.common.collect.ImmutableMap;
 // the frequency of a character is the number
 // of times it appears in the string
 
-public final class SortCharactersByFrequency {
+public final class SortCharsByFrequency {
 	// Time Complexity: O(n log k)
 
 	public static String sort(String s) {
