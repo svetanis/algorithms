@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.heap;
+package com.svetanis.algorithms.search.twoheaps;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
