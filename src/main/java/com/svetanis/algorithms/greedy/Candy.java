@@ -4,6 +4,8 @@ import static java.lang.Math.max;
 
 import java.util.Arrays;
 
+// 135. Candy
+
 // there are n children standing in a line
 // each child is assigned a rating value
 // given in the integer array ratings
@@ -18,10 +20,37 @@ import java.util.Arrays;
 // have to distribute the cadies to the children
 
 public final class Candy {
+	// Time Complexity: O(n)
+	// Space Complexity: O(n)
 
 	public static int candy(int[] ratings) {
 		int n = ratings.length;
-		
+		int[] candies = new int[n];
+		candies[0] = 1;
+		// from left to right
+		for (int i = 1; i < n; i++) {
+			if (ratings[i] > ratings[i - 1]) {
+				candies[i] = candies[i - 1] + 1;
+			} else {
+				candies[i] = 1;
+			}
+		}
+		int count = candies[n - 1];
+		// from right to left
+		for (int i = n - 2; i >= 0; i--) {
+			int current = 1;
+			if (ratings[i] > ratings[i + 1]) {
+				current = candies[i + 1] + 1;
+			}
+			count += max(current, candies[i]);
+			candies[i] = current;
+		}
+		return count;
+	}
+
+	public static int candy2(int[] ratings) {
+		int n = ratings.length;
+
 		int[] left = new int[n];
 		left[0] = 1;
 		// from left to right
