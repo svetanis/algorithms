@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.array;
+package com.svetanis.algorithms.slidingwindow.fixed;
 
 // 643. Maximum Average Subarray I
 

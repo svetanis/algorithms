@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.array;
+package com.svetanis.algorithms.slidingwindow.fixed;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static java.lang.Math.max;

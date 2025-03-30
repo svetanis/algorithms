@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.array;
+package com.svetanis.algorithms.slidingwindow.fixed;
 
 // Given an array and a number k, calculate the sum of, 
 // the product of all elements of subarray of size ‘k’.

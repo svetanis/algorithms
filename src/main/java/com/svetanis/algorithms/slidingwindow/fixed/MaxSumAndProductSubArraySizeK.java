@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.array;
+package com.svetanis.algorithms.slidingwindow.fixed;
 
 import static com.svetanis.java.base.collect.Lists.transform;
 import static java.lang.Integer.parseInt;

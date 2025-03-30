@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.array;
+package com.svetanis.algorithms.slidingwindow.fixed;
 
 // given an array of n-elements find the mean of the array 
 // as mean of all consecutive m-elements of array for all 
