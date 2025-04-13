@@ -7,8 +7,8 @@ import java.util.List;
 // 1229. Meeting Scheduler
 
 public final class MeetingScheduler {
-	// Time Complexity: O(n*log n)
-	// Space Complexity: O(n)
+	// Time Complexity: O(n * log n + m * log m)
+	// Space Complexity: O(n + m)
 
 	public static List<Integer> ms(int[][] slots1, int[][] slots2, int duration) {
 		int n = slots1.length;
