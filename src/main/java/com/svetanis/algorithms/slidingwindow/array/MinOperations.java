@@ -5,6 +5,7 @@ import java.util.Arrays;
 // 1658. Minimum Operations to Reduce X to Zero 
 
 public final class MinOperations {
+	// Time Complexity: O(n)
 
 	public static int minOperations(int[] a, int x) {
 		int n = a.length;
