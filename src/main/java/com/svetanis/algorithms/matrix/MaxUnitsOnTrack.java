@@ -5,8 +5,6 @@ import java.util.Arrays;
 // 1710. Maximum Units on a Truck
 
 public final class MaxUnitsOnTrack {
-	// Time Complexity: O(n * m)
-	// Space Complexity: O(n + m)
 
 	public static int maxUnits(int[][] boxTypes, int truckSize) {
 		Arrays.sort(boxTypes, (a, b) -> b[1] - a[1]);
