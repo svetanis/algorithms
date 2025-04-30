@@ -3,7 +3,7 @@ package com.svetanis.algorithms.bits.xor;
 // 1863. Sum of All Subset XOR Totals
 
 public final class SumAllSubsetXOR {
-	// Time Complexity: O(n)
+	// Time Complexity: O(2^n)
 
 	private int total;
 	
