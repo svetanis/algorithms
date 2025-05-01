@@ -2,7 +2,7 @@ package com.svetanis.algorithms.twopointers;
 
 import java.util.Arrays;
 
-// 283. Move Zeros
+// 881. Boats to Save People
 
 public final class BoatsToSavePeople {
 	// Time Complexity: O(n log n)
@@ -30,6 +30,5 @@ public final class BoatsToSavePeople {
 		System.out.println(countBoats(p3, 5)); // 4
 		int[] p4 = { 5, 1, 4, 2 };
 		System.out.println(countBoats(p4, 6)); // 2
-
 	}
 }
