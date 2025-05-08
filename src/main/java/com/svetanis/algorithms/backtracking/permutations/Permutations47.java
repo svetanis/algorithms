@@ -21,7 +21,8 @@ public final class Permutations47 {
 		return permutations;
 	}
 
-	private static void dfs(int[] a, boolean[] visited, List<Integer> permutation, List<List<Integer>> permutations) {
+	private static void dfs(int[] a, boolean[] visited, 
+			List<Integer> permutation, List<List<Integer>> permutations) {
 		if (permutation.size() == a.length) {
 			permutations.add(new ArrayList<>(permutation));
 			return;
