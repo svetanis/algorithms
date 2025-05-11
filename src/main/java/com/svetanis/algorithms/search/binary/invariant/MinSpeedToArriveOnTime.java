@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary;
+package com.svetanis.algorithms.search.binary.invariant;
 
 // 1870. Minimum Speed to Arrive on Time
 

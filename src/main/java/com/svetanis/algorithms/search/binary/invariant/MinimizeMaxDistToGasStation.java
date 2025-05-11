@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary;
+package com.svetanis.algorithms.search.binary.invariant;
 
 // 774. Minimize Max Distance to Gas Station
 

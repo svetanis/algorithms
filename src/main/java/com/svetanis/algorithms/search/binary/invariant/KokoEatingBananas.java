@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary;
+package com.svetanis.algorithms.search.binary.invariant;
 
 // 875. Koko Eating Bananas
 

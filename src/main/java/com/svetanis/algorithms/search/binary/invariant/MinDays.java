@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary;
+package com.svetanis.algorithms.search.binary.invariant;
 
 // 1482. Minimum Number of Days to Make m Bouquets
 
