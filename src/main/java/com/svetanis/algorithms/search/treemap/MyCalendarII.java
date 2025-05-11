@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary;
+package com.svetanis.algorithms.search.treemap;
 
 import java.util.TreeMap;
 
