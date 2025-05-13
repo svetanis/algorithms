@@ -7,15 +7,7 @@ public final class MinNumOfTaps {
 	// Space Complexity: O(n)
 
 	public static int minTaps(int n, int[] ranges) {
-		int len = ranges.length;
-		int[] last = new int[len + 1];
-		for (int i = 0; i < len; i++) {
-			if (ranges[i] > 0) {
-				int left = Math.max(0, i - ranges[i]);
-				int right = i + ranges[i];
-				last[left] = Math.max(last[left], right);
-			}
-		}
+		int[] last = intervals(ranges);
 		int curr = 0;
 		int prev = 0;
 		int taps = 0;
@@ -30,6 +22,19 @@ public final class MinNumOfTaps {
 			}
 		}
 		return taps;
+	}
+	
+	private static int[] intervals(int[] ranges) {
+		int n = ranges.length;
+		int[] a = new int[n + 1];
+		for (int i = 0; i < n; i++) {
+			if (ranges[i] > 0) {
+				int left = Math.max(0, i - ranges[i]);
+				int right = i + ranges[i];
+				a[left] = Math.max(a[left], right);
+			}
+		}
+		return a;
 	}
 
 	public static void main(String[] args) {
