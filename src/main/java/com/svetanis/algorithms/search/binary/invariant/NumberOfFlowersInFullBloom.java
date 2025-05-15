@@ -55,11 +55,11 @@ public final class NumberOfFlowersInFullBloom {
 
 		int[] people3 = { 6, 7, 21, 1, 13, 37, 5, 37, 46, 43 };
 		int[][] f3 = { { 19, 37 }, { 19, 38 }, { 19, 35 } };
-		Print.print(fullBloomFlowers(f3, people3)); // 2,2,1
+		Print.print(fullBloomFlowers(f3, people3)); // 0 0 3 0 0 2 0 2 0 0 
 
 		int[] people4 = { 1, 1000000000 };
 		int[][] f4 = { { 1, 2 }, { 4, 300 } };
-		Print.print(fullBloomFlowers(f4, people4)); // 2,2,1
+		Print.print(fullBloomFlowers(f4, people4)); // 1 0
 
 	}
 }
