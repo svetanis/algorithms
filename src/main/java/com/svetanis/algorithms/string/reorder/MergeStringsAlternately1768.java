@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.reorder;
 
 // 1768. Merge Strings Alternately
 

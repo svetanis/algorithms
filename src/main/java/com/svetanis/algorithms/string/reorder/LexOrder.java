@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.reorder;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.Splitters.checkedSplit;

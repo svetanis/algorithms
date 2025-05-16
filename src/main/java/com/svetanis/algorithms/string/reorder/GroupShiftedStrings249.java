@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.reorder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
