@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.prefixsum;
+package com.svetanis.algorithms.prefixsum.range;
 
 import static java.util.Arrays.asList;
 

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.prefixsum;
+package com.svetanis.algorithms.prefixsum.range;
 
 // 1893. Check if All the Integers in a Range Are Covered
 

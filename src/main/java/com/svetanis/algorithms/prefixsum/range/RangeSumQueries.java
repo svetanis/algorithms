@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.prefixsum;
+package com.svetanis.algorithms.prefixsum.range;
 
 import static com.svetanis.algorithms.prefixsum.PrefixSumArray.prefixSum;
 

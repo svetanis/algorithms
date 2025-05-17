@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.prefixsum;
+package com.svetanis.algorithms.prefixsum.range;
 
 // 303. Range Sum Query - Immutable
 
