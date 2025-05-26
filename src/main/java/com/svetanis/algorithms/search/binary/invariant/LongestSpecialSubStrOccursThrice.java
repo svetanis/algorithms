@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.slidingwindow.string;
+package com.svetanis.algorithms.search.binary.invariant;
 
 import java.util.HashMap;
 import java.util.Map;
