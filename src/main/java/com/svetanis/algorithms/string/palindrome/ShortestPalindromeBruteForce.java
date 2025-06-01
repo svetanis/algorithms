@@ -9,8 +9,8 @@ package com.svetanis.algorithms.string.palindrome;
 
 // quick and inefficient
 
-public final class ShortestPalindrome {
-	// Time Complexity: O(n)
+public final class ShortestPalindromeBruteForce {
+	// Time Complexity: O(n^2)
 
 	public static String palindrome(String s) {
 		int left = 0;
