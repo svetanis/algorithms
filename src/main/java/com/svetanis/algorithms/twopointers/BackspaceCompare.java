@@ -1,63 +1,60 @@
 package com.svetanis.algorithms.twopointers;
 
+// 844. Backspace String Compare
+
 // given two strings containing backspaces 
 // (identified by the char #)
 // check if the two strings are equal
 
 public final class BackspaceCompare {
-// Time Complexity: O(n + m)
-	
-  public static boolean compare(String str1, String str2) {
-    
-    int n = str1.length();
-    int m = str2.length();
-    int i = n - 1;
-    int j = m - 1;
+	// Time Complexity: O(n + m)
+	// Space Complexity: O(1)
 
-    while (i >= 0 || j >= 0) {
-      int next1 = next(str1, i);
-      int next2 = next(str2, j);
-      
-      // reached end of both strings
-      if (next1 < 0 && next2 < 0) {
-        return true;
-      }
-      
-      // reached end of one of the strings
-      if (next1 < 0 || next2 < 0) {
-        return false;
-      }
-      
-      if (str1.charAt(next1) != str2.charAt(next2)) {
-        return false;
-      }
+	public static boolean compare(String s, String t) {
+		int i = s.length() - 1;
+		int j = t.length() - 1;
+		while (i >= 0 || j >= 0) {
+			i = backspace(s, i);
+			j = backspace(t, j);
+			if (i >= 0 && j >= 0) {
+				if (s.charAt(i) != t.charAt(j)) {
+					return false;
+				}
+			} else if (i >= 0 || j >= 0) {
+				return false;
+			}
+			i--;
+			j--;
+		}
+		return true;
+	}
 
-      i = next1 - 1;
-      j = next2 - 1;
-    }
+	private static int backspace(String s, int index) {
+		int skip = 0;
+		while (index >= 0) {
+			if (s.charAt(index) == '#') {
+				skip++;
+				index--;
+			} else if (skip > 0) {
+				skip--;
+				index--;
+			} else {
+				break;
+			}
+		}
+		return index;
+	}
 
-    return true;
-  }
+	public static void main(String[] args) {
+		System.out.println(compare("ab#c", "ad#c")); // true
+		System.out.println(compare("ab##", "c#d#")); // true
+		System.out.println(compare("a#c", "b")); // false
+		System.out.println(compare("bxj##tw", "bxj###tw")); // false
+		System.out.println(compare("a##c", "#a#c")); // false
 
-  private static int next(String str, int i) {
-    int backSpace = 0;
-    while (i >= 0) {
-      if (str.charAt(i) == '#') {
-        backSpace++;
-      } else if (backSpace > 0) {
-        backSpace--;
-      } else {
-        break;
-      }
-      i--;
-    }
-    return i;
-  }
-
-  public static void main(String[] args) {
-    System.out.println(compare("xy#z", "xzz#"));
-    System.out.println(compare("xy#z", "xyz#"));
-    System.out.println(compare("xp#", "xyz##"));
-    System.out.println(compare("xywrrmp", "xywrrmu#p"));
-  }
+		System.out.println(compare("xy#z", "xzz#")); // true
+		System.out.println(compare("xy#z", "xyz#")); // false
+		System.out.println(compare("xp#", "xyz##")); // true
+		System.out.println(compare("xywrrmp", "xywrrmu#p")); // true
+	}
 }
