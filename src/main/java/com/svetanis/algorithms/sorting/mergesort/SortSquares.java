@@ -2,16 +2,18 @@ package com.svetanis.algorithms.sorting.mergesort;
 
 import static com.svetanis.java.base.utils.Print.print;
 
+// 977. Squares of a Sorted Array
+// twopointers.SquaringSortedArray.java
+
 // given sorted array of both 
 // positive and negative integers
 // sort squares 
 
 public final class SortSquares {
+	// Time Complexity: O(n)
+	// Aux Space: O(n)
 
 	public static void sort(int[] a) {
-		// Time Complexity: O(n)
-		// Aux Space: O(n)
-
 		int pivot = pivot(a);
 		if (pivot == -1) {
 			return;
