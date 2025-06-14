@@ -1,9 +1,11 @@
 package com.svetanis.algorithms.slidingwindow.string;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static java.lang.Math.max;
 
+import java.util.HashMap;
 import java.util.Map;
+
+// 904. Fruit Into Baskets
 
 // Given an array of characters where each character represents a fruit tree. 
 // The farm has following restrictions:
@@ -15,41 +17,37 @@ import java.util.Map;
 // Write a function to return the maximum number of fruits in both baskets.
 
 public final class MaxFruitCountOfTwoTypes {
+	// Time complexity: O(n)
 
-  public static int maxLen(char[] arr) {
-    // Time complexity: O(n)
+	public static int maxLen(char[] a) {
+		int n = a.length;
+		int left = 0; // current start
+		int max = 0; // max window size
+		Map<Character, Integer> map = new HashMap<>();
+		for (int right = 0; right < n; right++) {
+			char next = a[right];
+			int freq = map.getOrDefault(next, 0) + 1;
+			map.put(next, freq);
+			// shrink the sliding window, until k
+			// distinct chars left in frequency map
+			while (map.size() > 2) {
+				char front = a[left];
+				map.put(front, map.get(front) - 1);
+				if (map.get(front) == 0) {
+					map.remove(front);
+				}
+				left++; // shrink the window
+			}
+			max = max(max, right - left + 1);
+		}
+		return max;
+	}
 
-    int n = arr.length;
-    int left = 0; // current start
-    int max = 0; // max window size
-    Map<Character, Integer> map = newHashMap();
+	public static void main(String[] args) {
+		char[] a1 = { 'A', 'B', 'C', 'A', 'C' };
+		System.out.println(maxLen(a1));
 
-    for (int right = 0; right < n; right++) {
-      char next = arr[right];
-      int freq = map.getOrDefault(next, 0) + 1;
-      map.put(next, freq);
-      // shrink the sliding window, until k
-      // distinct chars left in frequency map
-      while (map.size() > 2) {
-        char front = arr[left];
-        map.put(front, map.get(front) - 1);
-        if (map.get(front) == 0) {
-          map.remove(front);
-        }
-        left++; // shrink the window
-      }
-      if(map.size() == 2) {
-        max = max(max, right - left + 1);
-      }
-    }
-    return max;
-  }
-
-  public static void main(String[] args) {
-    char[] a1 = {'A','B','C','A','C'};
-    System.out.println(maxLen(a1));
-
-    char[] a2 = {'A','B','B','B','C'};
-    System.out.println(maxLen(a2));
-  }
+		char[] a2 = { 'A', 'B', 'B', 'B', 'C' };
+		System.out.println(maxLen(a2));
+	}
 }
