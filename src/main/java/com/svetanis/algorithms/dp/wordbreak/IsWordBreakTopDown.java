@@ -4,7 +4,9 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static java.util.Arrays.asList;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
 
@@ -16,27 +18,34 @@ import com.google.common.collect.ImmutableList;
 // then we recursively check for remaining string str.substring(i)
 // which is suffix of length n - i
 
-public final class IsWordBreakRecursive {
+public final class IsWordBreakTopDown {
 
 	public static boolean isWordBreak(String s, List<String> dict) {
-		int n = s.length();
+		Set<String> set = new HashSet<>(dict);
+		Boolean[] dp = new Boolean[s.length()];
+		return dfs(s, 0, set, dp);
+	}
 
+	private static boolean dfs(String s, int index, Set<String> set, Boolean[] dp) {
+		int n = s.length();
 		// base case
-		if (n == 0) {
+		if (index == n) {
 			return true;
 		}
-
-		// try all prefixes of lengths from 1 to n
-		for (int i = 1; i <= n; ++i) {
-			boolean in = dict.contains(s.substring(0, i));
-			if (in && isWordBreak(s.substring(i), dict)) {
-				return true;
+		if (dp[index] != null) {
+			return dp[index];
+		}
+		boolean result = false;
+		for (int i = index; i < n; ++i) {
+			String ss = s.substring(index, i + 1);
+			if (set.contains(ss)) {
+				result = dfs(s, i + 1, set, dp);
+				if (result) {
+					break;
+				}
 			}
 		}
-
-		// if we have tried all prefixes
-		// and none of them worked
-		return false;
+		return dp[index] = result;
 	}
 
 	public static void main(String[] args) {
