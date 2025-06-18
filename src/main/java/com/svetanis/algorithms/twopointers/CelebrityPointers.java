@@ -5,6 +5,8 @@ import static com.google.common.base.Optional.of;
 
 import com.google.common.base.Optional;
 
+// 277. Find the Celebrity
+
 // you're at a party with n people
 // each labeled with a unique number
 // between 0 and n - 1. your goal is
@@ -73,5 +75,24 @@ public final class CelebrityPointers {
 		int[][] grid2 = { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 0 }, { 0, 0, 1, 0 } };
 		Celebrity c2 = new Celebrity(grid2);
 		System.out.println(celebrity(c2));
+	}
+
+	private static final class Celebrity {
+
+		private final int n;
+		private final int[][] grid;
+
+		public Celebrity(int[][] grid) {
+			this.grid = grid;
+			this.n = grid.length;
+		}
+
+		public int size() {
+			return n;
+		}
+
+		public boolean knows(int a, int b) {
+			return grid[a][b] == 1;
+		}
 	}
 }
