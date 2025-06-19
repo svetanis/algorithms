@@ -47,7 +47,7 @@ public final class RobotOnGridTopDown {
 	}
 
 	public static void main(String[] args) {
-		// m rows and n columns
+		// n rows and m columns
 		System.out.println(countUniquePaths(3, 2)); // 3
 		System.out.println(countUniquePaths(7, 3)); // 28
 		System.out.println(countUniquePaths(1, 1)); // 1

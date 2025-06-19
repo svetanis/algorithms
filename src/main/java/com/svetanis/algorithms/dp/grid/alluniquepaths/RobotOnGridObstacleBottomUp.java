@@ -45,7 +45,7 @@ public final class RobotOnGridObstacleBottomUp {
 	}
 
 	public static void main(String[] args) {
-		// m rows and n columns
+		// n rows and m columns
 		int[][] g1 = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
 		int[][] g2 = { { 0, 1 }, { 0, 0 } };
 		int[][] g3 = { { 1 } };
