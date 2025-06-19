@@ -1,6 +1,9 @@
-package com.svetanis.algorithms.dp.countways.minjumps;
+package com.svetanis.algorithms.dp.countways.jumps;
+
+import static java.lang.Math.min;
 
 // 45. Jump Game II
+
 // Given an array of positive numbers,
 // where each element represents the max number of jumps
 // that can be made forward from that element,
@@ -10,18 +13,16 @@ package com.svetanis.algorithms.dp.countways.minjumps;
 // If an element is 0,
 // then we cannot move through that element.
 
-public final class MinArrayJumpTopDown {
-	// Time Complexity: O(n^2)
-	
+public final class MinArrayJumpRecursive {
+
 	private static final int INF = Integer.MAX_VALUE;
 
 	public static int count(int[] a) {
-		Integer[] dp = new Integer[a.length];
-		int min = count(a, 0, dp);
+		int min = count(a, 0);
 		return min == INF ? -1 : min;
 	}
 
-	private static int count(int[] a, int index, Integer[] dp) {
+	private static int count(int[] a, int index) {
 		int n = a.length;
 		if (index == n - 1) {
 			return 0;
@@ -29,21 +30,17 @@ public final class MinArrayJumpTopDown {
 		if (a[index] == 0) {
 			return INF;
 		}
-		if (dp[index] != null) {
-			return dp[index];
-		}
-
 		int min = INF;
 		int start = index + 1;
 		int end = index + a[index];
 		while (start < n && start <= end) {
-			int jumps = count(a, start, dp);
+			int jumps = count(a, start);
 			if (jumps != INF) {
-				min = Math.min(min, jumps + 1);
+				min = min(min, jumps + 1);
 			}
 			start++;
 		}
-		return dp[index] = min;
+		return min;
 	}
 
 	public static void main(String[] args) {

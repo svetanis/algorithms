@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.countways.minjumps;
+package com.svetanis.algorithms.dp.countways.jumps;
 
 import static java.lang.Math.min;
 

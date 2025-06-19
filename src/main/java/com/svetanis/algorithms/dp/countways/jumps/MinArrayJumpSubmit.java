@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.countways.minjumps;
+package com.svetanis.algorithms.dp.countways.jumps;
 
 // 45. Jump Game II
 

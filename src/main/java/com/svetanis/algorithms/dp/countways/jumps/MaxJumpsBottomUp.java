@@ -1,8 +1,10 @@
-package com.svetanis.algorithms.dp.countways.minjumps;
+package com.svetanis.algorithms.dp.countways.jumps;
+
+import java.util.Arrays;
 
 // 2770. Maximum Number of Jumps to Reach the Last Index
 
-public final class MaxJumpsTopDown {
+public final class MaxJumpsBottomUp {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(n)
 
@@ -10,26 +12,18 @@ public final class MaxJumpsTopDown {
 
 	public static int count(int[] a, int target) {
 		int n = a.length;
-		Integer[] dp = new Integer[n];
-		int max = count(a, target, 0, dp);
-		return max < 0 ? -1 : max;
-	}
-
-	private static int count(int[] a, int target, int index, Integer[] dp) {
-		if (index == a.length - 1) {
-			return 0;
-		}
-		if (dp[index] != null) {
-			return dp[index];
-		}
-		int max = INF;
-		for (int i = index + 1; i < a.length; i++) {
-			int jumps = Math.abs(a[index] - a[i]);
-			if (jumps <= target) {
-				max = Math.max(max, 1 + count(a, target, i, dp));
+		int[] dp = new int[n];
+		Arrays.fill(dp, INF);
+		dp[0] = 0;
+		for (int start = 0; start < n - 1; start++) {
+			for (int end = start + 1; end < n; end++) {
+				int jump = Math.abs(a[end] - a[start]);
+				if (jump <= target && dp[start] != INF) {
+					dp[end] = Math.max(dp[end], dp[start] + 1);
+				}
 			}
 		}
-		return dp[index] = max;
+		return dp[n - 1] == INF ? -1 : dp[n - 1];
 	}
 
 	public static void main(String[] args) {
