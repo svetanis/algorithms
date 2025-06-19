@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.dice;
+package com.svetanis.algorithms.dp.countways.dice;
 
 // 1155. Number of Dice Rolls With Target Sum
 

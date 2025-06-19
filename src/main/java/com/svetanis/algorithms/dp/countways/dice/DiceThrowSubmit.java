@@ -1,35 +1,29 @@
-package com.svetanis.algorithms.dp.dice;
+package com.svetanis.algorithms.dp.countways.dice;
 
 // 1155. Number of Dice Rolls With Target Sum
 
 // returns number of ways to get sum
 // 'target' with 'n' dice and 'k' throws
 
-public final class DiceThrowTopDown {
+public final class DiceThrowSubmit {
 	// Time complexity: O(k * n * target)
+	// Space complexity: O(target)
 
 	private static final int MOD = (int) 1e9 + 7;
 
 	public static int diceThrow(int n, int k, int target) {
-		Integer[][] dp = new Integer[n + 1][target + 1];
-		return dfs(n, k, target, dp);
-	}
-
-	private static int dfs(int n, int k, int target, Integer[][] dp) {
-		if (target < 1) {
-			return 0;
+		int[] dp = new int[target + 1];
+		dp[0] = 1;
+		for (int dice = 1; dice <= n; dice++) {
+			int[] temp = new int[target + 1];
+			for (int sum = 1; sum <= Math.min(target, dice * k); sum++) {
+				for (int face = 1; face <= Math.min(k, sum); face++) {
+					temp[sum] = (temp[sum] + dp[sum - face]) % MOD;
+				}
+			}
+			dp = temp;
 		}
-		if (n == 1) {
-			return target <= k ? 1 : 0;
-		}
-		if (dp[n][target] != null) {
-			return dp[n][target];
-		}
-		int count = 0;
-		for (int face = 1; face <= k; face++) {
-			count = (count + dfs(n - 1, k, target - face, dp)) % MOD;
-		}
-		return dp[n][target] = count;
+		return dp[target];
 	}
 
 	public static void main(String[] args) {
