@@ -10,17 +10,16 @@ import static java.lang.Math.min;
 // of the min number of edit operations.
 
 public final class EditDistanceSubmit {
+	// Time complexity: O(n * m)
 
 	public static int editDist(String x, String y) {
-		// Time complexity: O(n * m)
-
 		int n = x.length();
 		int m = y.length();
 		Integer[][] dp = new Integer[n + 1][m + 1];
-		return editDist(x, y, n, m, dp);
+		return dfs(x, y, n, m, dp);
 	}
 
-	private static int editDist(String x, String y, int n, int m, Integer[][] dp) {
+	private static int dfs(String x, String y, int n, int m, Integer[][] dp) {
 		// base cases
 		if (n == 0 && m == 0) {
 			return 0;
@@ -35,11 +34,11 @@ public final class EditDistanceSubmit {
 			return dp[n][m];
 		}
 		if (x.charAt(n - 1) == y.charAt(m - 1)) {
-			dp[n][m] = editDist(x, y, n - 1, m - 1, dp);
+			dp[n][m] = dfs(x, y, n - 1, m - 1, dp);
 		} else {
-			int delete = 1 + editDist(x, y, n - 1, m, dp);
-			int insert = 1 + editDist(x, y, n, m - 1, dp);
-			int replace = 1 + editDist(x, y, n - 1, m - 1, dp);
+			int delete = 1 + dfs(x, y, n - 1, m, dp);
+			int insert = 1 + dfs(x, y, n, m - 1, dp);
+			int replace = 1 + dfs(x, y, n - 1, m - 1, dp);
 			dp[n][m] = min(min(delete, insert), replace);
 		}
 		return dp[n][m];

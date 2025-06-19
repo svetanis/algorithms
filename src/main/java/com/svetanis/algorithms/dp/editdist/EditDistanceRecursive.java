@@ -8,17 +8,15 @@ import static java.lang.Math.min;
 // of the min number of edit operations.
 
 public final class EditDistanceRecursive {
+	// Time complexity: O(n * m)
 
 	public static int editDist(String x, String y) {
-		// Time complexity: O(n * m)
-
 		int n = x.length();
 		int m = y.length();
-		return editDist(x, y, n, m);
+		return dfs(x, y, n, m);
 	}
 
-	private static int editDist(String x, String y, int n, int m) {
-
+	private static int dfs(String x, String y, int n, int m) {
 		// base cases
 		if (n == 0 && m == 0) {
 			return 0;
@@ -29,15 +27,12 @@ public final class EditDistanceRecursive {
 		if (m == 0) {
 			return n;
 		}
-
 		if (x.charAt(n - 1) == y.charAt(m - 1)) {
-			return editDist(x, y, n - 1, m - 1);
+			return dfs(x, y, n - 1, m - 1);
 		}
-
-		int delete = 1 + editDist(x, y, n - 1, m);
-		int insert = 1 + editDist(x, y, n, m - 1);
-		int replace = 1 + editDist(x, y, n - 1, m - 1);
-
+		int delete = 1 + dfs(x, y, n - 1, m);
+		int insert = 1 + dfs(x, y, n, m - 1);
+		int replace = 1 + dfs(x, y, n - 1, m - 1);
 		return min(min(delete, insert), replace);
 	}
 
