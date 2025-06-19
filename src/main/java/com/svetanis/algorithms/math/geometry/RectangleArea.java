@@ -5,12 +5,16 @@ import static java.lang.Math.min;
 
 import java.awt.Point;
 
+// 223. Rectangle Area
+
 // find the total area covered by two
 // rectangles in a 2D plane: the sum
 // of the areas of both rectangles minus
 // any overlapping area
 
 public class RectangleArea {
+	// Time Complexity: O(1)
+	// Space Complexity: O(1)
 
 	public static int area(Point p1, Point p2, Point p3, Point p4) {
 		// area of the first rectangle
