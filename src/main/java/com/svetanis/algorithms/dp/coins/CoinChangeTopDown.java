@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.coins;
 
 import static java.util.Arrays.asList;
 
@@ -21,13 +21,15 @@ import java.util.List;
 
 // f(a) = 1 + min(f(a - d0), f(a - d1), ..., f(a - dk))
 
-public final class CoinChangeRecursive {
+public final class CoinChangeTopDown {
 
 	public static int count(List<Integer> list, int amount) {
-		return count(list, 0, amount);
+		int n = list.size();
+		Integer[][] dp = new Integer[n + 1][amount + 1];
+		return count(list, 0, amount, dp);
 	}
 
-	private static int count(List<Integer> list, int index, int amount) {
+	private static int count(List<Integer> list, int index, int amount, Integer[][] dp) {
 		// base case
 		if (amount == 0) {
 			return 1;
@@ -42,12 +44,17 @@ public final class CoinChangeRecursive {
 			return 0;
 		}
 
+		if (dp[index][amount] != null) {
+			return dp[index][amount];
+		}
+
 		// return the sum of solutions
 		// 1. include a[n - 1]: count(a[], n, v - a[n-1])
-		int incl = count(list, index, amount - list.get(index));
+		int incl = count(list, index, amount - list.get(index), dp);
 		// 2. excluding a[n - 1]: count(a[], n - 1, v)
-		int excl = count(list, index + 1, amount);
-		return incl + excl;
+		int excl = count(list, index + 1, amount, dp);
+		dp[index][amount] = incl + excl;
+		return dp[index][amount];
 	}
 
 	public static void main(String[] args) {

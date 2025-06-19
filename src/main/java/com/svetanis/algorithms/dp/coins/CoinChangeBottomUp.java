@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.coins;
 
 import static java.util.Arrays.asList;
 import static java.util.Arrays.fill;
@@ -17,8 +17,8 @@ public final class CoinChangeBottomUp {
 	// Time Complexity: O(n * amount)
 	// Space Complexity: O(n * amount)
 
-	public static int count(List<Integer> list, int amount) {
-		int n = list.size();
+	public static int count(List<Integer> coins, int amount) {
+		int n = coins.size();
 		int[][] dp = new int[amount + 1][n];
 		// fill the entries for 0 value case
 		fill(dp[0], 1);
@@ -30,8 +30,8 @@ public final class CoinChangeBottomUp {
 					excl = dp[sum][i - 1];
 				}
 				int incl = 0;
-				if (sum >= list.get(i)) {
-					incl = dp[sum - list.get(i)][i];
+				if (sum >= coins.get(i)) {
+					incl = dp[sum - coins.get(i)][i];
 				}
 				// total count
 				dp[sum][i] = incl + excl;

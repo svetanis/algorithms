@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.coins;
 
 import static java.util.Arrays.asList;
 
@@ -22,7 +22,9 @@ public final class CoinChangeSpaceOptimized {
 	// Time Complexity: O(n * amount)
 	// Space Complexity: O(amount)
 
-	public static int count(List<Integer> list, int amount) {
+	private static final int MOD = 1000007;
+	
+	public static int count(List<Integer> coins, int amount) {
 		int[] dp = new int[amount + 1];
 		// base case
 		// given value is 0
@@ -32,12 +34,12 @@ public final class CoinChangeSpaceOptimized {
 		// after the index greater than
 		// or equal to the value of
 		// the picked coin
-		for (int i = 0; i < list.size(); ++i) {
-			for (int sum = list.get(i); sum <= amount; sum++) {
-				dp[sum] = (dp[sum] + dp[sum - list.get(i)]) % 1000007;
+		for (int coin : coins) {
+			for (int sum = coin; sum <= amount; sum++) {
+				dp[sum] = (dp[sum] + dp[sum - coin]) % MOD;
 			}
 		}
-		return dp[amount] % 1000007;
+		return dp[amount] % MOD;
 	}
 
 	public static void main(String[] args) {

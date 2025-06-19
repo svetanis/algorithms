@@ -1,4 +1,8 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.coins;
+
+import static java.util.Arrays.asList;
+
+import java.util.List;
 
 // 518. Coin Change II
 
@@ -17,17 +21,13 @@ package com.svetanis.algorithms.dp.coinchange;
 
 // f(a) = 1 + min(f(a - d0), f(a - d1), ..., f(a - dk))
 
-public final class CoinChangeMemoization {
-	// Time Complexity: O(n * amount)
-	// Space Complexity: O(n * amount)
+public final class CoinChangeRecursive {
 
-	public static int coinChange(int[] coins, int amount) {
-		int n = coins.length;
-		Integer[][] dp = new Integer[n + 1][amount + 1];
-		return dfs(coins, 0, amount, dp);
+	public static int count(List<Integer> coins, int amount) {
+		return count(coins, 0, amount);
 	}
 
-	private static int dfs(int[] coins, int index, int amount, Integer[][] dp) {
+	private static int count(List<Integer> coins, int index, int amount) {
 		// base case
 		if (amount == 0) {
 			return 1;
@@ -38,29 +38,21 @@ public final class CoinChangeMemoization {
 		}
 		// if there are no coins and V > 0,
 		// then no solution exists
-		if (index >= coins.length && amount >= 1) {
+		if (index >= coins.size() && amount >= 1) {
 			return 0;
-		}
-
-		if (dp[index][amount] != null) {
-			return dp[index][amount];
 		}
 
 		// return the sum of solutions
 		// 1. include a[n - 1]: count(a[], n, v - a[n-1])
-		int incl = dfs(coins, index, amount - coins[index], dp);
+		int incl = count(coins, index, amount - coins.get(index));
 		// 2. excluding a[n - 1]: count(a[], n - 1, v)
-		int excl = dfs(coins, index + 1, amount, dp);
-		dp[index][amount] = incl + excl;
-		return dp[index][amount];
+		int excl = count(coins, index + 1, amount);
+		return incl + excl;
 	}
 
 	public static void main(String[] args) {
-		int[] a1 = { 1, 2, 5 };
-		int[] a2 = { 2 };
-		int[] a3 = { 10 };
-		System.out.println(coinChange(a1, 5)); // 4
-		System.out.println(coinChange(a2, 3)); // 0
-		System.out.println(coinChange(a3, 10)); // 1
+		System.out.println(count(asList(1, 2, 3), 4)); // 4
+		System.out.println(count(asList(1, 2, 5), 5)); // 4
+		System.out.println(count(asList(2), 3)); // 0
 	}
 }

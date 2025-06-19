@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.coins;
 
 import java.util.Arrays;
 import java.util.HashMap;

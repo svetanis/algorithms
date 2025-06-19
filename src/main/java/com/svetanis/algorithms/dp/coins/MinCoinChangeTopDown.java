@@ -1,10 +1,12 @@
-package com.svetanis.algorithms.dp.coinchange;
+package com.svetanis.algorithms.dp.coins;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
 import static java.util.Arrays.asList;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // 322. Coin Change
 
@@ -15,15 +17,21 @@ import java.util.List;
 // n - size of array of coins S
 // V - coin value
 
-public final class MinCoinChangeRecursive {
+public final class MinCoinChangeTopDown {
+	// Time Complexity: O(n * amount)
+	// Space Complexity: O(amount)
 
 	public static int minCoinChange(List<Integer> list, int amount) {
-		int min = dfs(amount, 0, list);
+		Map<Integer, Integer> map = new HashMap<>();
+		int min = dfs(amount, 0, list, map);
 		return min == MAX_VALUE ? -1 : min;
 	}
 
-	private static int dfs(int amount, int sum, List<Integer> list) {
-		if (amount == sum) {
+	private static int dfs(int amount, int sum, List<Integer> list, Map<Integer, Integer> map) {
+		if (map.containsKey(sum)) {
+			return map.get(sum);
+		}
+		if (sum == amount) {
 			return 0;
 		}
 		if (sum > amount) {
@@ -31,11 +39,12 @@ public final class MinCoinChangeRecursive {
 		}
 		int min = MAX_VALUE;
 		for (int coin : list) {
-			int coins = dfs(amount, sum + coin, list);
+			int coins = dfs(amount, sum + coin, list, map);
 			if (coins != MAX_VALUE) {
 				min = min(min, coins + 1);
 			}
 		}
+		map.put(sum, min);
 		return min;
 	}
 
