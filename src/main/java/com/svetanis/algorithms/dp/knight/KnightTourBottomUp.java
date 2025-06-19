@@ -1,9 +1,10 @@
-package com.svetanis.algorithms.dp.countways;
+package com.svetanis.algorithms.dp.knight;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.collect.Maps.newMap;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.fill;
 
 import java.util.Map;
 
@@ -17,22 +18,21 @@ import com.google.common.collect.ImmutableMap;
 // to the next is similar to the movement of 
 // the Knight in a chess game.
 
-public final class KnightTourBruteForce {
+public final class KnightTourBottomUp {
 
-	public static int recursive(int src, int len) {
+	public static long dynamic(int src, int len) {
 		Map<Integer, ImmutableList<Integer>> map = neighbours();
-		return dfs(src, len, map);
-	}
-
-	private static int dfs(int src, int len, Map<Integer, ImmutableList<Integer>> map) {
-		if (len == 1) {
-			return 1;
+		int size = map.keySet().size();
+		long[][] dp = new long[len][size];
+		fill(dp[0], 1);
+		for (int i = 1; i < len; i++) {
+			for (int j = 0; j < size; j++) {
+				for (int val : map.get(j)) {
+					dp[i][j] += dp[i - 1][val];
+				}
+			}
 		}
-		int count = 0;
-		for (int val : map.get(src)) {
-			count += dfs(val, len - 1, map);
-		}
-		return count;
+		return dp[len - 1][src];
 	}
 
 	private static ImmutableMap<Integer, ImmutableList<Integer>> neighbours() {
@@ -51,12 +51,12 @@ public final class KnightTourBruteForce {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(recursive(1, 2));// 2
-		System.out.println(recursive(1, 3));// 5
-		System.out.println(recursive(9, 13));// 19520
-		System.out.println(recursive(2, 4));// 10
-		System.out.println(recursive(2, 8));// 272
-		System.out.println(recursive(2, 12));// 7456
-		System.out.println(recursive(2, 16));// 204416
+		System.out.println(dynamic(1, 2));// 2
+		System.out.println(dynamic(1, 3));// 5
+		System.out.println(dynamic(9, 13));// 19520
+		System.out.println(dynamic(2, 4));// 10
+		System.out.println(dynamic(2, 8));// 272
+		System.out.println(dynamic(2, 12));// 7456
+		System.out.println(dynamic(2, 16));// 204416
 	}
 }

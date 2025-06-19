@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.countways;
+package com.svetanis.algorithms.dp.knight;
 
 import static com.svetanis.java.base.collect.Lists.newList;
 import static java.util.Arrays.asList;

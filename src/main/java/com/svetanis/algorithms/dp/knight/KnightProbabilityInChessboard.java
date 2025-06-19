@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.grid;
+package com.svetanis.algorithms.dp.knight;
 
 // 688. Knight Probability in Chessboard
 
