@@ -1,11 +1,7 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.search;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-
-import com.google.common.base.Splitter;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 
 // 290. Word Pattern
 // given a pattern and a string s,
@@ -20,26 +16,29 @@ import com.google.common.collect.HashBiMap;
 // No two letters map to the same word, 
 // and no two words map to the same letter.
 
-public final class WordPattern {
+public final class WordPatternSubmit {
 	// Time Complexity: O(n)
 	// Space Complexity: O(n)
 
 	public static boolean wordPattern(String p, String s) {
-		List<String> words = Splitter.on(" ").splitToList(s);
-		if (p.toCharArray().length != words.size()) {
+		char[] chars = p.toCharArray();
+		String[] words = s.split(" ");
+		if (chars.length != words.length) {
 			return false;
 		}
-		BiMap<Character, String> map = HashBiMap.create();
-		for (int i = 0; i < words.size(); i++) {
-			char c = p.charAt(i);
-			String word = words.get(i);
-			Map<String, Character> inverse = map.inverse();
+		Map<Character, String> map = new HashMap<>();
+		Map<String, Character> reversed = new HashMap<>();
+		for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			String word = words[i];
 			boolean one = map.containsKey(c) && !map.get(c).equals(word);
-			boolean two = inverse.containsKey(word) && !inverse.get(word).equals(c);
+			boolean two = reversed.containsKey(word) && !reversed.get(word).equals(c);
 			if (one || two) {
 				return false;
+			} else {
+				map.put(c, word);
+				reversed.put(word, c);
 			}
-			map.put(c, word);
 		}
 		return true;
 	}

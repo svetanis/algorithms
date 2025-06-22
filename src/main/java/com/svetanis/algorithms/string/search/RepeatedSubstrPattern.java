@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.string;
+package com.svetanis.algorithms.string.search;
 
 // 459. Repeated Substring Pattern
 
