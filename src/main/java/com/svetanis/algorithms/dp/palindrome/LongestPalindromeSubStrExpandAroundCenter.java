@@ -27,11 +27,11 @@ public final class LongestPalindromeSubStrExpandAroundCenter {
 		return s.substring(start, end + 1);
 	}
 
-	private static int expand(String str, int left, int right) {
-		int n = str.length();
+	private static int expand(String s, int left, int right) {
+		int n = s.length();
 		int low = left;
 		int high = right;
-		while (low >= 0 && high < n && str.charAt(low) == str.charAt(high)) {
+		while (low >= 0 && high < n && s.charAt(low) == s.charAt(high)) {
 			low--;
 			high++;
 		}
@@ -39,7 +39,8 @@ public final class LongestPalindromeSubStrExpandAroundCenter {
 	}
 
 	public static void main(String[] args) {
-		String str = "forgeeksskeegfor";
-		System.out.println(lps(str));
+		System.out.println(lps("babad")); // bab / aba
+		System.out.println(lps("cbbd")); // bb
+		System.out.println(lps("aybabtu")); // bab
 	}
 }
