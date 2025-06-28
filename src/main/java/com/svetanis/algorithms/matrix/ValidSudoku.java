@@ -2,7 +2,7 @@ package com.svetanis.algorithms.matrix;
 
 // 36. Valid Sudoku
 
-public final class ValidSudoku36 {
+public final class ValidSudoku {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(n^2)
 
@@ -12,21 +12,49 @@ public final class ValidSudoku36 {
 		boolean[][] rows = new boolean[SIZE][SIZE];
 		boolean[][] cols = new boolean[SIZE][SIZE];
 		boolean[][] grid = new boolean[SIZE][SIZE];
-		for (int row = 0; row < SIZE; row++) {
-			for (int col = 0; col < SIZE; col++) {
-				char c = board[row][col];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				char c = board[i][j];
 				if (c == '.') {
 					continue;
 				}
-				int num = c - '0' - 1;
-				int index = (row / 3) * 3 + col / 3;
-
-				if (rows[row][num] || cols[col][num] || grid[index][num]) {
+				if (c < '1' || c > '9') {
 					return false;
 				}
-				rows[row][num] = true;
-				cols[col][num] = true;
-				grid[index][num] = true;
+				int value = c - '0' - 1;
+				int index = (i / 3) * 3 + j / 3;
+
+				if (rows[i][value] || cols[j][value] || grid[index][value]) {
+					return false;
+				}
+				rows[i][value] = true;
+				cols[j][value] = true;
+				grid[index][value] = true;
+			}
+		}
+		return true;
+	}
+
+	public static boolean isValidSudoku(char[][] board) {
+		boolean[][] rows = new boolean[SIZE][SIZE];
+		boolean[][] cols = new boolean[SIZE][SIZE];
+		boolean[][][] grid = new boolean[SIZE / 3][SIZE / 3][SIZE];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				char c = board[i][j];
+				if (c == '.') {
+					continue;
+				}
+				if (c < '1' || c > '9') {
+					return false;
+				}
+				int index = c - '0' - 1;
+				if (rows[i][index] || cols[j][index] || grid[i / 3][j / 3][index]) {
+					return false;
+				}
+				rows[i][index] = true;
+				cols[j][index] = true;
+				grid[i / 3][j / 3][index] = true;
 			}
 		}
 		return true;
@@ -44,6 +72,7 @@ public final class ValidSudoku36 {
 				{ '.', '.', '.', '4', '1', '9', '.', '.', '5' }, //
 				{ '.', '.', '.', '.', '8', '.', '.', '7', '9' } };//
 		System.out.println(isSudoku(board1)); // true
+		System.out.println(isValidSudoku(board1)); // true
 
 		char[][] board2 = { //
 				{ '8', '3', '.', '.', '7', '.', '.', '.', '.' }, //
@@ -55,6 +84,7 @@ public final class ValidSudoku36 {
 				{ '.', '6', '.', '.', '.', '.', '2', '8', '.' }, //
 				{ '.', '.', '.', '4', '1', '9', '.', '.', '5' }, //
 				{ '.', '.', '.', '.', '8', '.', '.', '7', '9' } };//
-		System.out.println(isSudoku(board2)); // true
+		System.out.println(isSudoku(board2)); // false
+		System.out.println(isValidSudoku(board2)); // false
 	}
 }
