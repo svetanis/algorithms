@@ -2,7 +2,7 @@ package com.svetanis.algorithms.bits.xor;
 
 // 268. Missing Number
 
-// given an array containting n
+// given an array containing n
 // distinct numbers in the range [0, n]
 // return the only number in the range
 // that is missing from the array
@@ -25,6 +25,7 @@ public final class MissingNumber268 {
     // return missing number
     return xor;
   }
+
 
   public static void main(String[] args) {
     int[] a1 = { 1, 5, 2, 6, 4, 0 };
