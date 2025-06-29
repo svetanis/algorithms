@@ -17,17 +17,17 @@ public final class TowerOfHanoi {
     return newList(list);
   }
 
-  private static void transfer(int n, int from, int to, int aux, 
+  private static void transfer(int n, int src, int dst, int aux, 
                             List<Pair<Integer, Integer>> list) {
 
     if (n == 1) {
-      list.add(Pair.build(from, to));
+      list.add(Pair.build(src, dst));
       return;
     }
 
-    transfer(n - 1, from, aux, to, list);
-    list.add(Pair.build(from, to));
-    transfer(n - 1, aux, to, from, list);
+    transfer(n - 1, src, aux, dst, list);
+    list.add(Pair.build(src, dst));
+    transfer(n - 1, aux, dst, src, list);
   }
 
   public static void main(String[] args) {
