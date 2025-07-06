@@ -1,24 +1,27 @@
 package com.svetanis.algorithms.slidingwindow.string;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static java.lang.Math.max;
 
+import java.util.HashMap;
 import java.util.Map;
 
-// Given a string, find the length of the longest 
-// substring that contains exactly two distinct char 
+// 159. Longest Substring with At Most Two Distinct Characters
 
-public final class LongestSubStrLenTwoDistinctChar {
+// Given a string, find the length of the longest 
+// substring that contains at most two distinct char 
+
+public final class LongestSubStrLenAtMostTwoDistinctChars {
 	// Time complexity: O(n)
 
 	public static int maxLen(String str) {
 		int n = str.length();
-		int max = 0; // max window size
 		int left = 0; // current start
-		Map<Character, Integer> map = newHashMap();
+		int max = 0; // max window size
+		Map<Character, Integer> map = new HashMap<>();
 		for (int right = 0; right < n; right++) {
-			char curr = str.charAt(right);
-			map.put(curr, map.getOrDefault(curr, 0) + 1);
+			char next = str.charAt(right);
+			int freq = map.getOrDefault(next, 0) + 1;
+			map.put(next, freq);
 			// shrink the sliding window, until k
 			// distinct chars left in frequency map
 			while (map.size() > 2) {
@@ -29,17 +32,12 @@ public final class LongestSubStrLenTwoDistinctChar {
 				}
 				left++; // shrink the window
 			}
-			if (map.size() == 2) {
-				max = max(max, right - left + 1);
-			}
+			max = max(max, right - left + 1);
 		}
 		return max;
 	}
 
 	public static void main(String[] args) {
-		System.out.println(maxLen("ababababa"));
-		System.out.println(maxLen("e"));
-		System.out.println(maxLen("baabcbab"));
-		System.out.println(maxLen("aabbcca"));
+		System.out.println(maxLen("aabbcca")); // 4
 	}
 }

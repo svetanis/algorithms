@@ -10,7 +10,7 @@ import java.util.Map;
 // Given a string, find the length of the longest 
 // substring with no more than K unique characters 
 
-public final class LongestSubStrLenKUnique {
+public final class LongestSubStrLenAtMostKUnique {
 	// Time complexity: O(n)
 
 	private static final int MAX = 256;
@@ -37,10 +37,7 @@ public final class LongestSubStrLenKUnique {
 				}
 				left++; // shrink the window
 			}
-			// max length so far
-			if (map.size() == k) {
-				max = max(max, right - left + 1);
-			}
+			max = max(max, right - left + 1);
 		}
 		return max;
 	}
