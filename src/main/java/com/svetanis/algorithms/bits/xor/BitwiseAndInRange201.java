@@ -13,9 +13,23 @@ public final class BitwiseAndInRange201 {
     return right;
   }
 
+  public static int bitwiseAnd2(int left, int right) {
+  	int shift = 0;
+    while (left < right) {
+    	left >>= 1;
+    	right >>= 1;
+    	shift++;
+    }
+    return left << shift;
+  }
+
   public static void main(String[] args) {
     System.out.println(bitwiseAnd(5, 7)); // 4
     System.out.println(bitwiseAnd(0, 0)); // 0
     System.out.println(bitwiseAnd(1, 2147483647)); // 0
+
+    System.out.println(bitwiseAnd2(5, 7)); // 4
+    System.out.println(bitwiseAnd2(0, 0)); // 0
+    System.out.println(bitwiseAnd2(1, 2147483647)); // 0
   }
 }
