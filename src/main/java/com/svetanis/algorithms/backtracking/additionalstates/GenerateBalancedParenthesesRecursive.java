@@ -15,8 +15,6 @@ import com.google.common.collect.ImmutableList;
 // all combination of ‘N’ pairs of balanced parentheses.
 
 public final class GenerateBalancedParenthesesRecursive {
-	// Time Complexity: O(n * 2^n)
-	// Space Complexity: O(n * 2^n)
 
 	public static List<String> parentheses(int n) {
 		List<String> list = new ArrayList<>();

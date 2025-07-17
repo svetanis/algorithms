@@ -10,12 +10,12 @@ import java.util.Queue;
 
 import com.google.common.collect.ImmutableList;
 
+// 22. Generate Parentheses
+
 // For a given number ‘N’, write a function to generate 
 // all combination of ‘N’ pairs of balanced parentheses.
 
 public final class GenerateBalancedParenthesesIterative {
-	// Time Complexity: O(n * 2^n)
-	// Space Complexity: O(n * 2^n)
 
 	public static ImmutableList<String> generate(int n) {
 		List<String> list = newArrayList();
