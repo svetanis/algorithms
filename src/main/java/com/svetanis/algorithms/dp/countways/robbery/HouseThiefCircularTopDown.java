@@ -2,7 +2,7 @@ package com.svetanis.algorithms.dp.countways.robbery;
 
 // 213. House Robber II
 
-public final class HouseThiefCircularMemoryOptimized {
+public final class HouseThiefCircularTopDown {
 
 	public static int maxProfit(int[] a) {
 		if (a == null || a.length == 0) {
@@ -18,25 +18,23 @@ public final class HouseThiefCircularMemoryOptimized {
 	}
 
 	private static int maxProfit(int[] a, int start, int end) {
-		int inclPrev = 0;
-		int exclPrev = 0;
-		for (int i = start; i <= end; i++) {
-			int inclCurr = exclPrev + a[i];
-			exclPrev = Math.max(inclPrev, exclPrev);
-			inclPrev = inclCurr;
-		}
-		return Math.max(inclPrev, exclPrev);
+		int n = end - start + 1;
+		Integer[] dp = new Integer[n + 1];
+		return dfs(a, start, end, dp);
 	}
 
-	private static int maxProfit2(int[] a, int start, int end) {
-		int prev1 = 0; // result of i - 1
-		int prev2 = 0; // result of i - 2
-		for (int i = start; i <= end; i++) {
-			int temp = Math.max(prev1, prev2 + a[i]);
-			prev2 = prev1;
-			prev1 = temp;
+	private static int dfs(int[] a, int start, int end, Integer[] dp) {
+		if (start > end) {
+			return 0;
 		}
-		return prev1;
+		if (dp[start] != null) {
+			return dp[start];
+		}
+		// include
+		int incl = a[start] + dfs(a, start + 2, end, dp);
+		// exclude
+		int excl = dfs(a, start + 1, end, dp);
+		return dp[start] = Math.max(incl, excl);
 	}
 
 	public static void main(String[] args) {
