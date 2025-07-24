@@ -35,8 +35,7 @@ public final class BalancedPartitionMemoization {
 		boolean incl = isSum(a, n - 1, sum - a[n], dp);
 		// 2. exclude last element
 		boolean excl = isSum(a, n - 1, sum, dp);
-		dp[sum][n] = incl || excl;
-		return dp[sum][n];
+		return dp[sum][n] = incl || excl;
 	}
 
 	public static void main(String[] args) {

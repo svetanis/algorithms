@@ -44,12 +44,43 @@ public final class BalancedPartitionRecursive {
 		return incl || excl;
 	}
 
+	public static boolean canPartition2(int[] a) {
+		int sum = 0;
+		for (int num : a) {
+			sum += num;
+		}
+		if (sum % 2 != 0) {
+			return false;
+		}
+		return canPartition(a, sum / 2, 0);
+	}
+
+	private static boolean canPartition(int[] a, int sum, int index) {
+		if (sum == 0) {
+			return true;
+		}
+		if (a.length == 0 || index > a.length) {
+			return false;
+		}
+		// include
+		if (a[index] <= sum) {
+			if (canPartition(a, sum - a[index], index + 1)) {
+				return true;
+			}
+		}
+		// exclude
+		return canPartition(a, sum, index + 1);
+	}
+
 	public static void main(String[] args) {
 		int[] a1 = { 3, 1, 5, 9, 12 };
 		System.out.println(canPartition(a1)); // true
+		System.out.println(canPartition2(a1)); // true
 		int[] a2 = { 1, 5, 11, 5 };
 		System.out.println(canPartition(a2)); // true
+		System.out.println(canPartition2(a2)); // true
 		int[] a3 = { 1, 2, 3, 5 };
 		System.out.println(canPartition(a3)); // false
+		System.out.println(canPartition2(a3)); // false
 	}
 }

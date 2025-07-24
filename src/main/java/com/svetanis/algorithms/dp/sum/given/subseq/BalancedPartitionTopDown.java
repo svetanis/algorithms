@@ -46,8 +46,7 @@ public final class BalancedPartitionTopDown {
 		boolean incl = isSum(nums, i + 1, sum - nums.get(i), dp);
 		// 2. exclude a[i]
 		boolean excl = isSum(nums, i + 1, sum, dp);
-		dp[i][sum] = incl || excl;
-		return dp[i][sum];
+		return dp[i][sum] = incl || excl;
 	}
 
 	public static void main(String[] args) {

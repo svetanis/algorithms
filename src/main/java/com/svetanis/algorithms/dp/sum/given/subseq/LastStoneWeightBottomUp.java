@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
 
 // 1049. Last Stone Weight II
 
-public final class LastStoneWeight {
+public final class LastStoneWeightBottomUp {
 	// Time Complexity: O(target * n)
 	// Space Complexity: O(n)
 
