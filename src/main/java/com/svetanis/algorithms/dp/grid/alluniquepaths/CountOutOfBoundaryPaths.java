@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.grid;
+package com.svetanis.algorithms.dp.grid.alluniquepaths;
 
 // 576. Out of Boundary Paths
 
