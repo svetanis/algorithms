@@ -9,18 +9,38 @@ public final class BestTimeBuySellStockIII {
 	// Space Complexity: O(1)
 
 	public static int maxProfit(int[] prices) {
-		int s1 = 0;
-		int s2 = 0;
-		int b1 = -prices[0];
-		int b2 = -prices[0];
+		if (prices == null || prices.length < 2) {
+			return 0;
+		}
+		int sell1 = 0;
+		int sell2 = 0;
+		int buy1 = -prices[0];
+		int buy2 = -prices[0];
 		for (int i = 1; i < prices.length; i++) {
 			int price = prices[i];
-			b1 = Math.max(b1, -price);
-			s1 = Math.max(s1, b1 + price);
-			b2 = Math.max(b2, s1 - price);
-			s2 = Math.max(s2, b2 + price);
+			buy1 = Math.max(buy1, -price);
+			sell1 = Math.max(sell1, buy1 + price);
+			buy2 = Math.max(buy2, sell1 - price);
+			sell2 = Math.max(sell2, buy2 + price);
 		}
-		return s2;
+		return sell2;
+	}
+
+	public static int maxProfit2(int[] prices) {
+		if (prices == null || prices.length < 2) {
+			return 0;
+		}
+		int sell1 = 0;
+		int sell2 = 0;
+		int buy1 = Integer.MIN_VALUE;
+		int buy2 = Integer.MIN_VALUE;
+		for (int price : prices) {
+			sell2 = Math.max(sell2, buy2 + price);
+			buy2 = Math.max(buy2, sell1 - price);
+			sell1 = Math.max(sell1, buy1 + price);
+			buy1 = Math.max(buy1, -price);
+		}
+		return sell2;
 	}
 
 	public static void main(String[] args) {

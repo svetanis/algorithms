@@ -6,25 +6,25 @@ package com.svetanis.algorithms.dp.maxprofit;
 // you cannot buy stock on the next day 
 // (i.e., cooldown one day).
 
-public final class BestTimeBuySellStockCooldown {
+public final class BestTimeBuySellStockCooldownBottomUp {
 	// Time Complexity: O(n)
+	// Space Complexity: O(n)
 
 	public static int maxProfit(int[] prices) {
-		if (prices == null || prices.length == 0) {
+		if (prices == null || prices.length <= 1) {
 			return 0;
 		}
-		int sellPrev = 0;
-		int buyPrev = -prices[0];
-		int sellPrevPrev = 0;
-		for (int day = 1; day < prices.length; day++) {
-			int price = prices[day];
-			int sellCurr = Math.max(sellPrev, buyPrev + price);
-			int buyCurr = Math.max(buyPrev, sellPrevPrev - price);
-			sellPrevPrev = sellPrev;
-			sellPrev = sellCurr;
-			buyPrev = buyCurr;
+		int n = prices.length;
+		int[] sell = new int[n];
+		sell[0] = 0;
+		int[] buy = new int[n];
+		buy[0] = -prices[0];
+		for (int i = 1; i < n; i++) {
+			sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);
+			int temp = i >= 2 ? sell[i - 2] - prices[i] : -prices[i];
+			buy[i] = Math.max(buy[i - 1], temp);
 		}
-		return sellPrev;
+		return sell[n - 1];
 	}
 
 	public static void main(String[] args) {
