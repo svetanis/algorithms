@@ -6,7 +6,7 @@ public final class BurstBalloonsTopDown {
 	// Time Complexity: O(n^3)
 	// Space Complexity: O(n^2)
 
-	public static int maxCoins(int[] a) {
+	public static int burstBalloons(int[] a) {
 		int[] ext = extended(a);
 		int n = ext.length;
 		Integer[][] dp = new Integer[n][n];
@@ -41,8 +41,8 @@ public final class BurstBalloonsTopDown {
 
 	public static void main(String[] args) {
 		int[] a1 = { 3, 1, 5, 8 };
-		System.out.println(maxCoins(a1)); // 167
+		System.out.println(burstBalloons(a1)); // 167
 		int[] a2 = { 1, 5 };
-		System.out.println(maxCoins(a2)); // 10
+		System.out.println(burstBalloons(a2)); // 10
 	}
 }
