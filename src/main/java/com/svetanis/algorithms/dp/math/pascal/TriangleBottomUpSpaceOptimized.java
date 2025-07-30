@@ -30,20 +30,37 @@ public final class TriangleBottomUpSpaceOptimized {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(n)
 
+	public static int minTotal(List<List<Integer>> triangle) {
+		int n = triangle.size();
+		int[] dp = new int[n];
+		for (int col = 0; col < n; col++) {
+			dp[col] = triangle.get(n - 1).get(col);
+		}
+		for (int row = n - 2; row >= 0; row--) {
+			for (int col = 0; col <= row; col++) {
+				int top = dp[col];
+				int left = dp[col + 1];
+				int val = triangle.get(row).get(col);
+				dp[col] = val + Math.min(top, left);
+			}
+		}
+		return dp[0];
+	}
+
 	public static int mps(List<List<Integer>> triangle) {
 		int n = triangle.size();
 		int[][] dp = init(triangle);
 		// start with the second last row
 		// and build up
-		for (int r = n - 2; r >= 0; r--) {
-			for (int c = 0; c <= r; c++) {
-				int top = dp[1][c];
-				int left = dp[1][c + 1];
-				int val = triangle.get(r).get(c);
-				dp[0][c] = val + min(left, top);
+		for (int row = n - 2; row >= 0; row--) {
+			for (int col = 0; col <= row; col++) {
+				int top = dp[1][col];
+				int left = dp[1][col + 1];
+				int val = triangle.get(row).get(col);
+				dp[0][col] = val + min(left, top);
 			}
 			// swap rows
-			for (int c = 0; c <= r; c++) {
+			for (int c = 0; c <= row; c++) {
 				dp[1][c] = dp[0][c];
 			}
 		}
@@ -55,8 +72,8 @@ public final class TriangleBottomUpSpaceOptimized {
 		// initialize dp grid
 		int[][] dp = new int[2][n];
 		// and the last row
-		for (int c = 0; c < n; c++) {
-			dp[1][c] = triangle.get(n - 1).get(c);
+		for (int col = 0; col < n; col++) {
+			dp[1][col] = triangle.get(n - 1).get(col);
 		}
 		return dp;
 	}
