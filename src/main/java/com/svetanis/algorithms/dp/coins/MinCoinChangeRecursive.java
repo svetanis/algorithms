@@ -16,6 +16,24 @@ import java.util.List;
 // V - coin value
 
 public final class MinCoinChangeRecursive {
+	// Time Complexity: (amount^n)
+
+	public static int coinChange(int[] coins, int amount) {
+		if (amount < 0) {
+			return -1;
+		}
+		if (amount == 0) {
+			return 0;
+		}
+		int min = Integer.MAX_VALUE;
+		for (int coin : coins) {
+			int change = coinChange(coins, amount - coin);
+			if (change >= 0 && change < min) {
+				min = change + 1;
+			}
+		}
+		return (min == Integer.MAX_VALUE) ? -1 : min;
+	}
 
 	public static int minCoinChange(List<Integer> list, int amount) {
 		int min = dfs(amount, 0, list);
