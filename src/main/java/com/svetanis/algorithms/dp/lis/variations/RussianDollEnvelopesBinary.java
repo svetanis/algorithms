@@ -6,14 +6,15 @@ import java.util.List;
 
 // 354. Russian Doll Envelopes
 
-public final class RussianDollEnvelopes {
+public final class RussianDollEnvelopesBinary {
 	// Time Complexity: O(n log n)
 	// Space Complexity: O(n)
 
 	public static int rde(int[][] envelopes) {
 		// sort dolls by width in ascending order
 		// if widths are equal sort dolls by height
-		Arrays.sort(envelopes, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+		Arrays.sort(envelopes, (a, b) -> a[0] == b[0] 
+				? b[1] - a[1] : a[0] - b[0]);
 		List<Integer> list = new ArrayList<>();
 		list.add(envelopes[0][1]);
 		for (int i = 1; i < envelopes.length; i++) {
