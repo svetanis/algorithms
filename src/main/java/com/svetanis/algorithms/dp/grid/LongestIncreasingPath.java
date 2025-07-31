@@ -34,8 +34,7 @@ public final class LongestIncreasingPath {
 				max = Math.max(max, 1 + dfs(grid, x, y, dp));
 			}
 		}
-		dp[row][col] = max;
-		return max;
+		return dp[row][col] = max;
 	}
 
 	private static boolean valid(int[][] grid, int row, int col) {
