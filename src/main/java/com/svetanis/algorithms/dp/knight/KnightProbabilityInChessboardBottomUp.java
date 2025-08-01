@@ -2,7 +2,7 @@ package com.svetanis.algorithms.dp.knight;
 
 // 688. Knight Probability in Chessboard
 
-public final class KnightProbabilityInChessboard {
+public final class KnightProbabilityInChessboardBottomUp {
 	// Time Complexity: O(k * n^2)
 	// Space Complexity: O(k * n^2)
 
