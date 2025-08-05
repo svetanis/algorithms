@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.search.binary.math;
+package com.svetanis.algorithms.twopointers;
 
 import java.util.Arrays;
 
