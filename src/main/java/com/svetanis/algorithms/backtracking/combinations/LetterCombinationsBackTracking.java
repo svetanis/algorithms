@@ -1,17 +1,12 @@
 package com.svetanis.algorithms.backtracking.combinations;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.collect.Maps.newMap;
 import static com.svetanis.java.base.utils.Print.printLines;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 // 17. Letter Combinations of a Phone Number
 
@@ -23,37 +18,35 @@ public final class LetterCombinationsBackTracking {
 	// Time Complexity: O(n * 4^n)
 	// Space Complexity: O(n * 4^n)
 
-	private final static ImmutableMap<Character, String> DIGITS = build();
+	private final static Map<Character, String> DIGITS = build();
 
-	public static ImmutableList<String> combinations(String s) {
+	public static List<String> combinations(String s) {
+		List<String> list = new ArrayList<>();
 		if (s.isEmpty()) {
-			return newList();
+			return list;
 		}
-		List<String> result = newArrayList();
-		List<Character> list = newArrayList();
-		dfs(s, list, result);
-		return newList(result);
+		StringBuilder sb = new StringBuilder();
+		dfs(s, sb, list);
+		return newList(list);
 	}
 
 	// index is redundant and derived from list.size()
-	private static void dfs(String s, List<Character> list, List<String> result) {
-		if (list.size() == s.length()) {
-			// String joined = Joiner.on("").join(list);
-			String joined = list.stream().map(e -> e.toString()).collect(Collectors.joining());
-			result.add(joined);
+	private static void dfs(String s, StringBuilder sb, List<String> list) {
+		if (sb.length() == s.length()) {
+			list.add(sb.toString());
 			return;
 		}
 
-		char nextDigit = s.charAt(list.size());
+		char nextDigit = s.charAt(sb.length());
 		for (char c : DIGITS.get(nextDigit).toCharArray()) {
-			list.add(c);
-			dfs(s, list, result);
-			list.remove(list.size() - 1);
+			sb.append(c);
+			dfs(s, sb, list);
+			sb.deleteCharAt(sb.length() - 1);
 		}
 	}
 
-	private static ImmutableMap<Character, String> build() {
-		Map<Character, String> map = newHashMap();
+	private static Map<Character, String> build() {
+		Map<Character, String> map = new HashMap<>();
 		map.put('0', "0");
 		map.put('1', "1");
 		map.put('2', "abc");
@@ -64,7 +57,7 @@ public final class LetterCombinationsBackTracking {
 		map.put('7', "pqrs");
 		map.put('8', "tuv");
 		map.put('9', "wxyz");
-		return newMap(map);
+		return map;
 	}
 
 	public static void main(String[] args) {
