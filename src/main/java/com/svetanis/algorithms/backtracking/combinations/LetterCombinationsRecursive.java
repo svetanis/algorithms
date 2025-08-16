@@ -1,61 +1,64 @@
 package com.svetanis.algorithms.backtracking.combinations;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.collect.Maps.newMap;
-import static com.svetanis.java.base.utils.Print.printLines;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+// 17. Letter Combinations of a Phone Number
 
 public final class LetterCombinationsRecursive {
 
-  public ImmutableList<String> combinations(String digits) {
-    List<String> list = newArrayList();
-    Map<Character, String> map = build();
-    recursion(digits, 0, "", list, map);
-    return newList(list);
-  }
+	private final Map<Character, String> map = build();
 
-  private void recursion(String digits, int index, String str, 
-  		List<String> list, Map<Character, String> map) {
-    int n = digits.length();
-    if (str.length() > digits.length()) {
-      return;
-    } else if (str.length() == n) {
-      list.add(str);
-      return;
-    }
-    for (int i = index; i < n; ++i) {
-      String letters = map.get(digits.charAt(i));
-      for (int j = 0; j < letters.length(); ++j) {
-        recursion(digits, i + 1, str + letters.charAt(j), list, map);
-      }
-    }
-  }
+	private String digits;
 
-  private ImmutableMap<Character, String> build() {
-    Map<Character, String> map = newHashMap();
-    map.put('0', "0");
-    map.put('1', "1");
-    map.put('2', "abc");
-    map.put('3', "def");
-    map.put('4', "ghi");
-    map.put('5', "jkl");
-    map.put('6', "mno");
-    map.put('7', "pqrs");
-    map.put('8', "tuv");
-    map.put('9', "wxyz");
-    return newMap(map);
-  }
+	public List<String> combinations(String digits) {
+		this.digits = digits;
+		List<String> list = new ArrayList<>();
+		if (digits.isEmpty()) {
+			return list;
+		}
+		dfs(0, "", list);
+		return list;
+	}
 
-  public static void main(String[] args) {
-    LetterCombinationsRecursive lc = new LetterCombinationsRecursive();
-    List<String> combinations = lc.combinations("23");
-    printLines(combinations);
-  }
+	private void dfs(int index, String s, List<String> list) {
+		int n = digits.length();
+		if (s.length() > n) {
+			return;
+		} else if (s.length() == n) {
+			list.add(s);
+			return;
+		}
+		for (int i = index; i < n; ++i) {
+			String letters = map.get(digits.charAt(i));
+			for (char letter : letters.toCharArray()) {
+				dfs(i + 1, s + letter, list);
+			}
+		}
+	}
+
+	private Map<Character, String> build() {
+		Map<Character, String> map = new HashMap<>();
+		map.put('0', "0");
+		map.put('1', "1");
+		map.put('2', "abc");
+		map.put('3', "def");
+		map.put('4', "ghi");
+		map.put('5', "jkl");
+		map.put('6', "mno");
+		map.put('7', "pqrs");
+		map.put('8', "tuv");
+		map.put('9', "wxyz");
+		return map;
+	}
+
+	public static void main(String[] args) {
+		LetterCombinationsRecursive lc = new LetterCombinationsRecursive();
+		System.out.println(lc.combinations("23"));
+		System.out.println(lc.combinations("56"));
+		System.out.println(lc.combinations(""));
+		System.out.println(lc.combinations("2"));
+	}
 }

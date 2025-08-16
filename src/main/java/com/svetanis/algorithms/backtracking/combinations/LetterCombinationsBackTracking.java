@@ -1,8 +1,5 @@
 package com.svetanis.algorithms.backtracking.combinations;
 
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.utils.Print.printLines;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,34 +15,36 @@ public final class LetterCombinationsBackTracking {
 	// Time Complexity: O(n * 4^n)
 	// Space Complexity: O(n * 4^n)
 
-	private final static Map<Character, String> DIGITS = build();
+	private final Map<Character, String> map = build();
 
-	public static List<String> combinations(String s) {
+	private String digits;
+
+	public List<String> combinations(String digits) {
+		this.digits = digits;
 		List<String> list = new ArrayList<>();
-		if (s.isEmpty()) {
+		if (digits.isEmpty()) {
 			return list;
 		}
-		StringBuilder sb = new StringBuilder();
-		dfs(s, sb, list);
-		return newList(list);
+		dfs(new StringBuilder(), list);
+		return list;
 	}
 
-	// index is redundant and derived from list.size()
-	private static void dfs(String s, StringBuilder sb, List<String> list) {
-		if (sb.length() == s.length()) {
+	// index is redundant and derived from sb.length
+	private void dfs(StringBuilder sb, List<String> list) {
+		if (sb.length() == digits.length()) {
 			list.add(sb.toString());
 			return;
 		}
 
-		char nextDigit = s.charAt(sb.length());
-		for (char c : DIGITS.get(nextDigit).toCharArray()) {
+		char next = digits.charAt(sb.length());
+		for (char c : map.get(next).toCharArray()) {
 			sb.append(c);
-			dfs(s, sb, list);
+			dfs(sb, list);
 			sb.deleteCharAt(sb.length() - 1);
 		}
 	}
 
-	private static Map<Character, String> build() {
+	private Map<Character, String> build() {
 		Map<Character, String> map = new HashMap<>();
 		map.put('0', "0");
 		map.put('1', "1");
@@ -61,8 +60,10 @@ public final class LetterCombinationsBackTracking {
 	}
 
 	public static void main(String[] args) {
-		printLines(combinations("23"));
-		printLines(combinations("56"));
-		printLines(combinations(""));
+		LetterCombinationsBackTracking lcb = new LetterCombinationsBackTracking();
+		System.out.println(lcb.combinations("23"));
+		System.out.println(lcb.combinations("56"));
+		System.out.println(lcb.combinations(""));
+		System.out.println(lcb.combinations("2"));
 	}
 }
