@@ -12,6 +12,15 @@ public final class CountBits {
 		int[] dp = new int[n + 1];
 		dp[0] = 0;
 		for (int i = 1; i <= n; i++) {
+			dp[i] = dp[i / 2] + i % 2;
+		}
+		return dp;
+	}
+
+	public static int[] count1(int n) {
+		int[] dp = new int[n + 1];
+		dp[0] = 0;
+		for (int i = 1; i <= n; i++) {
 			int index = i & (i - 1);
 			dp[i] = dp[index] + 1;
 		}
