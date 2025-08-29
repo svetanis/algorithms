@@ -14,28 +14,26 @@ public final class LargestAreaInHistogram {
 		int n = a.length;
 		int i = 0;
 		int max = 0;
-		Deque<Integer> stack = new ArrayDeque<>();
+		Deque<Integer> dq = new ArrayDeque<>();
 		while (i < n) {
-			if (stack.isEmpty() || a[stack.peek()] <= a[i]) {
-				stack.push(i++);
+			if (dq.isEmpty() || a[dq.peek()] <= a[i]) {
+				dq.push(i++);
 			} else {
-				max = max(max, areaWithTop(stack, a, i));
+				max = max(max, areaWithTop(dq, a, i));
 			}
 		}
 
-		while (!stack.isEmpty()) {
-			max = max(max, areaWithTop(stack, a, i));
+		while (!dq.isEmpty()) {
+			max = max(max, areaWithTop(dq, a, i));
 		}
 		return max;
 	}
 
-	private static int areaWithTop(Deque<Integer> stack, int[] a, int i) {
-		int top = stack.pop();
-		if (stack.isEmpty()) {
-			return a[top] * i;
-		} else {
-			return a[top] * (i - stack.peek() - 1);
-		}
+	private static int areaWithTop(Deque<Integer> dq, int[] a, int i) {
+		int top = dq.pop();
+		int right = i - 1;
+		int left = dq.isEmpty() ? -1 : dq.peek();
+		return a[top] * (right - left);
 	}
 
 	public static void main(String[] args) {
