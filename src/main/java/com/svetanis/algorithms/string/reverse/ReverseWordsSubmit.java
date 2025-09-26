@@ -37,6 +37,15 @@ public final class ReverseWordsSubmit {
 		return String.join(" ", words);
 	}
 
+	public static String reverseWords(String s) {
+		String[] splitted = s.trim().split("\\s+");
+		String out = "";
+		for(int i = s.length() - 1; i > 0; i--) {
+			out += splitted[i] + " ";
+		}
+		return out + splitted[0];
+	}
+
 	private static List<String> reverse(List<String> words) {
 		List<String> list = new ArrayList<>();
 		for (int i = words.size() - 1; i >= 0; i--) {
@@ -44,6 +53,8 @@ public final class ReverseWordsSubmit {
 		}
 		return list;
 	}
+	
+	
 
 	public static void main(String[] args) {
 		String s1 = "the sky is blue";
