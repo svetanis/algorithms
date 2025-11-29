@@ -26,7 +26,10 @@ public final class RangeAddition {
 	}
 
 	public static void main(String[] args) {
-		int[][] updates = { { 1, 3, 2 }, { 2, 4, 3 } };
-		print(rangeAddition(5, updates)); // 0,2,5,5,5
+		int[][] updates = { { 1, 3, 2 }, { 2, 4, 3 }, { 0, 2, -2 } };
+		print(rangeAddition(5, updates)); // -2,0,3,5,3
+
+		int[][] updates2 = { { 2, 4, 6 }, { 5, 6, 8 }, { 1, 9, -4 } };
+		print(rangeAddition(10, updates2)); // 0,-4,2,2,2,4,4,-4,-4,-4
 	}
 }

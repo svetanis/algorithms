@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.prefixsum.range;
 
 // 598. Range Addition II
 
