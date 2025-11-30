@@ -1,12 +1,7 @@
 package com.svetanis.algorithms.string;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
-import static com.google.common.collect.Maps.newHashMap;
-
+import java.util.HashMap;
 import java.util.Map;
-
-import com.google.common.base.Optional;
 
 // 389. Find the Difference
 // given two strings s and t
@@ -20,8 +15,46 @@ public final class FindDifference {
 	// Time Complexity: O(n)
 	// Space Complexity: O(n)
 
-	public static Optional<String> difference(String s, String t) {
-		Map<Character, Integer> map = newHashMap();
+	public static char differenceXor(String s, String t) {
+		int xor = 0;
+		for (char c : s.toCharArray()) {
+			xor ^= c;
+		}
+		for (char c : t.toCharArray()) {
+			xor ^= c;
+		}
+		return (char) xor;
+	}
+
+	public static char differenceSum(String s, String t) {
+		int ssum = 0;
+		int tsum = 0;
+		int index = 0;
+		while (index < s.length()) {
+			ssum += s.charAt(index);
+			tsum += t.charAt(index);
+			index += 1;
+		}
+		tsum += t.charAt(index);
+		return (char) (tsum - ssum);
+	}
+
+	public static char differenceSimple(String s, String t) {
+		int[] chars = new int[26];
+		for (char c : s.toCharArray()) {
+			chars[c - 'a']++;
+		}
+		for (char c : t.toCharArray()) {
+			chars[c - 'a']--;
+			if (chars[c - 'a'] == -1) {
+				return c;
+			}
+		}
+		return ' ';
+	}
+
+	public static char difference(String s, String t) {
+		Map<Character, Integer> map = new HashMap<>();
 		for (char c : s.toCharArray()) {
 			map.put(c, map.getOrDefault(c, 0) + 1);
 		}
@@ -29,11 +62,10 @@ public final class FindDifference {
 			char c = t.charAt(i);
 			map.put(c, map.getOrDefault(c, 0) - 1);
 			if (map.get(c) == -1) {
-				return of(c + "");
+				return c;
 			}
 		}
-
-		return absent();
+		return ' ';
 	}
 
 	public static void main(String[] args) {
