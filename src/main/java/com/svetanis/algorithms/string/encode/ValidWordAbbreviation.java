@@ -1,8 +1,5 @@
 package com.svetanis.algorithms.string.encode;
 
-import static java.lang.Character.isDigit;
-import static java.lang.Integer.parseInt;
-
 // 408. Valid Word Abbreviation
 
 public final class ValidWordAbbreviation {
@@ -26,12 +23,12 @@ public final class ValidWordAbbreviation {
 				continue;
 			}
 			// abbreviation char is not a digit
-			if (!isDigit(abbreviation.charAt(j))) {
+			if (!Character.isDigit(abbreviation.charAt(j))) {
 				return false;
 			}
 			// find the end of digit sequence in abbreviation
 			int start = j;
-			while (start < m && isDigit(abbreviation.charAt(start))) {
+			while (start < m && Character.isDigit(abbreviation.charAt(start))) {
 				start++;
 			}
 			String num = abbreviation.substring(j, start);
@@ -41,7 +38,7 @@ public final class ValidWordAbbreviation {
 				return false;
 			}
 			// move word and abbreviation index forward
-			int skip = parseInt(num);
+			int skip = Integer.parseInt(num);
 			i += skip;
 			j = start;
 		}
