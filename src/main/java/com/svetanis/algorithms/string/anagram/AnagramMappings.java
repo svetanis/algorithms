@@ -13,6 +13,18 @@ public final class AnagramMappings {
 	// Time Complexity: O(n)
 	// Space Complexity: O(n)
 
+	public static int[] anagramMappings(int[] a1, int[] a2) {
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int i = 0; i < a2.length; i++) {
+			map.put(a2[i], i);
+		}
+		int[] mapping = new int[a1.length];
+		for (int i = 0; i < a1.length; i++) {
+			mapping[i] = map.get(a1[i]);
+		}
+		return mapping;
+	}
+
 	public static int[] mappings(int[] a1, int[] a2) {
 		Map<Integer, Set<Integer>> map = new HashMap<>();
 		for (int i = 0; i < a2.length; i++) {
