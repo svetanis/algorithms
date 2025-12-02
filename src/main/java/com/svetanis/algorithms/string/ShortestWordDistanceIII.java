@@ -5,7 +5,31 @@ package com.svetanis.algorithms.string;
 public final class ShortestWordDistanceIII {
 	// Time Complexity: O(n)
 
-	private static int shortestDist(String[] dictionary, String w1, String w2) {
+	public static int shortestDistSimple(String[] dict, String w1, String w2) {
+		if (dict == null || dict.length == 0) {
+			return 0;
+		}
+		if (w1 == null || w1.length() == 0) {
+			return 0;
+		}
+		if (w2 == null || w2.length() == 0) {
+			return 0;
+		}
+		int prev = -1;
+		int minLen = Integer.MAX_VALUE;
+		for (int i = 0; i < dict.length; i++) {
+			if (!dict[i].equals(w1) && !dict[i].equals(w2)) {
+				continue;
+			}
+			if (prev != -1 && (w1.equals(w2) || !dict[i].equals(dict[prev]))) {
+				minLen = Math.min(minLen, i - prev);
+			}
+			prev = i;
+		}
+		return minLen;
+	}
+
+	public static int shortestDist(String[] dictionary, String w1, String w2) {
 		int min = dictionary.length;
 		if (w1.equals(w2)) {
 			min = sde(dictionary, w1);
