@@ -8,6 +8,16 @@ import java.util.stream.Collectors;
 public final class RemoveVowels {
 	// Time Complexity: O(n)
 	// Space Complexity: O(n)
+	
+	public static String removeVowelsSimple(String s) {
+		StringBuilder sb = new StringBuilder();
+		for(char c : s.toCharArray()) {
+			if(!vowel(c)) {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
 
 	public static String removeVowels(String s) {
 		return s.codePoints().mapToObj(c -> (char) c)
