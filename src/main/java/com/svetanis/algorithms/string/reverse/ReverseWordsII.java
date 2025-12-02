@@ -10,6 +10,8 @@ public final class ReverseWordsII {
 
 	public static void reverse(char[] s) {
 		int n = s.length;
+		// reverse the entire string
+		reverse(s, 0, n - 1);
 		for (int start = 0, end = 0; end < n; end++) {
 			if (s[end] == ' ') {
 				reverse(s, start, end - 1);
@@ -19,8 +21,6 @@ public final class ReverseWordsII {
 				reverse(s, start, end);
 			}
 		}
-		// reverse the entire string
-		reverse(s, 0, n - 1);
 	}
 
 	private static void reverse(char[] chars, int i, int j) {
