@@ -9,14 +9,14 @@ public final class HandshakesBottomUp {
 
 	public static int countWays(int numPeople) {
 		int n = numPeople / 2;
-		int[] dp = new int[n + 1];
+		long[] dp = new long[n + 1];
 		dp[0] = 1;
 		for (int i = 1; i <= n; i++) {
 			for (int j = 0; j < i; j++) {
 				dp[i] = (dp[i] + (dp[j] * dp[i - 1 - j]) % MOD) % MOD;
 			}
 		}
-		return dp[n];
+		return (int) dp[n];
 	}
 
 	public static void main(String[] args) {
