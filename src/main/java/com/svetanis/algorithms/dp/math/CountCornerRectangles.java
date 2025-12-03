@@ -5,6 +5,28 @@ package com.svetanis.algorithms.dp.math;
 public final class CountCornerRectangles {
 	// Time Complexity: O(m * n^2)
 
+	public static int countSimple(int[][] grid) {
+		int count = 0;
+		int m = grid.length;
+		int n = grid[0].length;
+		for (int i = 0; i < m; i++) {
+			int[] dp = new int[m];
+			for (int j = 0; j < n; j++) {
+				if (grid[i][j] == 0) {
+					continue;
+				}
+				for (int k = i - 1; k >= 0; k--) {
+					if (grid[k][j] == 0) {
+						continue;
+					}
+					count += dp[k];
+					dp[k] += 1;
+				}
+			}
+		}
+		return count;
+	}
+
 	public static int count(int[][] grid) {
 		int count = 0;
 		int n = grid.length;
