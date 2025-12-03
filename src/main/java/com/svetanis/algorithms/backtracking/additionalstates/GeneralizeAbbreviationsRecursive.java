@@ -1,11 +1,7 @@
 package com.svetanis.algorithms.backtracking.additionalstates;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
-
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.ImmutableList;
 
 // 320. Generalized Abbreviation
 
@@ -16,10 +12,10 @@ public final class GeneralizeAbbreviationsRecursive {
 	// Time Complexity: O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
-	public static ImmutableList<String> generate(String s) {
-		List<String> list = newArrayList();
+	public static List<String> generate(String s) {
+		List<String> list = new ArrayList<>();
 		dfs(s, new StringBuilder(), 0, 0, list);
-		return newList(list);
+		return list;
 	}
 
 	private static void dfs(String s, StringBuilder sb, int start, int count, List<String> list) {

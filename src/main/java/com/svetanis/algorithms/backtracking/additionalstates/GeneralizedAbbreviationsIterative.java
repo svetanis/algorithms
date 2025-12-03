@@ -1,13 +1,9 @@
 package com.svetanis.algorithms.backtracking.additionalstates;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
-import static com.svetanis.java.base.collect.Lists.newList;
-
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
-import com.google.common.collect.ImmutableList;
 
 // 320. Generalized Abbreviation
 
@@ -18,9 +14,9 @@ public final class GeneralizedAbbreviationsIterative {
 	// Time Complexity: O(n * 2^n)
 	// Space Complexity: O(n * 2^n)
 
-	public static ImmutableList<String> generate(String s) {
-		List<String> list = newArrayList();
-		Queue<Abbreviation> queue = newLinkedList();
+	public static List<String> generate(String s) {
+		List<String> list = new ArrayList<>();
+		Queue<Abbreviation> queue = new LinkedList<>();
 		queue.add(new Abbreviation(new StringBuilder(), 0, 0));
 		while (!queue.isEmpty()) {
 			Abbreviation abb = queue.poll();
@@ -46,7 +42,7 @@ public final class GeneralizedAbbreviationsIterative {
 				queue.add(new Abbreviation(sbr, start2, 0));
 			}
 		}
-		return newList(list);
+		return list;
 	}
 
 	public static void main(String[] args) {

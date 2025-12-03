@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-// 291. Word Pattern
+// 291. Word Pattern II
+
 // given a pattern and a string s,
 // find if s follows the same pattern.
 // Here follow means a full match, 
