@@ -1,12 +1,9 @@
 package com.svetanis.algorithms.prefixsum;
 
-import static com.google.common.collect.Maps.newHashMap;
-import static java.lang.Integer.MIN_VALUE;
-import static java.lang.Math.max;
-import static java.util.Arrays.asList;
-
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+
+// 325. Max Size Subarray Sum Equals k
 
 // find the max length of a subarray 
 // from the given array, such that the
@@ -20,23 +17,23 @@ public final class LongestSubArrayLenWithSumEqualsKHashMap {
 	// Time complexity: O(n)
 	// Space complexity: O(n)
 
-	public static int maxSubArrLen(int target, List<Integer> list) {
-		int sum = 0;
-		int max = MIN_VALUE;
-		Map<Integer, Integer> map = newHashMap();
-		map.put(0, -1);
-		for (int i = 0; i < list.size(); i++) {
-			sum += list.get(i);
+	public static int maxSubArrLen(int target, int[] a) {
+		int max = 0;
+		long sum = 0;
+		Map<Long, Integer> map = new HashMap<>();
+		map.put(0L, -1);
+		for (int i = 0; i < a.length; i++) {
+			sum += a[i];
 			// first entry (0,-1) takes care about
 			// edge case when subarray starts at 0
 			// otherwise add this check
 			// if (sum == target) {
 			// max = i + 1;
 			// }
-			int diff = sum - target;
+			long diff = sum - target;
 			if (map.containsKey(diff)) {
 				int start = map.get(diff);
-				max = max(max, i - start);
+				max = Math.max(max, i - start);
 			}
 			map.putIfAbsent(sum, i);
 		}
@@ -44,7 +41,7 @@ public final class LongestSubArrayLenWithSumEqualsKHashMap {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(maxSubArrLen(15, asList(10, 5, 2, 7, 1, 9))); // 4
-		System.out.println(maxSubArrLen(3, asList(1, -1, 5, -2, 3))); // 4
+		System.out.println(maxSubArrLen(15, new int[] {10, 5, 2, 7, 1, 9})); // 4
+		System.out.println(maxSubArrLen(3, new int[] {1, -1, 5, -2, 3})); // 4
 	}
 }
