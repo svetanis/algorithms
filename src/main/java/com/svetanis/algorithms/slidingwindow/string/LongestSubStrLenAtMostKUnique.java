@@ -1,7 +1,5 @@
 package com.svetanis.algorithms.slidingwindow.string;
 
-import static java.lang.Math.max;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,16 +11,10 @@ import java.util.Map;
 public final class LongestSubStrLenAtMostKUnique {
 	// Time complexity: O(n)
 
-	private static final int MAX = 256;
-
 	public static int kUniqueMaxLen(String s, int k) {
 		int n = s.length();
-		if (countUnique(s) < k) {
-			return 0;
-		}
-
 		int left = 0; // current start
-		int max = 0; // max window size
+		int max = 0;
 		Map<Character, Integer> map = new HashMap<>();
 		for (int right = 0; right < n; right++) {
 			char curr = s.charAt(right);
@@ -37,22 +29,9 @@ public final class LongestSubStrLenAtMostKUnique {
 				}
 				left++; // shrink the window
 			}
-			max = max(max, right - left + 1);
+			max = Math.max(max, right - left + 1);
 		}
 		return max;
-	}
-
-	private static int countUnique(String s) {
-		int k = 0;
-		int[] count = new int[MAX];
-		// count num of unique chars
-		for (char c : s.toCharArray()) {
-			if (count[c] == 0) {
-				k++;
-			}
-			count[c]++;
-		}
-		return k;
 	}
 
 	public static void main(String[] args) {
