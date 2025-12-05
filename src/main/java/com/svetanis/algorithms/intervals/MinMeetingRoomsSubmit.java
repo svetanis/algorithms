@@ -1,5 +1,8 @@
 package com.svetanis.algorithms.intervals;
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
 // 253. Meeting Rooms II
 
 // Given a list of intervals representing 
@@ -10,6 +13,21 @@ package com.svetanis.algorithms.intervals;
 public final class MinMeetingRoomsSubmit {
 	// Time Complexity: O(n*log n)
 	// Space Complexity: O(n)
+
+	public static int mmr(int[][] intervals) {
+		if (intervals.length == 0) {
+			return 0;
+		}
+		Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		for (int[] interval : intervals) {
+			if (!pq.isEmpty() && pq.peek() <= interval[0]) {
+				pq.poll();
+			}
+			pq.offer(interval[1]);
+		}
+		return pq.size();
+	}
 
 	public static int minMeetingRooms(int[][] intervals) {
 		int n = 1000010;
