@@ -1,7 +1,7 @@
 package com.svetanis.algorithms.permutations;
 
 // 1842. Next Palindrome Using Same Digits
-
+// not correct
 public final class NextPalindrome {
 	// Time Complexity: O(n)
 	// Space Complexity: O(n)
@@ -18,9 +18,9 @@ public final class NextPalindrome {
 		return new String(chars);
 	}
 
-	public static boolean nextPermutation(char[] a) {
+	private static boolean nextPermutation(char[] a) {
 		int n = a.length;
-		int mid = (n % 2 == 0) ? n / 2 : n / 2 + 1;
+		int mid = n / 2;
 		int pivot = mid - 2;
 		// find digit that is less than
 		// its immediate right digit
@@ -34,7 +34,7 @@ public final class NextPalindrome {
 		// than the digit found above
 		// rms = rightMostSuccessor
 		int rms = mid - 1;
-		while (a[pivot] >= a[rms]) {
+		while (rms >= 0 && a[pivot] >= a[rms]) {
 			rms--;
 		}
 		swap(a, pivot, rms);
@@ -58,5 +58,6 @@ public final class NextPalindrome {
 
 	public static void main(String[] args) {
 		System.out.println(nextPalindrome("12521")); // 15251
+		System.out.println(nextPalindrome("23143034132")); // 23314041332
 	}
 }
