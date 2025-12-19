@@ -32,8 +32,37 @@ public final class LongestLineOfConsecutiveOnes {
 		return max;
 	}
 
+	public static int longestLine2(int[][] grid) {
+		int rows = grid.length;
+		int cols = grid[0].length;
+		if (rows == 0) {
+			return 0;
+		}
+		int max = 0;
+		int[][][] dp = new int[rows][cols][4];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				if (grid[i][j] == 1) {
+					// horizontal direction
+					dp[i][j][0] = j == 0 ? 1 : dp[i][j - 1][0] + 1;
+					max = Math.max(max, dp[i][j][0]);
+					// vertical direction
+					dp[i][j][1] = i == 0 ? 1 : dp[i - 1][j][1] + 1;
+					max = Math.max(max, dp[i][j][1]);
+					// diagonal direction
+					dp[i][j][2] = (i == 0 || j == 0) ? 1 : dp[i - 1][j - 1][2] + 1;
+					max = Math.max(max, dp[i][j][2]);
+					// antidiagonal direction
+					dp[i][j][3] = (i == 0 || j == cols - 1) ? 1 : dp[i - 1][j + 1][3] + 1;
+					max = Math.max(max, dp[i][j][3]);
+				}
+			}
+		}
+		return max;
+	}
+
 	public static void main(String[] args) {
 		int[][] grid = { { 0, 1, 1, 0 }, { 0, 1, 1, 1 }, { 1, 0, 0, 1 } };
-		System.out.println(longestLine(grid)); // 3
+		System.out.println(longestLine2(grid)); // 3
 	}
 }
