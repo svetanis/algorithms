@@ -23,14 +23,14 @@ public final class CombinationSumTopDown {
 		if (map.containsKey(remain)) {
 			return map.get(remain);
 		}
-		int sum = 0;
+		int count = 0;
 		for (int num : nums) {
 			if (remain - num >= 0) {
-				sum += combinations(nums, remain - num, map);
+				count += combinations(nums, remain - num, map);
 			}
 		}
-		map.put(remain, sum);
-		return sum;
+		map.put(remain, count);
+		return count;
 	}
 
 	public static void main(String[] args) {
