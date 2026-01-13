@@ -1,15 +1,19 @@
 package com.svetanis.algorithms.search.binary.invariant;
 
-import java.util.Arrays;
-
 // 410. Split Array Largest Sum
 
 public final class SplitArrayLargestSum {
 	// Time Complexity: O( n * log(sum - max))
 
 	public static int splitArray(int[] a, int k) {
-		int low = Arrays.stream(a).max().getAsInt();
-		int high = Arrays.stream(a).sum();
+		int max = 0;
+		int sum = 0;
+		for (int num : a) {
+			sum += num;
+			max = Math.max(max, num);
+		}
+		int low = max;
+		int high = sum;
 		while (low < high) {
 			int mid = low + (high - low) / 2;
 			if (splitPossible(a, mid, k)) {
@@ -22,6 +26,20 @@ public final class SplitArrayLargestSum {
 	}
 
 	private static boolean splitPossible(int[] a, int max, int k) {
+		int sum = 0;
+		int count = 1;
+		for (int num : a) {
+			if (sum + num > max) {
+				count++;
+				sum = num;
+			} else {
+				sum += num;
+			}
+		}
+		return count <= k;
+	}
+
+	private static boolean splitPossible2(int[] a, int max, int k) {
 		int count = 0;
 		int sum = 1 << 30;
 		for (int num : a) {
