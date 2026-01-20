@@ -13,7 +13,6 @@ public final class ShortestCommonSuperSeqLcsTopDown {
 	public String scs(String x, String y) {
 		this.dp = new HashMap<>();
 		String lcs = lcs(x, y, 0, 0);
-		System.out.println(lcs);
 		return scs(x, y, lcs);
 	}
 
