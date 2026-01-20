@@ -1,7 +1,5 @@
 package com.svetanis.algorithms.dp.common.scs;
 
-import static java.lang.Math.min;
-
 // 1092. Shortest Common Supersequence
 
 public final class ShortestCommonSuperSeqBottomUp {
@@ -53,7 +51,7 @@ public final class ShortestCommonSuperSeqBottomUp {
 				} else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
 					dp[i][j] = 1 + dp[i - 1][j - 1];
 				} else {
-					dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1]);
+					dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1]);
 				}
 			}
 		}
@@ -61,28 +59,10 @@ public final class ShortestCommonSuperSeqBottomUp {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(scs("geek", "eke"));
-		System.out.println(scs("AGGTAB", "GXTXAYB"));
+		System.out.println(scs("geek", "eke")); // gekek
+		System.out.println(scs("AGGTAB", "GXTXAYB")); // AGXGTXAYB
 		System.out.println(scs("ABCBDAB", "BDCABA")); // ABDCABDAB
 		System.out.println(scs("abac", "cab")); // cabac
 		System.out.println(scs("aaaaaaaa", "aaaaaaaa")); // aaaaaaaa
-	}
-
-	private static String scs(String x, String y, int n, int m, int[][] dp) {
-		if (n == 0) {
-			return y.substring(0, m);
-		}
-		if (m == 0) {
-			return x.substring(0, n);
-		}
-		if (x.charAt(n - 1) == y.charAt(m - 1)) {
-			return x.charAt(n - 1) + scs(x, y, n - 1, m - 1, dp);
-		} else {
-			if (dp[n][m - 1] > dp[n - 1][m]) {
-				return x.charAt(n - 1) + scs(x, y, n - 1, m, dp);
-			} else {
-				return y.charAt(m - 1) + scs(x, y, n, m - 1, dp);
-			}
-		}
 	}
 }
