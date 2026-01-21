@@ -15,7 +15,7 @@ import java.util.Arrays;
 // 2 * sum(s1) = k + sum(n)
 // sum(s1) = (sum(n) + k)/2
 
-public final class TargetSum {
+public final class TargetSumBottomUp {
 	// Time complexity: O(sum * n)
 
 	public static int count(int[] a, int k) {

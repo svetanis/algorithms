@@ -1,14 +1,15 @@
 package com.svetanis.algorithms.dp.sum.given.subseq;
 
-import java.util.Arrays;
-
 // 494. Target Sum
 
-public final class TargetSumSubmit {
+public final class TargetSumSpaceOptimized {
 	// Time complexity: O(sum * n)
 
 	public static int count(int[] a, int k) {
-		int total = Arrays.stream(a).sum();
+		int total = 0;
+		for (int num : a) {
+			total += num;
+		}
 		if (total < k || (total - k) % 2 == 1) {
 			return 0;
 		}

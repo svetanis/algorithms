@@ -5,40 +5,32 @@ import java.util.Map;
 
 // 494. Target Sum
 
-public final class TargetSumTopDown {
+public final class TargetSumMemoization {
 	// Time complexity: O(n * sum)
 
 	private Map<String, Integer> map;
 
-	public int count(int[] a, int k) {
+	public int count(int[] a, int target) {
 		this.map = new HashMap<>();
-		int total = 0;
-		for (int num : a) {
-			total += num;
-		}
-		if (total < k || (total - k) % 2 == 1) {
-			return 0;
-		}
-		int target = (total - k) / 2;
 		return dfs(a, target, 0, 0);
 	}
 
 	private int dfs(int[] a, int target, int index, int sum) {
-		if (index == a.length) {
-			return sum == target ? 1 : 0;
-		}
 		String key = index + "," + sum;
 		if (map.containsKey(key)) {
 			return map.get(key);
 		}
+		if (index == a.length) {
+			return sum == target ? 1 : 0;
+		}
 		int incl = dfs(a, target, index + 1, sum + a[index]);
-		int excl = dfs(a, target, index + 1, sum);
+		int excl = dfs(a, target, index + 1, sum - a[index]);
 		map.put(key, incl + excl);
 		return incl + excl;
 	}
 
 	public static void main(String[] args) {
-		TargetSumTopDown ts = new TargetSumTopDown();
+		TargetSumMemoization ts = new TargetSumMemoization();
 		int[] a3 = { 1, 1, 1, 1, 1 };
 		System.out.println(ts.count(a3, 3)); // 5
 
