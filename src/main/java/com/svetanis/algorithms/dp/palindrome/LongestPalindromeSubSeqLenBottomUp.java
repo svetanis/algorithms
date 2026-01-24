@@ -13,8 +13,8 @@ public final class LongestPalindromeSubSeqLenBottomUp {
 	// Time Complexity: O(n^2)
 	// Space Complexity: (O(n^2)
 
-	public static int lps(String str) {
-		int n = str.length();
+	public static int lps(String s) {
+		int n = s.length();
 		int[][] dp = new int[n][n];
 
 		// strings of length 1 are
@@ -32,7 +32,7 @@ public final class LongestPalindromeSubSeqLenBottomUp {
 		// MatrixChainMultiplicationDP
 		for (int start = n - 1; start >= 0; start--) {
 			for (int end = start + 1; end < n; end++) {
-				if (str.charAt(start) == str.charAt(end)) {
+				if (s.charAt(start) == s.charAt(end)) {
 					dp[start][end] = 2 + dp[start + 1][end - 1];
 				} else {
 					dp[start][end] = max(dp[start + 1][end], dp[start][end - 1]);

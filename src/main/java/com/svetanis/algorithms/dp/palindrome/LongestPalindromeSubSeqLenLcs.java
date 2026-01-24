@@ -9,29 +9,29 @@ public final class LongestPalindromeSubSeqLenLcs {
 	// Time Complexity: O(n^2)
 	// Space Complexity: (O(n^2)
 
-	public static int lps(String str) {
-		int n = str.length();
-		String reversed = reverse(str);
-		Integer[][] memo = new Integer[n + 1][n + 1];
-		return lcs(str, reversed, n, n, memo);
+	public static int lps(String s) {
+		int n = s.length();
+		String reversed = reverse(s);
+		Integer[][] dp = new Integer[n + 1][n + 1];
+		return lcs(s, reversed, n, n, dp);
 	}
 
-	private static int lcs(String s1, String s2, int i, int j, Integer[][] memo) {
+	private static int lcs(String s1, String s2, int i, int j, Integer[][] dp) {
 		if (i == 0 || j == 0) {
-			memo[i][j] = 0;
+			dp[i][j] = 0;
 			return 0;
 		}
-		if (memo[i][j] != null) {
-			return memo[i][j];
+		if (dp[i][j] != null) {
+			return dp[i][j];
 		}
 		if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-			memo[i][j] = 1 + lcs(s1, s2, i - 1, j - 1, memo);
-			return memo[i][j];
+			dp[i][j] = 1 + lcs(s1, s2, i - 1, j - 1, dp);
+			return dp[i][j];
 		}
-		int top = lcs(s1, s2, i - 1, j, memo);
-		int left = lcs(s1, s2, i, j - 1, memo);
+		int top = lcs(s1, s2, i - 1, j, dp);
+		int left = lcs(s1, s2, i, j - 1, dp);
 		int max = max(top, left);
-		memo[i][j] = max;
+		dp[i][j] = max;
 		return max;
 	}
 

@@ -9,14 +9,14 @@ public final class LongestPalindromeSubSeqLcs {
 	// Time Complexity: O(n^2)
 	// Space Complexity: (O(n^2)
 
-	public static String lps(String str) {
-		int n = str.length();
-		String reversed = reverse(str);
+	public static String lps(String s) {
+		int n = s.length();
+		String reversed = reverse(s);
 		Integer[][] dp = new Integer[n + 1][n + 1];
-		lcs(str, reversed, n, n, dp);
+		lcs(s, reversed, n, n, dp);
 		// start from the right-most-bottom-most
 		// corner and one by one store chars in lcs[]
-		return reconstruct(str, reversed, dp, n, n);
+		return reconstruct(s, reversed, dp, n, n);
 	}
 
 	private static int lcs(String s1, String s2, int i, int j, Integer[][] dp) {

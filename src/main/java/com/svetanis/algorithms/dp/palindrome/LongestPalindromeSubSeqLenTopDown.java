@@ -13,13 +13,13 @@ public final class LongestPalindromeSubSeqLenTopDown {
 	// Time Complexity: O(n^2)
 	// Space Complexity: (O(n^2)
 
-	public static int lps(String str) {
-		int n = str.length();
+	public static int lps(String s) {
+		int n = s.length();
 		Integer[][] dp = new Integer[n][n];
-		return lps(str, dp, 0, n - 1);
+		return dfs(s, dp, 0, n - 1);
 	}
 
-	private static int lps(String str, Integer[][] dp, int low, int high) {
+	private static int dfs(String s, Integer[][] dp, int low, int high) {
 		if (low > high) {
 			dp[low][high] = 0;
 			return 0;
@@ -35,7 +35,7 @@ public final class LongestPalindromeSubSeqLenTopDown {
 		// Base case 2:
 		// if there are only 2 chars
 		// and both are same
-		if (str.charAt(low) == str.charAt(high) && low + 1 == high) {
+		if (s.charAt(low) == s.charAt(high) && low + 1 == high) {
 			dp[low][high] = 2;
 			return 2;
 		}
@@ -45,15 +45,15 @@ public final class LongestPalindromeSubSeqLenTopDown {
 		}
 
 		// if the first and last chars match
-		if (str.charAt(low) == str.charAt(high)) {
-			dp[low][high] = 2 + lps(str, dp, low + 1, high - 1);
+		if (s.charAt(low) == s.charAt(high)) {
+			dp[low][high] = 2 + dfs(s, dp, low + 1, high - 1);
 			return dp[low][high];
 		}
 
 		// if first and last
 		// chars don't match
-		int left = lps(str, dp, low + 1, high);
-		int right = lps(str, dp, low, high - 1);
+		int left = dfs(s, dp, low + 1, high);
+		int right = dfs(s, dp, low, high - 1);
 		dp[low][high] = max(left, right);
 		return dp[low][high];
 	}
