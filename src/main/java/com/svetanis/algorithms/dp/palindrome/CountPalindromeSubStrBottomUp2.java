@@ -5,7 +5,7 @@ package com.svetanis.algorithms.dp.palindrome;
 // Given a string, find the total number 
 // of palindromic substrings in it. 
 
-public final class CountPalindromeSubStrBottomUp {
+public final class CountPalindromeSubStrBottomUp2 {
 	// Time Complexity: O(n^2)
 	// Auxiliary Space O(n^2)
 
@@ -20,22 +20,18 @@ public final class CountPalindromeSubStrBottomUp {
 		// palindrome of length 1
 		for (int i = 0; i < n; ++i) {
 			dp[i][i] = true;
-			count++;
+			count += 1;
 		}
 		// check for substring of length 2
 		for (int i = 0; i < n - 1; ++i) {
-			if (s.charAt(i) == s.charAt(i + 1)) {
-				dp[i][i + 1] = true;
-				count++;
-			}
+			dp[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
+			count += (dp[i][i + 1] ? 1 : 0);
 		}
 
-		for (int start = n - 1; start >= 0; start--) {
-			for (int end = start + 1; end < n; end++) {
-				if (dp[start + 1][end - 1] && s.charAt(start) == s.charAt(end)) {
-					dp[start][end] = true;
-					count++;
-				}
+		for (int len = 3; len <= n; len++) {
+			for (int i = 0, j = i + len - 1; j < n; i++, j++) {
+				dp[i][j] = dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j);
+				count += (dp[i][j] ? 1 : 0);
 			}
 		}
 		return count;
