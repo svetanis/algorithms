@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 // 759. Employee Free Time
 
@@ -15,7 +16,33 @@ public final class EmployeeFreeTime759 {
 	// Space Complexity: O(n)
 
 	public static List<Interval> eft(List<List<Interval>> schedule) {
-		List<Interval> intervals = flatten(schedule);
+		List<Interval> list = new ArrayList<>();
+		PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> a.start - b.start);
+		for (List<Interval> intervals : schedule) {
+			for (Interval interval : intervals) {
+				pq.offer(interval);
+			}
+		}
+		Interval prev = pq.poll();
+		while (!pq.isEmpty()) {
+			Interval curr = pq.poll();
+			if (curr.start > prev.end) {
+				list.add(new Interval(prev.end, curr.start));
+			} else {
+				curr.end = Math.max(curr.end, prev.end);
+			}
+			prev = curr;
+		}
+		return list;
+	}
+
+	public static List<Interval> eft2(List<List<Interval>> schedule) {
+		List<Interval> intervals = new ArrayList<>();
+		for (List<Interval> employee : schedule) {
+			for (Interval interval : employee) {
+				intervals.add(interval);
+			}
+		}
 		Collections.sort(intervals, (a, b) -> a.start - b.start);
 		int end = intervals.get(0).end;
 		List<Interval> list = new ArrayList<>();
@@ -24,16 +51,6 @@ public final class EmployeeFreeTime759 {
 				list.add(new Interval(end, interval.start));
 			}
 			end = Math.max(end, interval.end);
-		}
-		return list;
-	}
-
-	private static List<Interval> flatten(List<List<Interval>> schedule) {
-		List<Interval> list = new ArrayList<>();
-		for (List<Interval> employee : schedule) {
-			for (Interval interval : employee) {
-				list.add(interval);
-			}
 		}
 		return list;
 	}

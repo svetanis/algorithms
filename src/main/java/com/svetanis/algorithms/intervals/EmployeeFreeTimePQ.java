@@ -1,17 +1,13 @@
 package com.svetanis.algorithms.intervals;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
 import static java.util.Arrays.asList;
-import static java.util.Comparator.comparing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
-
-import com.google.common.collect.ImmutableList;
 
 // 759. Employee Free Time
 
@@ -26,8 +22,8 @@ public final class EmployeeFreeTimePQ {
 	// Time Complexity: O(n*log n)
 	// Space Complexity: O(n)
 
-	public static ImmutableList<Interval> eft(List<List<Interval>> schedule) {
-		List<Interval> list = newArrayList();
+	public static List<Interval> eft(List<List<Interval>> schedule) {
+		List<Interval> list = new ArrayList<>();
 		PriorityQueue<EmployeeInterval> pq = epq(schedule);
 		Interval prev = pq.peek().interval;
 		while (!pq.isEmpty()) {
@@ -52,12 +48,12 @@ public final class EmployeeFreeTimePQ {
 				pq.offer(new EmployeeInterval(interval, tei, next));
 			}
 		}
-		return newList(list);
+		return list;
 	}
 
 	// initialize priority queue and store first interval from each employee
 	private static PriorityQueue<EmployeeInterval> epq(List<List<Interval>> schedule) {
-		Comparator<EmployeeInterval> eic = comparing(i -> i.interval.start);
+		Comparator<EmployeeInterval> eic = Comparator.comparing(i -> i.interval.start);
 		PriorityQueue<EmployeeInterval> pq = new PriorityQueue<>(eic);
 		for (int i = 0; i < schedule.size(); i++) {
 			Interval interval = schedule.get(i).get(0);
