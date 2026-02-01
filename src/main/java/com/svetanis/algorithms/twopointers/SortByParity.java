@@ -2,23 +2,37 @@ package com.svetanis.algorithms.twopointers;
 
 import com.svetanis.java.base.utils.Print;
 
-// 922. Sort Array By Parity II
+// 905. Sort Array By Parity
 
 public final class SortByParity {
 	// Time Complexity: O(n)
 
-	public static int[] sort(int[] a) {
-		int even = 0;
-		int odd = 1;
+	public static int[] sortByParity(int[] a) {
+		int index = 0;
 		int n = a.length;
-		while (even < n) {
-			if (a[even] % 2 != 0) {
-				while (a[odd] % 2 != 0) {
-					odd += 2;
-				}
-				swap(a, even, odd);
+		for (int j = 0; j < n; j++) {
+			if (a[j] % 2 == 0) {
+				swap(a, index, j);
+				index += 1;
 			}
-			even += 2;
+		}
+		return a;
+	}
+
+	public static int[] sortByParity2(int[] a) {
+		int n = a.length;
+		int left = 0;
+		int right = n - 1;
+		while (left < right) {
+			while (left < right && a[left] % 2 == 0) {
+				left += 1;
+			}
+			while (left < right && a[right] % 2 != 0) {
+				right -= 1;
+			}
+			swap(a, left, right);
+			left += 1;
+			right -= 1;
 		}
 		return a;
 	}
@@ -30,10 +44,10 @@ public final class SortByParity {
 	}
 
 	public static void main(String[] args) {
-		int[] a1 = { 4, 2, 5, 7 };
-		Print.print(sort(a1)); // 4 5 2 7
+		int[] a1 = { 3, 1, 2, 4 };
+		Print.print(sortByParity(a1)); // 2 4 3 1
 
-		int[] a2 = { 2, 3 };
-		Print.print(sort(a2)); // 2 3
+		int[] a2 = { 0 };
+		Print.print(sortByParity(a2)); // 0
 	}
 }
