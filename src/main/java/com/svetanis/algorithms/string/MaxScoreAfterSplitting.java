@@ -6,6 +6,25 @@ public final class MaxScoreAfterSplitting {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 
+	public static int maxScoreOnePass(String s) {
+		int n = s.length();
+		int ones = 0;
+		int zeros = 0;
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < n - 1; i++) {
+			if (s.charAt(i) == '1') {
+				ones += 1;
+			} else {
+				zeros += 1;
+			}
+			max = Math.max(max, zeros - ones);
+		}
+		if (s.charAt(n - 1) == '1') {
+			ones += 1;
+		}
+		return max + ones;
+	}
+
 	public static int maxScore(String s) {
 		int n = s.length();
 		int total = 0;
