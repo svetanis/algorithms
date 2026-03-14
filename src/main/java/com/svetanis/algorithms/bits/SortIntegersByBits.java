@@ -10,6 +10,18 @@ public final class SortIntegersByBits {
 	// Time Complexity: O(n log n)
 	// Space Complexity: O(n)
 
+	public static int[] sortByBitsSimple(int[] arr) {
+		return Arrays.stream(arr)//
+				.boxed()//
+				.sorted((a,b) -> {//
+					int countA = Integer.bitCount(a);//
+					int countB = Integer.bitCount(b);//
+					return countA == countB ? a - b : countA - countB;//
+				})//
+				.mapToInt(i -> i)//
+				.toArray();
+	}
+	
 	public static int[] sortByBits(int[] a) {
 		int n = a.length;
 		for (int i = 0; i < n; i++) {
