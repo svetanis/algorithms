@@ -6,6 +6,20 @@ public final class ReverseStringSubmit {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 
+	public static void reverseStr(char[] chars) {
+		reverse(chars, 0, chars.length - 1);
+	}
+	
+	private static void reverse(char[] chars, int left, int right) {
+		if(left >= right) {
+			return;
+		}
+		char temp = chars[left];
+		chars[left] = chars[right];
+		chars[right] = temp;
+		reverse(chars, left + 1, right - 1);
+	}
+	
 	public static void reverse(char[] chars) {
 		int n = chars.length;
 		int left = 0;
