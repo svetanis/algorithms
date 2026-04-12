@@ -5,7 +5,7 @@ import java.util.Deque;
 
 // 768. Max Chunks To Make Sorted II
 
-public final class MaxChunksToSort {
+public final class MaxChunksToSortII {
 	// Time complexity: O(n)
 	// Space complexity: O(n)
 
