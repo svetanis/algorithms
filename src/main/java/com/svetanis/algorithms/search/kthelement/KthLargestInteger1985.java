@@ -1,5 +1,6 @@
 package com.svetanis.algorithms.search.kthelement;
 
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -13,14 +14,19 @@ public final class KthLargestInteger1985 {
     x.length() == y.length() ? x.compareTo(y) : x.length() - y.length());
 
     for (String num : nums) {
-      if (pq.size() < k || num.compareTo(pq.peek()) > 0) {
-        if (pq.size() == k) {
-          pq.poll();
-        }
-        pq.add(num);
+      pq.offer(num);
+      if (pq.size() > k) {
+        pq.poll();
       }
     }
     return pq.peek();
+  }
+
+  public static String kthLargestNumSort(String[] nums, int k) {
+    int len = nums.length;
+    Arrays.sort(nums, (x, y) -> 
+    x.length() == y.length() ? x.compareTo(y) : x.length() - y.length());
+    return nums[len - k];
   }
 
   public static void main(String[] args) {
