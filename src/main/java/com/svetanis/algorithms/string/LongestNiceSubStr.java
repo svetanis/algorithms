@@ -9,6 +9,27 @@ public final class LongestNiceSubStr {
   // Time Complexity: O(n^2)
   // Space Complexity: O(1)
 
+  public static String dfs(String s) {
+    int n = s.length();
+    Set<Character> set = new HashSet<>();
+    for (char c : s.toCharArray()) {
+      set.add(c);
+    }
+
+    for (int i = 0; i < n; i++) {
+      char curr = s.charAt(i);
+      char low = Character.toLowerCase(curr);
+      char upp = Character.toUpperCase(curr);
+      if (set.contains(low) && set.contains(upp)) {
+        continue;
+      }
+      String left = dfs(s.substring(0, i));
+      String right = dfs(s.substring(i + 1));
+      return left.length() >= right.length() ? left : right;
+    }
+    return s;
+  }
+
   public static String longestNiceSubstr(String s) {
     int n = s.length();
     int maxLen = 0;
@@ -37,8 +58,8 @@ public final class LongestNiceSubStr {
   }
 
   public static void main(String[] args) {
-    System.out.println(longestNiceSubstr("YazaAay")); // aAa
-    System.out.println(longestNiceSubstr("Bb")); // Bb
-    System.out.println(longestNiceSubstr("c")); // ""
+    System.out.println(dfs("YazaAay")); // aAa
+    System.out.println(dfs("Bb")); // Bb
+    System.out.println(dfs("c")); // ""
   }
 }
