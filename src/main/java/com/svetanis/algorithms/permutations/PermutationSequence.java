@@ -2,7 +2,7 @@ package com.svetanis.algorithms.permutations;
 
 // 60. Permutation Sequence
 
-public final class PermutaionSequence {
+public final class PermutationSequence {
 
 	public static String kPermutation(int n, int k) {
 		int[] a = init(n);
