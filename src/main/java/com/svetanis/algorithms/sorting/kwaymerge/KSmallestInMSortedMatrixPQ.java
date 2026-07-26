@@ -52,7 +52,10 @@ public final class KSmallestInMSortedMatrixPQ {
 	}
 
 	public static void main(String[] args) {
-		int[][] matrix = {{2, 6, 8}, {3, 7, 10}, {5, 8, 1}};
-		System.out.println(kSmallest(matrix, 5));
+		int[][] m1 = {{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
+		System.out.println(kSmallest(m1, 8)); // 13
+
+		int[][] m2 = {{-5}};
+		System.out.println(kSmallest(m2, 1)); // -5
 	}
 }
