@@ -5,7 +5,8 @@ import java.util.Arrays;
 // 611. Valid Triangle Number
 
 public final class ValidTriangleNumber611 {
-  // Time Complexity: O(n log n)
+  // Time Complexity: O(n^2) -- the sort is O(n log n), then the outer
+  // loop and the inner while dominate it.
   // Space Complexity: O(1)
 
   public static int vtn(int[] a) {
