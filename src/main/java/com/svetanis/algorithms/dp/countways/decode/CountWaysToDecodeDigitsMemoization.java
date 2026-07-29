@@ -1,7 +1,9 @@
-package com.svetanis.algorithms.backtracking.aggregation.memoization;
+package com.svetanis.algorithms.dp.countways.decode;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Arrays.fill;
+// Number of Ways to Decode a Message
+// https://algo.monster/problems/decode_ways
 
 // given a message consisting
 // of digits 0-9 to decode
@@ -20,15 +22,11 @@ public final class CountWaysToDecodeDigitsMemoization {
 	}
 
 	private static int dfs(int index, String s, int[] memo) {
-		if (memo[index] != -1) {
-			return memo[index];
-		}
-		if (s.startsWith("0")) {
-			return 0;
-		}
-
 		if (index == s.length()) {
 			return 1;
+		}
+		if (memo[index] != -1) {
+			return memo[index];
 		}
 
 		int count = 0;
@@ -43,6 +41,12 @@ public final class CountWaysToDecodeDigitsMemoization {
 	}
 
 	private static boolean valid(String s) {
+		// a leading zero is never decodable: the encoding is not
+		// zero-padded, so "01" is not a way of writing "A".
+		// parseInt("01") == 1, so parseInt alone is NOT a validator.
+		if (s.startsWith("0")) {
+			return false;
+		}
 		int num = parseInt(s);
 		return num > 0 && num <= 26;
 	}
@@ -52,6 +56,6 @@ public final class CountWaysToDecodeDigitsMemoization {
 		System.out.println(count("123")); // 3
 		System.out.println(count("02")); // 0
 		System.out.println(count("1221")); // 5
-		System.out.println(count("101")); // 2
+		System.out.println(count("101")); // 1 -- only "10"+"1" = JA; "1"+"01" is not a decoding
 	}
 }
