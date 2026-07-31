@@ -12,28 +12,39 @@ import java.util.Set;
 // using their weights
 
 public final class KnapsackWeightOnlyAggregation {
-	// Time Complexity: O(2^n)
+	// Time Complexity: O(total sum * 2^n)
 
 	public static List<Integer> knapsack(List<Integer> weights) {
 		Set<Integer> set = new HashSet<>();
-		dfs(0, 0, weights, set);
+		int total = weights.stream().mapToInt(Integer::intValue).sum();
+		for (int sum = 0; sum <= total; sum++) {
+			if (canMake(weights.size(), sum, weights)) {
+				set.add(sum);
+			}
+		}
 		return new ArrayList<>(set);
 	}
 
-	private static int dfs(int index, int sum, List<Integer> weights, 
-			Set<Integer> set) {
-		if (index == weights.size()) {
-			set.add(sum);
-			return 0;
-		}
+	// can the first n weights add up to exactly sum?
+	// the answer is returned, not collected - which is what
+	// makes it memoizable: canMake(n, sum) is memo[n][sum]
 
-		// include
-		sum += weights.get(index);
-		dfs(index + 1, sum, weights, set);
-		// backtrack
-		sum -= weights.get(index);
+	private static boolean canMake(int n, int sum, List<Integer> weights) {
+		// sum == 0 must be tested before n == 0:
+		// the empty set makes 0, so canMake(0, 0) is true
+		if (sum == 0) {
+			return true;
+		}
+		if (n == 0) {
+			return false;
+		}
+		int weight = weights.get(n - 1);
 		// exclude
-		return dfs(index + 1, sum, weights, set);
+		if (canMake(n - 1, sum, weights)) {
+			return true;
+		}
+		// include
+		return weight <= sum && canMake(n - 1, sum - weight, weights);
 	}
 
 	public static void main(String[] args) {
