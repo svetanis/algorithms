@@ -12,7 +12,8 @@ package com.svetanis.algorithms.bits.xor;
 public final class CountSetBitsInIntegerKernighan {
 
 	public static int count(int x) {
-		// Time Complexity: O(log n)
+		// Time Complexity: O(popcount) -- one iteration per SET bit, so <= 32
+		// and usually far fewer. That is the advantage over the shift loop.
 
 		int count = 0;
 		while (x != 0) {
