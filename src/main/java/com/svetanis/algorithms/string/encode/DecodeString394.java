@@ -6,7 +6,9 @@ import java.util.Deque;
 // 394. Decode String
 
 public final class DecodeString394 {
-	// Time Complexity: O(n)
+	// Time Complexity: O(n^2) -- sb.insert(0, c) shifts the whole buffer
+	// once per character, and nested brackets re-copy per level.
+	// string/encode/DecodeStringTwoStacks.java is the linear one.
 	// Space Complexity: O(n)
 
 	public static String decode(String s) {
