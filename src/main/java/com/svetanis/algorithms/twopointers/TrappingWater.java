@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.prefixsum;
+package com.svetanis.algorithms.twopointers;
 
 // 42. Trapping Rain Water
 
