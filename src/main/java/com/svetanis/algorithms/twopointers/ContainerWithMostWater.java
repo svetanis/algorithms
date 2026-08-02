@@ -15,7 +15,7 @@ import java.util.List;
 // Write a function that will return the maximum volume of water 
 // that will be trapped between these two buildings.
 
-public final class MaxTrappingWater {
+public final class ContainerWithMostWater {
 	// Time Complexity: O(n)
 
 	public static int maxWater(List<Integer> list) {
