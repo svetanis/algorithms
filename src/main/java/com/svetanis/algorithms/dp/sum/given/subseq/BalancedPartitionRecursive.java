@@ -59,7 +59,9 @@ public final class BalancedPartitionRecursive {
 		if (sum == 0) {
 			return true;
 		}
-		if (a.length == 0 || index > a.length) {
+		// index == a.length means the set is exhausted, so it must return here --
+		// with `>` the read below runs off the end and throws
+		if (a.length == 0 || index >= a.length) {
 			return false;
 		}
 		// include

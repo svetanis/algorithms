@@ -10,7 +10,12 @@ import java.util.List;
 // Partition problem is to determine 
 // whether a given set can be partitioned  
 // into two subsets such that the sum 
-// of elements in both subsets is same. 
+// of elements in both subsets is same.
+
+// the List<Integer> counterpart of BalancedPartitionMemoization: same
+// recursion, same complexity, different input type. this one indexes
+// forward, 0 up to n, with axes dp[n][sum] -- the shape SubSetSumTopDown
+// and SubSetSumCountTopDown also use.
 
 public final class BalancedPartitionTopDown {
 	// Time Complexity: O(sum * n)

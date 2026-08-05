@@ -4,12 +4,25 @@ import java.util.stream.IntStream;
 
 // 416. Partition Equal Subset Sum
 
-// Partition problem is to determine 
-// whether a given set can be partitioned  
-// into two subsets such that the sum 
-// of elements in both subsets is same. 
+// Partition problem is to determine
+// whether a given set can be partitioned
+// into two subsets such that the sum
+// of elements in both subsets is same.
+
+// this file and BalancedPartitionTopDown memoize the SAME recursion:
+// include or exclude one element, against a target of sum / 2. they are
+// kept apart to show both input types. this one takes int[], which is what
+// LeetCode 416 hands you and what every other file in this package uses;
+// BalancedPartitionTopDown takes List<Integer>.
+//
+// two further differences follow from the array form. the index runs
+// backward, n - 1 down to -1, which makes this the memoized twin of the
+// backward isSum in BalancedPartitionRecursive. and the table axes are
+// dp[sum][n], the reverse of the dp[n][sum] used elsewhere here.
 
 public final class BalancedPartitionMemoization {
+	// Time Complexity: O(sum * n)
+	// Space Complexity: O(sum * n)
 
 	public static boolean canPartition(int[] a) {
 		int sum = IntStream.of(a).sum();

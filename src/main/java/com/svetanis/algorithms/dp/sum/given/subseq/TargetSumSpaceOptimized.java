@@ -2,6 +2,10 @@ package com.svetanis.algorithms.dp.sum.given.subseq;
 
 // 494. Target Sum
 
+// like TargetSumTopDownReduced, this counts the NEGATIVE subset,
+// sum(neg) = (total - k) / 2, while TargetSumBottomUp counts the
+// positive one. see that file for why both give the same answer.
+
 public final class TargetSumSpaceOptimized {
 	// Time complexity: O(sum * n)
 

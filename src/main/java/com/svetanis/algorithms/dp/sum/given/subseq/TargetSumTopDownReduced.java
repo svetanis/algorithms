@@ -5,7 +5,17 @@ import java.util.Map;
 
 // 494. Target Sum
 
-public final class TargetSumTopDown {
+// "Reduced" means the +/- question is rewritten as a subset count before
+// any recursion happens, so the running sum only ever grows. Compare
+// TargetSumTopDownDirect, which memoizes the +/- recursion untouched.
+//
+// this file counts the NEGATIVE subset: sum(neg) = (total - k) / 2.
+// TargetSumBottomUp counts the POSITIVE one: sum(pos) = (total + k) / 2.
+// neither is more correct -- naming one side fixes the other, so the two
+// counts are equal. the halves look like a sign error side by side; they
+// are not.
+
+public final class TargetSumTopDownReduced {
 	// Time complexity: O(n * sum)
 
 	private Map<String, Integer> map;
@@ -38,7 +48,7 @@ public final class TargetSumTopDown {
 	}
 
 	public static void main(String[] args) {
-		TargetSumTopDown ts = new TargetSumTopDown();
+		TargetSumTopDownReduced ts = new TargetSumTopDownReduced();
 		int[] a3 = { 1, 1, 1, 1, 1 };
 		System.out.println(ts.count(a3, 3)); // 5
 

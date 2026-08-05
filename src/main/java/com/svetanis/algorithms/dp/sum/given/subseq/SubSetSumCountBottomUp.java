@@ -1,44 +1,44 @@
 package com.svetanis.algorithms.dp.sum.given.subseq;
 
-//Given a set of positive numbers, find the total number  
+//Given a set of non-negative numbers, find the total number
 //of subsets whose sum is equal to a given number ‘S’.
+
+// same table as SubSetSumBottomUp -- dp[item][capacity], the axes of
+// dp/knapsack/Knapsack01BottomUp. the boolean || becomes +, so the table
+// counts subsets instead of reporting whether one exists.
 
 public final class SubSetSumCountBottomUp {
 
   public static int count(int[] a, int sum) {
-    // Time complexity: O(sum * n)
+    // Time complexity: O(n * sum)
 
     int n = a.length;
 
-    // the value of subset[i][j] will be true
-    // if there is a subset of set[0 ... j - 1]
-    // with sum equal to i
-    int[][] dp = new int[sum + 1][n + 1];
+    // the value of dp[i][s] is the number of subsets
+    // of set[0 ... i - 1] with sum equal to s
+    int[][] dp = new int[n + 1][sum + 1];
 
-    // if sum is 0, then answer is true
-    for (int i = 0; i <= n; ++i) {
-      dp[0][i] = 1;
-    }
+    // only the empty set is seeded: it reaches sum 0 one way, and
+    // nothing else. the rest of row 0 is already 0.
+    // seeding dp[i][0] = 1 for every i would be wrong -- with a zero
+    // in the set there are 2 ways to reach sum 0, not 1.
+    dp[0][0] = 1;
 
-    // if sum is not 0 and set is empty,
-    // then answer is false
-    for (int s = 1; s <= sum; s++) {
-      dp[s][0] = 0;
-    }
+    // fill the subset table in bottom up manner.
+    // s starts at 0, not 1: column 0 is a real subproblem that a
+    // zero-valued element can double, so it has to be recomputed too
+    for (int i = 1; i <= n; ++i) {
+      for (int s = 0; s <= sum; ++s) {
+        dp[i][s] = dp[i - 1][s];
 
-    // fill the subset table in bottom up manner
-    for (int s = 1; s <= sum; ++s) {
-      for (int j = 1; j <= n; ++j) {
-        dp[s][j] = dp[s][j - 1];
-
-        if (s >= a[j - 1]) {
-          int incl = dp[s - a[j - 1]][j - 1];
-          int excl = dp[s][j - 1];
-          dp[s][j] = incl + excl;
+        if (s >= a[i - 1]) {
+          int incl = dp[i - 1][s - a[i - 1]];
+          int excl = dp[i - 1][s];
+          dp[i][s] = incl + excl;
         }
       }
     }
-    return dp[sum][n];
+    return dp[n][sum];
   }
 
   public static void main(String[] args) {
@@ -50,5 +50,9 @@ public final class SubSetSumCountBottomUp {
 
     int[] a3 = { 1, 2, 7, 1, 5 };
     System.out.println(count(a3, 9));
+
+    // {} and {0} both sum to 0
+    int[] a4 = { 2, 0, 1 };
+    System.out.println(count(a4, 0)); // 2
   }
 }

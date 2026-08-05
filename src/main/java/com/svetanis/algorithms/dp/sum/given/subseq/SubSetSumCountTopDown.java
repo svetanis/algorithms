@@ -1,7 +1,11 @@
 package com.svetanis.algorithms.dp.sum.given.subseq;
 
-//Given a set of positive numbers, find the total number  
+//Given a set of non-negative numbers, find the total number
 //of subsets whose sum is equal to a given number ‘S’.
+
+// memoized twin of SubSetSumCountRecursive, and it inherits the same
+// ordering requirement: the terminal test is "the set is exhausted",
+// not "the sum reached 0". see that file for why zeros force this.
 
 public final class SubSetSumCountTopDown {
 
@@ -16,12 +20,12 @@ public final class SubSetSumCountTopDown {
 
     int n = a.length;
 
-    if (sum == 0) {
-      return 1;
+    if (sum < 0) {
+      return 0;
     }
 
-    if (i >= n || sum < 0) {
-      return 0;
+    if (i >= n) {
+      return sum == 0 ? 1 : 0;
     }
 
     if (dp[i][sum] == null) {
@@ -47,5 +51,8 @@ public final class SubSetSumCountTopDown {
     int[] a3 = { 1, 2, 7, 1, 5 };
     System.out.println(count(a3, 9));
 
+    // {} and {0} both sum to 0
+    int[] a4 = { 2, 0, 1 };
+    System.out.println(count(a4, 0)); // 2
   }
 }

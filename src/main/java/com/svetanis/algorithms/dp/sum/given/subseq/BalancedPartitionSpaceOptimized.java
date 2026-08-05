@@ -10,11 +10,21 @@ import java.util.List;
 // Partition problem is to determine 
 // whether a given set can be partitioned  
 // into two subsets such that the sum 
-// of elements in both subsets is same. 
+// of elements in both subsets is same.
 
-public final class BalancedPartitionMemoryOptimized {
-	// Time Complexity: O(sum * n)
-	// Space Complexity: O(sum * n)
+// the halfway step between BalancedPartitionBottomUp and
+// BalancedPartitionSubmit. BottomUp keeps all n + 1 rows, but the loop only
+// ever reads row i - 1, so two rows are enough: build into row 1, copy it
+// down to row 0, repeat. Submit takes the last step and collapses those two
+// rows into one, which is what SubSetSumSpaceOptimized also does.
+//
+// dp[0][0] stays true throughout and is never cleared by the copy loop,
+// which starts at s = 1: a sum of 0 is reachable at every i by taking
+// nothing, so that cell is a real base case, not leftover state.
+
+public final class BalancedPartitionSpaceOptimized {
+	// Time Complexity: O(target * n)
+	// Space Complexity: O(target) -- two rows of target + 1, not a full table
 
 	public static boolean canPartition(List<Integer> nums) {
 		int sum = nums.stream().mapToInt(Integer::intValue).sum();

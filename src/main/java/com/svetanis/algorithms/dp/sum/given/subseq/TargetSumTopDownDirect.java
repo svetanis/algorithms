@@ -5,7 +5,14 @@ import java.util.Map;
 
 // 494. Target Sum
 
-public final class TargetSumMemoization {
+// "Direct" means this file does NOT reduce the problem first: it assigns
+// a real + or - to every element, exactly as the question states it, and
+// the running sum can go negative. That is the only difference from
+// TargetSumTopDownReduced, which rewrites the question as a subset count
+// before it recurses. This one is the memoized twin of TargetSumRecursive:
+// same dfs, same signature, one cache added.
+
+public final class TargetSumTopDownDirect {
 	// Time complexity: O(n * sum)
 
 	private Map<String, Integer> map;
@@ -16,12 +23,12 @@ public final class TargetSumMemoization {
 	}
 
 	private int dfs(int[] a, int target, int index, int sum) {
+		if (index == a.length) {
+			return sum == target ? 1 : 0;
+		}
 		String key = index + "," + sum;
 		if (map.containsKey(key)) {
 			return map.get(key);
-		}
-		if (index == a.length) {
-			return sum == target ? 1 : 0;
 		}
 		int incl = dfs(a, target, index + 1, sum + a[index]);
 		int excl = dfs(a, target, index + 1, sum - a[index]);
@@ -30,7 +37,7 @@ public final class TargetSumMemoization {
 	}
 
 	public static void main(String[] args) {
-		TargetSumMemoization ts = new TargetSumMemoization();
+		TargetSumTopDownDirect ts = new TargetSumTopDownDirect();
 		int[] a3 = { 1, 1, 1, 1, 1 };
 		System.out.println(ts.count(a3, 3)); // 5
 
