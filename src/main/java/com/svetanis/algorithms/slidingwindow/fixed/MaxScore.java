@@ -3,7 +3,8 @@ package com.svetanis.algorithms.slidingwindow.fixed;
 // 1423. Maximum Points You Can Obtain from Cards
 
 public final class MaxScore {
-	// Time Complexity: O(k)
+	// Time Complexity: O(n) for maxScore below -- it sums the whole array,
+	// then scans it. The O(k) claim is true of maxScoreTwoPointers further down.
 	// Aux Space: O(1)
 
 	public static int maxScore(int[] a, int k) {
