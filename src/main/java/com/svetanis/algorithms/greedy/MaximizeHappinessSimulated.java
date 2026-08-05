@@ -4,9 +4,24 @@ import static java.util.Arrays.sort;
 
 // 3075. Maximize Happiness of Selected Children
 
-public final class MaximizeHappinessBruteForce {
+// the simulated rung: run the process the problem describes, one turn at a
+// time -- take the largest remaining child, then decrement every other child
+// by 1 (floored at 0), k times over.
 
-	public static long maximizeHappiness(int[] a, int k) {
+// was named MaximizeHappinessBruteForce, which it is not: nothing is
+// enumerated and no alternative is ever explored. Same greedy as
+// MaximizeHappiness.java, just not folded into a formula.
+
+public final class MaximizeHappinessSimulated {
+	// Time Complexity: O(n log n + k * n)
+	// the k * n is the whole point of keeping this file: each turn walks the
+	// array to apply the decrement. MaximizeHappiness.java gets the same
+	// answer in O(k) by noticing the i-th pick has been decremented i times.
+
+	public static long maximizeHappiness(int[] input, int k) {
+		// the simulation writes its working state into the array, so without
+		// this copy the caller's data comes back zeroed
+		int[] a = input.clone();
 		sort(a);
 		int n = a.length;
 		int count = 0;
@@ -33,5 +48,10 @@ public final class MaximizeHappinessBruteForce {
 		System.out.println(maximizeHappiness(a1, 2)); // 4
 		System.out.println(maximizeHappiness(a2, 2)); // 1
 		System.out.println(maximizeHappiness(a3, 1)); // 5
+
+		// the same array twice, then handed to the sibling: all three agree
+		// only because the input survives the call
+		System.out.println(maximizeHappiness(a1, 2)); // 4
+		System.out.println(MaximizeHappiness.maximizeHappiness(a1, 2)); // 4
 	}
 }
