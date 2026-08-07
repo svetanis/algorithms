@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.twopointers.majority;
+package com.svetanis.algorithms.majority;
 
 import static com.google.common.primitives.Ints.indexOf;
 

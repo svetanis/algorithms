@@ -1,18 +1,18 @@
-package com.svetanis.algorithms.search.duplicate;
+package com.svetanis.algorithms.twopointers.dups;
 
 import static com.svetanis.java.base.utils.Arrays.max;
 
-// 287. Find the Duplicate Number
 
-// given an array of n + 1 integers in
-// the range from 1 to n inclusive
-// there is only one repeated number in nums 
-// find this repeated number
+// given an array of n + 1 integers holding each of 1..n
+// exactly once, plus a second copy of one of them
+// find the value that appears twice
 
-public final class DuplicateInPlaceXor {
+public final class DuplicateInPermutationXor {
 	// Time Complexity: O(n)
 
-	// wrong answer for edge cases, a = { 2, 2, 2, 2, 2}
+	// the contract above is load-bearing: 1..n must each be present, so
+	// that every value cancels itself except the one appearing twice.
+	// on { 2, 2, 2, 2, 2 } this returns 1 -- see DuplicateInPlaceMarking.
 	public static int duplicate(int[] a) {
 		// xor all numbers in a[]
 		int xor = a[0];
@@ -36,16 +36,8 @@ public final class DuplicateInPlaceXor {
 		int[] a2 = { 3, 1, 3, 4, 2 };
 		System.out.println(duplicate(a2)); // 3
 
-		int[] a3 = { 3, 3, 3, 3, 3 };
-		System.out.println(duplicate(a3)); // 3
-
 		int[] a4 = { 1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10 };
 		System.out.println(duplicate(a4)); // 7
 
-		int[] a5 = { 2, 2, 2, 2, 2 };
-		System.out.println(duplicate(a5)); // 2
-
-		int[] a6 = { 1, 1, 1, 1, 1 };
-		System.out.println(duplicate(a6)); // 1
 	}
 }

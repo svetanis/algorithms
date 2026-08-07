@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking.combinations;
+package com.svetanis.algorithms.backtracking.aggregation;
 
 public final class CountSubSetsGivenSum {
 

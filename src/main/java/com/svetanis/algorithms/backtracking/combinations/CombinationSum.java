@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking.deduplication;
+package com.svetanis.algorithms.backtracking.combinations;
 
 import static com.svetanis.java.base.collect.Lists.newList;
 import static java.util.Arrays.asList;

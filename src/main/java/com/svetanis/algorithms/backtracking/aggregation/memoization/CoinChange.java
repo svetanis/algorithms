@@ -1,15 +1,20 @@
-package com.svetanis.algorithms.backtracking.deduplication;
+package com.svetanis.algorithms.backtracking.aggregation.memoization;
 
 import static java.util.Arrays.asList;
 
 import java.util.List;
 
-// given a list of coins of different 
+// given a list of coins of different
 // denominations and a total amount of money
 // find the number of combinations that make
 // up that amount. each coin can be used any
-// amount of times. if amount can't be made 
+// amount of times. if amount can't be made
 // up by any combination of the coins, return 0
+
+// LC 518 (Coin Change II). This is the teaching version: correct, but not
+// submittable -- no memoization, so {1,2,5} with amount 5000 takes ~7 s.
+// The exponential cost is the point; CoinChangeMemoization.java next door
+// is the fix, and dp/coins/ carries the iterative rewrites.
 
 public final class CoinChange {
 

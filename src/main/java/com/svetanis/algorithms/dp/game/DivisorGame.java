@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.math.perfectsquares;
+package com.svetanis.algorithms.dp.game;
 
 // 1025. Divisor Game
 

@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.dp.math.perfectsquares;
+package com.svetanis.algorithms.dp.coins;
 
 import static java.lang.Math.sqrt;
 

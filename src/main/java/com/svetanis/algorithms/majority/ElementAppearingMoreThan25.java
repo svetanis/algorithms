@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.twopointers.majority;
+package com.svetanis.algorithms.majority;
 
 // 1287. Element Appearing More Than 25% In Sorted Array
 

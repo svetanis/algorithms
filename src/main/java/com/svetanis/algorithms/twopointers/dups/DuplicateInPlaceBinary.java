@@ -1,12 +1,21 @@
-package com.svetanis.algorithms.search.duplicate;
+package com.svetanis.algorithms.twopointers.dups;
 
 // 287. Find the Duplicate Number
 
-// given an array of n + 1 integers in
-// the range from 1 to n inclusive
-// there is only one repeated number in nums 
-// find this repeated number
+// Given an array of integers nums containing n + 1 integers 
+// where each integer is in the range [1, n] inclusive.
 
+// There is only one repeated number in nums, return this repeated number.
+
+// You must solve the problem without modifying 
+// the array nums and using only constant extra space.
+
+// 1 <= n <= 105
+// nums.length == n + 1
+// 1 <= nums[i] <= n
+// All the integers in nums appear only once except 
+// for precisely one integer which appears two or more times.
+    
 public final class DuplicateInPlaceBinary {
 	// Time Complexity: O(n log n)
 
