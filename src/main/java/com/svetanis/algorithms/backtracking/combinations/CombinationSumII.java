@@ -33,11 +33,15 @@ public final class CombinationSumII {
 			if (i > index && candidates[i] == candidates[i - 1]) {
 				continue;
 			}
-			if (sum + candidate <= target) {
-				combination.add(candidate);
-				dfs(target, i + 1, sum + candidate, candidates, combination, combinations);
-				combination.remove(combination.size() - 1);
+			// candidates are sorted, so once one overshoots so does
+			// every later one -- leave the loop rather than skipping
+			// this candidate and scanning the rest of the array
+			if (sum + candidate > target) {
+				break;
 			}
+			combination.add(candidate);
+			dfs(target, i + 1, sum + candidate, candidates, combination, combinations);
+			combination.remove(combination.size() - 1);
 		}
 	}
 
