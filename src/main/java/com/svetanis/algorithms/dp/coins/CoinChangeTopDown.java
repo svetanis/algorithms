@@ -15,11 +15,17 @@ import java.util.List;
 // returns the count of ways we can sum
 // a[0 ... n-1] coins to get sum v
 
-// f(a) : min number of coins needed to make 
-//        the amount of a using denominations
-//        d0, ..., dk-1
+// the recurrence, over (index, amount):
+// ways(i, amount) = ways(i, amount - coins[i]) + ways(i + 1, amount)
 
-// f(a) = 1 + min(f(a - d0), f(a - d1), ..., f(a - dk))
+// (this header used to carry `f(a) = 1 + min(f(a - d0), ...)`, which is
+// LC 322's recurrence -- the MINIMUM number of coins. Different problem;
+// MinCoinChange*.java in this folder is the one that computes it.)
+
+// ⚠️ This is CoinChangeMemoization.java with List<Integer> instead of int[] --
+// same algorithm, same limits, and the same StackOverflowError on a small
+// judge stack. Pick one of the two; keeping both teaches nothing extra.
+// Submit CoinChangeSubmit.java.
 
 public final class CoinChangeTopDown {
 

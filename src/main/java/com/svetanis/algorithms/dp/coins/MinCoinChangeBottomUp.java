@@ -28,11 +28,13 @@ public final class MinCoinChangeBottomUp {
 		fill(dp, MAX_VALUE);
 		dp[0] = 0;
 		for (int sum = 1; sum <= amount; sum++) {
-			int coins = MAX_VALUE;
 			for (int coin : list) {
-				if (coin <= sum) {
-					coins = dp[sum - coin];
+				if (coin > sum) {
+					continue;
 				}
+				// declared per coin: hoisting it out of this loop lets a
+				// non-fitting coin re-apply the previous coin's value
+				int coins = dp[sum - coin];
 				if (coins != MAX_VALUE) {
 					dp[sum] = min(dp[sum], coins + 1);
 				}

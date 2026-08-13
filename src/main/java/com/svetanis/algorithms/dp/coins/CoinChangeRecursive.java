@@ -15,11 +15,19 @@ import java.util.List;
 // returns the count of ways we can sum
 // a[0 ... n-1] coins to get sum v
 
-// f(a) : min number of coins needed to make 
-//        the amount of a using denominations
-//        d0, ..., dk-1
+// the recurrence, over (index, amount):
+// ways(i, amount) = ways(i, amount - coins[i])   // take coins[i] again
+//                 + ways(i + 1, amount)          // stop using coins[i]
+// staying at i on the first branch is what makes each coin unlimited;
+// never returning to i - 1 is what keeps the count unordered.
 
-// f(a) = 1 + min(f(a - d0), f(a - d1), ..., f(a - dk))
+// (this header used to carry `f(a) = 1 + min(f(a - d0), ...)`, which is
+// LC 322's recurrence -- the MINIMUM number of coins. Different problem;
+// MinCoinChange*.java in this folder is the one that computes it.)
+
+// RUNG 1: correct, but ~8 s at LC 518's ceiling ({1,2,5}, amount 5000) --
+// a TLE, and slower than the recursive version in
+// backtracking/deduplication/. Submit CoinChangeSubmit.java.
 
 public final class CoinChangeRecursive {
 

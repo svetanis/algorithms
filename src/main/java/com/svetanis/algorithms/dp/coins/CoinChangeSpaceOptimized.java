@@ -6,7 +6,11 @@ import java.util.List;
 
 // 518. Coin Change II
 
-// Given a value N, if we want to make change for N cents, 
+// RUNG 4: iterative, one row, no recursion depth. Submittable.
+// CoinChangeSubmit.java is this algorithm with int[] parameters --
+// that one is the LeetCode-shaped signature.
+
+// Given a value N, if we want to make change for N cents,
 // and we have infinite supply of each of S = { S1, S2, .. , Sm} valued coins,
 // how many ways can we make the change? The order of coins doesn’t matter.
 
@@ -22,8 +26,11 @@ public final class CoinChangeSpaceOptimized {
 	// Time Complexity: O(n * amount)
 	// Space Complexity: O(amount)
 
-	private static final int MOD = 1000007;
-	
+	// no modulus on purpose: LC 518 guarantees the answer fits in a signed
+	// 32-bit int, so reducing it can only corrupt a legal answer. This file
+	// used to carry MOD = 1000007 and returned 802394 for {1,2,5} amount
+	// 6000, where the answer is 1802401.
+
 	public static int count(List<Integer> coins, int amount) {
 		int[] dp = new int[amount + 1];
 		// base case
@@ -36,10 +43,10 @@ public final class CoinChangeSpaceOptimized {
 		// the picked coin
 		for (int coin : coins) {
 			for (int sum = coin; sum <= amount; sum++) {
-				dp[sum] = (dp[sum] + dp[sum - coin]) % MOD;
+				dp[sum] = dp[sum] + dp[sum - coin];
 			}
 		}
-		return dp[amount] % MOD;
+		return dp[amount];
 	}
 
 	public static void main(String[] args) {

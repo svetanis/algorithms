@@ -3,6 +3,17 @@ package com.svetanis.algorithms.dp.coins;
 // 518. Coin Change II
 // CSES: Coin Combinations II
 
+// the submission. Of the six CoinChange* rungs here only the three iterative
+// ones -- BottomUp, SpaceOptimized, this -- pass LC 518: CoinChangeRecursive
+// is ~8 s, and Memoization/TopDown recurse amount / min(coin) deep and can
+// overflow the stack.
+
+// counts UNORDERED combinations -- 1+2 and 2+1 are one way. The coin-outer /
+// sum-inner nesting is what makes that true; CoinCombinations.java swaps the
+// loops and counts ordered sequences instead.
+
+// no modulus: LC 518 guarantees the answer fits in a signed int.
+
 public final class CoinChangeSubmit {
 	// Time Complexity: O(n * amount)
 	// Space Complexity: O(amount)

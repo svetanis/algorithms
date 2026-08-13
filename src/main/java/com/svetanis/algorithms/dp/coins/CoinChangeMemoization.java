@@ -11,11 +11,18 @@ package com.svetanis.algorithms.dp.coins;
 // returns the count of ways we can sum
 // a[0 ... n-1] coins to get sum v
 
-// f(a) : min number of coins needed to make 
-//        the amount of a using denominations
-//        d0, ..., dk-1
+// the recurrence, over (index, amount):
+// ways(i, amount) = ways(i, amount - coins[i]) + ways(i + 1, amount)
 
-// f(a) = 1 + min(f(a - d0), f(a - d1), ..., f(a - dk))
+// (this header used to carry `f(a) = 1 + min(f(a - d0), ...)`, which is
+// LC 322's recurrence -- the MINIMUM number of coins. Different problem;
+// MinCoinChange*.java in this folder is the one that computes it.)
+
+// ⚠️ RUNG 2: fast (1 ms at LC 518's ceiling) but NOT submittable --
+// the recursion is amount / min(coin) deep, up to 5000 frames at LC 518's
+// limits, and throws StackOverflowError on a small judge stack.
+// CoinChangeTopDown.java is this file with List instead of int[].
+// The iterative rungs -- BottomUp, SpaceOptimized, Submit -- have no depth.
 
 public final class CoinChangeMemoization {
 	// Time Complexity: O(n * amount)

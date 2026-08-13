@@ -1,7 +1,6 @@
 package com.svetanis.algorithms.dp.coins;
 
 import static java.util.Arrays.asList;
-import static java.util.Arrays.fill;
 
 import java.util.List;
 
@@ -13,31 +12,38 @@ import java.util.List;
 // constructed in bottom up manner
 // using the base case 0 value case (n = 0)
 
+// RUNG 3, and the first one in this folder that is actually submittable:
+// iterative, so there is no recursion depth to blow. The three recursive
+// rungs above it (Recursive, Memoization, TopDown) all fail LC 518 --
+// one on time, two on stack.
+
+// the table is dp[coin][amount] -- item-major, matching dp/knapsack/ and
+// dp/sum/given/subseq/. row 0 is "no coins considered yet": one way to make
+// 0, no way to make anything else. that row is also why an empty coin list
+// returns an answer here rather than throwing.
+
 public final class CoinChangeBottomUp {
 	// Time Complexity: O(n * amount)
 	// Space Complexity: O(n * amount)
 
 	public static int count(List<Integer> coins, int amount) {
 		int n = coins.size();
-		int[][] dp = new int[amount + 1][n];
-		// fill the entries for 0 value case
-		fill(dp[0], 1);
+		int[][] dp = new int[n + 1][amount + 1];
+		// base case: exactly one way to make 0 -- take nothing
+		dp[0][0] = 1;
 
-		for (int sum = 1; sum <= amount; ++sum) {
-			for (int i = 0; i < n; ++i) {
-				int excl = 0;
-				if (i > 0) {
-					excl = dp[sum][i - 1];
-				}
-				int incl = 0;
-				if (sum >= coins.get(i)) {
-					incl = dp[sum - coins.get(i)][i];
-				}
+		for (int i = 1; i <= n; ++i) {
+			int coin = coins.get(i - 1);
+			for (int sum = 0; sum <= amount; ++sum) {
+				// exclude coin i: whatever the first i - 1 coins could do
+				int excl = dp[i - 1][sum];
+				// include coin i, staying on row i so it can be reused
+				int incl = sum >= coin ? dp[i][sum - coin] : 0;
 				// total count
-				dp[sum][i] = incl + excl;
+				dp[i][sum] = incl + excl;
 			}
 		}
-		return dp[amount][n - 1];
+		return dp[n][amount];
 	}
 
 	public static void main(String[] args) {
