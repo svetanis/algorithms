@@ -15,10 +15,10 @@ import java.util.stream.IntStream;
 // LeetCode 416 hands you and what every other file in this package uses;
 // BalancedPartitionTopDown takes List<Integer>.
 //
-// two further differences follow from the array form. the index runs
+// one further difference follows from the array form: the index runs
 // backward, n - 1 down to -1, which makes this the memoized twin of the
-// backward isSum in BalancedPartitionRecursive. and the table axes are
-// dp[sum][n], the reverse of the dp[n][sum] used elsewhere here.
+// backward isSum in BalancedPartitionRecursive. the table axes are
+// dp[n][sum], matching BalancedPartitionTopDown and the rest of this package.
 
 public final class BalancedPartitionMemoization {
 	// Time Complexity: O(sum * n)
@@ -30,7 +30,7 @@ public final class BalancedPartitionMemoization {
 			return false;
 		}
 		int n = a.length;
-		Boolean[][] dp = new Boolean[sum + 1][n + 1];
+		Boolean[][] dp = new Boolean[n + 1][sum + 1];
 		return isSum(a, n - 1, sum / 2, dp);
 	}
 
@@ -41,14 +41,14 @@ public final class BalancedPartitionMemoization {
 		if (n < 0 || sum < 0) {
 			return false;
 		}
-		if (dp[sum][n] != null) {
-			return dp[sum][n];
+		if (dp[n][sum] != null) {
+			return dp[n][sum];
 		}
 		// 1. include last element
 		boolean incl = isSum(a, n - 1, sum - a[n], dp);
 		// 2. exclude last element
 		boolean excl = isSum(a, n - 1, sum, dp);
-		return dp[sum][n] = incl || excl;
+		return dp[n][sum] = incl || excl;
 	}
 
 	public static void main(String[] args) {
