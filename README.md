@@ -10,6 +10,18 @@ A **curated collection of LeetCode problem solutions** organized by algorithm pa
 
 ---
 
+## 📄 Problem Write-ups
+
+Some problems here are solved several times over — brute force, memoized, tabulated,
+space-optimized — because the **progression is the lesson**. Those have a long-form write-up in
+**[`leetcode/`](leetcode/)**: every approach, its measured verdict on the judge, and why each step
+is forced by the previous one's failure.
+
+- **518** — [Coin Change II](leetcode/518-coin-change-ii.md) · 5 approaches · why memoization fixes
+  the complexity and the solution still fails
+
+---
+
 ## 🗂️ How This Repository is Organized
 
 Solutions are organized by **algorithmic pattern**, not difficulty, because **pattern recognition** is the key to interview success.
@@ -82,7 +94,7 @@ Each pattern folder contains **solutions to related LeetCode problems** with:
 - 1143: Longest Common Subsequence
 - 72: Edit Distance
 - 322: Coin Change
-- 518: Coin Change II
+- 518: Coin Change II — **[full write-up](leetcode/518-coin-change-ii.md)**
 - 416: Partition Equal Subset Sum
 - 494: Target Sum
 - 5: Longest Palindromic Substring
@@ -674,6 +686,8 @@ If all ✅ for a pattern, you've mastered it!
 LeetCode 76?  → Binary search for "76" in the repo
               → Or check Sliding Window folder
 ```
+
+Problems that have a full write-up are indexed in **[`leetcode/`](leetcode/)**.
 
 ### By Pattern
 ```
