@@ -19,6 +19,8 @@ is forced by the previous one's failure.
 
 - **518** — [Coin Change II](leetcode/518-coin-change-ii.md) · 5 approaches · why memoization fixes
   the complexity and the solution still fails
+- **416** — [Partition Equal Subset Sum](leetcode/416-partition-equal-subset-sum.md) · 6 approaches ·
+  why the same memoization *is* enough here, and how to tell the two cases apart before you write it
 
 ---
 
@@ -95,7 +97,7 @@ Each pattern folder contains **solutions to related LeetCode problems** with:
 - 72: Edit Distance
 - 322: Coin Change
 - 518: Coin Change II — **[full write-up](leetcode/518-coin-change-ii.md)**
-- 416: Partition Equal Subset Sum
+- 416: Partition Equal Subset Sum — **[full write-up](leetcode/416-partition-equal-subset-sum.md)**
 - 494: Target Sum
 - 5: Longest Palindromic Substring
 - 10: Regular Expression Matching
