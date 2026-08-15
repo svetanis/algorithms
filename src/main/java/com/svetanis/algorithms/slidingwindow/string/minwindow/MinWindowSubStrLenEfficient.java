@@ -31,7 +31,7 @@ public final class MinWindowSubStrLenEfficient {
 			char c = s.charAt(right);
 			if (map.containsKey(c)) {
 				map.put(c, map.get(c) - 1);
-				// include '>' to account for duplicates in pattern
+				// include '>=' to account for duplicates in pattern
 				if (map.get(c) >= 0) {
 					matched++;
 				}

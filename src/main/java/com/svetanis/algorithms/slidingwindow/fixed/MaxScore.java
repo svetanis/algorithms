@@ -3,10 +3,12 @@ package com.svetanis.algorithms.slidingwindow.fixed;
 // 1423. Maximum Points You Can Obtain from Cards
 
 public final class MaxScore {
-	// Time Complexity: O(n) for maxScore below -- it sums the whole array,
-	// then scans it. The O(k) claim is true of maxScoreTwoPointers further down.
-	// Aux Space: O(1)
 
+	// take k cards from the two ends => the cards LEFT BEHIND are a
+	// contiguous window of size n - k. Minimize that window instead.
+
+	// Time Complexity: O(n) -- sums the whole array, then scans it
+	// Aux Space: O(1)
 	public static int maxScore(int[] a, int k) {
 		int n = a.length;
 		int totalScore = 0;
@@ -30,6 +32,9 @@ public final class MaxScore {
 		return max;
 	}
 
+	// Time Complexity: O(k) -- touches only the k cards at each end,
+	// never the middle of the array
+	// Aux Space: O(1)
 	public static int maxScoreTwoPointers(int[] a, int k) {
 		int n = a.length;
 		int left = 0;

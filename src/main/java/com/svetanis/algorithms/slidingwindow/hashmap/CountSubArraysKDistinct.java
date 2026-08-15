@@ -3,13 +3,20 @@ package com.svetanis.algorithms.slidingwindow.hashmap;
 // 992. Subarrays with K Different Integers
 
 public final class CountSubArraysKDistinct {
-	// Time complexity: O(n)
 
+	// EXACTLY k is not a window: shrinking a valid window drops you to
+	// k - 1, so there is no shrink rule. Every subarray with at most k
+	// distinct has either exactly k or at most k - 1, and those two
+	// groups do not overlap -- so subtract the second from the whole.
+
+	// Time complexity: O(n) -- two passes of the same window
 	public static int count(int[] a, int k) {
-		return counts(a, k) - counts(a, k - 1);
+		return atMost(a, k) - atMost(a, k - 1);
 	}
 
-	private static int counts(int[] a, int k) {
+	// the number of subarrays containing AT MOST k distinct values
+	// Time complexity: O(n) -- each index enters and leaves once
+	private static int atMost(int[] a, int k) {
 		int n = a.length;
 		int left = 0;
 		int count = 0;
@@ -27,7 +34,12 @@ public final class CountSubArraysKDistinct {
 				}
 				left++;
 			}
-			count += right - left;
+			// every subarray ENDING at right is valid once the window is:
+			// its start may be any index in [left, right], which is
+			// right - left + 1 choices. Dropping the +1 under-counts by
+			// one per position -- it cancels in count() above, but makes
+			// this method wrong by n on its own.
+			count += right - left + 1;
 		}
 		return count;
 	}
