@@ -12,11 +12,15 @@ import java.util.List;
 
 public final class MergeIntervals {
 	// Time Complexity: O(n * log n)
-	// Space Complexity: O(1)
+	// Space Complexity: O(n) for the output list, plus O(log n) sort stack
 
 	public static List<List<Integer>> merge(List<List<Integer>> intervals) {
 		intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0)));
 		List<List<Integer>> list = new ArrayList<>();
+		// no empty guard: LC 56 guarantees at least one interval, so get(0)
+		// is safe. On an empty list this line throws IndexOutOfBounds --
+		// state that when asked, since "what about empty input?" is the
+		// standard follow-up on this pattern.
 		list.add(intervals.get(0));
 		for (int i = 1; i < intervals.size(); i++) {
 			List<Integer> prev = list.get(list.size() - 1);

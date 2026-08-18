@@ -23,15 +23,16 @@ public final class EmployeeFreeTime759 {
 				pq.offer(interval);
 			}
 		}
-		Interval prev = pq.poll();
+		// carry the furthest point covered so far as an int, not as one of
+		// the caller's Interval objects. Writing the running max back into
+		// a polled Interval would widen the schedule that was passed in.
+		int end = pq.poll().end;
 		while (!pq.isEmpty()) {
 			Interval curr = pq.poll();
-			if (curr.start > prev.end) {
-				list.add(new Interval(prev.end, curr.start));
-			} else {
-				curr.end = Math.max(curr.end, prev.end);
+			if (curr.start > end) {
+				list.add(new Interval(end, curr.start));
 			}
-			prev = curr;
+			end = Math.max(end, curr.end);
 		}
 		return list;
 	}

@@ -8,14 +8,16 @@ import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.PriorityQueue;
 
-// Given a list of intervals representing the start and end time of ‘N’ meetings, 
-// find the minimum number of rooms required to hold all the meetings.
+// Given a list of jobs, each with a start time, an end time and a CPU load,
+// find the maximum total load at any single moment. Jobs run concurrently,
+// so the answer is the largest sum of loads over the jobs active at once --
+// not a count of jobs, which is what MinMeetingRooms answers.
 
 public final class MaxCPULoad {
 	// Time Complexity: O(n*log n)
 	// Space Complexity: O(n)
 
-	public static int minMeetingRooms(List<Job> jobs) {
+	public static int maxLoad(List<Job> jobs) {
 		int max = 0;
 		int load = 0;
 		List<Job> sorted = sort(jobs, comparing(j -> j.start));
@@ -36,19 +38,19 @@ public final class MaxCPULoad {
 		list1.add(new Job(1, 4, 3));
 		list1.add(new Job(2, 5, 4));
 		list1.add(new Job(7, 9, 6));
-		System.out.println(minMeetingRooms(list1));
+		System.out.println(maxLoad(list1));
 
 		List<Job> list2 = newArrayList();
 		list2.add(new Job(6, 7, 10));
 		list2.add(new Job(2, 4, 11));
 		list2.add(new Job(8, 12, 15));
-		System.out.println(minMeetingRooms(list2));
+		System.out.println(maxLoad(list2));
 
 		List<Job> list3 = newArrayList();
 		list3.add(new Job(1, 4, 2));
 		list3.add(new Job(2, 4, 1));
 		list3.add(new Job(3, 6, 5));
-		System.out.println(minMeetingRooms(list3));
+		System.out.println(maxLoad(list3));
 	}
 
 	private static final class Job {

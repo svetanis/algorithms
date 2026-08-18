@@ -8,6 +8,10 @@ public final class NonOverlappingIntervals {
 	// Time Complexity: O(n * log n)
 	// Space Complexity: O(1)
 
+	// Both methods read intervals[0] with no empty guard: LC 435 guarantees
+	// at least one interval. On an empty array they throw. Say so when asked
+	// -- "what about empty input?" is the standard follow-up on this pattern.
+
 	public static int nonOverlappingIntervals(int[][] intervals) {
 		Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
 		int n = intervals.length;

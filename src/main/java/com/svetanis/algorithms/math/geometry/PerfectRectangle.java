@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.intervals;
+package com.svetanis.algorithms.math.geometry;
 
 import java.util.HashMap;
 import java.util.Map;

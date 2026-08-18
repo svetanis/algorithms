@@ -1,7 +1,6 @@
 package com.svetanis.algorithms.intervals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.svetanis.java.base.utils.Print;
@@ -16,11 +15,10 @@ import com.svetanis.java.base.utils.Print;
 // (merge if necessary)
 
 public final class InsertIntervalSubmit {
-  // Time Complexity: O(n log n)
+  // Time Complexity: O(n)
   // Space Complexity: O(n)
 
   public static int[][] insert(int[][] intervals, int[] interval) {
-    Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
     int i = 0;
     int n = intervals.length;
     List<int[]> list = new ArrayList<>();

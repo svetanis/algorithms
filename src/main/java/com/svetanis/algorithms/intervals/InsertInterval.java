@@ -13,7 +13,14 @@ import java.util.List;
 // (merge if necessary)
 
 public final class InsertInterval {
-	// Time Complexity: O(n)
+	// Time Complexity: O(n log n) -- because of the sort below.
+
+	// The sort is load-bearing here and must stay. This version's contract is
+	// only "non-overlapping", which does not imply sorted by start, and the
+	// scan below reads the intervals in order: on [[6,9],[1,3]] inserting
+	// [2,5] it would return [[2,5],[6,9],[1,3]] without it.
+	// InsertIntervalSubmit is LC 57, which does guarantee sorted input --
+	// that is why it has no sort and is O(n).
 
 	public static List<List<Integer>> insert(List<List<Integer>> intervals, 
 			List<Integer> interval) {
