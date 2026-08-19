@@ -10,26 +10,32 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-// You are given n activities with their start and finish times. 
-// Select the maximum number of activities that can be performed by a single person, 
-// assuming that a person can only work on a single activity at a time.
+// given n activities with their start and finish times, select the maximum
+// number that one person can perform, doing only one at a time. an activity
+// can be chosen only if its start time is GREATER THAN the finish time of the
+// last chosen one -- so an activity starting exactly when the previous
+// finishes CANNOT be taken.
 
-// 1) Sort the activities according to their finishing time
-// 2) Select the first activity from the sorted array and print it.
-// 3) Do following for remaining activities in the sorted array.
-//    a) If the start time of this activity is greater than or equal 
-//       to the finish time of previously selected activity 
-//       then select this activity and print it.
+// 1) sort the activities by finishing time
+// 2) take the first one
+// 3) take each later activity whose start is greater than the last taken finish
 
 public final class ActivitySelection {
 
   public static ImmutableList<Interval> activities(List<Interval> intervals) {
-    int n = intervals.size();
+    if (intervals.isEmpty()) {
+      return ImmutableList.of();
+    }
+    // sorted here rather than by the caller: the greedy is only correct on
+    // finish-time order, and a method that silently needs a pre-sorted input
+    // returns a plausible wrong answer when handed anything else
+    List<Interval> sorted = sort(intervals, comparing(i -> i.end));
+
     List<Interval> list = newArrayList();
-    list.add(intervals.get(0));
-    for (int i = 1; i < n; i++) {
-      if (intervals.get(i).start >= list.get(list.size() - 1).end) {
-        list.add(intervals.get(i));
+    list.add(sorted.get(0));
+    for (int i = 1; i < sorted.size(); i++) {
+      if (sorted.get(i).start > list.get(list.size() - 1).end) {
+        list.add(sorted.get(i));
       }
     }
     return newList(list);
@@ -38,15 +44,20 @@ public final class ActivitySelection {
   public static void main(String[] args) {
     int[] start = { 1, 3, 0, 5, 8, 5 };
     int[] end = { 2, 4, 6, 7, 9, 9 };
-    List<Interval> activities = buildActivities(start, end);
-    print(activities(activities));
+    print(activities(build(start, end)));
+
+    // an activity starting exactly when another finishes cannot follow it,
+    // so {10, 20} and {20, 30} cannot both be taken -- the answer is 1
+    int[] touchStart = { 10, 12, 20 };
+    int[] touchEnd = { 20, 25, 30 };
+    print(activities(build(touchStart, touchEnd)));
   }
 
-  private static List<Interval> buildActivities(int[] start, int[] end) {
+  private static List<Interval> build(int[] start, int[] end) {
     List<Interval> list = newArrayList();
     for (int i = 0; i < start.length; i++) {
       list.add(new Interval(start[i], end[i]));
     }
-    return sort(list, comparing(i -> i.end));
+    return list;
   }
 }

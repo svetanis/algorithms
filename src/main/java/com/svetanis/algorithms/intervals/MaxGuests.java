@@ -4,8 +4,16 @@ import static java.util.Arrays.sort;
 
 import com.svetanis.java.base.Pair;
 
-// given a list of intervals, find the point
-// where the max number of intervals overlap
+// a register logs each guest's entry and exit time. find the time at which
+// the most guests are at the party, and how many. entries are not sorted.
+
+// a guest whose exit is logged at time t IS counted as present at t, so a
+// guest arriving at t and one leaving at t are both at the party -- hence
+// `in[i] <= out[j]`. this matches MinPlatforms, whose statement is explicit
+// about the same moment, and it matches the worked trace of the source's
+// first example. NOTE: the source's own second and third examples disagree
+// with its first about this, so the examples cannot all be satisfied; the
+// consistent reading is the one implemented here.
 
 public final class MaxGuests {
   // Time Complexity: O(n*log n)
