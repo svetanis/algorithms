@@ -18,14 +18,17 @@ public final class RemoveDuplicatesSorted80 {
 		if (n <= 2) {
 			return n;
 		}
-		int index = 0;
-		for (int curr : a) {
-			if (index < 2 || curr != a[index - 2]) {
-				a[index] = curr;
-				index++;
+		// slow = the WRITE cursor: everything in [0, slow) is finished
+		// fast = the READ cursor: visits every element exactly once
+		int slow = 0;
+		for (int fast = 0; fast < a.length; fast++) {
+			int curr = a[fast];
+			if (slow < 2 || curr != a[slow - 2]) {
+				a[slow] = curr;
+				slow++;
 			}
 		}
-		return index;
+		return slow;
 	}
 
 	public static void main(String[] args) {

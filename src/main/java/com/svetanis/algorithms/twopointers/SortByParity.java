@@ -7,13 +7,15 @@ import com.svetanis.java.base.utils.Print;
 public final class SortByParity {
 	// Time Complexity: O(n)
 
+	// slow = the WRITE cursor: everything in [0, slow) is even
+	// fast = the READ cursor: visits every element exactly once
 	public static int[] sortByParity(int[] a) {
-		int index = 0;
+		int slow = 0;
 		int n = a.length;
-		for (int j = 0; j < n; j++) {
-			if (a[j] % 2 == 0) {
-				swap(a, index, j);
-				index += 1;
+		for (int fast = 0; fast < n; fast++) {
+			if (a[fast] % 2 == 0) {
+				swap(a, slow, fast);
+				slow += 1;
 			}
 		}
 		return a;

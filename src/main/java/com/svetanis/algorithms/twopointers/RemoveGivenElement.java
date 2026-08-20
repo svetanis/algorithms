@@ -14,14 +14,16 @@ public final class RemoveGivenElement {
     // Time Complexity: O(n)
     // Space Complexity: O(1)
 
-    int next = 0; // index of the next element which is not target
-    for (int i = 0; i < a.length; i++) {
-      if (a[i] != target) {
-        a[next] = a[i];
-        next++;
+    // slow = the WRITE cursor: everything in [0, slow) is finished
+    // fast = the READ cursor: visits every element exactly once
+    int slow = 0;
+    for (int fast = 0; fast < a.length; fast++) {
+      if (a[fast] != target) {
+        a[slow] = a[fast];
+        slow++;
       }
     }
-    return next;
+    return slow;
   }
 
   public static void main(String[] args) {

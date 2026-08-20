@@ -10,37 +10,48 @@ public final class RemoveDuplicatesSorted {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 
+	// slow = the WRITE cursor: everything in [0, slow) is finished
+	// fast = the READ cursor: visits every element exactly once
 	public static int remove(int[] a) {
-		int index = 0; // index of the next non-duplicate element
-		for (int curr : a) {
-			if (index == 0 || curr != a[index - 1]) {
-				a[index] = curr;
-				index++;
+		int slow = 0;
+		for (int fast = 0; fast < a.length; fast++) {
+			int curr = a[fast];
+			if (slow == 0 || curr != a[slow - 1]) {
+				a[slow] = curr;
+				slow++;
 			}
 		}
-		return index;
+		return slow; // slow is a COUNT here
 	}
 
+	// the same algorithm with slow meaning the LAST WRITTEN index
+	// rather than the next free slot, hence the + 1 on the way out
 	public static int remove1(int[] a) {
-		int next = 0; // index of the next non-duplicate element
-		for (int i = 1; i < a.length; i++) {
-			if (a[i] != a[next]) {
-				next++;
-				a[next] = a[i];
+		if (a.length == 0) {
+			return 0; // slow is an INDEX here, so the +1 below would report 1
+		}
+		int slow = 0;
+		for (int fast = 1; fast < a.length; fast++) {
+			if (a[fast] != a[slow]) {
+				slow++;
+				a[slow] = a[fast];
 			}
 		}
-		return next + 1;
+		return slow + 1;
 	}
 
 	public static int remove2(int[] a) {
-		int next = 1; // index of the next non-duplicate element
-		for (int i = 1; i < a.length; i++) {
-			if (a[i] != a[next - 1]) {
-				a[next] = a[i];
-				next++;
+		if (a.length == 0) {
+			return 0; // slow is seeded to 1, so an empty array would report 1
+		}
+		int slow = 1; // the next free slot, so no +1 on the way out
+		for (int fast = 1; fast < a.length; fast++) {
+			if (a[fast] != a[slow - 1]) {
+				a[slow] = a[fast];
+				slow++;
 			}
 		}
-		return next;
+		return slow;
 	}
 
 	public static void main(String[] args) {

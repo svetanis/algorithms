@@ -31,7 +31,9 @@ public final class TripletClosestToGivenSum {
         if (diff == 0) {
           return sum;
         }
-        if (diff < min) {
+        // the second clause is the header's tie-break: among triplets
+        // equally close to the target, keep the SMALLEST sum
+        if (diff < min || (diff == min && sum < result)) {
           min = diff;
           result = sum;
         }

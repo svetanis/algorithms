@@ -16,9 +16,12 @@ public final class RemoveDuplicatesInPlace {
 	public static int removeDups(List<Integer> arr) {
 		int slow = 0;
 		for (int fast = 0; fast < arr.size(); fast++) {
-			if (arr.get(fast) != arr.get(slow)) {
+			// unbox before comparing: != on two Integers compares
+			// references, which only works inside the -128..127 cache
+			int curr = arr.get(fast);
+			if (curr != arr.get(slow)) {
 				slow++;
-				arr.set(slow, arr.get(fast));
+				arr.set(slow, curr);
 			}
 		}
 		return slow + 1;
