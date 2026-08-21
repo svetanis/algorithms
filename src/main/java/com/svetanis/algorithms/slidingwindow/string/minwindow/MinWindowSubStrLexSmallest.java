@@ -27,7 +27,10 @@ public final class MinWindowSubStrLexSmallest {
 		for (int right = 0; right < s.length(); right++) {
 			char c = s.charAt(right);
 			wc.put(c, wc.getOrDefault(c, 0) + 1);
-			if (pc.containsKey(c) && pc.get(c) == wc.get(c)) {
+			// equals, not ==: these are two Integers, and a reference compare
+			// only works inside the -128..127 cache -- a character occurring
+			// 128 times in one window would never register as matched
+			if (pc.containsKey(c) && pc.get(c).equals(wc.get(c))) {
 				matched++;
 			}
 

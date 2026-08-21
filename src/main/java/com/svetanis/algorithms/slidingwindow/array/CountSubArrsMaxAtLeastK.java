@@ -1,7 +1,5 @@
 package com.svetanis.algorithms.slidingwindow.array;
 
-import java.util.Arrays;
-
 // 2962. Count Subarrays Where Max Element Appears at Least K Times
 
 public final class CountSubArrsMaxAtLeastK {
@@ -9,6 +7,9 @@ public final class CountSubArrsMaxAtLeastK {
 
 	public static long countSubArr(int[] a, int k) {
 		int n = a.length;
+		if (n == 0) {
+			return 0;
+		}
 		int max = max(a);
 		int left = 0;
 		int maxCount = 0;
@@ -28,8 +29,11 @@ public final class CountSubArrsMaxAtLeastK {
 		return subArrCount;
 	}
 
+	// seeded with a[0], not 0: seeding with 0 makes every all-negative
+	// array report a max of 0, which no element equals, so maxCount
+	// never rises and the answer is 0 for every k
 	private static int max(int[] a) {
-		int max = 0;
+		int max = a[0];
 		for (int num : a) {
 			max = Math.max(max, num);
 		}
@@ -38,7 +42,10 @@ public final class CountSubArrsMaxAtLeastK {
 
 	public static long countSubArr2(int[] a, int k) {
 		int n = a.length;
-		int max = Arrays.stream(a).max().getAsInt();
+		if (n == 0) {
+			return 0;
+		}
+		int max = max(a);
 		int right = 0;
 		int maxCount = 0;
 		long subArrCount = 0;

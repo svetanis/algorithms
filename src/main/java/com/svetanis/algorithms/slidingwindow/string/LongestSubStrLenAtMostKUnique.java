@@ -34,6 +34,35 @@ public final class LongestSubStrLenAtMostKUnique {
 		return max;
 	}
 
+	// the same window with a count array instead of a map.
+	// an array has no size(), and size() IS the validity test here,
+	// so the distinct count has to be maintained by hand: a bucket
+	// crossing 0 -> 1 is a new character, 1 -> 0 is one leaving.
+	// 128 buckets, indexed by the char itself, so no assumption is
+	// made about the alphabet.
+	// Time complexity: O(n)
+	// Aux Space: O(1) -- 128 ints regardless of input
+
+	public static int kUniqueMaxLenCountArray(String s, int k) {
+		int left = 0;
+		int max = 0;
+		int distinct = 0;
+		int[] count = new int[128];
+		for (int right = 0; right < s.length(); right++) {
+			if (count[s.charAt(right)]++ == 0) {
+				distinct++;
+			}
+			while (distinct > k) {
+				if (--count[s.charAt(left)] == 0) {
+					distinct--;
+				}
+				left++;
+			}
+			max = Math.max(max, right - left + 1);
+		}
+		return max;
+	}
+
 	public static void main(String[] args) {
 		String s1 = "aabbcc";
 		System.out.println(kUniqueMaxLen(s1, 1));

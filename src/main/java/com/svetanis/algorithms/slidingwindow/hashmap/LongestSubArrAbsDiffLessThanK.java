@@ -6,7 +6,10 @@ import java.util.TreeMap;
 // Absolute Diff Less Than or Equal to Limit
 
 public final class LongestSubArrAbsDiffLessThanK {
-	// Time complexity: O(n)
+	// Time complexity: O(n log n) -- each index enters and leaves the
+	// window once, but every put/remove/lastKey/firstKey on the TreeMap
+	// costs O(log n). A monotonic deque pair would make this O(n).
+	// Aux Space: O(n) -- the map holds the whole window in the worst case
 
 	public static int longestSubArr(int[] a, int limit) {
 		int max = 0;

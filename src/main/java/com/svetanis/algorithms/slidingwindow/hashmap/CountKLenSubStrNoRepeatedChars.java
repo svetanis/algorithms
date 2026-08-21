@@ -10,7 +10,7 @@ public final class CountKLenSubStrNoRepeatedChars {
 	// Space Complexity: O(m)
 
 	public static int countSubStrNoRepeats(String s, int k) {
-		if (k > s.length()) {
+		if (k <= 0 || k > s.length()) {
 			return 0;
 		}
 		char[] freq = new char[26];
@@ -32,8 +32,11 @@ public final class CountKLenSubStrNoRepeatedChars {
 		return count;
 	}
 
+	// k <= 0 belongs in the guard, not just k > length: with k = 0 the map
+	// starts empty, so map.size() == k holds at every window and this counts
+	// one empty substring per position -- the sibling above returns 0
 	public static int countSubStrNoRepeats2(String s, int k) {
-		if (k > s.length()) {
+		if (k <= 0 || k > s.length()) {
 			return 0;
 		}
 		Map<Character, Integer> map = new HashMap<>();

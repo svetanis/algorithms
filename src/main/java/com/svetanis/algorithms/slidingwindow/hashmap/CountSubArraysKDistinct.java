@@ -11,6 +11,12 @@ public final class CountSubArraysKDistinct {
 
 	// Time complexity: O(n) -- two passes of the same window
 	public static int count(int[] a, int k) {
+		// k = 0 would call atMost(a, -1), whose shrink loop can never be
+		// satisfied and walks left off the end of the array. No non-empty
+		// subarray holds 0 distinct values, so the answer is 0.
+		if (k <= 0) {
+			return 0;
+		}
 		return atMost(a, k) - atMost(a, k - 1);
 	}
 

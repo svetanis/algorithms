@@ -22,16 +22,19 @@ import java.util.Map;
 
 public final class MaxSumDistinctSubArraySizeK {
 	// Time Complexity: O(n)
-	// Aux Space: O(n)
+	// Aux Space: O(k) -- the map never holds more than k entries
 
-	public static int maxSum(int k, List<Integer> list) {
+	// the sum is a long: k and each value both reach 1e5, so the
+	// window can total 1e10, five times past Integer.MAX_VALUE
+
+	public static long maxSum(int k, List<Integer> list) {
 		int n = list.size();
 		if (n < k) {
 			return -1;
 		}
 		Map<Integer, Integer> map = newHashMap();
-		int sum = sum(list, k, map);
-		int max = map.size() == k ? sum : 0;
+		long sum = sum(list, k, map);
+		long max = map.size() == k ? sum : 0;
 		for (int i = k; i < n; i++) {
 			int left = list.get(i - k);
 			int right = list.get(i);
@@ -55,8 +58,8 @@ public final class MaxSumDistinctSubArraySizeK {
 		return max;
 	}
 
-	private static int sum(List<Integer> list, int k, Map<Integer, Integer> map) {
-		int sum = 0;
+	private static long sum(List<Integer> list, int k, Map<Integer, Integer> map) {
+		long sum = 0;
 		for (int i = 0; i < k; i++) {
 			int curr = list.get(i);
 			int freq = map.getOrDefault(curr, 0);
