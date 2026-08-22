@@ -5,7 +5,8 @@ import static com.svetanis.java.base.utils.Print.print;
 // 370. Range Addition
 
 public final class RangeAddition {
-	// Query Time Complexity: O(n)
+	// Update: O(1) per range. Materialize: one O(n) prefix pass.
+	// There is no query operation in this class.
 	// Space Complexity: O(n)
 
 	public static int[] rangeAddition(int n, int[][] updates) {

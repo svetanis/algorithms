@@ -3,7 +3,9 @@ package com.svetanis.algorithms.prefixsum.range;
 // 304. Range Sum Query 2D - Immutable
 
 public final class RangeSumQuery2DSubmit {
-	// Query Time Complexity: O(n * m)
+	// Query Time Complexity: O(1) -- four lookups and three adds.
+	// The O(n * m) cost is the CONSTRUCTOR, paid once. O(1) query
+	// after O(n * m) preprocessing is LC 304's entire reason to exist.
 	// Space Complexity: O(n * m)
 
 	public RangeSumQuery2DSubmit(int[][] grid) {

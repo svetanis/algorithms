@@ -8,7 +8,14 @@ public final class BrightestPosition {
 	// Time complexity: O(n log n)
 	// Space complexity: O(n)
 
+	private static final String NO_LIGHTS = "no lights, so no position has a brightness";
+
 	public static int brightestPosition(int[][] lights) {
+		if (lights.length == 0) {
+			// without this the method returns 0, which reads as a real position
+			// on a street that has no lights on it at all
+			throw new IllegalArgumentException(NO_LIGHTS);
+		}
 		// track changes in brightness (diff array)
 		TreeMap<Integer, Integer> map = new TreeMap<>();
 		for (int[] light : lights) {
