@@ -1,43 +1,40 @@
 package com.svetanis.algorithms.search.binary.rotated;
 
-// given a sorted array of distinct integer in ascending order
-// and is rotated k times around a pivot, find the number of rotations
+// given a sorted array of distinct integers in ascending order
+// and rotated k times around a pivot, find the number of rotations
 
-// number of rotations is equal to index of minimum element
+// the number of rotations is the index of the minimum element,
+// so this is 153 returning the index instead of the value:
+// a[i] <= a[last] reads F F F F T T T, and the first T is the minimum
 
 public final class RotationCountNoDuplicatesIterative {
 
 	public static int count(int[] a) {
 		// time complexity: O(log n)
 
-		int left = 0, right = a.length - 1;
+		int last = a.length - 1;
+		int left = 0;
+		int right = last;
 		while (left < right) {
 			int mid = left + (right - left) / 2;
-
-			if (mid < right && a[mid] > a[mid + 1]) {
-				return mid + 1;
-			}
-
-			if (mid > left && a[mid - 1] > a[mid]) {
-				return mid;
-			}
-			
-			// left side is sorted,
-			// pivot is on the right side
-			if (a[left] < a[mid]) {
-				left = mid + 1;
+			if (a[mid] <= a[last]) {
+				right = mid;
 			} else {
-			// right side is sorted,
-			// pivot is on the left side
-				right = mid - 1;
+				left = mid + 1;
 			}
 		}
-		// the array is not rotated
-		return 0;
+		// an unrotated array is all true, so the first true is index 0
+		return left;
 	}
 
 	public static void main(String[] args) {
-		int[] a = { 15, 18, 2, 3, 6, 12 };
-		System.out.println(count(a));
+		int[] a1 = { 15, 18, 2, 3, 6, 12 };
+		System.out.println(count(a1)); // 2
+
+		int[] a2 = { 4, 5, 6, 7, 0, 1, 2 };
+		System.out.println(count(a2)); // 4
+
+		int[] a3 = { 1, 2, 3, 4 };
+		System.out.println(count(a3)); // 0
 	}
 }

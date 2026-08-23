@@ -13,7 +13,7 @@ public final class KokoEatingBananas {
 		while (left < right) {
 			// potential eating speed
 			int mid = left + (right - left) / 2;
-			int total = timeTaken(piles, mid);
+			long total = timeTaken(piles, mid);
 			if (total <= h) {
 				// rate is sufficient, try slower
 				right = mid;
@@ -25,8 +25,10 @@ public final class KokoEatingBananas {
 		return left;
 	}
 
-	private static int timeTaken(int[] piles, int rate) {
-		int total = 0; // total time needed at this rate
+	// long: 10^4 piles * 10^9 bananas at rate 1 is 10^13 hours,
+	// which is 4,600 times past Integer.MAX_VALUE
+	private static long timeTaken(int[] piles, int rate) {
+		long total = 0; // total time needed at this rate
 		for (int pile : piles) {
 			total += (pile + rate - 1) / rate; // ceiling division
 		}
@@ -51,9 +53,9 @@ public final class KokoEatingBananas {
 	}
 
 	private static boolean canEatAllBananas(int[] piles, int h, int rate) {
-		int total = 0; // total time needed at this rate
+		long total = 0; // total time needed at this rate
 		for (int pile : piles) {
-			total += (int) Math.ceil((double) pile / rate);
+			total += (long) Math.ceil((double) pile / rate);
 		}
 		return total <= h;
 	}

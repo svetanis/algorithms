@@ -5,7 +5,11 @@ import java.util.List;
 // 81. Search in Rotated Sorted Array II
 
 public final class RotatedGivenElementDuplicatesIterative {
-	// Time Complexity: O(log n)
+	// Time Complexity: O(log n) average, O(n) worst case
+	// duplicates at left, mid and right carry no information, so
+	// that branch discards one element per end instead of half the
+	// range -- {2,2,2,2,2,2} searching for 3 visits everything.
+	// same argument as RotatedMin154DuplicatesIterative
 
 	public static int search(int[] a, int k) {
 		int n = a.length;
@@ -55,7 +59,9 @@ public final class RotatedGivenElementDuplicatesIterative {
 				return mid;
 			}
 
-			if (a.get(left) == a.get(mid) && a.get(right) == a.get(mid)) {
+			// equals, not ==: these are two Integers, and a reference
+			// compare only works inside the -128..127 cache
+			if (a.get(left).equals(a.get(mid)) && a.get(right).equals(a.get(mid))) {
 				left++;
 				right--;
 			} else if (a.get(left) <= a.get(mid)) {

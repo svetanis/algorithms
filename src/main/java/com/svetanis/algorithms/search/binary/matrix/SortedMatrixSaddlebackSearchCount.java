@@ -8,8 +8,9 @@ public final class SortedMatrixSaddlebackSearchCount {
     // time complexity: O(n*m)
 
     int n = matrix.length;
+    int m = matrix[0].length;
     int row = 0;
-    int col = n - 1; 
+    int col = m - 1; // columns, not rows: the two differ on any non-square matrix
     int count = 0;
 
     while (col >= 0 && row < n) {

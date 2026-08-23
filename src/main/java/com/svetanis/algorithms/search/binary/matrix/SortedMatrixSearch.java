@@ -24,6 +24,12 @@ public final class SortedMatrixSearch {
         col = 0;
       }
     }
+    // the loop can only stop at row == n by running off the end.
+    // (n, 0) is not a cell, so a caller that indexes with it throws --
+    // report the same (-1, -1) the saddleback siblings use
+    if (row == n) {
+      return Pair.build(-1, -1);
+    }
     return Pair.build(row, col);
   }
 

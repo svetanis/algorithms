@@ -13,7 +13,7 @@ public final class MaxRuntime {
 			right += battery;
 		}
 		while (left < right) {
-			long mid = (left + right + 1) >> 1;
+			long mid = left + (right - left + 1) / 2;
 			if (canRun(batteries, mid, n)) {
 				left = mid;
 			} else {

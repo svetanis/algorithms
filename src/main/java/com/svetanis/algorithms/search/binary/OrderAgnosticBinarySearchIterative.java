@@ -30,6 +30,12 @@ public final class OrderAgnosticBinarySearchIterative {
   public static int binarySearch(int[] a, int start, int end, int x) {
     // O(log n)
 
+    // the direction test reads both ends BEFORE the loop guard runs, so an
+    // empty range indexes a[0] and a[-1]; the three siblings above all
+    // return -1 on an empty array and this one has to agree
+    if (start > end) {
+      return -1;
+    }
     boolean isAscending = a[start] < a[end];
     while (start <= end) {
       int mid = start + (end - start) / 2;

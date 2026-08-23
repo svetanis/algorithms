@@ -4,49 +4,38 @@ package com.svetanis.algorithms.search.binary.rotated;
 // The array has been rotated (anti-clockwise) k number of times.
 // Given such an array, find the value of k.
 
-// number of rotations is equal to index of minimum element
+// the number of rotations is the index of the minimum element.
+// same first-true search as RotationCountNoDuplicatesIterative,
+// written as a recursion: a[i] <= a[last] reads F F F F T T T
 
 public final class RotationCountNoDuplicatesRecursive {
 
   public static int count(int[] a) {
-    int n = a.length;
-    return count(a, 0, n - 1);
-  }
-
-  public static int count(int[] a, int left, int right) {
     // time complexity: O(log n)
 
-    if (right < left) {
-      return 0;
-    }
+    int last = a.length - 1;
+    return count(a, 0, last, last);
+  }
 
-    if (right == left) {
+  private static int count(int[] a, int left, int right, int last) {
+    if (left == right) {
       return left;
     }
-
     int mid = left + (right - left) / 2;
-
-    if (mid < right && a[mid + 1] < a[mid]) {
-      return mid + 1;
+    if (a[mid] <= a[last]) {
+      return count(a, left, mid, last);
     }
-
-    if (mid > left && a[mid] < a[mid - 1]) {
-      return mid;
-    }
-
-    if (a[right] > a[mid]) {
-	// right side is sorted,
-	// pivot is on the left side
-      return count(a, left, mid - 1);
-    } else {
-	// left side is sorted,
-	// pivot is on the right side
-      return count(a, mid + 1, right);
-    }
+    return count(a, mid + 1, right, last);
   }
 
   public static void main(String[] args) {
-    int[] a = { 15, 18, 2, 3, 6, 12 };
-    System.out.println(count(a));
+    int[] a1 = { 15, 18, 2, 3, 6, 12 };
+    System.out.println(count(a1)); // 2
+
+    int[] a2 = { 4, 5, 6, 7, 0, 1, 2 };
+    System.out.println(count(a2)); // 4
+
+    int[] a3 = { 1, 2, 3, 4 };
+    System.out.println(count(a3)); // 0
   }
 }

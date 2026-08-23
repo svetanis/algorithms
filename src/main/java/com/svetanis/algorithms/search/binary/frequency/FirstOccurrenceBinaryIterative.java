@@ -9,9 +9,8 @@ import com.google.common.base.Optional;
 public final class FirstOccurrenceBinaryIterative {
 
   public static Optional<Integer> firstOccurrence(int[] a, int k) {
-    int n = a.length - 1;
     sort(a);
-    return firstOccurrence(a, 0, n - 1, k);
+    return firstOccurrence(a, 0, a.length - 1, k);
   }
 
   private static Optional<Integer> firstOccurrence(int[] a, int left, int right, int k) {

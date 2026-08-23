@@ -11,7 +11,7 @@ public final class DivideChocolate {
 		int left = 1;
 		int right = Arrays.stream(sweetness).sum();
 		while (left < right) {
-			int mid = (left + right + 1) >>> 1;
+			int mid = left + (right - left + 1) / 2;
 			if (canSplit(sweetness, k, mid)) {
 				left = mid;
 			} else {

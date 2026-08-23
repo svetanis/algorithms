@@ -1,9 +1,23 @@
 package com.svetanis.algorithms.search.binary.rotated;
 
-// given a sorted array of distinct integer in ascending order
-// and is rotated k times around a pivot, find the number of rotations
+// given a sorted array in ascending order, duplicates allowed,
+// rotated k times around a pivot, find the number of rotations
 
-// number of rotations is equal to index of minimum element
+// number of rotations is the index at which the low run BEGINS
+
+// Time Complexity: O(log n) average, O(n) worst case -- the
+// all-ends-equal branch discards one element per end, not half
+
+// this cannot be simplified to 154's three-branch loop, and the
+// reason is the contract, not the code. 154 owes you the minimum
+// VALUE, so any index holding a minimum will do. the rotation
+// count owes you the index where the low run begins, and with
+// duplicates those are different indices: {0,0,1,0} holds a
+// minimum at index 0, but rotates 3 times, not 0. 154's right--
+// walks past the start of the low run.
+
+// so this file looks for the DROP itself -- a[mid] > a[mid+1],
+// or a[mid-1] > a[mid] -- instead of converging on a boundary
 
 public final class RotationCountDuplicatesIterative {
 

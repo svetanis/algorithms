@@ -13,7 +13,7 @@ public final class LongestSpecialSubStrOccursThrice {
 		int left = 0;
 		int right = s.length();
 		while (left < right) {
-			int mid = (left + right + 1) / 2;
+			int mid = left + (right - left + 1) / 2;
 			if (valid(s, mid)) {
 				left = mid;
 			} else {

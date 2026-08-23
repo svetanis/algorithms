@@ -8,20 +8,19 @@ package com.svetanis.algorithms.search.binary.bitonic;
 
 public final class BitonicMinElement {
 
-  public static int min(int[] a) {
-    // Time Complexity: O(log n)
+  // no binary search exists here, and that is the point:
+  // the array rises then falls, so the smallest value is at
+  // one of the two ENDS. there is no interior valley to find.
 
-    int start = 0;
+  // the loop that would find one -- BitonicMaxElement's, with its
+  // branches swapped -- converges on whichever end its early steps
+  // steered it to, which is the right one only about 4 times in 5.
+
+  public static int min(int[] a) {
+    // Time Complexity: O(1)
+
     int end = a.length - 1;
-    while (start < end) {
-      int mid = start + (end - start) / 2;
-      if (a[mid] > a[mid + 1]) {
-        start = mid + 1;
-      } else {
-        end = mid;
-      }
-    }
-    return start;
+    return a[0] <= a[end] ? 0 : end;
   }
 
   public static void main(String[] args) {

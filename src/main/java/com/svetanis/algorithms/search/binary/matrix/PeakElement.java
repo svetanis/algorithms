@@ -12,33 +12,32 @@ public final class PeakElement {
   public static int peak(int[][] matrix) {
     // Time Complexity: O(rows * log(col))
 
-    int n = matrix.length;
     int m = matrix[0].length;
-    int mid = m / 2;
-    return peak(matrix, n, m, mid);
+    return peak(matrix, 0, m - 1);
   }
 
-  private static int peak(int[][] matrix, int r, int c, int mid) {
+  // carry BOTH column bounds. deriving the next column from mid alone
+  // -- mid - mid/2 -- is a no-op at mid == 1, so the recursion never ends
+  private static int peak(int[][] matrix, int low, int high) {
+    int mid = low + (high - low) / 2;
     Pair<Integer, Integer> pair = colMax(matrix, mid);
     int max = pair.getLeft();
     int index = pair.getRight();
 
-    if (mid == 0 || mid == c - 1) {
-      return max;
-    }
-
-    boolean one = max >= matrix[index][mid - 1];
-    boolean two = max >= matrix[index][mid + 1];
+    // max is the largest in its own column, so only the
+    // left and right neighbours are left to beat it
+    boolean one = mid == 0 || max >= matrix[index][mid - 1];
+    boolean two = mid == matrix[0].length - 1 || max >= matrix[index][mid + 1];
     if (one && two) {
       return max;
     }
 
     // max is less than its left
-    if (max < matrix[index][mid - 1]) {
-      return peak(matrix, r, c, mid - mid / 2);
+    if (mid > 0 && max < matrix[index][mid - 1]) {
+      return peak(matrix, low, mid - 1);
     }
     // max is less than its right
-    return peak(matrix, r, c, mid + mid / 2);
+    return peak(matrix, mid + 1, high);
   }
 
   private static Pair<Integer, Integer> colMax(int[][] matrix, int mid) {

@@ -28,7 +28,7 @@ public final class LastOccurrenceBinaryIterative {
 		int left = 0;
 		int right = a.length - 1;
 		while (left < right) {
-			int mid = left + (right - left) / 2 + 1;
+			int mid = left + (right - left + 1) / 2;
 			if (target < a[mid]) {
 				right = mid - 1;
 			} else if (target > a[mid]) {

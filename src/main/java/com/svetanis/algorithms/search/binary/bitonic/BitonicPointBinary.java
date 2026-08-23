@@ -26,12 +26,19 @@ public final class BitonicPointBinary {
       return -1;
     }
 
+    int n = a.length;
     int mid = left + (right - left) / 2;
-    if (a[mid - 1] < a[mid] && a[mid + 1] < a[mid]) {
-      return mid;
+
+    // guard both ends: without these, a strictly increasing or
+    // decreasing array reads past the array instead of reporting
+    // that it has no bitonic point, and the absent() below is dead
+    boolean higherThanLeft = mid == 0 || a[mid - 1] < a[mid];
+    boolean higherThanRight = mid == n - 1 || a[mid + 1] < a[mid];
+    if (higherThanLeft && higherThanRight) {
+      return mid == 0 || mid == n - 1 ? -1 : mid;
     }
 
-    if (a[mid] < a[mid + 1]) {
+    if (mid < n - 1 && a[mid] < a[mid + 1]) {
       return bitonicPoint(a, mid + 1, right);
     } else {
       return bitonicPoint(a, left, mid - 1);

@@ -30,7 +30,9 @@ public final class ExponentialSearch {
 		}
 
 		int left = i / 2;
-		int right = min(i, n);
+		// n - 1, not n: the range holds INDEXES, and the doubling
+		// runs past the end whenever x is larger than every element
+		int right = min(i, n - 1);
 		return new Interval(left, right);
 	}
 

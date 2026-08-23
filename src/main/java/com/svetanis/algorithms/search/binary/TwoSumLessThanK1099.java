@@ -26,6 +26,9 @@ public final class TwoSumLessThanK1099 {
 
 	public static void main(String[] args) {
 		int[] a = { 34, 23, 1, 24, 75, 33, 54, 8 };
-		System.out.println(maxSum(a, 60)); // 57
+		System.out.println(maxSum(a, 60)); // 58 -- 24 + 34, LeetCode's own example 1
+
+		int[] a1 = { 10, 20, 30 };
+		System.out.println(maxSum(a1, 15)); // -1 -- no pair sums below k
 	}
 }
