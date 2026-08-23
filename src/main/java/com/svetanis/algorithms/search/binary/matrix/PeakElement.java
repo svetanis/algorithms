@@ -25,10 +25,12 @@ public final class PeakElement {
     int index = pair.getRight();
 
     // max is the largest in its own column, so only the
-    // left and right neighbours are left to beat it
-    boolean one = mid == 0 || max >= matrix[index][mid - 1];
-    boolean two = mid == matrix[0].length - 1 || max >= matrix[index][mid + 1];
-    if (one && two) {
+    // left and right neighbours are left to beat it.
+    // a column at the edge has no neighbour on that side, which counts as beaten
+    int lastCol = matrix[0].length - 1;
+    boolean atLeastLeft = mid == 0 || max >= matrix[index][mid - 1];
+    boolean atLeastRight = mid == lastCol || max >= matrix[index][mid + 1];
+    if (atLeastLeft && atLeastRight) {
       return max;
     }
 

@@ -18,7 +18,10 @@ public final class RotationCountNoDuplicatesRecursive {
   }
 
   private static int count(int[] a, int left, int right, int last) {
-    if (left == right) {
+    // left >= right, not ==, so this mirrors the iterative version's
+    // while (left < right) exactly -- including on an empty array,
+    // where both start at left = 0, right = -1 and return 0 without reading a[]
+    if (left >= right) {
       return left;
     }
     int mid = left + (right - left) / 2;
