@@ -34,6 +34,6 @@ public final class ContiguousArray {
 		System.out.println(maxLen(a2)); // 2
 
 		int[] a3 = { 1, 1, 1, 1, 1, 1, 1, 1 };
-		System.out.println(maxLen(a3)); // 2
+		System.out.println(maxLen(a3)); // 0 -- no zeros at all, so no balanced span
 	}
 }
