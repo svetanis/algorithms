@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.PriorityQueue;
 
 // 1499. Max Value of Equation
@@ -10,7 +12,7 @@ public final class MaxValueOfEquationPQ {
 
 	public static int maxValue(int[][] points, int k) {
 		int max = Integer.MIN_VALUE;
-		PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+		PriorityQueue<int[]> pq = new PriorityQueue<>(comparingInt((int[] a) -> a[0]).reversed());
 		for (int[] point : points) {
 			int x = point[0];
 			int y = point[1];
