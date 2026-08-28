@@ -43,6 +43,10 @@ public final class PerfectRectangle {
 	}
 
 	private void init(int[][] rectangles) {
+		// reset first: the fields below ACCUMULATE, so without this a second call
+		// on the same instance adds to the first call's totals and answers wrongly
+		totalArea = 0;
+		counts.clear();
 		minX = rectangles[0][0];
 		minY = rectangles[0][1];
 		maxX = rectangles[0][2];

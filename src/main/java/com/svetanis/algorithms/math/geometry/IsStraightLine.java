@@ -10,7 +10,7 @@ public class IsStraightLine {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 
-	public static boolean isBoomerang(int[][] points) {
+	public static boolean checkStraightLine(int[][] points) {
 		int x1 = points[0][0], y1 = points[0][1]; // p1
 		int x2 = points[1][0], y2 = points[1][1]; // p2
 		for (int i = 2; i < points.length; i++) {
@@ -28,9 +28,9 @@ public class IsStraightLine {
 
 	public static void main(String[] args) {
 		int[][] points1 = { { 1, 2 }, { 2, 3 }, { 3, 4 }, { 4, 5 }, { 5, 6 }, { 6, 7 } };
-		System.out.println(isBoomerang(points1)); // true
+		System.out.println(checkStraightLine(points1)); // true
 
 		int[][] points2 = { { 1, 1 }, { 2, 2 }, { 3, 4 }, { 4, 5 }, { 5, 6 }, { 7, 7 } };
-		System.out.println(isBoomerang(points2)); // false
+		System.out.println(checkStraightLine(points2)); // false
 	}
 }
