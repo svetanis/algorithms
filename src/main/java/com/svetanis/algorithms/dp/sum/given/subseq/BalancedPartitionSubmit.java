@@ -10,8 +10,9 @@ import java.util.stream.IntStream;
 // of elements in both subsets is same. 
 
 public final class BalancedPartitionSubmit {
-	// Time Complexity: O(target * n)
+	// Time Complexity: O(n * target)
 	// Space Complexity: O(target)
+	// n = number of elements, target = sum / 2
 
 	public static boolean canPartition(int[] nums) {
 		int sum = IntStream.of(nums).sum();

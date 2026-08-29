@@ -14,14 +14,32 @@ same combination and count once.
 
 | # | Approach | Time | Space | Verdict on LC 518 |
 |---|----------|------|-------|-------------------|
-| 1 | [Plain recursion](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeRecursive.java) | exponential | O(amount) stack | **TLE** — about 8 s at the constraint ceiling |
-| 2 | [Memoized, `int[]`](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeMemoization.java) | O(n · amount) | O(n · amount) + O(amount) stack | **StackOverflowError** |
-| 3 | [Memoized, `List`](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeTopDown.java) | O(n · amount) | O(n · amount) + O(amount) stack | **StackOverflowError** |
+| 1 | [Plain recursion](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeRecursive.java) | O(C(amount + n, n)) | O(n + amount) stack | **TLE** — ~7 s on `{1,2,5}` at amount 5000 |
+| 2 | [Memoized, `int[]`](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeMemoization.java) | O(n · amount) | O(n · amount) + O(n + amount) stack | **Risky** — needs ~0.8 MB of stack |
+| 3 | [Memoized, `List`](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeTopDown.java) | O(n · amount) | O(n · amount) + O(n + amount) stack | **Risky** — needs ~0.8 MB of stack |
 | 4 | [Bottom-up, 2-D table](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeBottomUp.java) | O(n · amount) | O(n · amount) | Passes |
 | 5 | [Bottom-up, one array](../src/main/java/com/svetanis/algorithms/dp/coins/CoinChangeSubmit.java) | O(n · amount) | O(amount) | Passes — submit this |
 
 The interesting part is row 2: memoization fixes the time complexity completely
-and the solution *still* does not pass. That is the step most write-ups skip.
+and the solution *still* may not pass. That is the step most write-ups skip.
+
+**On rows 1–3, two things worth being precise about.** `{1,2,5}` with amount 5000 is the *amount*
+ceiling with three coins — it is not LeetCode's ceiling, which allows **300** coins. And the
+"risky" verdict is a measurement of what the code needs, not an observed judge failure; §2 gives the
+number and how it was obtained.
+
+**At the real ceiling** — coins `1..300`, amount 5000, warm, best of 5 × 20 reps — the surviving
+rows separate properly, which `{1,2,5}` hides:
+
+| | `{1,2,5}` / 5000 | 300 coins / 5000 | table |
+|---|---:|---:|---|
+| memoized (rows 2, 3) | 0.152 ms | 23.5 ms | `Integer[301][5001]` — 11.5 MB of *references* alone |
+| 2-D table (row 4) | 0.089 ms | 1.95 ms | `int[301][5001]` — 5.7 MB |
+| one array (row 5) | 0.043 ms | **0.61 ms** | `int[5001]` — 19 KB |
+
+*(At 300 coins the true count exceeds a signed `int` and every version returns the same negative
+number. No legal LC test reaches this — the problem guarantees the answer fits — but a
+ceiling-sized timing run does, and the garbage count is easy to mistake for a bug.)*
 
 ---
 
@@ -103,12 +121,15 @@ Reading it:
   question and both compute it from scratch.
 
 That duplication is the whole problem. Here it costs one extra node; on
-`{1, 2, 5}` with amount 5000 the same repetition compounds into about
-**8 seconds**, which is a time-limit-exceeded verdict.
+`{1, 2, 5}` with amount 5000 the same repetition compounds into **about 7 seconds**
+(6.98 s and 7.05 s on two cold runs here; ~4.2 billion nodes), which is a
+time-limit-exceeded verdict several times over. And that is only three
+coins — at LeetCode's 300 the tree has 79 digits, so row 1 fails by a margin no
+timing can express.
 
 The fix writes itself: cache the answer per `(i, amount)` pair.
 
-## 2 & 3. Add memoization — still fails
+## 2 & 3. Add memoization — and the problem moves rather than going away
 
 Caching by `(index, amount)` means every distinct node in that tree is computed
 once, which collapses the work to `O(n · amount)`:
@@ -123,22 +144,45 @@ dp[index][amount] = incl + excl;
 return dp[index][amount];
 ```
 
-This runs in about **1 ms** at the same input. It still does not pass.
+This runs in about **1 ms** at the same input. The time problem is gone; a different one is not.
 
 The reason is depth, not speed. The `incl` branch subtracts `coins[index]` and
 recurses without advancing the index, so the deepest chain is
-`amount / min(coin)` frames. With a coin of value 1 and amount 5000 that is
-**5000 stack frames** before the first return, and LeetCode's judge stack throws
-`StackOverflowError` well before that. Locally, with the default JVM stack, the
-same code finishes fine — which is exactly why this failure is confusing when
-you meet it.
+`amount / min(coin) + n` frames. With a coin of value 1 and amount 5000 that is
+**5,003** — measured, not estimated — and **5,300** at LeetCode's ceiling of 300 coins. The `+ n` is
+easy to drop and it is the part that carries the total past a 5,000-frame budget.
+
+**How much stack that actually needs.** Sweeping `-Xss` on these two files at `{1,2,5}` / 5000,
+three runs each:
+
+| `-Xss` | result |
+|---|---|
+| 256k, 512k | `StackOverflowError`, every run |
+| 768k | `StackOverflowError` on 2 of 3 — the boundary |
+| 800k, 832k, 1m | clean, every run |
+| **JVM default (1 MB here)** | **clean, every run** |
+
+So the code wants roughly **800 KB**. Whether it crashes on LeetCode depends on the judge's stack
+size, which is not published and cannot be measured from here — **so this page does not claim the
+crash, it claims the requirement.** That is the more useful form anyway: 0.8 MB is a number you can
+check against any judge, and it is why the two source files hedge the same claim as *"a risk rather
+than a certain failure"*.
+
+⚠️ **The depth is not a property of the input alone — coin order changes it.** Memoization caps
+the first uncached chain, so `{1,2,5}` at amount 5000 reaches **5,003** frames while the same coins
+given as `{5,2,1}` reach **1,005**. LeetCode does not promise sorted input, so a submission that
+survives one ordering may not survive another. This is also why the depth is hard to pin down by
+reading.
 
 There are two files here because the two versions differ only in `int[]` versus
-`List<Integer>` parameters. Same algorithm, same limit, same crash.
+`List<Integer>` parameters. Same algorithm, same limit, same risk.
 
 **The lesson:** memoization removes redundant work, but it keeps the call stack.
 When the recursion depth is driven by the *input value* rather than the input
-*size*, top-down is the wrong shape and you have to go iterative.
+*size*, top-down is the wrong shape — the depth grows with `amount`, which the
+problem statement lets reach 5000, while nothing in the language guarantees you
+the stack for it. Going iterative removes the question instead of betting on the
+answer, which is why rows 4 and 5 are the ones to submit.
 
 ## 4. Bottom-up, 2-D table
 

@@ -29,6 +29,12 @@ import java.util.List;
 
 public final class CoinChangeTopDown {
 
+	// Time Complexity: O(n * amount) -- one evaluation per (index, amount) state
+	// Space Complexity: O(n * amount) table, plus a recursion depth of n + amount --
+	// the depth is the risk: 5,003 frames on {1,2,5} at amount 5000 needs ~800k of
+	// stack (measured: overflows at -Xss512k, clean at 800k). CoinChangeSubmit.java
+	// is the fix -- it has no stack to run out of
+
 	public static int count(List<Integer> list, int amount) {
 		int n = list.size();
 		Integer[][] dp = new Integer[n + 1][amount + 1];

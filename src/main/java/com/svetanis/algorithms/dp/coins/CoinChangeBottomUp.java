@@ -12,10 +12,13 @@ import java.util.List;
 // constructed in bottom up manner
 // using the base case 0 value case (n = 0)
 
-// RUNG 3, and the first one in this folder that is actually submittable:
-// iterative, so there is no recursion depth to blow. The three recursive
-// rungs above it (Recursive, Memoization, TopDown) all fail LC 518 --
-// one on time, two on stack.
+// RUNG 3, and the safe one to submit: iterative, so there is no recursion
+// depth to blow. Of the three recursive rungs above it, only Recursive
+// actually fails LC 518, and it fails on time -- it does not finish
+// amount = 5000 in eight seconds. Memoization and TopDown both answer it
+// in milliseconds on a default stack; their depth grows with the amount,
+// so they overflow once the stack is cut to 256k, which makes them a risk
+// rather than a certain failure.
 
 // the table is dp[coin][amount] -- item-major, matching dp/knapsack/ and
 // dp/sum/given/subseq/. row 0 is "no coins considered yet": one way to make

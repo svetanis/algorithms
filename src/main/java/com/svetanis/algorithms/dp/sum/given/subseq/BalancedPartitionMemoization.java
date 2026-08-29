@@ -21,8 +21,10 @@ import java.util.stream.IntStream;
 // dp[n][sum], matching BalancedPartitionTopDown and the rest of this package.
 
 public final class BalancedPartitionMemoization {
-	// Time Complexity: O(sum * n)
-	// Space Complexity: O(sum * n)
+	// Time Complexity: O(n * target)
+	// Space Complexity: O(n * sum) -- the table is allocated over the full
+	// sum, though no index above target is ever reached; half of it is dead
+	// n = number of elements, target = sum / 2
 
 	public static boolean canPartition(int[] a) {
 		int sum = IntStream.of(a).sum();

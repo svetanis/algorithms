@@ -44,8 +44,9 @@ same code would be useless if the values were unbounded.
 
 Only the first row fails, and everything below it finishes in single-digit milliseconds at the
 largest input the judge can send. *(Row 1 is one algorithm written twice in the file — `canPartition`
-indexes backward, `canPartition2` forward. Both are exponential; the forward one is about twice as
-slow. Rows 2 and 3 are likewise one algorithm over two input types, `int[]` and `List<Integer>`.)*
+indexes backward, `canPartition2` forward. Both are exponential, and which is faster **depends
+entirely on the answer**: on false inputs the forward one is slower by a measured 1.0–1.2×, and on
+true inputs it is faster by five orders of magnitude, because only it stops early. Rows 2 and 3 are likewise one algorithm over two input types, `int[]` and `List<Integer>`.)*
 
 **That "everything below passes" is the surprise.** On
 [LC 518 · Coin Change II](518-coin-change-ii.md) — the same knapsack recurrence, the same repo, the
@@ -93,8 +94,31 @@ elements run out is a success, not a failure.
 
 A tree small enough to read in full: **`nums = {1, 1, 1, 5}`**, total 8, so `target = 4`. The answer
 is **false** — the reachable sums are 1, 2, 3, 5, 6, 7, 8, and 4 is not among them. A false case is
-the honest one to draw, because `||` short-circuits the moment a true is found and a successful
-search shows almost none of the tree.
+the honest one to draw, because it is where **no base case fires early**: every node is expanded and
+the drawing shows the work actually done.
+
+⚠️ **`isSum` does not short-circuit, and that is worth a moment.** It assigns both branches to
+locals before combining them:
+
+```java
+boolean incl = isSum(a, n - 1, sum - a[n]);
+boolean excl = isSum(a, n - 1, sum);
+return incl || excl;
+```
+
+`||` short-circuits, but both statements have already run by the time it is reached. **The whole tree
+is explored whatever the answer is.** Measured on `n` ones — an input that partitions evenly down
+the very first path a short-circuiting search would take:
+
+| `n` ones | `canPartition` | `canPartition2` |
+|---|---:|---:|
+| 20 | 9.6 ms | 0.005 ms |
+| 26 | 142 ms | 0.004 ms |
+| 30 | **2,218 ms** | **0.004 ms** |
+
+`canPartition2` returns the moment it finds a subset, via an explicit `if (...) return true;`. Two
+lines apart in the same file, and on a true input the difference is five orders of magnitude —
+**assigning a recursive call to a local is a decision, not a formatting choice.**
 
 Each node is `isSum(i, s)`. Left edge includes `a[i]`, right edge drops it.
 
@@ -168,7 +192,7 @@ This is the part worth carrying to the next problem. On
 |---|---|---|
 | recursive call | `ways(i, amount - coins[i])` | `isSum(i - 1, sum - a[i])` |
 | index on that branch | **stays at `i`** | **drops to `i - 1`** |
-| deepest chain | `amount / min(coin)` — up to 5,000 frames | `n` — at most 200 frames |
+| deepest chain | `amount / min(coin) + n` — **5,300** frames at LC 518's ceiling | `n` — at most 200 frames |
 
 Coins are unlimited, so 518's take-branch does not advance the index; its depth is governed by the
 *value* of the input. Elements here are used at most once, so both branches advance, and depth is
@@ -522,7 +546,7 @@ early.
 |-------|--------|----------------|
 | all values `100` | 10000 | the largest table the constraints permit |
 | 199×`100` + one `98` | 9999 | same size, answer `false` — no early exit anywhere |
-| mixed values `1..100` | 4999 | dense reachable sums; an average value near 50 halves the target |
+| mixed values `1..100` | 4999 | dense reachable sums; an average value near 50 halves the target. ⚠️ **the one input not pinned here** — the exact array was not recorded, so its row reproduces in shape (a re-drawn instance gave target 5125 and 747,322 states) but not to the digit |
 | `k` ones + one `k + 2` | 99 | target unreachable by exactly 1, and `sum < 0` never fires |
 
 Times in milliseconds on the three large inputs, in that order:
@@ -538,8 +562,13 @@ Times in milliseconds on the three large inputs, in that order:
 The bottom three rows barely move between the first two inputs and drop on the third, which is what
 `n · target` predicts — the mixed input has half the target, so it is half the work. The memoized
 rows move the opposite way, [for the reason above](#where-memoization-beats-the-table-and-where-it-loses).
-State counts behind that: memoization fills 15,050 of 2,000,000 cells on the first input, 29,901 of
-1,999,800 on the second, and 746,366 of 999,800 on the third.
+State counts behind that, for **row 2** (`int[]`): 15,050 of 2,000,000 cells on the first input,
+29,901 of 1,999,800 on the second, and 746,366 of 999,800 on the third.
+
+**The two memoized files do not fill the same cells.** On the `one 98` input row 2 writes 29,901 and
+row 3 writes **15,050** — one indexes backward from `a[199] = 98`, the other forward from
+`a[0] = 100`, so they reach different state sets from the same input. Any count quoted for
+"memoization" belongs to one of them, not both.
 
 **Correctness.** All six files, seven entry points including `canPartition2`, were cross-checked
 against each other on **40,000 random inputs** (lengths 1–14, values 1–20): no disagreements and no

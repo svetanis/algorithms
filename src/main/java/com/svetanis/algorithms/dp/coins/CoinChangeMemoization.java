@@ -18,9 +18,12 @@ package com.svetanis.algorithms.dp.coins;
 // LC 322's recurrence -- the MINIMUM number of coins. Different problem;
 // MinCoinChange*.java in this folder is the one that computes it.)
 
-// ⚠️ RUNG 2: fast (1 ms at LC 518's ceiling) but NOT submittable --
-// the recursion is amount / min(coin) deep, up to 5000 frames at LC 518's
-// limits, and throws StackOverflowError on a small judge stack.
+// ⚠️ RUNG 2: fast (0.15 ms on {1,2,5}/5000, 23 ms at LC's 300-coin ceiling)
+// but a RISK to submit -- the recursion is amount / min(coin) + n deep,
+// 5,003 frames on {1,2,5} at amount 5000 and 5,300 at the 300-coin ceiling.
+// Measured: needs ~800k of stack (overflows at -Xss512k, clean at 800k, clean
+// at the 1m JVM default). Whether a given judge gives that much is not
+// something this file can know -- the iterative rungs do not ask.
 // CoinChangeTopDown.java is this file with List instead of int[].
 // The iterative rungs -- BottomUp, SpaceOptimized, Submit -- have no depth.
 

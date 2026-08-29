@@ -12,7 +12,8 @@ import static com.svetanis.java.base.utils.Nums.isOdd;
 
 public final class BalancedPartitionRecursive {
 	// Time Complexity: O(2^n)
-	// Space Complexity: O(n)
+	// Space Complexity: O(n) -- recursion depth
+	// n = number of elements
 
 	public static boolean canPartition(int[] a) {
 		int sum = sum(a);

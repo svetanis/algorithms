@@ -5,8 +5,9 @@ package com.svetanis.algorithms.dp.coins;
 
 // the submission. Of the six CoinChange* rungs here only the three iterative
 // ones -- BottomUp, SpaceOptimized, this -- pass LC 518: CoinChangeRecursive
-// is ~8 s, and Memoization/TopDown recurse amount / min(coin) deep and can
-// overflow the stack.
+// is ~7 s, and Memoization/TopDown recurse amount / min(coin) + n deep --
+// 5,003 frames on {1,2,5} at amount 5000, 5,300 at LC's 300-coin ceiling --
+// which needs ~800k of stack and can overflow a judge that gives less.
 
 // counts UNORDERED combinations -- 1+2 and 2+1 are one way. The coin-outer /
 // sum-inner nesting is what makes that true; CoinCombinations.java swaps the

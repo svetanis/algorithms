@@ -23,7 +23,7 @@ import java.util.List;
 // nothing, so that cell is a real base case, not leftover state.
 
 public final class BalancedPartitionSpaceOptimized {
-	// Time Complexity: O(target * n)
+	// Time Complexity: O(n * target)
 	// Space Complexity: O(target) -- two rows of target + 1, not a full table
 
 	public static boolean canPartition(List<Integer> nums) {

@@ -31,6 +31,11 @@ import java.util.List;
 
 public final class CoinChangeRecursive {
 
+	// Time Complexity: O(C(amount + n, n)) -- one call per partial coin multiset
+	// summing to at most amount. Polynomial in amount for a fixed coin set,
+	// exponential in the number of denominations. ~8 s at LC 518's ceiling.
+	// Space Complexity: O(n + amount) -- the recursion depth is exactly n + amount
+
 	public static int count(List<Integer> coins, int amount) {
 		return count(coins, 0, amount);
 	}

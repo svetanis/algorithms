@@ -18,8 +18,9 @@ import java.util.List;
 // and SubSetSumCountTopDown also use.
 
 public final class BalancedPartitionTopDown {
-	// Time Complexity: O(sum * n)
-	// Space Complexity: O(sum * n)
+	// Time Complexity: O(n * target)
+	// Space Complexity: O(n * target)
+	// n = number of elements, target = sum / 2
 
 	public static boolean canPartition(List<Integer> nums) {
 		int sum = nums.stream().mapToInt(Integer::intValue).sum();
@@ -31,10 +32,10 @@ public final class BalancedPartitionTopDown {
 		return isSum(nums, sum / 2);
 	}
 
-	private static boolean isSum(List<Integer> nums, int sum) {
+	private static boolean isSum(List<Integer> nums, int target) {
 		int n = nums.size();
-		Boolean[][] dp = new Boolean[n + 1][sum + 1];
-		return isSum(nums, 0, sum, dp);
+		Boolean[][] dp = new Boolean[n + 1][target + 1];
+		return isSum(nums, 0, target, dp);
 	}
 
 	private static boolean isSum(List<Integer> nums, int i, int sum, Boolean[][] dp) {
