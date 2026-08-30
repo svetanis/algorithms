@@ -19,6 +19,9 @@ is forced by the previous one's failure.
 
 - **518** — [Coin Change II](leetcode/518-coin-change-ii.md) · 5 approaches · why memoization fixes
   the complexity and the solution still fails
+- **22** — [Generate Parentheses](leetcode/22-generate-parentheses.md) · 5 approaches · all of them
+  pass, so the separation is elsewhere — only one is backtracking proper, and the page shows what
+  makes the undo necessary in that one and pointless in the rest
 - **416** — [Partition Equal Subset Sum](leetcode/416-partition-equal-subset-sum.md) · 6 approaches ·
   why the same memoization *is* enough here, and how to tell the two cases apart before you write it
 
@@ -42,6 +45,7 @@ Each pattern folder contains **solutions to related LeetCode problems** with:
 **When to use:** Generate combinations, permutations, find all solutions, explore all paths
 
 **Common LeetCode Problems:**
+- 22: Generate Parentheses — **[full write-up](leetcode/22-generate-parentheses.md)**
 - 46: Permutations
 - 47: Permutations II
 - 77: Combinations

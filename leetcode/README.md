@@ -26,6 +26,15 @@ previous one's failure*.
 | 416 | [Partition Equal Subset Sum](416-partition-equal-subset-sum.md) | 6 | The same memoization that sinks 518 is **enough** here — and one word in the recurrence tells you which case you are in beforehand |
 | 518 | [Coin Change II](518-coin-change-ii.md) | 5 | Memoization fixes the time complexity and the solution **still** fails — on stack depth, not on time |
 
+## Backtracking
+
+Every approach passes, so the progression is not about what the judge rejects. It is about how much
+of the search space each one refuses to build, and what carrying the partial answer costs.
+
+| # | Problem | Approaches | The step most write-ups skip |
+|---|---------|-----------|------------------------------|
+| 22 | [Generate Parentheses](22-generate-parentheses.md) | 5 | **Only one of the five is backtracking in the strict sense.** The others prune just as early but never need an undo — a fresh string per step leaves the caller's untouched, so there is nothing to restore. The undo exists because one version mutates a shared buffer, not because the algorithm demands it |
+
 ---
 
 Java source for every solution lives under
