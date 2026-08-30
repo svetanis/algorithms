@@ -28,6 +28,11 @@ public final class WordBreakBacktracking {
 		}
 		boolean result = false;
 		for (String word : dict) {
+			// a zero-length word leaves `index` where it was, so the same state
+			// recurses forever
+			if (word.isEmpty()) {
+				continue;
+			}
 			String prefix = s.substring(index);
 			if (startsWith(prefix, word)) {
 				result = result || dfs(index + word.length(), s, dict);
@@ -54,5 +59,7 @@ public final class WordBreakBacktracking {
 		System.out.println(wbb("aab", asList("a", "c")));
 		System.out.println(wbb("aab", asList("a", "aa", "b")));
 		System.out.println(wbb("iamsuperlady", dictionary()));
+		// an empty dictionary word used to recurse until the stack ran out
+		System.out.println(wbb("aab", asList("a", "", "b"))); // true
 	}
 }

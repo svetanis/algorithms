@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking;
+package com.svetanis.algorithms.backtracking.queens;
 
 import java.util.ArrayList;
 import java.util.Arrays;

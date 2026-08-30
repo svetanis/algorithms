@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking;
+package com.svetanis.algorithms.backtracking.additionalstates;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.backtracking.aggregation.memoization;
 
+import static java.util.Arrays.fill;
+
 // 509. Fibonacci Number
 
 // the memoized rung. The naive one it is built from is
@@ -13,17 +15,20 @@ public final class FibonacciMemoization {
 
 	public static int fib(int n) {
 		int[] memo = new int[n + 1];
+		// -1 is the "absent" marker. Fibonacci is never negative, so no
+		// computed value can collide with it. The old marker was 0, which
+		// IS a Fibonacci value -- fib(0) -- and that only survived because
+		// n == 0 returns from its base case before the cache is consulted.
+		// Copy a 0 marker into a counting problem and it is a silent bug.
+		// Same convention as CountWaysToDecodeDigitsMemoization, one file over.
+		fill(memo, -1);
 		return fib(n, memo);
 	}
 
 	private static int fib(int n, int[] memo) {
 		// check in memo, if found
-		// retrieve and return right away.
-		// 0 doubles as "absent" here, and fib(0) is genuinely 0 -- but the
-		// collision cannot fire: n == 0 returns from its base case below and
-		// is never written to memo. Correct, though only by that accident;
-		// Integer[] with null would make the sentinel honest.
-		if (memo[n] != 0) {
+		// retrieve and return right away
+		if (memo[n] != -1) {
 			return memo[n];
 		}
 

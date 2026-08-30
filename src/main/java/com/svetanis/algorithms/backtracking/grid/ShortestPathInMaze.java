@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking;
+package com.svetanis.algorithms.backtracking.grid;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;

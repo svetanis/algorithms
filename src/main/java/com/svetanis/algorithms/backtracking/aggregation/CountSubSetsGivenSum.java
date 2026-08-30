@@ -9,13 +9,13 @@ public final class CountSubSetsGivenSum {
   private static int count(int[] a, int i, int sum, boolean atLeastOneIncl) {
     // Time Complexity: O(2^n)
 
-    // order of base cases matters
-    if (sum == 0 && atLeastOneIncl) {
-      return 1;
-    }
-
+    // the count is settled only at the end of the array. returning 1 as soon
+    // as sum hits 0 stops the walk there, so a subset that reaches the target
+    // early and could still take a 0 -- or a pair like +4 and -4 -- is counted
+    // once instead of once per extension. with every value 1 or more that can
+    // never happen, which is why the shortcut looked correct.
     if (i == a.length) {
-      return 0;
+      return sum == 0 && atLeastOneIncl ? 1 : 0;
     }
 
     int excl = count(a, i + 1, sum, atLeastOneIncl);

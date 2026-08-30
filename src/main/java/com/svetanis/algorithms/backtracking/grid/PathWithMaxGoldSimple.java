@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking;
+package com.svetanis.algorithms.backtracking.grid;
 
 // 1219. Path with Maximum Gold
 

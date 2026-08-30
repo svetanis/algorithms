@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.backtracking;
+package com.svetanis.algorithms.backtracking.grid;
 
 import static com.svetanis.java.base.utils.Print.print;
 

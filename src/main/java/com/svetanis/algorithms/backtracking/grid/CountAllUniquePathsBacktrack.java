@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.recursive.count;
+package com.svetanis.algorithms.backtracking.grid;
 
 public final class CountAllUniquePathsBacktrack {
 

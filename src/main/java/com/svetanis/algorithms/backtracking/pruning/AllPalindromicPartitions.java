@@ -32,10 +32,12 @@ public final class AllPalindromicPartitions {
 			return;
 		}
 		for (int end = index; end < s.length(); end++) {
-			String prefix = s.substring(index, end + 1).trim();
+			String prefix = s.substring(index, end + 1);
 			if (isPalindrome(prefix)) {
 				list.add(prefix);
-				partitions(s, index + prefix.length(), list, lists);
+				// step from the loop variable, never from the substring's length --
+				// a step derived from a transformed value can disagree with the bounds
+				partitions(s, end + 1, list, lists);
 				list.remove(list.size() - 1);
 			}
 		}

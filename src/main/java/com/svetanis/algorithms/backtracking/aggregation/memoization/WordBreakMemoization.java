@@ -18,7 +18,8 @@ import java.util.Set;
 public final class WordBreakMemoization {
 
 	public static boolean wbm(String str, List<String> dict) {
-		Boolean[] memo = new Boolean[str.length()];
+		// n + 1: index reaches str.length(), which is the success state
+		Boolean[] memo = new Boolean[str.length() + 1];
 		return dfs(0, str, memo, dict);
 	}
 
@@ -26,15 +27,23 @@ public final class WordBreakMemoization {
 		// Time Complexity: O(n^2 * m)
 		// Space Complexity: O(n)
 
-		if (memo[index] != null) {
-			return memo[index];
-		}
+		// base case BEFORE the memo lookup: the lookup reads memo[index],
+		// so it must not run at an index the base case exists to stop at
 		if (index == s.length()) {
 			return true;
+		}
+		if (memo[index] != null) {
+			return memo[index];
 		}
 
 		boolean result = false;
 		for (String word : dict) {
+			// a zero-length word leaves `index` where it was, so the same state
+			// recurses forever. the memo does not stop it: memo[index] is written
+			// after the loop, and the loop never returns
+			if (word.isEmpty()) {
+				continue;
+			}
 			String prefix = s.substring(index).trim();
 			if (startsWith(prefix, word)) {
 				result = result || dfs(index + word.length(), s, memo, dict);
@@ -45,11 +54,12 @@ public final class WordBreakMemoization {
 	}
 
 	private static boolean dfs2(int index, String s, Boolean[] memo, Set<String> dict) {
-		if (memo[index] != null) {
-			return memo[index];
-		}
+		// same ordering as dfs -- base case first
 		if (index == s.length()) {
 			return true;
+		}
+		if (memo[index] != null) {
+			return memo[index];
 		}
 
 		boolean result = false;
@@ -67,5 +77,7 @@ public final class WordBreakMemoization {
 		System.out.println(wbm("aab", asList("a", "c")));
 		System.out.println(wbm("aab", asList("a", "aa", "b")));
 		System.out.println(wbm("iamsuperlady", dictionary()));
+		// an empty dictionary word used to recurse until the stack ran out
+		System.out.println(wbm("aab", asList("a", "", "b"))); // true
 	}
 }
