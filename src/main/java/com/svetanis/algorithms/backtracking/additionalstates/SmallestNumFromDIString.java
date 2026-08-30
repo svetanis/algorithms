@@ -7,6 +7,10 @@ public final class SmallestNumFromDIString {
 	private String smallest;
 
 	public String smallestNum(String s) {
+		// `smallest` doubles as the stop flag, so it has to be cleared
+		// here -- otherwise the second call on this object returns the
+		// first call's answer
+		this.smallest = null;
 		boolean[] visited = new boolean[10];
 		StringBuilder sb = new StringBuilder();
 		dfs(0, s, visited, sb);
