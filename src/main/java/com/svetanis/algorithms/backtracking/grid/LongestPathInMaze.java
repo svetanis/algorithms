@@ -11,6 +11,12 @@ import java.awt.Point;
 // i.e. route can be formed from positions having their value as 1.
 // note there should not be any cycles in the output path
 
+// MOVES: all four neighbours, so the visited marker is required.
+// REPORTS: the longest route, combined with `max`. Both `max` and `dist` are
+// threaded DOWN as parameters, so the return value is "the longest seen anywhere
+// so far" rather than "the longest from here" -- which is why there is no
+// memoized twin of this file. A cache keyed on (x, y) would be wrong.
+
 public final class LongestPathInMaze {
 
   public static int solveMaze(int[][] maze, Point src, Point dst) {

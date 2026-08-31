@@ -1,5 +1,10 @@
 package com.svetanis.algorithms.backtracking.grid;
 
+// MOVES: right and down only, so a coordinate never decreases and a cycle
+// cannot be built -- which is why there is no visited marker anywhere in here.
+// REPORTS: how many paths, combined with `+`: each call returns its own count
+// and the caller adds them. Arriving at the last cell is worth 1.
+
 public final class CountAllUniquePathsBacktrack {
 
   public static int count(int[][] grid) {

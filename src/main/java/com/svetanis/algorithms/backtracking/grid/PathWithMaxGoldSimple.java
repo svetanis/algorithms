@@ -2,6 +2,10 @@ package com.svetanis.algorithms.backtracking.grid;
 
 // 1219. Path with Maximum Gold
 
+// The same problem as PathWithMaxGold, written with dx/dy direction arrays
+// instead of four separate `if` blocks. Same moves, same marker, same undo.
+// VERIFIED: prints 24 and 28, which are LC 1219's two published examples.
+
 public final class PathWithMaxGoldSimple {
 	// Time Complexity: O(4^(n*m))
 	// Space Complexity: O(n * m)

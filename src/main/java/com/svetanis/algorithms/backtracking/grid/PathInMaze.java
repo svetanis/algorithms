@@ -13,6 +13,14 @@ import com.google.common.collect.ImmutableList;
 // a maze with designated entrance and exit points, 
 // find a path from the entrance to the exit, if one exists.
 
+// MOVES: all four neighbours.
+// MARKER: it writes into the maze itself and NEVER clears the mark. That looks
+// like the missing-undo bug and is not one. For a yes-or-no reachability
+// question, a cell that cannot reach the destination cannot reach it from any
+// other route either, so leaving the mark on prunes without losing an answer.
+// Spelling a word (LC 79) is the case where the mark must come off, because
+// there the letters already used are part of the question.
+
 public final class PathInMaze {
 
   public static ImmutableList<Point> maze(int[][] maze, Point src, Point dst) {

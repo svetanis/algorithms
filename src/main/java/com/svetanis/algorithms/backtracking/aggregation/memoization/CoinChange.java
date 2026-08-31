@@ -4,6 +4,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 518. Coin Change II
+
 // given a list of coins of different
 // denominations and a total amount of money
 // find the number of combinations that make
@@ -11,12 +13,18 @@ import java.util.List;
 // amount of times. if amount can't be made
 // up by any combination of the coins, return 0
 
-// LC 518 (Coin Change II). This is the teaching version: correct, but not
+// This is the teaching version: correct, but not
 // submittable -- no memoization, so {1,2,5} with amount 5000 takes ~7 s.
 // The exponential cost is the point; CoinChangeMemoization.java next door
 // is the fix, and dp/coins/ carries the iterative rewrites.
 
 public final class CoinChange {
+	// Time Complexity: O(C(amount + n, n)) -- the loop visits exactly one node per
+	// distinct non-decreasing coin sequence whose sum is at most the amount, which is
+	// the number of multisets of coins. Measured on {1,2,5}: doubling the amount
+	// multiplies the nodes by ~7.4, converging on 2^n. Exponential in n.
+	// Space Complexity: O(amount) stack -- `sum` climbs by one coin per frame, so the
+	// depth is amount / min(coin)
 
 	public static int coins(int amount, List<Integer> coins) {
 		return dfs(amount, 0, 0, coins);

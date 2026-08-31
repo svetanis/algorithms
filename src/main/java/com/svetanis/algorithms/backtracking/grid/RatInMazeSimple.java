@@ -10,6 +10,11 @@ import static com.svetanis.java.base.utils.Print.print;
 // In the maze matrix, 0 means the block is a dead end and 1 means 
 // the block can be used in the path from source to destination. 
 
+// MOVES: down and right only. A coordinate never decreases, so a cycle cannot
+// be built and nothing here needs a marker for termination -- `visited` is used
+// to RECORD the path for printing, not to prevent revisiting.
+// REPORTS: whether a path exists, combined with `||`: the first `true` returns.
+
 public final class RatInMazeSimple {
 
   public static void solveMaze(int[][] maze) {

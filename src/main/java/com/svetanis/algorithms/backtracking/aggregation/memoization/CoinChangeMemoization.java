@@ -4,6 +4,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 518. Coin Change II
+
 // given a list of coins of different
 // denominations and a total amount of money
 // find the number of combinations that make
@@ -11,7 +13,7 @@ import java.util.List;
 // amount of times. if amount can't be made
 // up by any combination of the coins, return 0
 
-// LC 518 (Coin Change II). Correct and fast -- 2 ms at LC 518's ceiling
+// Correct and fast -- 2 ms at LC 518's ceiling
 // ({1,2,5}, amount 5000) -- but still not submittable, which is not obvious:
 // `sum` climbs one coin at a time, so the recursion is amount / min(coin)
 // deep, up to 5000 frames at LC 518's limits. It survives a default JVM
@@ -20,7 +22,13 @@ import java.util.List;
 // dp/coins/CoinChangeSubmit.java is iterative and has no depth at all.
 
 public final class CoinChangeMemoization {
-	// Time Complexity: O(n * amount)
+	// Time Complexity: O(n^2 * amount) -- NOT O(n * amount). There are
+	// n * amount states, one per (index, sum), and each one runs a loop over
+	// the coins from index onward. O(n * amount) counts the states and forgets
+	// the loop inside one. Measured with the amount held fixed: doubling n
+	// multiplies the work by ~3.7, not by 2.
+	// The take-or-leave form -- dp/coins/CoinChangeMemoization.java -- has the
+	// same n * amount states with O(1) work in each, so it really is O(n * amount).
 	// Space Complexity: O(n * amount)
 
 	public static int coins(int amount, List<Integer> coins) {

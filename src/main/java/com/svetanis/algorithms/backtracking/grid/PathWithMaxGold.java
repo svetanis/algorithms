@@ -2,6 +2,13 @@ package com.svetanis.algorithms.backtracking.grid;
 
 // 1219. Path with Maximum Gold
 
+// MOVES: all four neighbours, with the marker cleared on the way out so a cell
+// is free again for a different route.
+// REPORTS: the most gold, combined with `max`, and `max` is threaded down as a
+// parameter -- so the return value is "the best seen anywhere so far" and this
+// cannot be cached on (x, y).
+// VERIFIED: prints 24 and 28, which are LC 1219's two published examples.
+
 public final class PathWithMaxGold {
 	// Time Complexity: O(4^(n*m))
 	// Space Complexity: O(n * m)

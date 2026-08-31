@@ -10,6 +10,14 @@ import java.awt.Point;
 // The path can only be constructed out of cells having value 1
 // and at any given moment, we can only move one step in one of the 4 directions
 
+// MOVES: all four neighbours, so the visited marker is required.
+// REPORTS: the shortest route, combined with `min`. `min` and `dist` are
+// threaded DOWN as parameters, so the return value is "the shortest seen
+// anywhere so far" rather than "the shortest from here" -- which is why this
+// file has no memoized twin. A cache keyed on (x, y) would be wrong.
+// (BFS answers this in one pass without a marker-and-undo at all; this file is
+// here as the backtracking version of the question.)
+
 public final class ShortestPathInMaze {
 
   public static int solveMaze(int[][] maze, Point src, Point dst) {

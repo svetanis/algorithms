@@ -12,6 +12,13 @@ import com.google.common.collect.ImmutableList;
 // Given nxn matrix of positive integers,
 // find path from its first cell to the last one
 
+// MOVES: NOT a step to a neighbour. `dx[i] * val` multiplies the step by the
+// value in the cell being left, so this jumps. From a cell holding 7 you land
+// seven columns or seven rows away. Everything else -- the marker, the undo,
+// the four directions -- is the ordinary grid walk.
+// REPORTS: whether a path exists, combined with `||`: the first `true` returns
+// immediately and the rest of the loop is skipped.
+
 public final class PathFromSrcToDst {
 
   private static final int[] dx = { -1, 0, 0, 1 };

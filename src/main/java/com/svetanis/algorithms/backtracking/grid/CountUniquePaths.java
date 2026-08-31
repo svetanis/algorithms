@@ -3,6 +3,13 @@ package com.svetanis.algorithms.backtracking.grid;
 // Find the total number of unique paths which the robot
 // can take in a given maze to reach the dst from given src
 
+// MOVES: all four neighbours, so a cycle IS possible and the visited marker is
+// what makes the search finite -- marked on the way in, cleared on the way out.
+// REPORTS: how many paths. Note it threads `count` DOWN as a parameter and
+// returns it again, rather than each call returning its own count. That works,
+// but it means the return value is "how many found anywhere so far", not "how
+// many from here" -- so this one cannot be memoized on (x, y).
+
 public final class CountUniquePaths {
 
   public static int solveMaze(int[][] maze) {

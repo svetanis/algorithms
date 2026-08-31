@@ -18,6 +18,11 @@ import static com.svetanis.java.base.utils.Print.print;
 // (x + 1, y - 2)
 // (x + 2, y - 1)
 
+// MOVES: eight knight moves rather than four neighbours. That is the only
+// structural difference from the maze walkers in this package.
+// REPORTS: every tour that visits all n*n squares once. The board itself is the
+// marker: a square holds the move number that landed on it, and 0 means unused.
+
 public final class KnightTour {
 
   private static final int[] dx = { 2, 1, -1, -2, -2, -1, 1, 2 };
