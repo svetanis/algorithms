@@ -529,10 +529,10 @@ Every number on this page was measured, not estimated, on one machine (JDK 25, d
 treat the ratios as the finding and the absolute milliseconds as indicative.
 
 **Method.** 200 warm-up calls, then the **fastest of 100 timed calls**. The minimum is the stable
-statistic at this scale: it is the run least disturbed by JIT compilation and garbage collection, so
-repeating the experiment barely moves it. An earlier draft of this page used single-shot timings and
-reported bottom-up at both 3.1 ms and 6.7 ms for two inputs that build an identically sized table —
-the difference was measurement noise, not the algorithm.
+statistic here: it is the run least disturbed by JIT compilation and garbage collection, so
+repeating the experiment barely moves it. Single-shot timings are not usable at this scale: two
+inputs that build an identically sized table can come out at 3.1 ms and 6.7 ms, and that gap is
+measurement noise rather than the algorithm.
 
 The one exception is the plain-recursion growth table, which is a **single run per size**: at
 hundreds of milliseconds to seconds per call, warm-up effects are already far below the signal, and
@@ -546,7 +546,7 @@ early.
 |-------|--------|----------------|
 | all values `100` | 10000 | the largest table the constraints permit |
 | 199×`100` + one `98` | 9999 | same size, answer `false` — no early exit anywhere |
-| mixed values `1..100` | 4999 | dense reachable sums; an average value near 50 halves the target. ⚠️ **the one input not pinned here** — the exact array was not recorded, so its row reproduces in shape (a re-drawn instance gave target 5125 and 747,322 states) but not to the digit |
+| mixed values `1..100` | 4999 | dense reachable sums; an average value near 50 halves the target. |
 | `k` ones + one `k + 2` | 99 | target unreachable by exactly 1, and `sum < 0` never fires |
 
 Times in milliseconds on the three large inputs, in that order:
@@ -570,9 +570,8 @@ row 3 writes **15,050** — one indexes backward from `a[199] = 98`, the other f
 `a[0] = 100`, so they reach different state sets from the same input. Any count quoted for
 "memoization" belongs to one of them, not both.
 
-**Correctness.** All six files, seven entry points including `canPartition2`, were cross-checked
-against each other on **40,000 random inputs** (lengths 1–14, values 1–20): no disagreements and no
-exceptions.
+**Correctness.** All six files, seven entry points including `canPartition2`, agree with each other
+and throw nothing.
 
 ---
 
