@@ -55,12 +55,12 @@ public final class CoinChangeRecursive {
 			return 0;
 		}
 
-		// return the sum of solutions
-		// 1. include a[n - 1]: count(a[], n, v - a[n-1])
-		int incl = count(coins, index, amount - coins.get(index));
-		// 2. excluding a[n - 1]: count(a[], n - 1, v)
-		int excl = count(coins, index + 1, amount);
-		return incl + excl;
+		// TAKE coins[index] -- index stays put, so the same coin can be taken again
+		int take = count(coins, index, amount - coins.get(index));
+		// LEAVE coins[index] -- and never come back to it, which is what stops
+		// 1+2 and 2+1 being counted as two different answers
+		int leave = count(coins, index + 1, amount);
+		return take + leave;
 	}
 
 	public static void main(String[] args) {

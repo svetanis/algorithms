@@ -38,12 +38,12 @@ public final class CoinChangeBottomUp {
 		for (int i = 1; i <= n; ++i) {
 			int coin = coins.get(i - 1);
 			for (int sum = 0; sum <= amount; ++sum) {
-				// exclude coin i: whatever the first i - 1 coins could do
-				int excl = dp[i - 1][sum];
-				// include coin i, staying on row i so it can be reused
-				int incl = sum >= coin ? dp[i][sum - coin] : 0;
-				// total count
-				dp[i][sum] = incl + excl;
+				// TAKE coin i -- stay on row i, so the coin can be taken again
+				int take = sum >= coin ? dp[i][sum - coin] : 0;
+				// LEAVE coin i -- whatever the first i - 1 coins could already do
+				int leave = dp[i - 1][sum];
+				// the same + as the recursion
+				dp[i][sum] = take + leave;
 			}
 		}
 		return dp[n][amount];

@@ -56,12 +56,12 @@ public final class CoinChangeMemoization {
 			return dp[index][amount];
 		}
 
-		// return the sum of solutions
-		// 1. include a[n - 1]: count(a[], n, v - a[n-1])
-		int incl = dfs(coins, index, amount - coins[index], dp);
-		// 2. excluding a[n - 1]: count(a[], n - 1, v)
-		int excl = dfs(coins, index + 1, amount, dp);
-		dp[index][amount] = incl + excl;
+		// TAKE coins[index] -- index stays put, so the same coin can be taken again
+		int take = dfs(coins, index, amount - coins[index], dp);
+		// LEAVE coins[index] -- and never come back to it, which is what stops
+		// 1+2 and 2+1 being counted as two different answers
+		int leave = dfs(coins, index + 1, amount, dp);
+		dp[index][amount] = take + leave;
 		return dp[index][amount];
 	}
 
