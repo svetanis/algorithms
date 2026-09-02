@@ -24,7 +24,7 @@ previous one's failure*.
 | # | Problem | Approaches | The step most write-ups skip |
 |---|---------|-----------|------------------------------|
 | 416 | [Partition Equal Subset Sum](416-partition-equal-subset-sum.md) | 6 | The same memoization that sinks 518 is **enough** here — and one word in the recurrence tells you which case you are in beforehand |
-| 518 | [Coin Change II](518-coin-change-ii.md) | 5 | Memoization fixes the time complexity and the solution **still** fails — on stack depth, not on time |
+| 518 | [Coin Change II](518-coin-change-ii.md) | 7 | Memoization fixes the time complexity and the solution **still** fails — on stack depth, not on time |
 
 ## Backtracking
 
@@ -34,6 +34,15 @@ of the search space each one refuses to build, and what carrying the partial ans
 | # | Problem | Approaches | The step most write-ups skip |
 |---|---------|-----------|------------------------------|
 | 22 | [Generate Parentheses](22-generate-parentheses.md) | 5 | **Only one of the five is backtracking in the strict sense.** The others prune just as early but never need an undo — a fresh string per step leaves the caller's untouched, so there is nothing to restore. The undo exists because one version mutates a shared buffer, not because the algorithm demands it |
+
+## Grid and graph traversal
+
+Depth-first and breadth-first look interchangeable on these problems. Input size is what decides
+between them.
+
+| # | Problem | Approaches | The step most write-ups skip |
+|---|---------|-----------|------------------------------|
+| 200 | [Number of Islands](200-number-of-islands.md) | 3 | **A grid that is all land is one island, and the recursion needs a stack frame for every cell in it** — 90,000 at the size the constraints allow, which no default stack takes. The queue version has no depth at all |
 
 ---
 
