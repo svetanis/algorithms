@@ -1,30 +1,15 @@
 # LeetCode Write-ups — Java
 
-Long-form write-ups for the problems in this repository that are solved **more than once in the
-source tree** — brute force, memoized, tabulated, space-optimized.
+Long-form write-ups that cover every version of a solution, not only the fastest one. The versions
+that fail are what explain the one that works, and each page says exactly what broke and why the
+next version was forced. A few pages instead follow one technique across several problems, where
+recognising it is the hard part.
 
-Each page walks the whole progression and shows *why each step is forced by the previous one's
-failure*, with the measured verdict for every version: what times out, what overflows the stack,
-what actually passes. These are the problems where reading only the optimal solution teaches you
-the least.
-
-Pages are grouped below by what *"solved more than once"* actually means for that family, because
-the thing that connects one approach to the next is different in each: **dynamic programming** (one
-recurrence, four implementations), **graphs** (genuinely different algorithms, chosen not forced),
-**trees** (recursive vs iterative vs traversal property), and **data structures** (Fenwick tree vs
-segment tree vs merge-sort counting). Sections appear as their first page lands.
+Every version carries a measured verdict: what times out, what overflows the stack, what returns a
+plausible wrong answer. Every page traces a small input filling in step by step, because that is the
+part a solutions tab never shows you.
 
 Filenames stay flat — `NNN-problem-slug.md` — so a page's path never changes once it is linked.
-
-## Dynamic programming
-
-One recurrence, implemented four or five ways. The page is about *why each step is forced by the
-previous one's failure*.
-
-| # | Problem | Approaches | The step most write-ups skip |
-|---|---------|-----------|------------------------------|
-| 416 | [Partition Equal Subset Sum](416-partition-equal-subset-sum.md) | 6 | The same memoization that sinks 518 is **enough** here — and one word in the recurrence tells you which case you are in beforehand |
-| 518 | [Coin Change II](518-coin-change-ii.md) | 7 | Memoization fixes the time complexity and the solution **still** fails — on stack depth, not on time |
 
 ## Backtracking
 
@@ -43,6 +28,25 @@ between them.
 | # | Problem | Approaches | The step most write-ups skip |
 |---|---------|-----------|------------------------------|
 | 200 | [Number of Islands](200-number-of-islands.md) | 3 | **A grid that is all land is one island, and the recursion needs a stack frame for every cell in it** — 90,000 at the size the constraints allow, which no default stack takes. The queue version has no depth at all |
+
+## Topological sort
+
+One loop serves all of these. What changes from problem to problem is what each node carries along
+it and what is kept at the end.
+
+| # | Problem | Covers | The step most write-ups skip |
+|---|---------|-----------|------------------------------|
+| 207 | [Course Schedule](207-course-schedule.md) | 4 problems | Two solutions that read the prerequisite pairs in opposite directions give the same answer on every input here — only one of them is right on Course Schedule II |
+
+## Dynamic programming
+
+One recurrence, implemented four or five ways. The page is about *why each step is forced by the
+previous one's failure*.
+
+| # | Problem | Approaches | The step most write-ups skip |
+|---|---------|-----------|------------------------------|
+| 416 | [Partition Equal Subset Sum](416-partition-equal-subset-sum.md) | 6 | The same memoization that sinks 518 is **enough** here — and one word in the recurrence tells you which case you are in beforehand |
+| 518 | [Coin Change II](518-coin-change-ii.md) | 7 | Memoization fixes the time complexity and the solution **still** fails — on stack depth, not on time |
 
 ---
 
