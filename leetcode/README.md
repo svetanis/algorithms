@@ -38,6 +38,15 @@ it and what is kept at the end.
 |---|---------|-----------|------------------------------|
 | 207 | [Course Schedule](207-course-schedule.md) | 4 problems | Two solutions that read the prerequisite pairs in opposite directions give the same answer on every input here — only one of them is right on Course Schedule II |
 
+## Greedy
+
+Guessing the greedy choice is easy; justifying it is not. The rules that fail are the ones that are
+right on most inputs.
+
+| # | Problem | Approaches | The step most write-ups skip |
+|---|---------|-----------|------------------------------|
+| 134 | [Gas Station](134-gas-station.md) | 4 | The total of `gas[i] - cost[i]` decides **whether** an answer exists and can never name **which** station — reordering the same stations moves the answer without moving the total |
+
 ## Dynamic programming
 
 One recurrence, implemented four or five ways. The page is about *why each step is forced by the

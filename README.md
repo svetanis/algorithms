@@ -17,13 +17,20 @@ space-optimized — because the **progression is the lesson**. Those have a long
 **[`leetcode/`](leetcode/)**: every approach, its measured verdict on the judge, and why each step
 is forced by the previous one's failure.
 
-- **518** — [Coin Change II](leetcode/518-coin-change-ii.md) · 5 approaches · why memoization fixes
+- **518** — [Coin Change II](leetcode/518-coin-change-ii.md) · 7 approaches · why memoization fixes
   the complexity and the solution still fails
 - **22** — [Generate Parentheses](leetcode/22-generate-parentheses.md) · 5 approaches · all of them
   pass, so the separation is elsewhere — only one is backtracking proper, and the page shows what
   makes the undo necessary in that one and pointless in the rest
 - **416** — [Partition Equal Subset Sum](leetcode/416-partition-equal-subset-sum.md) · 6 approaches ·
   why the same memoization *is* enough here, and how to tell the two cases apart before you write it
+- **200** — [Number of Islands](leetcode/200-number-of-islands.md) · 3 approaches · a grid that is
+  all land is one island, and the recursion needs a stack frame for every cell in it
+- **207** — [Course Schedule](leetcode/207-course-schedule.md) · 4 problems · two solutions that
+  read the prerequisite pairs in opposite directions give the same answer on every input here — only
+  one of them is right on Course Schedule II
+- **134** — [Gas Station](leetcode/134-gas-station.md) · 4 solutions · the total decides *whether*
+  an answer exists and can never name *which* station it is
 
 ---
 
@@ -125,7 +132,7 @@ Each pattern folder contains **solutions to related LeetCode problems** with:
 - 122: Best Time to Buy and Sell Stock II
 - 55: Jump Game
 - 45: Jump Game II
-- 134: Gas Station
+- 134: Gas Station — **[full write-up](leetcode/134-gas-station.md)**
 - 455: Assign Cookies
 - 452: Minimum Number of Arrows to Burst Balloons
 - 435: Non-overlapping Intervals
@@ -194,8 +201,8 @@ Each pattern folder contains **solutions to related LeetCode problems** with:
 - 54: Spiral Matrix
 - 59: Spiral Matrix II
 - 73: Set Matrix Zeroes
-- 200: Number of Islands
-- 207: Course Schedule
+- 200: Number of Islands — **[full write-up](leetcode/200-number-of-islands.md)**
+- 207: Course Schedule — **[full write-up](leetcode/207-course-schedule.md)**
 - 210: Course Schedule II
 - 130: Surrounded Regions
 - 79: Word Search
