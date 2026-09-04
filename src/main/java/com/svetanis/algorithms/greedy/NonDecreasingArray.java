@@ -4,7 +4,12 @@ package com.svetanis.algorithms.greedy;
 
 public final class NonDecreasingArray {
 	// Time Complexity: O(n)
-	// Space Complexity: O(1)
+	// Space Complexity: O(1) -- nothing is allocated. The repair is written
+	// straight into the caller's array, which comes back modified: the array
+	// IS the running state, and that is what keeps this O(1). Deliberate,
+	// like the sibling CanPlaceFlowers605 -- but say it out loud before an
+	// interviewer asks, because the signature promises only a boolean.
+	// Need the caller's data intact? checkPossibility(a.clone()).
 
 	public static boolean checkPossibility(int[] a) {
 		int n = a.length;

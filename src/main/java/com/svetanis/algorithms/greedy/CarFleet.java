@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.greedy;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.Arrays;
 
 // 853. Car Fleet
@@ -29,7 +31,7 @@ public final class CarFleet {
 		for (int i = 0; i < n; i++) {
 			indices[i] = i;
 		}
-		Arrays.sort(indices, (a, b) -> positions[b] - positions[a]);
+		Arrays.sort(indices, comparingInt((Integer i) -> positions[i]).reversed());
 		return indices;
 	}
 

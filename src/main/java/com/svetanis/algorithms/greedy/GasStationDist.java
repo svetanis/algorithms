@@ -4,7 +4,20 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// 134. Gas Station -- the circular-tour framing (petrol pumps: gas + distance)
+//
+// The same problem stated the other common way, and a genuinely different
+// algorithm -- not a copy of either GasStation134 method. It sweeps forward over
+// 2n positions with a restart latch: `start == -1` means "no candidate right
+// now", and any candidate that survives n consecutive stations has completed the
+// circuit and is the answer.
+//
+// Walking 2n is what replaces GasStation134's `total >= 0` feasibility test. If
+// no candidate survives n stations across the doubled sweep, no start exists.
+
 public final class GasStationDist {
+	// Time Complexity: O(n) -- the sweep is 2n
+	// Space Complexity: O(1)
 
 	public static int start(List<Integer> gas, List<Integer> dist) {
 		int fuel = 0;

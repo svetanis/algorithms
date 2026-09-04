@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.greedy;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,7 +34,7 @@ public final class MostProfitAssigningWork {
 		for (int i = 0; i < difficulty.length; i++) {
 			list.add(new int[] { difficulty[i], profit[i] });
 		}
-		Collections.sort(list, (i, j) -> i[0] - j[0]);
+		Collections.sort(list, comparingInt(i -> i[0]));
 		return list;
 	}
 

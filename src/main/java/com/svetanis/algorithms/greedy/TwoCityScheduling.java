@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.greedy;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.Arrays;
 
 // 1029. Two City Scheduling
@@ -8,7 +10,7 @@ public final class TwoCityScheduling {
 	// Time Complexity: O(n log n)
 
 	public static int tcs(int[][] costs) {
-		Arrays.sort(costs, (a, b) -> (a[0] - a[1]) - (b[0] - b[1]));
+		Arrays.sort(costs, comparingInt(c -> c[0] - c[1]));
 		int n = costs.length / 2;
 		int total = 0;
 		for (int i = 0; i < n; i++) {

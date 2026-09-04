@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.greedy;
 
+import static java.util.Comparator.reverseOrder;
+
 import java.util.PriorityQueue;
 
 // 871. Minimum Number of Refueling Stops
@@ -13,7 +15,7 @@ public final class MinNumOfRefuelingStops {
 		int count = 0;
 		int index = 0;
 		int fuel = startFuel;
-		PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+		PriorityQueue<Integer> pq = new PriorityQueue<>(reverseOrder());
 		while (fuel < target) {
 			while (index < n && stations[index][0] <= fuel) {
 				pq.offer(stations[index++][1]);

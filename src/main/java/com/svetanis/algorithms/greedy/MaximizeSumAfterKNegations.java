@@ -6,7 +6,8 @@ import java.util.Map;
 // 1005. Maximize Sum Of Array After K Negations
 
 public final class MaximizeSumAfterKNegations {
-	// Time Complexity: O(n + ь)
+	// Time Complexity: O(n) -- the two value loops are bounded at 100 each,
+	// because LC 1005 caps |nums[i]| at 100
 
 	public static int largestSumAfterKNegations(int[] nums, int k) {
 		Map<Integer, Integer> map = frequency(nums);

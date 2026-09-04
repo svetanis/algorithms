@@ -4,7 +4,8 @@ package com.svetanis.algorithms.greedy;
 
 public final class CanPlaceFlowers605 {
   // Time Complexity: O(n)
-  // Space Complexity: O(n)
+  // Space Complexity: O(1) -- nothing is allocated. The flowers are planted
+  // straight into the caller's array, which comes back modified.
 
   public static boolean placeFlowers(int[] a, int n) {
     int len = a.length;

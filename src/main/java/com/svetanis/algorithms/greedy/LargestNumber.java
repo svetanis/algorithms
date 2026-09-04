@@ -8,7 +8,7 @@ import java.util.List;
 public final class LargestNumber {
 	// Time Complexity: O(n log n)
 
-	public static String pairSum(int[] a) {
+	public static String largestNumber(int[] a) {
 		List<String> list = new ArrayList<>();
 		for (int num : a) {
 			list.add(String.valueOf(num));
@@ -22,9 +22,9 @@ public final class LargestNumber {
 
 	public static void main(String[] args) {
 		int[] a1 = { 1, 4, 3, 2 };
-		System.out.println(pairSum(a1)); // 4
+		System.out.println(largestNumber(a1)); // 4321
 
 		int[] a2 = { 6, 2, 6, 5, 1, 2 };
-		System.out.println(pairSum(a2)); // 9
+		System.out.println(largestNumber(a2)); // 665221
 	}
 }
