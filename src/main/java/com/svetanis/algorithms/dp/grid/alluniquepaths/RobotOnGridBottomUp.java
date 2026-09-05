@@ -45,9 +45,9 @@ public final class RobotOnGridBottomUp {
 		dp[0][0] = 1; // 1 way to start from (0, 0)
 		for (int r = 0; r < n; ++r) {
 			for (int c = 0; c < m; ++c) {
-				int right = r < 1 ? 0 : dp[r - 1][c];
-				int down = c < 1 ? 0 : dp[r][c - 1];
-				dp[r][c] += right + down;
+				int above = r < 1 ? 0 : dp[r - 1][c];   // the cell ABOVE: the robot arrived by moving down
+				int left = c < 1 ? 0 : dp[r][c - 1];    // the cell LEFT: the robot arrived by moving right
+				dp[r][c] += above + left;
 			}
 		}
 		return dp[n - 1][m - 1];
