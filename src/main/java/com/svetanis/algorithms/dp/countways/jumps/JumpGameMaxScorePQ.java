@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.dp.countways.jumps;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.PriorityQueue;
 
 // 1696. Jump Game VI
@@ -9,7 +11,7 @@ public final class JumpGameMaxScorePQ {
 
 	public static int maxScore(int[] a, int k) {
 		int max = a[0];
-		PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> y[0] - x[0]);
+		PriorityQueue<int[]> pq = new PriorityQueue<>(comparingInt((int[] x) -> x[0]).reversed());
 		pq.offer(new int[] { a[0], 0 });
 		for (int i = 1; i < a.length; i++) {
 			while (!pq.isEmpty() && i - pq.peek()[1] > k) {

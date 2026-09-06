@@ -18,8 +18,10 @@ public final class HouseThiefCircularTopDown {
 	}
 
 	private static int maxProfit(int[] a, int start, int end) {
-		int n = end - start + 1;
-		Integer[] dp = new Integer[n + 1];
+		// dp is keyed by the ABSOLUTE index into a, so it is sized by a.length.
+		// Sizing it by the segment length (end - start + 1) fits only while
+		// start <= 1, which is all the two callers above happen to pass.
+		Integer[] dp = new Integer[a.length];
 		return dfs(a, start, end, dp);
 	}
 

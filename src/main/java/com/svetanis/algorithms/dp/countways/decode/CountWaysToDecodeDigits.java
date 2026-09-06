@@ -23,7 +23,12 @@ public final class CountWaysToDecodeDigits {
 			return 1;
 		}
 		int count = 0;
-		for (int i = index; i < s.length(); i++) {
+		// at most two digits: 26 is the largest letter, so a three-digit
+		// prefix can never be an encoding. scanning to the end of the string
+		// instead used to hand parseInt an 11-digit prefix, which throws --
+		// and LC 91 allows a message of 100 digits.
+		int last = Math.min(index + 1, s.length() - 1);
+		for (int i = index; i <= last; i++) {
 			String prefix = s.substring(index, i + 1);
 			if (valid(prefix)) {
 				count += dfs(index + prefix.length(), s);
@@ -37,6 +42,10 @@ public final class CountWaysToDecodeDigits {
 		// zero-padded, so "01" is not a way of writing "A".
 		// parseInt("01") == 1, so parseInt alone is NOT a validator.
 		if (s.startsWith("0")) {
+			return false;
+		}
+		// answer before parsing: parseInt throws on anything past 10 digits
+		if (s.length() > 2) {
 			return false;
 		}
 		int num = parseInt(s);
