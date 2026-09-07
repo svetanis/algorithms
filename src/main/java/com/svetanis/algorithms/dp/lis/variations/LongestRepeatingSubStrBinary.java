@@ -11,7 +11,7 @@ public final class LongestRepeatingSubStrBinary {
 		int low = 0;
 		int high = s.length() - 1;
 		while (low < high) {
-			int mid = (low + high + 1) / 2;
+			int mid = low + (high - low + 1) / 2;
 			if (containsRepeatingSubstr(s, mid)) {
 				low = mid;
 			} else {

@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.dp.lis.variations;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +14,10 @@ public final class LongestStringChainLenBottomUp {
 
 	public static int lcl(String[] words) {
 		Map<String, Integer> dp = new HashMap<>();
-		Arrays.sort(words, (a, b) -> a.length() - b.length());
-		int maxLen = 1;
+		Arrays.sort(words, comparingInt(a -> a.length()));
+		// no words means no chain, so the seed is only a length
+		// when there is at least one word to be it
+		int maxLen = words.length == 0 ? 0 : 1;
 		for (String word : words) {
 			int len = 1;
 			for (int i = 0; i < word.length(); i++) {
@@ -38,5 +42,8 @@ public final class LongestStringChainLenBottomUp {
 
 		String[] a3 = { "abcd", "dbqca" };
 		System.out.println(lcl(a3)); // 1
+
+		// a seed of 1 answers 1 here, because the loop never runs
+		System.out.println(lcl(new String[0])); // 0
 	}
 }

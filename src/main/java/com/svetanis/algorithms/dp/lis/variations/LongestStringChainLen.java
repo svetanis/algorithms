@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.dp.lis.variations;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.Arrays;
 
 // 1048. Longest String Chain
@@ -7,11 +9,13 @@ import java.util.Arrays;
 public final class LongestStringChainLen {
 
 	public static int lcl(String[] words) {
-		Arrays.sort(words, (a, b) -> a.length() - b.length());
+		Arrays.sort(words, comparingInt(a -> a.length()));
 		int n = words.length;
 		int[] dp = new int[n];
 		Arrays.fill(dp, 1);
-		int max = 1;
+		// no words means no chain, so the seed is only a length
+		// when there is at least one word to be it
+		int max = n == 0 ? 0 : 1;
 		for (int curr = 0; curr < n; curr++) {
 			for (int prev = 0; prev < curr; prev++) {
 				if (predecessor(words[prev], words[curr])) {
@@ -45,5 +49,8 @@ public final class LongestStringChainLen {
 
 		String[] a3 = { "abcd", "dbqca" };
 		System.out.println(lcl(a3)); // 1
+
+		// a seed of 1 answers 1 here, because neither loop runs
+		System.out.println(lcl(new String[0])); // 0
 	}
 }

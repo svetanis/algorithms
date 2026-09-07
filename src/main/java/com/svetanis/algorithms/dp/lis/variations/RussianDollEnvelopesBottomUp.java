@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.dp.lis.variations;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.Arrays;
 
 // 354. Russian Doll Envelopes
@@ -15,8 +17,8 @@ public final class RussianDollEnvelopesBottomUp {
 		}
 		// sort dolls by width in ascending order
 		// if widths are equal sort dolls by height
-		Arrays.sort(envelopes, (a, b) -> a[0] == b[0] 
-				? b[1] - a[1] : a[0] - b[0]);
+		Arrays.sort(envelopes, comparingInt((int[] a) -> a[0])
+				.thenComparing(comparingInt((int[] a) -> a[1]).reversed()));
 		int[] dp = new int[n];
 		Arrays.fill(dp, 1);
 		int maxEnvelopes = 0;

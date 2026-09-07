@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.dp.lis.variations;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,8 +15,8 @@ public final class RussianDollEnvelopesBinary {
 	public static int rde(int[][] envelopes) {
 		// sort dolls by width in ascending order
 		// if widths are equal sort dolls by height
-		Arrays.sort(envelopes, (a, b) -> a[0] == b[0] 
-				? b[1] - a[1] : a[0] - b[0]);
+		Arrays.sort(envelopes, comparingInt((int[] a) -> a[0])
+				.thenComparing(comparingInt((int[] a) -> a[1]).reversed()));
 		List<Integer> list = new ArrayList<>();
 		list.add(envelopes[0][1]);
 		for (int i = 1; i < envelopes.length; i++) {

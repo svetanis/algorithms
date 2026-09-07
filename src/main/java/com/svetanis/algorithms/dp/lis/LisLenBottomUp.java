@@ -17,7 +17,9 @@ public final class LisLenBottomUp {
 		int n = a.length;
 		int[] dp = new int[n];
 		fill(dp, 1);
-		int max = 1;
+		// an empty sequence has no increasing subsequence, so the seed
+		// is only a length when there is at least one element to be it
+		int max = n == 0 ? 0 : 1;
 		for (int i = 1; i < n; i++) {
 			for (int j = 0; j < i; j++) {
 				if (a[j] < a[i] && dp[i] <= dp[j]) {
@@ -50,5 +52,6 @@ public final class LisLenBottomUp {
 		System.out.println(lis(a9)); // 4
 		int[] a10 = { 0, 0, 1, 6, 0, 0, 0 };
 		System.out.println(lis(a10)); // 3
+		System.out.println(lis(new int[0])); // 0
 	}
 }
