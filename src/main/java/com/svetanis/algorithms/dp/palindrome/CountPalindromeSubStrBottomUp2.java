@@ -40,7 +40,7 @@ public final class CountPalindromeSubStrBottomUp2 {
 	public static void main(String[] args) {
 		System.out.println(lps("abdbca")); // 7
 		System.out.println(lps("cddpd")); // 7
-		System.out.println(lps("pqr")); // 7
+		System.out.println(lps("pqr")); // 3
 		System.out.println(lps("abc")); // 3
 		System.out.println(lps("aaa")); // 6
 	}
