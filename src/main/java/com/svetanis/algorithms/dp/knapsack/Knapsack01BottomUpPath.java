@@ -58,9 +58,6 @@ public final class Knapsack01BottomUpPath {
         profit -= items[i].value;
       }
     }
-    if (profit != 0) {
-      list.add(items[0].weight);
-    }
     print(list);
   }
 

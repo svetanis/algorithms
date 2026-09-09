@@ -9,11 +9,10 @@ public final class Knapsack01SpaceOptimized {
     // Space Complexity: O(W)
 
     int n = items.length;
+    // no zeroing loop: Java already zero-initializes int[].
+    // one used to sit here indexed by item (i <= n) over a capacity-sized
+    // array, which threw whenever there were more items than capacity.
     int[] a = new int[max + 1];
-
-    for (int i = 0; i <= n; ++i) {
-      a[i] = 0;
-    }
 
     for (int i = 0; i < n; ++i) {
       for (int w = max; w >= items[i].weight; --w) {
