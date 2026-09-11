@@ -28,8 +28,13 @@ public final class TargetSumBottomUp {
 
 	public static int count(int[] a, int k) {
 		int total = Arrays.stream(a).sum();
-		// if (k + total) is odd, can't find subset
-		if (total < k || (k + total) % 2 == 1) {
+		// this file solves for the POSITIVE subset, (k + total) / 2, which shrinks
+		// as k goes negative -- so it needs a guard at BOTH ends. total < k covers
+		// the top; total < -k covers the bottom, and without it k = -1000 with a
+		// small total gives a negative target and countSubsets throws.
+		// the parity test must be != 0, not == 1: java's remainder of a negative
+		// number is negative, so -5 % 2 is -1 and an odd negative sum slips through
+		if (total < k || total < -k || (k + total) % 2 != 0) {
 			return 0;
 		}
 		int target = (k + total) / 2;
@@ -76,5 +81,16 @@ public final class TargetSumBottomUp {
 		// multiply the single assignment of {1} by 2^8
 		int[] a3 = { 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 		System.out.println(count(a3, 1)); // 256
+
+		// a target below -total. LC 494 allows k down to -1000, and the positive
+		// subset (k + total) / 2 is then negative -- this threw
+		// NegativeArraySizeException until the guard covered the bottom end
+		int[] a4 = { 1 };
+		System.out.println(count(a4, -1000)); // 0
+
+		// and the case the parity test used to miss: k + total is -5, and
+		// -5 % 2 is -1 in java, so "% 2 == 1" did not see it as odd
+		int[] a5 = { 1, 1, 1 };
+		System.out.println(count(a5, -8)); // 0
 	}
 }

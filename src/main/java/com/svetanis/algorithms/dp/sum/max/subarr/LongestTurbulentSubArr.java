@@ -7,7 +7,9 @@ public final class LongestTurbulentSubArr {
 	// Space Complexity: O(1)
 
 	public static int maxTurbulenceSize(int[] a) {
-		int max = 1;
+		// an empty array has no subarray at all, so the seed is only a
+		// length when there is at least one element to be it
+		int max = a.length == 0 ? 0 : 1;
 		int inc = 1;
 		int dec = 1;
 		for (int i = 1; i < a.length; i++) {
@@ -29,5 +31,9 @@ public final class LongestTurbulentSubArr {
 
 		int[] a3 = { 100 };
 		System.out.println(maxTurbulenceSize(a3)); // 1
+
+		// no elements, so no subarray. a version seeding max at 1 answers 1 here
+		int[] a4 = {};
+		System.out.println(maxTurbulenceSize(a4)); // 0
 	}
 }
