@@ -4,6 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.collect.Lists.newList;
 import static com.svetanis.java.base.collect.Maps.newMap;
+import static java.util.Comparator.comparingInt;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +20,9 @@ import com.google.common.collect.ImmutableMap;
 // given an unsorted array of numbers,
 // find the top k frequently occurring numbers in it
 
-public final class KMostFrequent {
+// the heap holds the value alone; KMostFrequentEntryHeap holds the whole Map.Entry
+
+public final class KMostFrequentHeap {
 	// Time Complexity: O(n + n * log k)
 
 	public static ImmutableList<Integer> kMostFrequent(List<Integer> terms, int k) {
@@ -28,6 +31,8 @@ public final class KMostFrequent {
 		return kMostFrequent(pq);
 	}
 
+	// polling a min-heap keyed on the count yields LEAST frequent first, so this
+	// list runs from least to most frequent. LC 347 accepts any order.
 	private static ImmutableList<Integer> kMostFrequent(Queue<Integer> pq) {
 		List<Integer> list = newArrayList();
 		while (!pq.isEmpty()) {
@@ -40,7 +45,10 @@ public final class KMostFrequent {
 		// go through all numbers of the map and push them in the min heap
 		// which will have top k frequent numbers. If the heap size is
 		// more than k, remove the smallest top entry
-		Comparator<Integer> c = (x, y) -> map.get(x) - map.get(y);
+		// the heap holds the NUMBER alone; the comparator reads its count from the map.
+		// The sibling KMostFrequentEntryHeap carries the whole Map.Entry instead.
+		// Ordered by ASCENDING count, so the top is the one being thrown away.
+		Comparator<Integer> c = comparingInt(x -> map.get(x));
 		Queue<Integer> pq = new PriorityQueue<>(c);
 		for (int key : map.keySet()) {
 			pq.add(key);

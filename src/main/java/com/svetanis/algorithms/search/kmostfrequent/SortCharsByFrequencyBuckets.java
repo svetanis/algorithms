@@ -7,7 +7,9 @@ import java.util.Map;
 
 // 451. Sort Characters By Frequency
 
-public final class SortCharsByFrequencySubmit {
+// self-contained: no java-base, no Guava -- submittable to LeetCode as it stands
+
+public final class SortCharsByFrequencyBuckets {
 	// Time Complexity: O(n)
 
 	public static String sort(String s) {

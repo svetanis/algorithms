@@ -2,6 +2,7 @@ package com.svetanis.algorithms.search.kmostfrequent;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static com.svetanis.java.base.collect.Maps.newMap;
+import static java.util.Comparator.comparingInt;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -24,7 +25,9 @@ import com.google.common.collect.ImmutableMap;
 // the frequency of a character is the number
 // of times it appears in the string
 
-public final class SortCharsByFrequency {
+// the heap answer; SortCharsByFrequencyBuckets is the O(n) bucket answer
+
+public final class SortCharsByFrequencyHeap {
 	// Time Complexity: O(n log k)
 
 	public static String sort(String s) {
@@ -43,7 +46,7 @@ public final class SortCharsByFrequency {
 	}
 
 	private static Queue<Character> sortedQueue(Map<Character, Integer> fm) {
-		Comparator<Character> c = (a, b) -> (fm.get(b) - fm.get(a));
+		Comparator<Character> c = comparingInt((Character ch) -> fm.get(ch)).reversed();
 		Queue<Character> pq = new PriorityQueue<>(c);
 		// add all characters to the max heap
 		pq.addAll(fm.keySet());

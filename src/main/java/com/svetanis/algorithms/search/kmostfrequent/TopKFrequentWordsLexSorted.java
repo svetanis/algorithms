@@ -3,6 +3,8 @@ package com.svetanis.algorithms.search.kmostfrequent;
 import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.utils.Print.printLines;
+import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.reverseOrder;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,10 +22,17 @@ public final class TopKFrequentWordsLexSorted {
 
 	public static List<String> topKFrequent(List<String> terms, int k) {
 		Map<String, Integer> map = frequencyMap(terms);
-		// min heap : least frequent element first
+		// the heap's top is the survivor to throw away, so BOTH halves of the key are
+		// written backwards from the way the answer reads: lowest count first, and
+		// among equal counts the alphabetically LAST word first. thenComparing with
+		// the natural order instead passes both of LC 692's examples and still loses
+		// every tie that lands on the k boundary.
 		Queue<String> pq = new PriorityQueue<>(
-				(s1, s2) -> map.get(s1).equals(map.get(s2)) ? s2.compareTo(s1) : map.get(s1) - map.get(s2));
+				comparingInt((String s) -> map.get(s)).thenComparing(reverseOrder()));
 
+		// add-then-trim: nothing is tested against the top, so the ordering rule lives
+		// in the comparator alone. Testing by hand restates it a second time, and a
+		// count-only test drops the tie-break exactly at the k boundary.
 		// keep k top frequent elements in the heap
 		for (String entry : map.keySet()) {
 			pq.offer(entry);
@@ -31,6 +40,8 @@ public final class TopKFrequentWordsLexSorted {
 				pq.poll();
 			}
 		}
+		// poll hands back the worst survivor first, so pushing to the front reverses
+		// it into the required order: highest frequency first, ties alphabetical.
 		LinkedList<String> list = new LinkedList<>();
 		while (!pq.isEmpty()) {
 			list.addFirst(pq.poll());

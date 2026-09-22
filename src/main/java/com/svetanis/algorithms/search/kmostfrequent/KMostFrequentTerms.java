@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.search.kmostfrequent;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Comparator.comparingInt;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,7 +31,7 @@ public final class KMostFrequentTerms {
 		// go through all numbers of the map and push them in the min heap
 		// which will have top k frequent numbers. If the heap size is
 		// more than k, remove the smallest top entry
-		Comparator<Map.Entry<String, Integer>> c = (e1, e2) -> e1.getValue() - e2.getValue();
+		Comparator<Map.Entry<String, Integer>> c = comparingInt(e -> e.getValue());
 		Queue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(c);
 		for (Map.Entry<String, Integer> entry : map.entrySet()) {
 			pq.offer(entry);
