@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.matrix.tictactoe;
 
 // 1275. Find Winner on a Tic Tac Toe Game
 

@@ -3,8 +3,10 @@ package com.svetanis.algorithms.matrix;
 // 1570. Dot Product of Two Sparse Vectors
 
 public final class SparseVector {
-	// Time Complexity: O(min(k, l))
-	// k and l are number of non-zero elements
+	// Time Complexity: O(n), n = the vector length -- every position is
+	// multiplied, zeros included. storing only the non-zero entries is
+	// what makes it O(non-zeros); see todo/SparseVector.java
+	// Space Complexity: O(1) beyond the vectors themselves
 
 	public SparseVector(int[] a) {
 		this.a = a;

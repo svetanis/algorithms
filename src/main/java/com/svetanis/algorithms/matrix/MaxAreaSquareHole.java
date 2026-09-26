@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public final class MaxAreaSquareHole {
 	// Time Complexity: O(h * log h + v * log v)
-	// Space Complexity: O(log h + log v)
+	// Space Complexity: O(log h + log v) -- sorts the caller's bar arrays in place
 
 	public static int maxSquare(int n, int m, 
 			int[] hBars, int[] vBars) {

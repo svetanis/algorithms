@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.matrix.tictactoe;
 
 // 348. Design Tic-Tac-Toe
 

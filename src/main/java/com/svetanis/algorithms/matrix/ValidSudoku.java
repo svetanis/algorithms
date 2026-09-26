@@ -3,8 +3,8 @@ package com.svetanis.algorithms.matrix;
 // 36. Valid Sudoku
 
 public final class ValidSudoku {
-	// Time Complexity: O(n^2)
-	// Space Complexity: O(n^2)
+	// Time Complexity: O(1) -- the board is always 9 x 9, so 81 cells
+	// Space Complexity: O(1) -- 27 sets of at most 9 digits
 
 	private static final int SIZE = 9;
 

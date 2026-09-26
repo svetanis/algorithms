@@ -3,7 +3,8 @@ package com.svetanis.algorithms.matrix;
 // 766. Toeplitz Matrix
 
 public final class ToeplitzMatrix {
-	// Time Complexity: O(n^2)
+	// Time Complexity: O(n * m) -- every cell is on exactly one diagonal
+	// Space Complexity: O(1)
 
 	public static boolean isToeplitz(int[][] matrix) {
 

@@ -17,7 +17,7 @@ public final class LuckyNumbers {
 		this.rows = matrix.length;
 		this.cols = matrix[0].length;
 		int[] minInRows = new int[rows];
-		int[] maxInCols = new int[cols];
+		int[] maxInCols = new int[cols]; // starts at 0: LC 1380 values are >= 1
 		Arrays.fill(minInRows, Integer.MAX_VALUE);
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {

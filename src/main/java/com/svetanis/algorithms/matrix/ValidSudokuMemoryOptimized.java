@@ -3,8 +3,9 @@ package com.svetanis.algorithms.matrix;
 // 36. Valid Sudoku
 
 public final class ValidSudokuMemoryOptimized {
-	// Time Complexity: O(n^2)
-	// Space Complexity: O(n)
+	// Time Complexity: O(1) -- the board is always 9 x 9, so 81 cells
+	// Space Complexity: O(1) -- 27 ints used as bitmasks; the same
+	// information as ValidSudoku's sets, in fewer machine words
 
 	private static final int SIZE = 9;
 

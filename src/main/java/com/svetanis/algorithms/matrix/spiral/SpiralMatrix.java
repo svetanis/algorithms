@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.matrix.spiral;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,8 @@ import java.util.List;
 
 public final class SpiralMatrix {
   // Time Complexity: O(n * m)
-  // Space Complexity: O(n * m)
+  // Space Complexity: O(n * m) auxiliary -- the boolean[n][m] visited array.
+  // Compare SpiralMatrixSpaceEfficient.java, which is O(1) auxiliary.
 
   private static final int[] dx = { 0, 1, 0, -1 };
   private static final int[] dy = { 1, 0, -1, 0 };

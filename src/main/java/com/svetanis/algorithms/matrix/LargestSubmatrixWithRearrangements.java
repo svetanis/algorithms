@@ -5,8 +5,10 @@ import java.util.Arrays;
 // 1727. Largest Submatrix With Rearrangements
 
 public final class LargestSubmatrixWithRearrangements {
-	// Time Complexity: O(m * n * log n)
-	// Space Complexity: O(1)
+	// Time Complexity: O(n * m * log m), n = rows, m = columns -- each
+	// row of length m is sorted
+	// Space Complexity: O(1) extra -- but it OVERWRITES the caller's
+	// matrix with column heights and reorders every row
 
 	public static int largestSubmatrix(int[][] matrix) {
 		int m = matrix[0].length;

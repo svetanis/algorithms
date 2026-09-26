@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.matrix.spiral;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,9 @@ import java.util.List;
 
 public final class SpiralMatrixSpaceEfficient {
 	// Time Complexity: O(n * m)
-	// Space Complexity: O(n * m)
+	// Space Complexity: O(1) auxiliary -- four int boundaries, no visited[][].
+	// That is the ONLY difference from SpiralMatrix.java, so stating it as
+	// O(n * m) like its sibling erases the reason this file exists.
 
 	public static List<Integer> spiral(int[][] grid) {
 		int top = 0;

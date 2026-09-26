@@ -1,12 +1,12 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.matrix.spiral;
 
 import com.svetanis.java.base.utils.Print;
 
 // 59. Spiral Matrix II
 
 public final class SpiralMatrixII {
-	// Time Complexity: O(n * m)
-	// Space Complexity: O(n * m)
+	// Time Complexity: O(n^2)
+	// Space Complexity: O(n^2) for the returned grid, O(1) besides it
 
 	public static int[][] spiral(int n) {
 		int top = 0;

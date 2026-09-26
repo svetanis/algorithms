@@ -2,9 +2,16 @@ package com.svetanis.algorithms.matrix;
 
 // 2257. Count Unguarded Cells in the Grid
 
+// KEPT AS A SPECIMEN of recursion depth. dfs() calls itself once per
+// cell along a guard's line of sight, so the depth equals the length
+// of that line. LC 2257 allows a single row or column of up to 1e5
+// cells, and a guard at one end of it overflows the default JVM
+// stack. CountUnguardedCells.java walks the same lines with a loop
+// and handles that input -- use it.
+
 public final class CountUnguardedCellsRecursive {
 	// Time Complexity: O(n * m)
-	// Space Complexity: O(n * m)
+	// Space Complexity: O(n * m) for the grid, plus O(max(n, m)) call stack
 
 	public static int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
 		int[][] grid = new int[m][n];

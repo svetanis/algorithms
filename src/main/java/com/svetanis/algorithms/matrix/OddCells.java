@@ -3,7 +3,7 @@ package com.svetanis.algorithms.matrix;
 // 1252. Cells with Odd Values in a Matrix
 
 public final class OddCells {
-	// Time Complexity: O(n + m + indices.length)
+	// Time Complexity: O(n * m + indices.length) -- every cell is checked
 	// Space Complexity: O(n + m)
 
 	public static int oddCells(int m, int n, int[][] indices) {

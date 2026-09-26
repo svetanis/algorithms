@@ -4,6 +4,11 @@ import com.svetanis.java.base.utils.Print;
 
 // 1861. Rotating the Box
 
+// same cost as RotatingTheBox.java: this one lets the stones fall
+// BEFORE rotating, along each row, instead of after, down each
+// column. it does so inside the caller's grid, so the input is
+// modified -- the other two versions leave it untouched.
+
 public final class RotatingTheBoxOptimized {
 	// Time Complexity: O(n * m)
 	// Space Complexity: O(n * m)

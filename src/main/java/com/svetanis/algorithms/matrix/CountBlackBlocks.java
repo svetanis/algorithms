@@ -8,8 +8,8 @@ import com.svetanis.java.base.utils.Print;
 // 2768. Number of Black Blocks
 
 public final class CountBlackBlocks {
-	// Time Complexity: O(1)
-	// Space Complexity: O(1)
+	// Time Complexity: O(k), k = coordinates.length -- four map updates each
+	// Space Complexity: O(k) -- the map holds up to 4k blocks
 
 	private int rows;
 	private int cols;

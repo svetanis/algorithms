@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.matrix;
+package com.svetanis.algorithms.matrix.tictactoe;
 
 // 794. Valid Tic-Tac-Toe State
 
@@ -27,14 +27,14 @@ public final class ValidTicTacToe {
 			boolean row0 = board[i].charAt(0) == c;
 			boolean row1 = board[i].charAt(1) == c;
 			boolean row2 = board[i].charAt(2) == c;
-			if (row0 && row1 & row2) {
+			if (row0 && row1 && row2) {
 				return true;
 			}
 			// check column
 			boolean col0 = board[0].charAt(i) == c;
 			boolean col1 = board[1].charAt(i) == c;
 			boolean col2 = board[2].charAt(i) == c;
-			if (col0 && col1 & col2) {
+			if (col0 && col1 && col2) {
 				return true;
 			}
 		}
@@ -42,14 +42,14 @@ public final class ValidTicTacToe {
 		boolean dg10 = board[0].charAt(0) == c;
 		boolean dg11 = board[1].charAt(1) == c;
 		boolean dg12 = board[2].charAt(2) == c;
-		if (dg10 && dg11 & dg12) {
+		if (dg10 && dg11 && dg12) {
 			return true;
 		}
 		// check anti-diagonal
 		boolean dg20 = board[0].charAt(2) == c;
 		boolean dg21 = board[1].charAt(1) == c;
 		boolean dg22 = board[2].charAt(0) == c;
-		return dg20 && dg21 & dg22;
+		return dg20 && dg21 && dg22;
 	}
 
 	private int count(char c) {

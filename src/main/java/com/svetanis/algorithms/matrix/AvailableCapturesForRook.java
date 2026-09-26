@@ -3,7 +3,7 @@ package com.svetanis.algorithms.matrix;
 // 999. Available Captures for Rook
 
 public final class AvailableCapturesForRook {
-	// Time Complexity: O(n^2)
+	// Time Complexity: O(1) -- the board is always 8 x 8
 	// Space Complexity: O(1)
 
 	private static final int[] DIR = { -1, 0, 1, 0, -1 };

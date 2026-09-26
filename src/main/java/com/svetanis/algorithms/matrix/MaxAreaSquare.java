@@ -8,7 +8,7 @@ import java.util.Set;
 
 public final class MaxAreaSquare {
 	// Time Complexity: O(h^2 + v^2)
-	// Space Complexity: O(h^2 + v^2)
+	// Space Complexity: O(h + v^2) -- only the vertical gaps go into a set
 
 	private static final int MOD = (int) 1e9 + 7;
 

@@ -2,54 +2,30 @@ package com.svetanis.algorithms.matrix.rotate;
 
 import com.svetanis.java.base.utils.Print;
 
-// 48. Rotate Image
+// 48. Rotate Image, turned the other way: 90 degrees counter-clockwise, in place
 
-// A quarter-turn clockwise is two simpler moves, and either pair works:
-//   rotate:            flip the rows upside down, then transpose (lower half)
-//   rotateByTranspose: transpose (upper half), then reverse each row
-// Which pair to use is a free choice. The one thing NOT free is the order
-// inside a pair: swap the two moves and the grid turns counter-clockwise.
-// Forgot the order? Transpose Example 1 and compare it with the expected output.
+// The same two moves as clockwise, with the second move swapped:
+//   rotate:            reverse each row, then transpose (upper half)
+//   rotateByTranspose: transpose (upper half), then flip the rows upside down
+// Which pair to use is a free choice. The order inside a pair is not:
+// do either pair the other way round and the grid turns clockwise.
+// Forgot the order? Transpose the example and compare it with the expected output.
 
-public final class Rotate90InPlaceMirrorClockwise {
+public final class Rotate90InPlaceMirrorCounterClockwise {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(1), in place
 
 	public static void rotate(int[][] matrix) {
-		flipUpsideDown(matrix);
-		mirrorDiagonal(matrix);
+		reverseEachRow(matrix);
+		transposeUpperHalf(matrix);
 	}
 
 	public static void rotateByTranspose(int[][] matrix) {
 		transposeUpperHalf(matrix);
-		reverseEachRow(matrix);
-	}
-
-	// flips the grid upside down: row r trades places with row n - 1 - r
-	private static void flipUpsideDown(int[][] matrix) {
-		int n = matrix.length;
-		for (int row = 0; row < n / 2; ++row) { // top half only, or every row swaps back
-			for (int col = 0; col < n; ++col) {
-				int temp = matrix[row][col];
-				matrix[row][col] = matrix[n - row - 1][col];
-				matrix[n - row - 1][col] = temp;
-			}
-		}
+		flipUpsideDown(matrix);
 	}
 
 	// transpose: m[row][col] trades places with m[col][row]
-	private static void mirrorDiagonal(int[][] matrix) {
-		int n = matrix.length;
-		for (int row = 0; row < n; ++row) {
-			for (int col = 0; col < row; ++col) { // lower half: each pair swapped once
-				int temp = matrix[row][col];
-				matrix[row][col] = matrix[col][row];
-				matrix[col][row] = temp;
-			}
-		}
-	}
-
-	// transpose again, walking the other half - either half is correct
 	private static void transposeUpperHalf(int[][] matrix) {
 		int n = matrix.length;
 		for (int row = 0; row < n; row++) {
@@ -73,8 +49,18 @@ public final class Rotate90InPlaceMirrorClockwise {
 		}
 	}
 
+	// flips the grid upside down: row trades places with n - 1 - row
+	private static void flipUpsideDown(int[][] matrix) {
+		int n = matrix.length;
+		for (int row = 0; row < n / 2; row++) { // top half only, or every row swaps back
+			int[] temp = matrix[row]; // a row is one array: swap the references
+			matrix[row] = matrix[n - 1 - row];
+			matrix[n - 1 - row] = temp;
+		}
+	}
+
 	public static void main(String[] args) {
-		// expected [[7,4,1],[8,5,2],[9,6,3]]
+		// expected [[3,6,9],[2,5,8],[1,4,7]]
 		int m1[][] = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 		rotate(m1);
 		Print.print(m1);
@@ -82,7 +68,7 @@ public final class Rotate90InPlaceMirrorClockwise {
 		rotateByTranspose(t1);
 		Print.print(t1);
 
-		// expected [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+		// expected [[11,10,7,16],[9,8,6,12],[1,4,3,14],[5,2,13,15]]
 		int m2[][] = { { 5, 1, 9, 11 }, //
 				{ 2, 4, 8, 10 }, //
 				{ 13, 3, 6, 7 }, //

@@ -3,7 +3,8 @@ package com.svetanis.algorithms.matrix;
 // 766. Toeplitz Matrix
 
 public final class ToeplitzMatrixSimple {
-	// Time Complexity: O(n^2)
+	// Time Complexity: O(n * m)
+	// Space Complexity: O(1) -- and only the row above is ever read
 
 	public static boolean isToeplitz(int[][] matrix) {
 

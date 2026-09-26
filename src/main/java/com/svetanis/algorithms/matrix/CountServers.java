@@ -4,7 +4,7 @@ package com.svetanis.algorithms.matrix;
 
 public final class CountServers {
 	// Time Complexity: O(n * m)
-	// Space Complexity: O(n * m)
+	// Space Complexity: O(n + m) -- one count per row and per column
 
 	public static int countServers(int[][] grid) {
 		int n = grid.length;

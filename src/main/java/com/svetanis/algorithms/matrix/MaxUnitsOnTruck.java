@@ -1,13 +1,17 @@
 package com.svetanis.algorithms.matrix;
 
+import static java.util.Comparator.comparingInt;
+
 import java.util.Arrays;
 
 // 1710. Maximum Units on a Truck
 
-public final class MaxUnitsOnTrack {
+public final class MaxUnitsOnTruck {
+	// Time Complexity: O(k log k), k = boxTypes.length
+	// Space Complexity: O(log k) -- sorts the caller's boxTypes in place
 
 	public static int maxUnits(int[][] boxTypes, int truckSize) {
-		Arrays.sort(boxTypes, (a, b) -> b[1] - a[1]);
+		Arrays.sort(boxTypes, comparingInt((int[] a) -> a[1]).reversed());
 		int total = 0;
 		int boxes = truckSize;
 		for (int[] type : boxTypes) {
