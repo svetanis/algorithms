@@ -2,8 +2,9 @@ package com.svetanis.algorithms.math.geometry;
 
 // 892. Surface Area of 3D Shapes
 
-public class SurfaceArea3D {
+public final class SurfaceArea3D {
 	// Time Complexity: O(n^2)
+	// Space Complexity: O(1)
 
 	public static int surfaceArea(int[][] g) {
 		int area = 0;

@@ -2,8 +2,14 @@ package com.svetanis.algorithms.math;
 
 // 507. Perfect Number
 
+// Divisors come in pairs, i and n / i, with the smaller one at most
+// sqrt(n): 28 = 2 * 14 = 4 * 7. So look only up to sqrt(n) and add both of
+// each pair -- once when they are the same, as 6 * 6 = 36. 1 is counted
+// from the start, and n itself never is.
+
 public final class PerfectNumber {
-	// Time Complexity: O(n)
+	// Time Complexity: O(sqrt(n))
+	// Space Complexity: O(1)
 
 	public static boolean perfectNumber(int n) {
 		if (n == 1) {

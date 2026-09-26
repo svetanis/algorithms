@@ -24,7 +24,7 @@ public final class ComplexNumMultiplication {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(cnm("1+1i", "1+1i")); // 0 + 2i
-		System.out.println(cnm("1+-1i", "1+-1i")); // 0 +-2i
+		System.out.println(cnm("1+1i", "1+1i")); // 0+2i
+		System.out.println(cnm("1+-1i", "1+-1i")); // 0+-2i
 	}
 }

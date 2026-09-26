@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -12,7 +12,7 @@ import java.awt.Point;
 // of the areas of both rectangles minus
 // any overlapping area
 
-public class RectangleArea {
+public final class RectangleArea {
 	// Time Complexity: O(1)
 	// Space Complexity: O(1)
 

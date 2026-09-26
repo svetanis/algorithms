@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 // 3000. Maximum Area of Longest Diagonal Rectangle
 
-public class MaxAreaLongestDiagonalRectangle {
+public final class MaxAreaLongestDiagonalRectangle {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 

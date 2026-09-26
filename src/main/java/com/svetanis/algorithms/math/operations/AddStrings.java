@@ -3,15 +3,15 @@ package com.svetanis.algorithms.math.operations;
 // 415. Add Strings
 
 public final class AddStrings {
-  // Time Complexity: O(n)
-  // Space Complexity: O(n)
+  // Time Complexity: O(max(n, m)), n and m the two lengths
+  // Space Complexity: O(max(n, m)) for the answer
 
   public static String add(String num1, String num2) {
-  	int carry = 0;
-  	int i = num1.length() - 1;
-  	int j = num2.length() - 1;
-  	StringBuilder sb = new StringBuilder();
-  	while(i >= 0 || j >= 0 || carry > 0) {
+    int carry = 0;
+    int i = num1.length() - 1;
+    int j = num2.length() - 1;
+    StringBuilder sb = new StringBuilder();
+    while (i >= 0 || j >= 0 || carry > 0) {
       if (i >= 0) {
         carry += (num1.charAt(i) - '0');
         i--;
@@ -21,9 +21,9 @@ public final class AddStrings {
         j--;
       }
       sb.append(carry % 10);
-      carry /= 10;  	
-  	}
-  	return sb.reverse().toString();
+      carry /= 10;
+    }
+    return sb.reverse().toString();
   }
 
   public static void main(String[] args) {

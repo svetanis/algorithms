@@ -6,6 +6,11 @@ import java.util.List;
 
 // 4 * jumbo + 2 * small = tomatoSlices
 // jumbo + small = cheeseSlices
+//
+// Put jumbo = cheese - small into the first line:
+// 4 * cheese - 4 * small + 2 * small = tomato, so
+// small = (4 * cheese - tomato) / 2. It has to divide evenly, and neither
+// count may be negative.
 
 public final class CountBurgers {
 	// Time Complexity: O(1)
@@ -23,7 +28,7 @@ public final class CountBurgers {
 
 	public static void main(String[] args) {
 		System.out.println(burgers(16, 7)); // 1 6
-		System.out.println(burgers(17, 4));
-		System.out.println(burgers(4, 17));
+		System.out.println(burgers(17, 4)); // [], 17 tomato slices is odd
+		System.out.println(burgers(4, 17)); // [], too few tomato slices
 	}
 }

@@ -7,7 +7,9 @@ package com.svetanis.algorithms.math.operations;
 // using the operators + and -
 
 public final class SumTwoIntegersIterative {
-	// Time Complexity: O(n)
+	// Time Complexity: O(1) -- at most 32 passes, one per bit of an int
+	// (-1 + 1 takes all 32)
+	// Space Complexity: O(1)
 
 	public static int sum(int x, int y) {
 		// iterate till there is no carry

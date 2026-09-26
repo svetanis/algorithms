@@ -10,6 +10,9 @@ public final class FractionAdditionSubtraction {
 		if (Character.isDigit(s.charAt(0))) {
 			s = "+" + s;
 		}
+		// every denominator is 1..10, and each of them divides 6*7*8*9*10 =
+		// 30240, so every fraction turns into a whole count of 1/30240ths.
+		// Any common multiple of 1..10 works; the smallest is 2520
 		int commonDenominator = 6 * 7 * 8 * 9 * 10;
 		int total = add(s, commonDenominator);
 		int gcd = gcd(Math.abs(total), commonDenominator);

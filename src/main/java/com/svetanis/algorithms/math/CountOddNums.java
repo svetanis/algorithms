@@ -14,7 +14,9 @@ public final class CountOddNums {
 		return n / 2;
 	}
 
-	public static int countOdds2(int low, int high) {
+	// odd numbers in 1..x are (x + 1) / 2, so the answer is the odds up to
+	// high minus the odds below low
+	public static int countOddsByPrefix(int low, int high) {
 		int oddsUpToHigh = (high + 1) / 2;
 		int oddsBeforeLow = low / 2;
 		return oddsUpToHigh - oddsBeforeLow;
@@ -24,7 +26,7 @@ public final class CountOddNums {
 		System.out.println(countOdds(3, 7)); // 3
 		System.out.println(countOdds(8, 10)); // 1
 
-		System.out.println(countOdds2(3, 7)); // 3
-		System.out.println(countOdds2(8, 10)); // 1
+		System.out.println(countOddsByPrefix(3, 7)); // 3
+		System.out.println(countOddsByPrefix(8, 10)); // 1
 	}
 }

@@ -2,7 +2,7 @@ package com.svetanis.algorithms.math.gcd;
 
 // CSES: Common Divisors
 
-public final class GreatestCommonDivisor {
+public final class CommonDivisors {
 	// Time Complexity: O(n log n)
 	
 	private static final int N = 1000001;

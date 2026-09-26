@@ -6,6 +6,11 @@ public final class SmallestIntDivisibleByK {
 	// Time Complexity: O(k)
 	// Space Complexity: O(1)
 
+	// Keep only the remainder of 1, 11, 111, ... by k: the next one is
+	// (remainder * 10 + 1) % k, and the numbers themselves never need to be
+	// built. There are only k possible remainders, so within k lengths one
+	// is 0 -- or a remainder has repeated, and from there they cycle without
+	// ever reaching 0.
 	public static int smallestInt(int k) {
 		int n = 1 % k;
 		for (int len = 1; len <= k; len++) {

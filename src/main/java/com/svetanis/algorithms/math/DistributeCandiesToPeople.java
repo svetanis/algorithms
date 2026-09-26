@@ -4,7 +4,13 @@ import com.svetanis.java.base.utils.Print;
 
 // 1103. Distribute Candies to People
 
-public final class DistributeCandieToPeople {
+// Hand out 1, 2, 3, ... candies round the circle until they run out; the
+// last person gets whatever is left.
+
+public final class DistributeCandiesToPeople {
+	// Time Complexity: O(sqrt(candies) + people) -- after k turns
+	// 1 + 2 + ... + k = k(k + 1) / 2 candies are gone
+	// Space Complexity: O(people) for the answer
 
 	public static int[] distributeCandies(int candies, int people) {
 		int[] a = new int[people];

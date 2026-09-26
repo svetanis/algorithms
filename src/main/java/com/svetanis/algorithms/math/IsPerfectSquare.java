@@ -1,6 +1,8 @@
 package com.svetanis.algorithms.math;
 
-// 367. given a positive integer n,
+// 367. Valid Perfect Square
+
+// given a positive integer n,
 // return true if n is a perfect square
 // or false otherwise
 
@@ -15,11 +17,15 @@ package com.svetanis.algorithms.math;
 // numbers to a sum
 
 public final class IsPerfectSquare {
-	// Time Complexity: O(log n)
+	// Time Complexity: O(sqrt(n)) -- the k-th pass makes the sum k^2
+	// Space Complexity: O(1)
 
 	public static boolean isPerfectSquare(int n) {
 		int i = 1;
-		int sum = 0;
+		// long, not int: above 46340^2, the largest square an int holds, one
+		// more odd number overflows the sum to a negative, and the loop
+		// wraps around and around without landing on or above n
+		long sum = 0;
 		while (sum < n) {
 			sum += i;
 			if (sum == n) {
@@ -31,9 +37,11 @@ public final class IsPerfectSquare {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(isPerfectSquare(35));
-		System.out.println(isPerfectSquare(49));
-		System.out.println(isPerfectSquare(16));
-		System.out.println(isPerfectSquare(14));
+		System.out.println(isPerfectSquare(35)); // false
+		System.out.println(isPerfectSquare(49)); // true
+		System.out.println(isPerfectSquare(16)); // true
+		System.out.println(isPerfectSquare(14)); // false
+		System.out.println(isPerfectSquare(Integer.MAX_VALUE)); // false
+		System.out.println(isPerfectSquare(2147395600)); // true, 46340^2
 	}
 }

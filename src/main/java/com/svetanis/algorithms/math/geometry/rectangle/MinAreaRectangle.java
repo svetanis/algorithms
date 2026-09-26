@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.abs;

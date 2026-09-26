@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 // 976. Largest Perimeter Triangle
 
-public class LargestPerimeterTriangle {
+public final class LargestPerimeterTriangle {
 	// Time Complexity: O(n log n)
 	// Space Complexity: O(1)
 
 	public static int largestPerimeter(int[] a) {
-		Arrays.sort(a);
+		Arrays.sort(a); // sorts the caller's array in place
 		for (int i = a.length - 1; i >= 2; i--) {
 			int sum = a[i - 1] + a[i - 2];
 			if (sum > a[i]) {

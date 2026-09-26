@@ -2,7 +2,17 @@ package com.svetanis.algorithms.math;
 
 // 972. Equal Rational Numbers
 
+// Turn each string into a double, writing the repeating part out 20 times,
+// and call them equal when they are within 1e-9.
+//
+// WRONG on some inputs, and kept as it is: two different values can be
+// closer than any tolerance a double can check. "0.3804(5645)" and
+// "0.380(456)" are 8.1e-10 apart and this says they are equal. The exact
+// version, comparing them as fractions, is EqualRationalNumsExact.
+
 public final class EqualRationalNums {
+	// Time Complexity: O(1) -- every part is at most 4 digits
+	// Space Complexity: O(1)
 
 	private static final double DIFF = 1E-9;
 

@@ -32,7 +32,7 @@ public final class MinTimeDifference {
 
 	public static int minDiff(List<String> points) {
 		List<Integer> minutes = points.stream()
-				.map(t -> minutes(t))
+				.map(MinTimeDifference::minutes)
 				.sorted().toList();
 		List<Integer> list = new ArrayList<>();
 		list.addAll(minutes);

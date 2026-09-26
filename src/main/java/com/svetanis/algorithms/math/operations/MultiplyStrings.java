@@ -35,6 +35,10 @@ public final class MultiplyStrings {
 			int d1 = s1.charAt(i) - '0';
 			for (int j = len2 - 1; j >= 0; j--) {
 				int d2 = s2.charAt(j) - '0';
+				// counting from the right, digit i is worth 10^(len1 - 1 - i) and
+				// digit j 10^(len2 - 1 - j); their product is worth
+				// 10^(len1 + len2 - 2 - i - j), which is slot i + j + 1 of an
+				// array of len1 + len2 slots read left to right
 				product[i + j + 1] += d1 * d2;
 			}
 		}

@@ -11,6 +11,9 @@ public final class ReverseInteger {
 		int min = Integer.MIN_VALUE / 10;
 		int max = Integer.MAX_VALUE / 10;
 		while (num != 0) {
+			// checked before the multiply by 10, which is where it would
+			// overflow. reverse == max is still safe: that happens only on the
+			// last digit, which is the input's first digit, at most 2
 			if (reverse < min || reverse > max) {
 				return 0;
 			}

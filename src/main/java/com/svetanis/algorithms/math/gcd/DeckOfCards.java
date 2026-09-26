@@ -2,8 +2,18 @@ package com.svetanis.algorithms.math.gcd;
 
 // 914. X of a Kind in a Deck of Cards
 
+// A group size X works only if it divides the count of every value: four
+// 1s and six 2s split into groups of 2, never of 4. The sizes that divide
+// every count are exactly the divisors of their gcd, so some X >= 2 works
+// exactly when the gcd of the counts is at least 2.
+//
+// counts 4, 6: gcd 2 -> true
+// counts 3, 3, 2: gcd 1 -> false
+
 public final class DeckOfCards {
-	// Time Complexity: O(n + m * log k)
+	// Time Complexity: O(n + 10^4 * log n), 10^4 being the size of the
+	// count array (card values are below 10^4) and n the deck size
+	// Space Complexity: O(10^4) for the counts
 
 	public static boolean hasGroupSizeX(int[] deck) {
 		int[] counts = counts(deck);
@@ -11,12 +21,12 @@ public final class DeckOfCards {
 		return gcd >= 2;
 	}
 
+	// gcd(0, c) is c, so 0 is a safe start, and a value that never appears
+	// (count 0) leaves the gcd unchanged
 	private static int gcd(int[] counts) {
-		int gcd = -1;
+		int gcd = 0;
 		for (int count : counts) {
-			if (count > 0) {
-				gcd = gcd == -1 ? count : gcd(gcd, count);
-			}
+			gcd = gcd(gcd, count);
 		}
 		return gcd;
 	}

@@ -2,7 +2,12 @@ package com.svetanis.algorithms.math;
 
 // 949. Largest Time for Given Digits
 
+// Try every time of day, 23:59 down to 00:00, and keep the largest whose
+// four digits are exactly the four given (same digits, same counts).
+
 public final class LargestTimeForGivenDigits {
+	// Time Complexity: O(1) -- always 24 * 60 times
+	// Space Complexity: O(1)
 
 	public static String largestTimeFromDigits(int[] a) {
 		int max = -1;
@@ -48,6 +53,6 @@ public final class LargestTimeForGivenDigits {
 		int[] a1 = { 1, 2, 3, 4 };
 		System.out.println(largestTimeFromDigits(a1)); // 23:41
 		int[] a2 = { 5, 5, 5, 5 };
-		System.out.println(largestTimeFromDigits(a2));
+		System.out.println(largestTimeFromDigits(a2)); // "", 55 is no hour
 	}
 }

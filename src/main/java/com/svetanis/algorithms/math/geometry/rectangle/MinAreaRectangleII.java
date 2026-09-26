@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,6 +35,12 @@ public final class MinAreaRectangleII {
 					Point p3 = points.get(k);
 					int x4 = p2.x - p1.x + p3.x;
 					int y4 = p2.y - p1.y + p3.y;
+					// off the grid, the fourth corner cannot be an input point -- and
+					// encode() would not keep it apart from one: (200, 40001) and
+					// (201, 0) both encode to 8040201
+					if (x4 < 0 || x4 > 40000 || y4 < 0 || y4 > 40000) {
+						continue;
+					}
 					int hash = encode(new Point(x4, y4));
 					if (set.contains(hash)) {
 						int v1 = (p2.x - p1.x) * (p3.x - p1.x);
@@ -72,6 +78,8 @@ public final class MinAreaRectangleII {
 		return list;
 	}
 
+	// unique only for 0 <= x, y <= 40000: y never reaches 40001, so it never
+	// spills into the next x
 	private static int encode(Point p) {
 		return p.x * 40001 + p.y;
 	}
@@ -83,6 +91,9 @@ public final class MinAreaRectangleII {
 		System.out.println(minArea(points2)); // 1
 		int[][] points3 = { { 0, 3 }, { 1, 2 }, { 3, 1 }, { 1, 3 }, { 2, 1 } };
 		System.out.println(minArea(points3)); // 0
+		// no rectangle: the fourth corner of the first three is (200, 40001)
+		int[][] points4 = { { 200, 0 }, { 0, 40000 }, { 400, 1 }, { 201, 0 } };
+		System.out.println(minArea(points4)); // 0
 	}
 
 	private static class Point {

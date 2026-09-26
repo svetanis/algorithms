@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 // 836. Rectangle Overlap
 
-public class RectangleOverlap {
+public final class RectangleOverlap {
 	// Time Complexity: O(1)
 	// Space Complexity: O(1)
 
@@ -15,15 +15,12 @@ public class RectangleOverlap {
 		int bot2X = rec2[0], bot2Y = rec2[1];
 		// top right of second rectangle x4
 		int top2X = rec2[2], top2Y = rec2[3];
-		// one rectangle is to the left of the other
-		boolean left = bot2X >= top1X || top2X <= bot1X;
-		// one rectangle is to the right of the other
-		boolean right = top1X <= bot2X || bot1X >= top2X;
-		// one rectangle is above the other
-		boolean above = bot2Y >= top1Y || bot1Y >= top2Y;
-		// one rectangle is below the other
-		boolean below = top1Y <= bot2Y || top2Y <= bot1Y;
-		return !(left || right || above || below);
+		// side by side: one ends at or before the other starts, left to right
+		boolean sideBySide = top1X <= bot2X || top2X <= bot1X;
+		// stacked: one ends at or before the other starts, bottom to top
+		boolean stacked = top1Y <= bot2Y || top2Y <= bot1Y;
+		// touching along an edge counts as separate: the overlap area is 0
+		return !(sideBySide || stacked);
 	}
 
 	public static void main(String[] args) {

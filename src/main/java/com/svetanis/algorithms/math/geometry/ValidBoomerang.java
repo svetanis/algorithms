@@ -2,10 +2,13 @@ package com.svetanis.algorithms.math.geometry;
 
 // 1037. Valid Boomerang
 
-// slope1 = (y2 - y1)/(x2 - x1)
-// slope2 = (y3 - y2)/(x3 - x2)
+// Three points make a boomerang when they are not on one line: the slopes
+// p1 -> p2 and p2 -> p3 differ.
+//   (y2 - y1)/(x2 - x1) != (y3 - y2)/(x3 - x2)
+// Cross-multiplied, so nothing is divided and a vertical line needs no
+// special case -- this is the cross product being nonzero.
 
-public class ValidBoomerang {
+public final class ValidBoomerang {
 	// Time Complexity: O(1)
 	// Space Complexity: O(1)
 

@@ -2,7 +2,7 @@ package com.svetanis.algorithms.math.geometry;
 
 // 1266. Minimum Time Visiting All Points
 
-public class MinTimeVisitingAllPoints {
+public final class MinTimeVisitingAllPoints {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 

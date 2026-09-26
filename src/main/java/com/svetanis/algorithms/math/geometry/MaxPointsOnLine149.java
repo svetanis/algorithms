@@ -7,7 +7,7 @@ import java.util.Map;
 
 public final class MaxPointsOnLine149 {
 	// Time Complexity: O(n^2 * log(min(dx,dy))
-	// Space Complexity: O(n^2)
+	// Space Complexity: O(n) -- the map is rebuilt for each point
 
 	public static int maxPoints(int[][] grid) {
 		int max = 1;

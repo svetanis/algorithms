@@ -6,8 +6,10 @@ import com.svetanis.java.base.utils.Print;
 
 public final class PlusOne66 {
   // Time Complexity: O(n)
-  // Space Complexity: O(1)
+  // Space Complexity: O(1), or O(n) when every digit is 9 and a longer
+  // array is needed
 
+  // changes the caller's array in place, and returns it
   public static int[] plusOne(int[] a) {
     int n = a.length;
     for (int i = n - 1; i >= 0; i--) {

@@ -4,6 +4,11 @@ package com.svetanis.algorithms.math;
 
 public final class CalculateMoneyInLeetcodeBank {
 
+	// Week w (counting from 0) pays w + 1, w + 2, ..., w + 7: 28 + 7w in all.
+	// So the full weeks pay 28 * weeks + 7 * (0 + 1 + ... + (weeks - 1)),
+	// and the days of the last, unfinished week are added one by one.
+	// Time Complexity: O(1) -- at most 6 leftover days
+	// Space Complexity: O(1)
 	public static int totalMoney(int n) {
 		int total = 0;
 		int weeks = n / 7;
@@ -15,7 +20,11 @@ public final class CalculateMoneyInLeetcodeBank {
 		return total;
 	}
 
-	public static int totalMoney2(int n) {
+	// every day one by one: each Monday pays one more than the last Monday,
+	// and each other day one more than the day before
+	// Time Complexity: O(n)
+	// Space Complexity: O(1)
+	public static int totalMoneyDayByDay(int n) {
 		int monday = 1;
 		int prev = monday + 1;
 		int count = 0;
@@ -38,5 +47,8 @@ public final class CalculateMoneyInLeetcodeBank {
 		System.out.println(totalMoney(4)); // 10
 		System.out.println(totalMoney(10)); // 37
 		System.out.println(totalMoney(20)); // 96
+		System.out.println(totalMoneyDayByDay(4)); // 10
+		System.out.println(totalMoneyDayByDay(10)); // 37
+		System.out.println(totalMoneyDayByDay(20)); // 96
 	}
 }

@@ -7,7 +7,9 @@ package com.svetanis.algorithms.math.operations;
 // using the operators + and -
 
 public final class SumTwoIntegersRecursive {
-	// Time Complexity: O(n)
+	// Time Complexity: O(1) -- at most 32 calls, one per bit of an int
+	// (-1 + 1 takes all 32)
+	// Space Complexity: O(1) -- at most 32 frames on the stack
 
 	public static int sum(int x, int y) {
 		if (y == 0) {

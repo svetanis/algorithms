@@ -3,7 +3,8 @@ package com.svetanis.algorithms.math;
 // 1295. Find Numbers with Even Number of Digits
 
 public final class DigitCount {
-	// Time Complexity: O(n * k)
+	// Time Complexity: O(n * d), d the digits in a number (at most 6 here)
+	// Space Complexity: O(1)
 
 	public static int digitCount(int[] a) {
 		int count = 0;

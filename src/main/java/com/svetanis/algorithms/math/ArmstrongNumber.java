@@ -3,6 +3,8 @@ package com.svetanis.algorithms.math;
 // 1134. Armstrong Number
 
 public final class ArmstrongNumber {
+	// Time Complexity: O(d), d the number of digits
+	// Space Complexity: O(1)
 
 	public static boolean isArmstrong(int num) {
 		int sum = 0;

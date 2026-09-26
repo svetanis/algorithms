@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 // 3024. Type of Triangle
 
-public class TypeOfTriangle {
+public final class TypeOfTriangle {
 	// Time Complexity: O(1)
 	// Space Complexity: O(1)
 
@@ -25,7 +25,7 @@ public class TypeOfTriangle {
 	}
 
 	public static String triangleTypeSorted(int[] nums) {
-		Arrays.sort(nums);
+		Arrays.sort(nums); // sorts the caller's array in place
 		int a = nums[0];
 		int b = nums[1];
 		int c = nums[2];

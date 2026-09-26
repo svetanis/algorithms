@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 import java.util.HashMap;
 import java.util.Map;

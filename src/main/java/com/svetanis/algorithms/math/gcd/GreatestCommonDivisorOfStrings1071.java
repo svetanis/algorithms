@@ -2,8 +2,15 @@ package com.svetanis.algorithms.math.gcd;
 
 // 1071. Greatest Common Divisor of Strings
 
+// If both strings are copies of one block, gluing them in either order
+// gives the same string: "ABCABC" + "ABC" and "ABC" + "ABCABC" are both
+// "ABCABCABC". If s1 + s2 differs from s2 + s1, no block exists.
+//
+// When a block exists, the longest one has length gcd(len1, len2):
+// "ABABAB" (6) and "ABAB" (4) -> gcd 2 -> "AB".
+
 public final class GreatestCommonDivisorOfStrings1071 {
-  // Time Complexity: O(n + m)
+  // Time Complexity: O(n + m) for the two concatenations
   // Space Complexity: O(n + m)
 
   public static String gcd(String s1, String s2) {

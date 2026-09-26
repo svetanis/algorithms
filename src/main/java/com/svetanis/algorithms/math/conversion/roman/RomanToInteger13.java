@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 // 13. Roman to Integer
-// main.java.numeric.conversions.roman
 
 public final class RomanToInteger13 {
   // Time Complexity: O(n)
+  // Space Complexity: O(1)
 
-  private Map<Character, Integer> map;
+  private final Map<Character, Integer> map;
 
   public RomanToInteger13() {
     map = init();
   }
 
+  // read from the right: a symbol smaller than the one after it (the I in
+  // IV) is subtracted, anything else is added
   public int romanToInt(String roman) {
     int prev = 0;
     int total = 0;
@@ -54,13 +56,13 @@ public final class RomanToInteger13 {
     System.out.println(num.romanToInt("XIII")); // 13
     System.out.println(num.romanToInt("CCVII")); // 207
     System.out.println(num.romanToInt("MLXVI")); // 1066
-    System.out.println(num.romanToInt("XL")); /// 40
+    System.out.println(num.romanToInt("XL")); // 40
     System.out.println(num.romanToInt("XC")); // 90
     System.out.println(num.romanToInt("CD")); // 400
-    System.out.println(num.romanToInt("CM")); /// 900
+    System.out.println(num.romanToInt("CM")); // 900
     System.out.println(num.romanToInt("MCMIV")); // 1904
     System.out.println(num.romanToInt("MCMLIV")); // 1954
-    System.out.println(num.romanToInt("MCMXC")); /// 1990
+    System.out.println(num.romanToInt("MCMXC")); // 1990
     System.out.println(num.romanToInt("MMVIII")); // 2008
 
   }

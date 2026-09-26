@@ -1,8 +1,8 @@
-package com.svetanis.algorithms.math.geometry;
+package com.svetanis.algorithms.math.geometry.rectangle;
 
 // 3047. Find the Largest Area of Square Inside Two Rectangles
 
-public class MaxSquareAreaInsideTwoRectangles {
+public final class MaxSquareAreaInsideTwoRectangles {
 	// Time Complexity: O(n^2)
 	// Space Complexity: O(1)
 

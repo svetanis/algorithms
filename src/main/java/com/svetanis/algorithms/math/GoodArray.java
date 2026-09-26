@@ -2,7 +2,12 @@ package com.svetanis.algorithms.math;
 
 // 1250. Check If It Is a Good Array
 
+// Some multiples of the numbers add up to 1 exactly when the numbers have
+// no common divisor other than 1 (Bezout): gcd of the whole array is 1.
+
 public final class GoodArray {
+	// Time Complexity: O(n * log(max))
+	// Space Complexity: O(log(max)) for the gcd recursion
 
 	public static boolean isGoodArray(int[] a) {
 		int gcd = 0;

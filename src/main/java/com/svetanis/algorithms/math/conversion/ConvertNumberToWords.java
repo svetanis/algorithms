@@ -1,9 +1,21 @@
 package com.svetanis.algorithms.math.conversion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+// 273. Integer to English Words
+
+// Read the number in groups of three digits, from the billions down:
+// 1,234,567 is "One Million", "Two Hundred Thirty Four Thousand",
+// "Five Hundred Sixty Seven". Each group is said the same way, followed
+// by its scale word. Every word goes into one list, and the list is
+// joined with single spaces -- so no piece has to remember its own space.
+
 public final class ConvertNumberToWords {
+	// Time Complexity: O(1) -- at most four groups of three digits
+	// Space Complexity: O(1)
 
 	private static final Map<Integer, String> DIGITS = numberToWords();
 
@@ -11,19 +23,23 @@ public final class ConvertNumberToWords {
 		if (n == 0) {
 			return "Zero";
 		}
-		StringBuilder sb = new StringBuilder();
-		for (int i = 1000000000; i >= 1000; i /= 1000) {
+		List<String> words = new ArrayList<>();
+		// i is the scale: billion, million, thousand
+		for (int i = 1_000_000_000; i >= 1000; i /= 1000) {
 			if (n >= i) {
-				sb.append(threeDigits(n / i)).append(" ").append(DIGITS.get(i));
+				words.add(threeDigits(n / i));
+				words.add(DIGITS.get(i));
 				n %= i;
 			}
 		}
 		if (n > 0) {
-			sb.append(threeDigits(n));
+			words.add(threeDigits(n));
 		}
-		return sb.toString();
+		return String.join(" ", words);
 	}
 
+	// 1..999 in words; each part is added with a space in front, and the
+	// first space is cut off at the end
 	private static String threeDigits(int n) {
 		StringBuilder sb = new StringBuilder();
 		// convert hundreds place
@@ -42,13 +58,14 @@ public final class ConvertNumberToWords {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(convert(9923));
-		System.out.println(convert(523));
-		System.out.println(convert(89));
-
-		System.out.println(convert(123));
-		System.out.println(convert(12345));
+		System.out.println(convert(123)); // One Hundred Twenty Three
+		System.out.println(convert(12345)); // Twelve Thousand Three Hundred Forty Five
+		// One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven
 		System.out.println(convert(1234567));
+
+		System.out.println(convert(9923)); // Nine Thousand Nine Hundred Twenty Three
+		System.out.println(convert(1000010)); // One Million Ten
+		System.out.println(convert(0)); // Zero
 	}
 
 	private static Map<Integer, String> numberToWords() {

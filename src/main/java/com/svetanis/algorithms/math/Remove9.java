@@ -2,7 +2,14 @@ package com.svetanis.algorithms.math;
 
 // 660. Remove 9
 
+// With 9 removed, the numbers left use only the digits 0..8 -- they are
+// exactly the base-9 numerals, in order: 1, 2, ..., 8, 10, 11, ... So the
+// n-th one is n written in base 9, read as if it were decimal.
+//   9 in base 9 is "10", so the 9th number is 10
+
 public final class Remove9 {
+	// Time Complexity: O(log n), one base-9 digit per pass
+	// Space Complexity: O(1)
 
 	public static int newInteger(int n) {
 		int base = 1;
@@ -15,7 +22,8 @@ public final class Remove9 {
 		return result;
 	}
 
-	public static int newInteger2(int n) {
+	// the same base-9 digits, collected as a String
+	public static int newIntegerByString(int n) {
 		String s = "";
 		while (n > 0) {
 			s = (n % 9) + s;
@@ -24,8 +32,9 @@ public final class Remove9 {
 		return Integer.parseInt(s);
 	}
 
-	// time limit exceeded
-	public static int newInteger3(int n) {
+	// the brute force: count up, skipping any number with a 9 in it.
+	// O(answer) -- too slow for LeetCode at n up to 8 * 10^8
+	public static int newIntegerCountingUp(int n) {
 		int num = 0;
 		int count = 0;
 		while (count < n) {
@@ -39,5 +48,8 @@ public final class Remove9 {
 
 	public static void main(String[] args) {
 		System.out.println(newInteger(9)); // 10
+		System.out.println(newInteger(10)); // 11
+		System.out.println(newIntegerByString(9)); // 10
+		System.out.println(newIntegerCountingUp(9)); // 10
 	}
 }

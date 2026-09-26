@@ -2,7 +2,9 @@ package com.svetanis.algorithms.math.geometry;
 
 // 593. Valid Square
 
-public class ValidSquare {
+public final class ValidSquare {
+	// Time Complexity: O(1)
+	// Space Complexity: O(1)
 
 	public static boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
 		boolean one = validate(p1, p2, p3);

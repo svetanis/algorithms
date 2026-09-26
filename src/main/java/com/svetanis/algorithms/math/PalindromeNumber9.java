@@ -3,7 +3,7 @@ package com.svetanis.algorithms.math;
 // 9. Palindrome Number
 
 public final class PalindromeNumber9 {
-	// Time Complexity: O(n)
+	// Time Complexity: O(log n), one pass per digit
 	// Space Complexity: O(1)
 
 	public static boolean palindrome(int num) {

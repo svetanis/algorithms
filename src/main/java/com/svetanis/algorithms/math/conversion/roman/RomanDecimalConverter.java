@@ -5,11 +5,10 @@ import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.svetanis.java.base.Preconditions.checkNotNull;
 import static com.svetanis.java.base.collect.Lists.sort;
-import static java.lang.Integer.MIN_VALUE;
 import static java.util.regex.Pattern.compile;
 
 import java.util.List;
-import java.util.regex.Matcher;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import com.google.common.base.Converter;
@@ -19,34 +18,51 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+// Both directions of Roman numerals behind one Guava Converter, with the
+// input checked first: intToRoman and romanToInt return an empty Optional
+// for a number or a string that has no answer, never a made-up value.
+//
+// Up to 4999 (MMMM), one more M than the usual 3999 allows.
+
 public final class RomanDecimalConverter {
+	// Time Complexity: O(1) each way -- at most 4999, so a bounded number of symbols
+	// Space Complexity: O(1)
 
-	private static final BiMap<Integer, String> bimap = build();
-	private static final Converter<Integer, String> CONVERTER = new RomanConverter(bimap);
+	private static final int MAX = 4999;
 
+	// one group per decimal place: thousands, hundreds, tens, ones. Each
+	// place is either a subtractive pair (CM, CD) or an optional five-symbol
+	// followed by up to three ones-symbols (D?C{0,3})
+	private static final Pattern VALID = compile("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$");
+
+	private static final BiMap<Integer, String> BIMAP = build();
+	private static final Converter<Integer, String> CONVERTER = new RomanConverter(BIMAP);
+
+	// no checks on this path: converter().convert(0) is ""
 	public static Converter<Integer, String> converter() {
 		return CONVERTER;
 	}
 
-	public static String intToRoman(int num) {
-		return converter().convert(num);
-	}
-
-	public static int romanToInt(String roman) {
-		if (isValid(roman)) {
-			return converter().reverse().convert(roman);
-		} else {
-			return MIN_VALUE;
+	// empty when num is outside 1..4999
+	public static Optional<String> intToRoman(int num) {
+		if (num < 1 || num > MAX) {
+			return Optional.empty();
 		}
+		return Optional.of(converter().convert(num));
 	}
 
+	// empty when roman is not a numeral, "" included
+	public static Optional<Integer> romanToInt(String roman) {
+		if (!isValid(roman)) {
+			return Optional.empty();
+		}
+		return Optional.of(converter().reverse().convert(roman));
+	}
+
+	// the pattern matches "" (every group may be empty), so that is
+	// turned away first
 	private static boolean isValid(String roman) {
-		String one = "^M{0,4}(CM|CD|D?C{0,3})";
-		String two = "(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$";
-		String pattern = one + two;
-		Pattern pat = compile(pattern);
-		Matcher matcher = pat.matcher(roman);
-		return matcher.matches();
+		return !roman.isEmpty() && VALID.matcher(roman).matches();
 	}
 
 	public static class RomanConverter extends Converter<Integer, String> {
@@ -107,20 +123,17 @@ public final class RomanDecimalConverter {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(intToRoman(3));
-		System.out.println(intToRoman(4));
-		System.out.println(intToRoman(5));
-		System.out.println(intToRoman(9));
-		System.out.println(intToRoman(10));
-		System.out.println(intToRoman(11));
-		System.out.println(intToRoman(40));
-		System.out.println(intToRoman(1904));
+		int[] nums = { 3, 4, 5, 9, 10, 11, 40, 1904, 0 };
+		for (int num : nums) {
+			// III, IV, V, IX, X, XI, XL, MCMIV, out of range
+			System.out.println(intToRoman(num).orElse("out of range"));
+		}
 
 		System.out.println();
 
 		List<String> list = getList();
 		for (String s : list) {
-			System.out.println(romanToInt(s));
+			System.out.println(romanToInt(s).map(String::valueOf).orElse("not valid"));
 		}
 
 	}

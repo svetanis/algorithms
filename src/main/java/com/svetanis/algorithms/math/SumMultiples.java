@@ -6,13 +6,19 @@ import java.util.stream.IntStream;
 
 public final class SumMultiples {
 
+	// Add the multiples of 3, of 5 and of 7. A multiple of 15, 21 or 35 was
+	// added twice, so take those off once. A multiple of 105 was added three
+	// times and taken off three times, so add it back.
+	// Time Complexity: O(1)
+	// Space Complexity: O(1)
 	public static int sumMultiples(int n) {
-		int sum = f(n, 3) + f(n, 5) + f(n, 7);
-		int intersection = f(n, 15) + f(n, 21) + f(n, 35);
-		return sum - intersection + f(n, 105);
+		int sum = sumOfMultiples(n, 3) + sumOfMultiples(n, 5) + sumOfMultiples(n, 7);
+		int intersection = sumOfMultiples(n, 15) + sumOfMultiples(n, 21) + sumOfMultiples(n, 35);
+		return sum - intersection + sumOfMultiples(n, 105);
 	}
 
-	private static int f(int n, int x) {
+	// x + 2x + ... + mx = x * m(m + 1) / 2, with m = n / x of them
+	private static int sumOfMultiples(int n, int x) {
 		int m = n / x;
 		return (1 + m) * x * m / 2;
 	}
