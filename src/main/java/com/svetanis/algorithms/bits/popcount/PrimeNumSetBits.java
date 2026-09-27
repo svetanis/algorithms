@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.bits;
+package com.svetanis.algorithms.bits.popcount;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,6 +10,7 @@ public final class PrimeNumSetBits {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 
+	// right <= 10^6 < 2^20, so a count of 1s is at most 20: these are all the primes it can be
 	private static final Set<Integer> PRIMES = Set.of(2, 3, 5, 7, 11, 13, 17, 19);
 
 	public static int countPrimeSetBits(int left, int right) {
@@ -28,10 +29,10 @@ public final class PrimeNumSetBits {
 		Arrays.fill(primes, true);
 		primes[0] = primes[1] = false;
 		Set<Integer> set = new HashSet<>();
-		for (int i = 2; i < n; ++i) {
+		for (int i = 2; i <= n; ++i) {
 			if (primes[i]) {
 				set.add(i);
-				// mark the multiple of i as non-prime number
+				// mark the multiples of i from i * i: smaller ones have a smaller factor
 				for (int j = i; i * j <= n; ++j) {
 					primes[i * j] = false;
 				}

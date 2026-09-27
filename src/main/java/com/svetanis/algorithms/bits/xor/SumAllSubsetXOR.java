@@ -2,22 +2,26 @@ package com.svetanis.algorithms.bits.xor;
 
 // 1863. Sum of All Subset XOR Totals
 
+// visit every subset once, carrying its XOR down the recursion
+
 public final class SumAllSubsetXOR {
 	// Time Complexity: O(2^n)
+	// Space Complexity: O(n), the recursion
 
 	private int total;
 	
 	public int subsetXorSum(int[] a) {
+		total = 0; // the total belongs to this call only
 		dfs(a, 0, 0);
 		return total;
 	}
 	
 	private void dfs(int[] a, int index, int xor) {
-		total += xor;
+		total += xor; // every call is one subset
 		for(int i = index; i < a.length; i++) {
-			xor ^= a[i];
+			xor ^= a[i]; // choose a[i]
 			dfs(a, i + 1, xor);
-			xor ^= a[i];
+			xor ^= a[i]; // unchoose: ^ undoes itself
 		}
 	}
 

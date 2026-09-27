@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.bits.xor;
+package com.svetanis.algorithms.bits.popcount;
 
 // given two non-neg integers, return the number of bits
 // set to 1 in the binary representation of the number
@@ -9,12 +9,13 @@ package com.svetanis.algorithms.bits.xor;
 // assume that a and b are integers within the range [0.. 100,000,000]
 
 public final class CountBitsInProduct {
+	// Time Complexity: O(popcount of a * b) -- at most 54 passes, a * b < 2^54
 
 	public static int solution(int a, int b) {
-		long n = (long) a * (long) b;
+		long n = (long) a * (long) b; // up to 10^16: past int, inside long
 		int count = 0;
 		while (n != 0) {
-			// clear the least significant bit
+			// clear the lowest 1: one pass per 1
 			n = n & (n - 1);
 			count++;
 		}

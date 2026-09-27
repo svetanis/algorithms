@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.bits.xor;
 
+import static com.svetanis.java.base.utils.Print.print;
+
 // 260. Single Number III
 
 // in a non-empty array of integers,
@@ -8,7 +10,11 @@ package com.svetanis.algorithms.bits.xor;
 // find the two numbers that appear
 // only once
 
-public final class TwoSingleNumbers {
+// XOR of everything is x ^ y, which has a 1 wherever x and y differ.
+// Split the array on one such slot: x and y land in different halves,
+// both copies of every pair land in the same half, so each half is 136
+
+public final class SingleNumberIII {
 	// Time Complexity: O(n)
 
 	public static int[] single(int[] a) {
@@ -17,7 +23,7 @@ public final class TwoSingleNumbers {
 		for (int i = 0; i < a.length; i++) {
 			xor = xor ^ a[i];
 		}
-		// rightmost bit that is 1
+		// the lowest 1 of x ^ y: a slot where x and y differ, already a mask
 		int rmb = xor & ~(xor - 1);
 		int x = 0, y = 0;
 		for (int i = 0; i < a.length; i++) {
@@ -33,18 +39,18 @@ public final class TwoSingleNumbers {
 
 	public static void main(String[] args) {
 		int[] a1 = { 1, 2, 1, 3, 2, 5 };
-		System.out.println(single(a1)); // [3,5]
+		print(single(a1)); // [3,5]
 
 		int[] a2 = { -1, 0 };
-		System.out.println(single(a2)); // [-1,0]
+		print(single(a2)); // [-1,0]
 
 		int[] a3 = { 0, 1 };
-		System.out.println(single(a3)); // [1,0]
+		print(single(a3)); // [1,0]
 
 		int[] a4 = { 1, 4, 2, 1, 3, 5, 6, 2, 3, 5 };
-		System.out.println(single(a4));
+		print(single(a4)); // [6,4]
 
 		int[] a5 = { 2, 1, 3, 2 };
-		System.out.println(single(a5));
+		print(single(a5)); // [3,1]
 	}
 }

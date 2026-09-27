@@ -8,6 +8,8 @@ package com.svetanis.algorithms.bits.xor;
 
 // XOR of two same numbers returns zero
 // XOR with zero returns the same number
+// and the order does not matter, so every
+// pair cancels wherever its two copies are
 
 public final class SingleNumber {
 	// Time Complexity: O(n)
@@ -15,7 +17,7 @@ public final class SingleNumber {
 	public static int single(int[] a) {
 		int xor = 0;
 		for (int num : a) {
-			xor = xor ^ num;
+			xor = xor ^ num; // pairs cancel, the single is left
 		}
 		return xor;
 	}

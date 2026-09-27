@@ -4,14 +4,20 @@ import com.svetanis.java.base.utils.Print;
 
 // 645. Set Mismatch
 
-public final class DuplicateAndMissing {
+// XOR the array with 1..n: dup appears three times, missing once and
+// every other number twice, so dup ^ missing is left. They differ in
+// some slot; split both lists on it, and in each half everything but
+// one of the two appears an even number of times. A last pass says
+// which of them is the duplicate.
+
+public final class SetMismatch645 {
 	// Time Complexity: O(n)
 	// Space Complexity: O(1)
 
 	public static int[] setMismatch(int[] a) {
 		int xor = xor(a);
 		int x = separate(a, xor);
-		int y = xor ^ x;
+		int y = xor ^ x; // xor is x ^ y, so ^ x leaves y
 		return segregate(a, x, y);
 	}
 
@@ -39,11 +45,11 @@ public final class DuplicateAndMissing {
 	}
 
 	private static int separate(int[] a, int xor) {
-		// get the rightmost set bit
+		// a slot where dup and missing differ
 		int rsb = xor & -xor; // xor & ~(xor - 1);
 		int x = 0;
 		for (int i = 1; i <= a.length; ++i) {
-			if ((i & rsb) > 0) {
+			if ((i & rsb) > 0) { // only the half with that slot on
 				x = x ^ i;
 			}
 			if ((a[i - 1] & rsb) > 0) {

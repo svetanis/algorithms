@@ -1,9 +1,13 @@
-package com.svetanis.algorithms.bits.xor;
+package com.svetanis.algorithms.bits.popcount;
 
 // 477. Total Hamming Distance
 
+// two numbers differ in slot i exactly when one has 1 there and the
+// other 0, so slot i adds ones * zeros to the total over all pairs
+
 public final class TotalHammingDistance {
-	// Time Complexity: O(n)
+	// Time Complexity: O(n) -- 31 passes over the array
+	// Space Complexity: O(1)
 
 	public static int totalHammingDist(int[] nums) {
 		int total = 0;
@@ -18,7 +22,7 @@ public final class TotalHammingDistance {
 					zeros++;
 				}
 			}
-			total += ones * zeros;
+			total += ones * zeros; // pairs that differ in slot i
 		}
 		return total;
 	}

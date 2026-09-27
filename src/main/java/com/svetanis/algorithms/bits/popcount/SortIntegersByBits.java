@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.bits;
+package com.svetanis.algorithms.bits.popcount;
 
 import java.util.Arrays;
 
@@ -16,7 +16,7 @@ public final class SortIntegersByBits {
 				.sorted((a,b) -> {//
 					int countA = Integer.bitCount(a);//
 					int countB = Integer.bitCount(b);//
-					return countA == countB ? a - b : countA - countB;//
+					return countA == countB ? a - b : countA - countB; // fewer 1s first, ties by value
 				})//
 				.mapToInt(i -> i)//
 				.toArray();
@@ -26,11 +26,11 @@ public final class SortIntegersByBits {
 		int n = a.length;
 		for (int i = 0; i < n; i++) {
 			int bits = Integer.bitCount(a[i]);
-			a[i] += bits * 100000;
+			a[i] += bits * 100000; // two keys in one int: the count above, the value below (values <= 10^4)
 		}
 		Arrays.sort(a);
 		for (int i = 0; i < n; i++) {
-			a[i] %= 100000;
+			a[i] %= 100000; // drop the count, keep the value
 		}
 		return a;
 	}

@@ -13,8 +13,8 @@ public final class MissingNumber268 {
 
   public static int single(int[] a) {
     int n = a.length;
-    int xor = n;
-    // xor all numbers from 1 to n
+    int xor = n; // n itself, which the loop below does not reach
+    // xor all numbers from 0 to n
     for (int i = 0; i < n; i++) {
       xor = xor ^ i;
     }
@@ -22,7 +22,7 @@ public final class MissingNumber268 {
     for (int i = 0; i < n; i++) {
       xor = xor ^ a[i];
     }
-    // return missing number
+    // every present number met its copy; the missing one is left
     return xor;
   }
 

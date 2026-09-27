@@ -1,8 +1,11 @@
-package com.svetanis.algorithms.bits.xor;
+package com.svetanis.algorithms.bits.popcount;
 
 import static com.svetanis.java.base.utils.Print.print;
 
 // 338. Counting Bits
+
+// a table whose smaller case is a number already counted:
+// i >> 1 (i without its slot 0), or i & (i - 1) (i without its lowest 1)
 
 public final class CountBits {
 	// Time Complexity: O(n)
@@ -12,7 +15,7 @@ public final class CountBits {
 		int[] dp = new int[n + 1];
 		dp[0] = 0;
 		for (int i = 1; i <= n; i++) {
-			dp[i] = dp[i / 2] + i % 2;
+			dp[i] = dp[i / 2] + i % 2; // i / 2 is i without slot 0; i % 2 is slot 0
 		}
 		return dp;
 	}
@@ -21,7 +24,7 @@ public final class CountBits {
 		int[] dp = new int[n + 1];
 		dp[0] = 0;
 		for (int i = 1; i <= n; i++) {
-			int index = i & (i - 1);
+			int index = i & (i - 1); // i without its lowest 1: smaller, one 1 fewer
 			dp[i] = dp[index] + 1;
 		}
 		return dp;
@@ -31,7 +34,7 @@ public final class CountBits {
 		int[] dp = new int[n + 1];
 		dp[0] = 0;
 		for (int i = 1; i <= n; i++) {
-			int index = i >> 1;
+			int index = i >> 1; // i without slot 0
 			dp[i] = dp[index] + (i & 1);
 		}
 		return dp;

@@ -6,7 +6,10 @@ package com.svetanis.algorithms.bits.xor;
 // the range from 1 to n, find the one
 // number that is missing from the array
 
-// XOR of two same numbers returns zero
+// XOR of two same numbers returns zero:
+// XOR 1..n with the array, every present
+// number meets its copy, and the missing
+// one is all that is left
 
 public final class MissingNumber {
 	// Time Complexity: O(n)
@@ -34,7 +37,7 @@ public final class MissingNumber {
 			// xor all numbers from 1 to n - 1
 			xor = xor ^ (i + 1);
 		}
-		xor ^= n;
+		xor ^= n; // the loop stopped at n - 1
 		return xor;
 	}
 

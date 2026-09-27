@@ -4,6 +4,9 @@ import static com.svetanis.java.base.utils.Print.print;
 
 // 2433. Find The Original Array of Prefix Xor
 
+// prefix[i] = prefix[i - 1] ^ a[i], and ^ is its own inverse,
+// so a[i] = prefix[i - 1] ^ prefix[i] -- prefix sums with ^ for + and -
+
 public final class PrefixXorOriginalArr {
 	// Time Complexity: O(n)
 	// Space Complexity: O(n)
@@ -13,7 +16,7 @@ public final class PrefixXorOriginalArr {
 		int[] a = new int[n];
 		a[0] = prefix[0];
 		for (int i = 1; i < n; i++) {
-			a[i] = prefix[i - 1] ^ prefix[i];
+			a[i] = prefix[i - 1] ^ prefix[i]; // the shared part cancels, a[i] is left
 		}
 		return a;
 	}

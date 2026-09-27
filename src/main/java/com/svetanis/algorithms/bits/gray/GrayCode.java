@@ -1,4 +1,4 @@
-package com.svetanis.algorithms.bits.xor;
+package com.svetanis.algorithms.bits.gray;
 
 import static com.svetanis.java.base.utils.Print.print;
 
@@ -7,13 +7,18 @@ import java.util.List;
 
 // 89. Gray Code
 
+// going from i to i + 1 flips a run of low slots; i ^ (i >> 1)
+// cancels all of that run but its top slot, so neighbouring codes
+// differ in exactly one slot
+
 public final class GrayCode {
 	// Time Complexity: O(2^n)
+	// Space Complexity: O(2^n)
 
 	public static List<Integer> grayCode(int n) {
 		List<Integer> list = new ArrayList<>();
 		for (int i = 0; i < 1 << n; i++) {
-			int gray = i ^ (i >> 1);
+			int gray = i ^ (i >> 1); // one slot from the previous code
 			list.add(gray);
 		}
 		return list;
