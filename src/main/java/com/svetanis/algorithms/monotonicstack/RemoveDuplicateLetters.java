@@ -6,42 +6,50 @@ import java.util.HashSet;
 import java.util.Set;
 
 // 316. Remove Duplicate Letters
+//
+// s holds lowercase letters. Keep exactly one copy of each letter, so that the result is the
+// smallest in dictionary order among all possible results.
+//
+// Remove K Digits with a different permission to pop: a larger letter before a smaller one
+// should go, but only if it appears again later, so that it can still be taken then.
 
 public final class RemoveDuplicateLetters {
-	// Time complexity: O(n)
+	// Time Complexity: O(n), every position is pushed at most once and popped at most once
+	// Space Complexity: O(1), the stack and the set hold at most 26 letters
 
 	public static String remove(String s) {
-		int[] a = indices(s);
-		Set<Character> set = new HashSet<>();
-		Deque<Character> dq = new ArrayDeque<>();
+		int[] lastIndex = lastIndices(s); // last position of each letter
+		Set<Character> onStack = new HashSet<>();
+		Deque<Character> stack = new ArrayDeque<>();
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
-			if (set.contains(c)) {
-				continue;
+			if (onStack.contains(c)) {
+				continue; // already placed, and placed better than here
 			}
-			while (!dq.isEmpty() && dq.peek() > c && a[dq.peek() - 'a'] > i) {
-				set.remove(dq.pop());
+			while (!stack.isEmpty() && stack.peek() > c && lastIndex[stack.peek() - 'a'] > i) {
+				onStack.remove(stack.pop()); // larger, and comes back later: take it then
 			}
-			dq.push(c);
-			set.add(c);
+			stack.push(c);
+			onStack.add(c);
 		}
-		return distinct(dq);
+		return bottomToTop(stack);
 	}
 
-	private static String distinct(Deque<Character> dq) {
+	// push() adds at the head, so iterating yields the newest first; reversed, the oldest first
+	private static String bottomToTop(Deque<Character> stack) {
 		StringBuilder sb = new StringBuilder();
-		for (char c : dq) {
+		for (char c : stack) {
 			sb.append(c);
 		}
 		return sb.reverse().toString();
 	}
 
-	private static int[] indices(String s) {
-		int[] a = new int[26];
+	private static int[] lastIndices(String s) {
+		int[] lastIndex = new int[26];
 		for (int i = 0; i < s.length(); i++) {
-			a[s.charAt(i) - 'a'] = i;
+			lastIndex[s.charAt(i) - 'a'] = i;
 		}
-		return a;
+		return lastIndex;
 	}
 
 	public static void main(String[] args) {

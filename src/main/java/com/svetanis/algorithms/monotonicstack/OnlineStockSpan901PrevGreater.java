@@ -8,30 +8,36 @@ import java.util.Deque;
 // Prices arrive one day at a time. For each new price, return its span: the number of
 // consecutive days, ending today, whose price is less than or equal to today's.
 //
-// A stream cannot be scanned backwards, so the answer is read at push time. The stack keeps
-// only days with a higher price than every day after them, each with its own span; a day
-// that pops them absorbs their spans, because every day they covered is covered by it too.
+// The count stops at the nearest earlier day with a strictly HIGHER price, so the span is
+// today minus that day: previous greater, walked left to right. A stream has no array, so each
+// stack entry carries its own price, and the class counts the days itself. With no higher day,
+// prev is -1 and today - (-1) counts every day so far. OnlineStockSpan901 stores each day's
+// span instead of its number and adds up the spans it pops.
 
-public final class OnlineStockSpan901 {
+public final class OnlineStockSpan901PrevGreater {
   // Time Complexity: O(1) amortized per call, each day is pushed once and popped at most once
   // Space Complexity: O(n) for the stack
 
   private final Deque<Day> stack = new ArrayDeque<>(); // prices strictly falling to the top
+  private int index = 0; // today's day number
 
   public int next(int price) {
-    int span = 1; // today
     while (!stack.isEmpty() && stack.peek().price() <= price) { // equal prices count too
-      span += stack.pop().span(); // absorb the popped day's span
+      stack.pop(); // inside today's span, so it can never stop a later count
     }
-    stack.push(new Day(price, span));
+    int prev = stack.isEmpty() ? -1 : stack.peek().index(); // the nearest higher day
+    int span = index - prev;
+    stack.push(new Day(price, index)); // it might stop a later day's count
+    index++;
     return span;
   }
 
-  private record Day(int price, int span) {
+  // a day's price, and its number for the subtraction
+  private record Day(int price, int index) {
   }
 
   public static void main(String[] args) {
-    OnlineStockSpan901 oss = new OnlineStockSpan901();
+    OnlineStockSpan901PrevGreater oss = new OnlineStockSpan901PrevGreater();
     System.out.println(oss.next(100)); // 1
     System.out.println(oss.next(80)); // 1
     System.out.println(oss.next(60)); // 1

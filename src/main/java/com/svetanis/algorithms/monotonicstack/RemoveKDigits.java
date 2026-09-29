@@ -1,29 +1,36 @@
 package com.svetanis.algorithms.monotonicstack;
 
 // 402. Remove K Digits
+//
+// Remove k digits from the number num (a string) so that what remains is the smallest
+// possible number. Leading zeros are dropped; nothing left means "0".
+//
+// A digit on the left weighs more than every digit after it, so a larger digit followed by a
+// smaller one should go. The StringBuilder is the stack: each pop deletes a digit, and what is
+// left on it at the end is the answer.
 
 public final class RemoveKDigits {
-	// Time Complexity: O(n)
+	// Time Complexity: O(n), every digit is appended once and deleted at most once
+	// Space Complexity: O(n) for the StringBuilder
 
 	public static String removeKDigits(String num, int k) {
-		StringBuilder sb = new StringBuilder();
-		for (char c : num.toCharArray()) {
-			while (sb.length() > 0 && k > 0 && sb.charAt(sb.length() - 1) > c) {
-				sb.deleteCharAt(sb.length() - 1);
+		StringBuilder kept = new StringBuilder();
+		for (char digit : num.toCharArray()) {
+			while (kept.length() > 0 && k > 0 && kept.charAt(kept.length() - 1) > digit) {
+				kept.deleteCharAt(kept.length() - 1); // a larger digit before a smaller one: delete it
 				k--;
 			}
-			sb.append(c);
+			kept.append(digit);
 		}
-		while (k > 0 && sb.length() > 0) {
-			sb.deleteCharAt(sb.length() - 1);
+		while (k > 0 && kept.length() > 0) { // digits never fell: the largest are at the end
+			kept.deleteCharAt(kept.length() - 1);
 			k--;
 		}
-		// remove leading zeros
-		int index = 0;
-		while (index < sb.length() && sb.charAt(index) == '0') {
-			index++;
+		int firstNonZero = 0;
+		while (firstNonZero < kept.length() && kept.charAt(firstNonZero) == '0') {
+			firstNonZero++;
 		}
-		String s = sb.substring(index);
+		String s = kept.substring(firstNonZero);
 		return s.isEmpty() ? "0" : s;
 	}
 

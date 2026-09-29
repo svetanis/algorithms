@@ -6,23 +6,29 @@ import java.util.Deque;
 import com.svetanis.java.base.utils.Print;
 
 // 1475. Final Prices With a Special Discount in a Shop
+//
+// Item i is discounted by the price of the first item to its right that costs the same or
+// less; with no such item there is no discount. Return what is paid for each item.
+//
+// The discount is the next smaller-or-equal price. Scanning from the right, the answer is
+// read at push time: after popping every higher price, the top is the discount.
 
 public final class FinalPricesWithSpecialDiscount {
-  // Time complexity: O(n)
-  // Space complexity: O(1)
+  // Time Complexity: O(n), every price is pushed once and popped at most once
+  // Space Complexity: O(n) for the stack
 
   public static int[] finalPrices(int[] prices) {
     int n = prices.length;
-    int[] a = new int[n];
-    Deque<Integer> dq = new ArrayDeque<>();
+    int[] paid = new int[n];
+    Deque<Integer> stack = new ArrayDeque<>(); // prices to the right, never falling to the top
     for (int i = n - 1; i >= 0; i--) {
-      while (!dq.isEmpty() && dq.peek() > prices[i]) {
-        dq.pop();
+      while (!stack.isEmpty() && stack.peek() > prices[i]) {
+        stack.pop(); // higher: never the discount for i or anyone to its left
       }
-      a[i] = dq.isEmpty() ? prices[i] : prices[i] - dq.peek();
-      dq.push(prices[i]);
+      paid[i] = stack.isEmpty() ? prices[i] : prices[i] - stack.peek(); // push-time reading
+      stack.push(prices[i]);
     }
-    return a;
+    return paid;
   }
 
   public static void main(String[] args) {

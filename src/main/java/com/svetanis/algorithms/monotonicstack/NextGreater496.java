@@ -8,30 +8,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 // 496. Next Greater Element I
+//
+// nums1 is a subset of nums2, all values distinct. For each value in nums1, return the first
+// larger value to its right in nums2; -1 if none.
+//
+// One next-greater pass over nums2, stored by VALUE rather than by position, then a lookup
+// per query. Storing by value is safe only because the values are distinct.
 
 public final class NextGreater496 {
-	// Time complexity: O(n)
+	// Time Complexity: O(n + m), n = nums1.length, m = nums2.length
+	// Space Complexity: O(m) for the stack and the map
 
-	public static int[] nextGreater(int[] a1, int[] a2) {
-		Map<Integer, Integer> map = nextGreater(a2);
-		int n = a1.length;
+	public static int[] nextGreater(int[] nums1, int[] nums2) {
+		Map<Integer, Integer> greaterOf = nextGreaterByValue(nums2);
+		int n = nums1.length;
 		int[] greater = new int[n];
 		for (int i = 0; i < n; i++) {
-			greater[i] = map.getOrDefault(a1[i], -1);
+			greater[i] = greaterOf.getOrDefault(nums1[i], -1); // absent: nothing larger followed
 		}
 		return greater;
 	}
 
-	private static Map<Integer, Integer> nextGreater(int[] a) {
-		Deque<Integer> dq = new ArrayDeque<>();
-		Map<Integer, Integer> map = new HashMap<>();
-		for (int element : a) {
-			while (!dq.isEmpty() && dq.peekLast() < element) {
-				map.put(dq.pollLast(), element);
+	// value -> the first larger value after it; values with none are left out
+	private static Map<Integer, Integer> nextGreaterByValue(int[] nums) {
+		Deque<Integer> stack = new ArrayDeque<>(); // values still waiting, never rising to the top
+		Map<Integer, Integer> greaterOf = new HashMap<>();
+		for (int value : nums) {
+			while (!stack.isEmpty() && stack.peek() < value) {
+				greaterOf.put(stack.pop(), value); // value is the first larger one after it
 			}
-			dq.addLast(element);
+			stack.push(value); // no answer yet
 		}
-		return map;
+		return greaterOf;
 	}
 
 	public static void main(String[] args) {

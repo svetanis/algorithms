@@ -4,25 +4,32 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 // 768. Max Chunks To Make Sorted II
+//
+// Any integers, duplicates allowed. Split the array into the most chunks such that sorting
+// each chunk on its own, then joining them, gives the whole array sorted.
+//
+// The stack holds one entry per chunk: its largest value, never falling from bottom to top.
+// A value smaller than some chunk's maximum must be sorted into that chunk, so every chunk
+// whose maximum exceeds it merges into one, which keeps the largest maximum among them.
 
 public final class MaxChunksToSortII {
-	// Time complexity: O(n)
-	// Space complexity: O(n)
+	// Time Complexity: O(n), every value is pushed once and popped at most once
+	// Space Complexity: O(n) for the stack
 
-	public static int maxChunks(int[] a) {
-		Deque<Integer> dq = new ArrayDeque<>();
-		for (int num : a) {
-			if (dq.isEmpty() || dq.peek() <= num) {
-				dq.push(num);
+	public static int maxChunks(int[] arr) {
+		Deque<Integer> stack = new ArrayDeque<>(); // one maximum per chunk
+		for (int value : arr) {
+			if (stack.isEmpty() || stack.peek() <= value) {
+				stack.push(value); // a new chunk, whose maximum is value
 			} else {
-				int top = dq.pop();
-				while (!dq.isEmpty() && dq.peek() > num) {
-					dq.pop();
+				int chunkMax = stack.pop(); // the maximum of the chunk value merges into
+				while (!stack.isEmpty() && stack.peek() > value) {
+					stack.pop(); // absorb every chunk whose maximum exceeds value
 				}
-				dq.push(top);
+				stack.push(chunkMax); // the merged chunk keeps the largest maximum
 			}
 		}
-		return dq.size();
+		return stack.size();
 	}
 
 	public static void main(String[] args) {
@@ -34,6 +41,5 @@ public final class MaxChunksToSortII {
 
 		int[] a3 = { 5, 1, 1, 8, 1, 6, 5, 9, 7, 8 };
 		System.out.println(maxChunks(a3)); // 1
-
 	}
 }

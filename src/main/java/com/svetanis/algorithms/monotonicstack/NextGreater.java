@@ -6,20 +6,27 @@ import static java.util.Arrays.fill;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+// Next greater element: for each element, the first larger element to its right; -1 if none.
+//
+// Scan left to right. The stack holds the positions still waiting for a larger element, and
+// their values never rise from bottom to top. An arriving element answers every smaller one
+// on top: it is the first larger element each of them has met.
+
 public final class NextGreater {
-	// Time complexity: O(n)
+	// Time Complexity: O(n), every position is pushed once and popped at most once
+	// Space Complexity: O(n) for the stack
 
 	public static int[] nextGreater(int[] a) {
 		int n = a.length;
 		int[] greater = new int[n];
-		fill(greater, -1);
-		Deque<Integer> dq = new ArrayDeque<>();
+		fill(greater, -1); // stays -1 for an element nothing larger follows
+		Deque<Integer> stack = new ArrayDeque<>(); // holds positions, never values
 		for (int i = 0; i < n; i++) {
-			while (!dq.isEmpty() && a[i] > a[dq.peekLast()]) {
-				int top = dq.pollLast();
-				greater[top] = a[i];
+			while (!stack.isEmpty() && a[i] > a[stack.peek()]) {
+				int index = stack.pop(); // a[i] is the first element to beat a[index]
+				greater[index] = a[i];
 			}
-			dq.addLast(i);
+			stack.push(i); // a[i] has no answer yet
 		}
 		return greater;
 	}
