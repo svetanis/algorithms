@@ -32,7 +32,10 @@ public final class KthLargestMinHeapPQ {
 	}
 
 	private static Queue<Integer> priorityQueue(List<Integer> list, int k) {
-		Queue<Integer> pq = new PriorityQueue<Integer>(k, (x, y) -> x - y);
+		// k here is the INITIAL CAPACITY, not a bound -- the heap grows on demand.
+		// What holds it at k is this loop plus the poll-before-add in kthLargest.
+		// A capacity of 0 throws IllegalArgumentException, so k >= 1 is a precondition.
+		Queue<Integer> pq = new PriorityQueue<Integer>(k, Integer::compare);
 		// put first k numbers in the min heap
 		for (int i = 0; i < k; i++) {
 			pq.add(list.get(i));
@@ -40,8 +43,11 @@ public final class KthLargestMinHeapPQ {
 		return pq;
 	}
 
+	// the same template without the prefill: one pass has to hold the heap at k
+	// by itself, so the branch carries both cases -- room left, or a newcomer that
+	// beats the top. Equal to the top does not beat it.
 	public static int kthLargestSingleLoop(List<Integer> list, int k) {
-		Queue<Integer> pq = new PriorityQueue<Integer>(k, (x, y) -> x - y);
+		Queue<Integer> pq = new PriorityQueue<Integer>(k, Integer::compare);
 		for (int element : list) {
 			if (pq.size() < k || element > pq.peek()) {
 				if (pq.size() == k) {

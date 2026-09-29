@@ -17,7 +17,7 @@ public final class KthLargestStream {
 
 	public KthLargestStream(List<Integer> list, int k) {
 		this.k = k;
-		this.pq = new PriorityQueue<>((x, y) -> x - y);
+		this.pq = new PriorityQueue<>(Integer::compare);
 		buildPQ(list);
 	}
 
@@ -27,7 +27,8 @@ public final class KthLargestStream {
 		}
 	}
 
-	private int add(int num) {
+	// public: LC 703 calls add() from outside the class
+	public int add(int num) {
 		// add the new number in the min heap
 		pq.add(num);
 		// if heap has more than k numbers,

@@ -14,7 +14,7 @@ public final class KthLargestStreamSubmit {
 
 	public KthLargestStreamSubmit(int k, int[] a) {
 		this.k = k;
-		this.pq = new PriorityQueue<>((x, y) -> x - y);
+		this.pq = new PriorityQueue<>(Integer::compare);
 		buildPQ(a);
 	}
 

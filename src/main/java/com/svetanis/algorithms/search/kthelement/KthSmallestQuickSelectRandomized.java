@@ -18,7 +18,11 @@ public final class KthSmallestQuickSelectRandomized {
     if (dist == k) {
       return a[pivot];
     } else if (k < dist) {
-      return select(a, left, pivot, k);
+      // pivot - 1, not pivot: the pivot is already in its final place, and
+      // re-including it can hand back the identical range. that happens
+      // whenever the pivot value is the largest in the range -- guaranteed
+      // when every value is equal -- and the recursion then never ends
+      return select(a, left, pivot - 1, k);
     } else {
       return select(a, pivot + 1, right, k - dist);
     }

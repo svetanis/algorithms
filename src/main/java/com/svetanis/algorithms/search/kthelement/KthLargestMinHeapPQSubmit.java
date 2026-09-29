@@ -21,7 +21,7 @@ public final class KthLargestMinHeapPQSubmit {
 	}
 
 	private static Queue<Integer> priorityQueue(int[] a, int k) {
-		Queue<Integer> pq = new PriorityQueue<>((x, y) -> x - y);
+		Queue<Integer> pq = new PriorityQueue<>(Integer::compare);
 		// put first k numbers in the min heap
 		for (int i = 0; i < Math.min(k, a.length); i++) {
 			pq.add(a[i]);
@@ -30,7 +30,7 @@ public final class KthLargestMinHeapPQSubmit {
 	}
 
 	public static int kthLargestSingleLoop(int[] a, int k) {
-		Queue<Integer> pq = new PriorityQueue<Integer>((x, y) -> x - y);
+		Queue<Integer> pq = new PriorityQueue<Integer>(Integer::compare);
 		for (int element : a) {
 			if (pq.size() < k || element > pq.peek()) {
 				if (pq.size() == k) {

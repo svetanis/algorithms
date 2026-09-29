@@ -1,9 +1,8 @@
 package com.svetanis.algorithms.search.kthelement;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.algorithms.search.binary.BinarySearchRecursive.binarySearch;
+import static com.svetanis.algorithms.search.binary.BinarySearchInsertPositionIterative.binary2;
 import static com.svetanis.java.base.collect.Lists.newList;
-import static java.lang.Math.abs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,35 +37,37 @@ public final class KClosestToGivenNumberTwoPointers {
 		return list;
 	}
 
+	// the same answer grown outward from the middle instead of located by its
+	// left edge. k is assumed to be at most a.length, which LC 658 guarantees
 	public static ImmutableList<Integer> kClosest(int[] a, int k, int target) {
-		int index = targetIndex(a, target);
-		int left = index;
-		int right = index + 1;
+		// first index whose value is >= target -- LC 35's insert position,
+		// which is where the window has to start growing from. an exact hit
+		// is not needed and is not looked for
+		int right = binary2(a, target);
+		int left = right - 1;
 		List<Integer> list = newArrayList();
 		for (int i = 0; i < k; i++) {
-			if (left >= 0 && right < a.length) {
-				int diff1 = abs(target - a[left]);
-				int diff2 = abs(target - a[right]);
-				if (diff1 < diff2) {
-					list.add(0, a[left--]);
-				} else {
-					list.add(a[right++]);
-				}
-			} else if (left >= 0) {
+			if (takeLeft(a, target, left, right)) {
 				list.add(0, a[left--]);
-			} else if (right < a.length) {
+			} else {
 				list.add(a[right++]);
 			}
 		}
 		return newList(list);
 	}
 
-	private static int targetIndex(int[] a, int target) {
-		int index = binarySearch(a, target);
-		if (index != -1) {
-			return index;
+	// prepending the left candidate and appending the right one keeps the
+	// result in array order, so no sort is needed at the end
+	private static boolean takeLeft(int[] a, int target, int left, int right) {
+		if (left < 0) {
+			return false;
 		}
-		return target < a[0] ? 0 : a.length - 1;
+		if (right >= a.length) {
+			return true;
+		}
+		// on a tie LC 658 wants the SMALLER value, which in a sorted array
+		// is the left candidate -- hence <=, not <
+		return target - a[left] <= a[right] - target;
 	}
 
 	public static void main(String[] args) {
@@ -76,6 +77,14 @@ public final class KClosestToGivenNumberTwoPointers {
 		System.out.println(kClosest(a2, 3, 6)); // 4, 5, 6
 		int[] a3 = { 2, 4, 5, 6, 9 };
 		System.out.println(kClosest(a3, 3, 10)); // 5, 6, 9
+
+		// two of these four steps are ties, and both have to go left
+		int[] a6 = { 1, 2, 3, 4, 5 };
+		System.out.println(kClosest(a6, 4, 3)); // 1, 2, 3, 4 -- was 2, 3, 4, 5
+
+		// target absent and interior: the old code walked to the last index
+		int[] a7 = { 1, 2, 3, 100, 200 };
+		System.out.println(kClosest(a7, 2, 4)); // 2, 3 -- was 100, 200
 
 		int[] a4 = { 1, 2, 3, 4, 5 };
 		System.out.println(kClosestElements(a4, 4, 3)); // 1 2 3 4

@@ -10,7 +10,7 @@ public final class KthLargestStreamScanner {
   // Time complexity: O(log k)
   
   public static void kthLargest(Scanner input, int k) {
-		Queue<Integer> pq = new PriorityQueue<Integer>(k, (x, y) -> x - y);
+		Queue<Integer> pq = new PriorityQueue<Integer>(k, Integer::compare);
 
     int count = 0;
     while (true) {

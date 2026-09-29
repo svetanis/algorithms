@@ -1,6 +1,7 @@
 package com.svetanis.algorithms.search.kthelement;
 
 import static java.util.Arrays.asList;
+import static java.util.Comparator.reverseOrder;
 
 import java.util.List;
 import java.util.PriorityQueue;
@@ -12,10 +13,13 @@ import java.util.Queue;
 // find Kth largest number in it
 
 public final class KthLargestMaxHeapPQ {
-	// Time Complexity: O(n + k log n)
+	// Time Complexity: O(n log n + k log n) -- this INSERTS one at a time.
+	// O(n + ...) is the heapify bound, which needs new PriorityQueue<>(list).
+	// As written this is strictly worse than KthLargestMinHeapPQ's O(n log k),
+	// and it holds O(n) space where the min-heap holds O(k).
 
 	public static int kthLargest(List<Integer> list, int k) {
-		Queue<Integer> pq = new PriorityQueue<Integer>((x, y) -> (y - x));
+		Queue<Integer> pq = new PriorityQueue<Integer>(reverseOrder());
 		// 1. insert all the numbers in the max-heap
 		for (int element : list) {
 			pq.add(element);
@@ -24,7 +28,9 @@ public final class KthLargestMaxHeapPQ {
 		for (int i = 0; i < k - 1; i++) {
 			pq.poll();
 		}
-		// 3. return k-smallest number
+		// 3. the top is now the kth largest
+		// k = 0 skips the extract loop and returns the LARGEST element --
+		// a plausible wrong answer rather than a failure. k >= 1 is a precondition.
 		return pq.peek();
 	}
 

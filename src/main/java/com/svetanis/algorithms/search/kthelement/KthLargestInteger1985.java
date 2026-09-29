@@ -1,5 +1,8 @@
 package com.svetanis.algorithms.search.kthelement;
 
+import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.naturalOrder;
+
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -10,8 +13,9 @@ public final class KthLargestInteger1985 {
   // Time Complexity: O(n log k)
 
   public static String kthLargestNum(String[] nums, int k) {
-    Queue<String> pq = new PriorityQueue<String>((x, y) -> 
-    x.length() == y.length() ? x.compareTo(y) : x.length() - y.length());
+    Queue<String> pq =
+        new PriorityQueue<String>(
+            comparingInt((String s) -> s.length()).thenComparing(naturalOrder()));
 
     for (String num : nums) {
       pq.offer(num);
@@ -24,8 +28,7 @@ public final class KthLargestInteger1985 {
 
   public static String kthLargestNumSort(String[] nums, int k) {
     int len = nums.length;
-    Arrays.sort(nums, (x, y) -> 
-    x.length() == y.length() ? x.compareTo(y) : x.length() - y.length());
+    Arrays.sort(nums, comparingInt((String s) -> s.length()).thenComparing(naturalOrder()));
     return nums[len - k];
   }
 

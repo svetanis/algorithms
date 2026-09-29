@@ -9,9 +9,12 @@ import java.util.Queue;
 public final class KthSmallestMinHeapPQ {
 
 	public static int kthSmallest(int[] a, int k) {
-		// Time Complexity: O(n + k log n)
+		// Time Complexity: O(n log n + k log n) -- this INSERTS one at a time.
+		// O(n + ...) is the heapify bound, which needs new PriorityQueue<>(list).
+		// As written this is strictly worse than KthSmallestMaxHeapPQ's O(n log k),
+		// and it holds O(n) space where the max-heap of k holds O(k).
 
-		Queue<Integer> pq = new PriorityQueue<Integer>((x, y) -> x - y);
+		Queue<Integer> pq = new PriorityQueue<Integer>(Integer::compare);
 		// 1. insert all the numbers in the min-heap
 		for (int element : a) {
 			pq.add(element);

@@ -1,5 +1,7 @@
 package com.svetanis.algorithms.search.kthelement;
 
+import static java.util.Comparator.reverseOrder;
+
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -28,7 +30,7 @@ public final class KthSmallestMaxHeapPQ {
 	}
 	
 	private static Queue<Integer> priorityQueue(int[] a, int k){
-		Queue<Integer> pq = new PriorityQueue<>(k, (x, y) -> (y - x));
+		Queue<Integer> pq = new PriorityQueue<>(k, reverseOrder());
 		// put first k numbers in the max heap
 		for (int i = 0; i < k; i++) {
 			pq.add(a[i]);
@@ -39,7 +41,7 @@ public final class KthSmallestMaxHeapPQ {
 	public static int kthSmallestSingleLoop(int[] a, int k) {
 		// Time Complexity: O(n log k)
 
-		Queue<Integer> pq = new PriorityQueue<>(k, (x, y) -> (y - x));
+		Queue<Integer> pq = new PriorityQueue<>(k, reverseOrder());
 		for (int element : a) {
 			if (pq.size() < k || element < pq.peek()) {
 				if (pq.size() == k) {
