@@ -1,36 +1,38 @@
 package com.svetanis.algorithms.twopointers.triplet;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
+import java.util.Arrays;
+import java.util.Optional;
 
-import com.google.common.base.Optional;
-import com.svetanis.java.base.utils.Triplet;
-
-// Pythagorean Triplet is a set of natural numbers
-// such that a < b < c, for which a^2 + b^2 == c^2
-
-// given a number n, 
-// find a Pythagorean Triplet
-// with sum as given n
+// Pythagorean triplet with a given sum
+//
+// Input: a whole number n.
+// Return: natural numbers a < b < c with a^2 + b^2 == c^2 and a + b + c == n, as {a, b, c}
+// -- the one with the smallest a, and then the smallest b -- or empty when none exists.
+//
+// The one idea: the sum fixes the third number once two are chosen, c = n - a - b, so only
+// two loops are needed, not three. a is the smallest of three, so a <= n / 3; b is smaller
+// than c, so b < n / 2. c > b needs no test: a^2 + b^2 == c^2 with a >= 1 already forces it.
+//
+// Time: O(n^2) -- about n / 3 * n / 2 pairs.
+// Space: O(1).
 
 public final class PythagoreanTripletGivenSum {
-  // Time Complexity: O(n^2)
-	
-  public static Optional<Triplet<Integer, Integer, Integer>> triplet(int n) {
-    
-    for (int i = 1; i <= n / 3; i++) {
-      for (int j = i + 1; j <= n / 2; j++) {
-        int k = n - i - j;
+
+  public static Optional<int[]> triplet(int n) {
+    for (int i = 1; i <= n / 3; i++) {            // FIX the smallest number a
+      for (int j = i + 1; j <= n / 2; j++) {      // FIX the middle number b
+        int k = n - i - j;                        // the sum forces c
         if (i * i + j * j == k * k) {
-          return of(Triplet.build(i, j, k));
+          return Optional.of(new int[] { i, j, k }); // FOUND
         }
       }
     }
-    return absent();
+    return Optional.empty();                      // RETURN empty: no such triplet
   }
 
   public static void main(String[] args) {
-    int n = 12;
-    System.out.println(triplet(n));
+    System.out.println(triplet(12).map(Arrays::toString).orElse("none")); // [3, 4, 5]
+    System.out.println(triplet(30).map(Arrays::toString).orElse("none")); // [5, 12, 13]
+    System.out.println(triplet(10).map(Arrays::toString).orElse("none")); // none
   }
 }

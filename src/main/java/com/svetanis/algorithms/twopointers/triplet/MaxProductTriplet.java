@@ -1,36 +1,40 @@
 package com.svetanis.algorithms.twopointers.triplet;
 
-import static java.lang.Integer.MAX_VALUE;
-import static java.lang.Integer.MIN_VALUE;
-import static java.lang.Math.max;
-
 // 628. Maximum Product of Three Numbers
-
-// given an integer array,
-// find a max product of 
-// a triplet in array
+//
+// Input: an array of integers.
+// Return: the largest product of three numbers at three different positions; -1 when
+// there are fewer than three numbers.
+//
+// The one idea: the best three are either the three LARGEST numbers, or the two SMALLEST
+// with the largest -- two negatives make a positive. No other choice can win, so one pass
+// keeping the top three and the bottom two is enough, with no sort.
+//
+// Siblings:
+//   twopointers.triplet.MaxProductTripletSubmit -- the same pass with >= / <= updates, plus a
+//                                                 sorting version
+//   twopointers.quadruple.MaxProductQuadruple   -- four numbers: three candidates, not two
+//
+// Time: O(n) -- one pass.
+// Space: O(1).
 
 public class MaxProductTriplet {
 
   public static int maxProduct(int[] a) {
-    // Time Complexity: O(n)
-    // Space Complexity: O(1)
-
     int n = a.length;
     if (n < 3) {
-      return -1;
+      return -1;                                  // RETURN -1: no three numbers to multiply
     }
 
-    int firstMax = MIN_VALUE;
-    int secondMax = MIN_VALUE;
-    int thirdMax = MIN_VALUE;
+    int firstMax = Integer.MIN_VALUE;             // the three largest, largest first
+    int secondMax = Integer.MIN_VALUE;
+    int thirdMax = Integer.MIN_VALUE;
 
-    int firstMin = MAX_VALUE;
-    int secondMin = MAX_VALUE;
+    int firstMin = Integer.MAX_VALUE;             // the two smallest, smallest first
+    int secondMin = Integer.MAX_VALUE;
 
     for (int i = 0; i < n; i++) {
-      // update max elements
-      if (a[i] > firstMax) {
+      if (a[i] > firstMax) {                      // RECORD a new largest: the others shift down
         thirdMax = secondMax;
         secondMax = firstMax;
         firstMax = a[i];
@@ -41,8 +45,7 @@ public class MaxProductTriplet {
         thirdMax = a[i];
       }
 
-      // update min elements
-      if (a[i] < firstMin) {
+      if (a[i] < firstMin) {                      // RECORD a new smallest: the other shifts up
         secondMin = firstMin;
         firstMin = a[i];
       } else if (a[i] < secondMin) {
@@ -50,22 +53,28 @@ public class MaxProductTriplet {
       }
     }
 
-    int max1 = firstMax * secondMax * thirdMax;
-    int max2 = firstMin * secondMin * firstMax;
-    return max(max1, max2);
+    int max1 = firstMax * secondMax * thirdMax;   // COMPARE the three largest
+    int max2 = firstMin * secondMin * firstMax;   // with the two smallest and the largest
+    return Math.max(max1, max2);
   }
 
   public static void main(String[] args) {
     int[] a1 = { 10, 3, 5, 6, 20 };
-    System.out.println(maxProduct(a1));
+    System.out.println(maxProduct(a1)); // 1200
 
     int[] a2 = { -10, -3, -5, -6, -20 };
-    System.out.println(maxProduct(a2));
+    System.out.println(maxProduct(a2)); // -90
 
     int[] a3 = { 1, -4, 3, -6, 7, 0 };
-    System.out.println(maxProduct(a3));
+    System.out.println(maxProduct(a3)); // 168
 
     int[] a4 = { 1, 10, -5, -1, -100 };
-    System.out.println(maxProduct(a4));
+    System.out.println(maxProduct(a4)); // 5000
+
+    int[] a5 = { 1, 2, 3 };
+    System.out.println(maxProduct(a5)); // 6
+
+    int[] a6 = { -1, -2, -3 };
+    System.out.println(maxProduct(a6)); // -6
   }
 }
