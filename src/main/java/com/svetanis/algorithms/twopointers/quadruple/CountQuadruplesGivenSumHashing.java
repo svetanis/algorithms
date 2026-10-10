@@ -1,43 +1,53 @@
 package com.svetanis.algorithms.twopointers.quadruple;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.utils.Maps.freqMap;
-
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import com.google.common.collect.ImmutableList;
 
-// given 4 sorted arrays of distinct integers of the same size and a target sum
-// count all quadruples from all the four arrays whose sum is equal to x
-// quadruple has an element from each of the four arrays
+// Count quadruples with a given sum from four arrays, by hashing pair sums
+//
+// Input: four arrays of the same length n and a target. Neither sorting nor distinct values
+// is needed here; repeats are counted once per choice of positions.
+// Return: how many ways there are to take one number from each array so that the four
+// sum to the target.
+//
+// The one idea: split the four into two pairs. Count every a1 + a2 sum in a map -- n^2 of
+// them -- then for every a3 + a4 sum, the first pair must make target - sum, and the map
+// says in one lookup how many pairs do.
+//
+// Siblings -- the same count:
+//   twopointers.quadruple.CountQuadruplesGivenSumBinary      -- fixes three numbers, binary
+//                                                              searches the fourth: O(n^3 log n)
+//   twopointers.quadruple.CountQuadruplesGivenSumTwoPointers -- fixes two numbers and
+//                                                              converges on a3 and a4: O(n^3)
+//
+// Time: O(n^2) -- n^2 sums counted, n^2 lookups.
+// Space: O(n^2) for the map of sums.
 
 public final class CountQuadruplesGivenSumHashing {
-	// Time Complexity: O(n^2)
 
 	public static int count(int[] a1, int[] a2, int[] a3, int[] a4, int target) {
 		int n = a1.length;
 		int count = 0;
-		Map<Integer, Integer> map = freqMap(sums(a1, a2));
+		Map<Integer, Integer> map = sums(a1, a2);        // a1 + a2 sum -> how many pairs make it
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
+			for (int j = 0; j < n; j++) {                // FIX the pair from a3 and a4
 				int sum = a3[i] + a4[j];
-				count += map.getOrDefault(target - sum, 0);
+				count += map.getOrDefault(target - sum, 0); // COUNT every first pair that completes it
 			}
 		}
 		return count;
 	}
 
-	private static ImmutableList<Integer> sums(int[] a1, int[] a2) {
+	private static Map<Integer, Integer> sums(int[] a1, int[] a2) {
 		int n = a1.length;
-		List<Integer> list = newArrayList();
+		Map<Integer, Integer> map = new HashMap<>();
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				int sum = a1[i] + a2[j];
-				list.add(sum);
+				map.merge(sum, 1, Integer::sum);         // COUNT the pair under its sum
 			}
 		}
-		return newList(list);
+		return map;
 	}
 
 	public static void main(String[] args) {
@@ -45,6 +55,6 @@ public final class CountQuadruplesGivenSumHashing {
 		int[] a2 = { 2, 3, 7, 8 };
 		int[] a3 = { 1, 4, 6, 10 };
 		int[] a4 = { 2, 4, 7, 8 };
-		System.out.println(count(a1, a2, a3, a4, 30));
+		System.out.println(count(a1, a2, a3, a4, 30)); // 4
 	}
 }
