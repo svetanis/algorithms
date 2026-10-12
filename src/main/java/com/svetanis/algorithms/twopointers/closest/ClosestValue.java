@@ -1,57 +1,65 @@
 package com.svetanis.algorithms.twopointers.closest;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
-import static com.google.common.collect.ImmutableList.copyOf;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Maps.checkedGet;
-import static com.svetanis.java.base.utils.Maps.freqMap;
-import static com.svetanis.java.base.utils.Print.printLines;
-import static java.lang.Math.min;
-
-import java.util.List;
+import java.util.Arrays;
 import java.util.TreeMap;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.svetanis.java.base.Pair;
+// Closest value at another position
+//
+// Input: an array of integers.
+// Return: for each position i, the value at ANOTHER position nearest to a[i]: a[i] itself
+// when it occurs twice or more; otherwise the nearer of the next smaller and the next
+// larger value, the smaller one on a tie; -1 when the array holds no other number.
+//
+// The one idea: position does not matter, only value. Count every value in a TreeMap; a
+// value seen twice has a copy at distance 0. Otherwise the nearest value is one of its two
+// neighbours in sorted order -- lowerKey and higherKey -- and the closer of them wins.
+//
+// Siblings -- the same tree lookups, one side each:
+//   twopointers.closest.ClosestSmallerValue -- lower() only
+//   twopointers.closest.ClosestGreaterValue -- higher() only
+//
+// Time: O(n log n) -- build the map, then n pairs of lookups.
+// Space: O(n) for the map.
 
 public final class ClosestValue {
 
-  public static ImmutableList<Pair<Integer, Integer>> closest(int[] a) {
-    TreeMap<Integer, Integer> map = new TreeMap<>(freqMap(a));
-    List<Pair<Integer, Integer>> list = newArrayList();
-
-    for (int i = 0; i < a.length; i++) {
-      if (checkedGet(map, a[i]) > 1) {
-        list.add(Pair.build(a[i], a[i]));
-      } else {
-        Optional<Integer> greater = map.higherKey(a[i]) == null ? absent() : of(map.higherKey(a[i]));
-        Optional<Integer> lower = map.lowerKey(a[i]) == null ? absent() : of(map.lowerKey(a[i]));
-        int closest = getClosest(a[i], greater, lower);
-        list.add(Pair.build(a[i], closest));
-      }
+  public static int[] closest(int[] a) {
+    TreeMap<Integer, Integer> map = new TreeMap<>(); // value -> how many times it occurs
+    for (int x : a) {
+      map.merge(x, 1, Integer::sum);              // COUNT every value
     }
-    return copyOf(list);
-  }
-
-  private static int getClosest(int n, Optional<Integer> greater, Optional<Integer> lower) {
-    int closest = -1;
-    if (lower.isPresent()) {
-      closest = lower.get();
-    } else if (greater.isPresent()) {
-      closest = greater.get();
-    } else if (greater.isPresent() && lower.isPresent()) {
-      closest = min(greater.get() - n, n - lower.get());
+    int[] closest = new int[a.length];
+    for (int i = 0; i < a.length; i++) {
+      if (map.get(a[i]) > 1) {
+        closest[i] = a[i];                        // FOUND: a copy elsewhere, distance 0
+      } else {
+        closest[i] = nearer(a[i], map.lowerKey(a[i]), map.higherKey(a[i]));
+      }
     }
     return closest;
   }
 
+  private static int nearer(int x, Integer lower, Integer higher) {
+    if (lower == null && higher == null) {
+      return -1;                                  // RETURN -1: no other number at all
+    }
+    if (higher == null) {
+      return lower;
+    }
+    if (lower == null) {
+      return higher;
+    }
+    return (long) x - lower <= (long) higher - x ? lower : higher; // COMPARE distances; a tie keeps the smaller
+  }
+
   public static void main(String[] args) {
     int[] a1 = { 10, 5, 11, 6, 20, 12, 10 };
-    printLines(closest(a1));
+    System.out.println(Arrays.toString(closest(a1))); // [10, 6, 10, 5, 12, 11, 10]
 
     int[] a2 = { 10, 5, 11, 10, 20, 12 };
-    printLines(closest(a2));
+    System.out.println(Arrays.toString(closest(a2))); // [10, 10, 10, 10, 12, 11]
+
+    int[] a3 = { 1, 9, 10 };
+    System.out.println(Arrays.toString(closest(a3))); // [9, 10, 9]
   }
 }

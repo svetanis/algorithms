@@ -1,38 +1,46 @@
 package com.svetanis.algorithms.twopointers.closest;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
-import static com.google.common.collect.ImmutableList.copyOf;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.utils.Print.printLines;
-
-import java.util.List;
+import java.util.Arrays;
 import java.util.TreeSet;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.svetanis.java.base.Pair;
+// Closest greater value anywhere in the array
+//
+// Input: an array of integers.
+// Return: for each position i, the smallest number in the WHOLE array that is strictly
+// greater than a[i], or -1 when a[i] is the largest.
+//
+// The one idea: position does not matter, only value, so put every number in a TreeSet
+// once and ask TreeSet.higher(a[i]) -- the smallest value strictly above a[i] -- in
+// O(log n).
+//
+// Siblings -- the same TreeSet lookup:
+//   twopointers.closest.ClosestSmallerValue -- lower(): the largest value strictly below
+//   twopointers.closest.CeilingOnRight      -- ceiling(), and only among the numbers to the RIGHT
+//   twopointers.closest.ClosestValue        -- the nearer of the two sides
+//
+// Time: O(n log n) -- build the tree, then n lookups.
+// Space: O(n) for the tree.
 
 public final class ClosestGreaterValue {
 
-  public static ImmutableList<Pair<Integer, Integer>> closest(List<Integer> iterables) {
-    TreeSet<Integer> set = new TreeSet<>(iterables);
-    List<Pair<Integer, Integer>> list = newArrayList();
-
-    for (int element : iterables) {
-      Integer greater = set.higher(element);
-      Optional<Integer> optional = greater == null ? absent() : of(greater);
-      int closest = optional.isPresent() ? optional.get() : -1;
-      list.add(Pair.build(element, closest));
+  public static int[] closest(int[] a) {
+    TreeSet<Integer> set = new TreeSet<>();
+    for (int x : a) {
+      set.add(x);                                 // RECORD every value
     }
-    return copyOf(list);
+    int[] closest = new int[a.length];
+    for (int i = 0; i < a.length; i++) {
+      Integer greater = set.higher(a[i]);         // FIND the smallest value above a[i]
+      closest[i] = greater == null ? -1 : greater; // RECORD it, -1 when there is none
+    }
+    return closest;
   }
 
   public static void main(String[] args) {
-    List<Integer> list1 = newArrayList(10, 5, 11, 6, 20, 12);
-    printLines(closest(list1));
+    int[] a1 = { 10, 5, 11, 6, 20, 12 };
+    System.out.println(Arrays.toString(closest(a1))); // [11, 6, 12, 10, -1, 20]
 
-    List<Integer> list2 = newArrayList(10, 5, 11, 10, 20, 12);
-    printLines(closest(list2));
+    int[] a2 = { 10, 5, 11, 10, 20, 12 };
+    System.out.println(Arrays.toString(closest(a2))); // [11, 10, 12, 11, -1, 20]
   }
 }

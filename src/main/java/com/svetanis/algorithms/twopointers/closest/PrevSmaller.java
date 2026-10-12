@@ -1,38 +1,50 @@
 package com.svetanis.algorithms.twopointers.closest;
 
-import static com.svetanis.java.base.utils.Print.print;
-import static java.util.Arrays.fill;
-
+import java.util.Arrays;
 import java.util.Stack;
 
-import com.svetanis.java.base.Pair;
+// Previous smaller element, with a stack of (value, position) entries
+//
+// Input: an array of integers.
+// Return: for each position, the nearest number to its LEFT that is strictly smaller, or -1.
+//
+// The one idea: NextSmaller with the scan reversed. Walk right to left; the stack holds the
+// numbers still waiting for a smaller number on their left, and their values never fall from
+// bottom to top. An arriving a[i] is that smaller number for every larger one on top, so
+// each popped entry gets a[i] written into its own slot.
+//
+// Siblings:
+//   monotonicstack.PrevSmaller      -- this right-to-left walk with a stack of positions, and
+//                                     a left-to-right walk that reads a[i]'s answer off the top
+//   twopointers.closest.NextSmaller -- the same scan left to right
+//   twopointers.closest.PrevGreater -- the comparison flipped
+//
+// Time: O(n) -- every position is pushed once and popped at most once.
+// Space: O(n) for the stack.
 
 public final class PrevSmaller {
 
   public static int[] prevSmaller(int[] a) {
-    // time complexity: O(n);
-    // Space complexity: O(n)
-
     int n = a.length;
     int[] smaller = new int[n];
-    fill(smaller, -1);
+    Arrays.fill(smaller, -1);                     // stays -1 when nothing smaller precedes
 
-    Stack<Pair<Integer, Integer>> stack = new Stack<Pair<Integer, Integer>>();
-    for (int i = n - 1; i >= 0; i--) {
-      while (!stack.isEmpty() && a[i] < stack.peek().getLeft()) {
-        Pair<Integer, Integer> top = stack.pop();
-        smaller[top.getRight()] = a[i];
+    Stack<int[]> stack = new Stack<>();           // entries {value, position}
+    for (int i = n - 1; i >= 0; i--) {            // START at the right end
+      while (!stack.isEmpty() && a[i] < stack.peek()[0]) {
+        int[] top = stack.pop();                  // FOUND: a[i] is the nearest smaller on its left
+        smaller[top[1]] = a[i];                   // RECORD in that number's own slot
       }
-      stack.push(Pair.build(a[i], i));
+      stack.push(new int[] { a[i], i });          // a[i] waits for its own answer
     }
     return smaller;
   }
 
   public static void main(String[] args) {
     int[] a1 = { 1, 6, 4, 10, 2, 5 };
-    print(prevSmaller(a1));
+    System.out.println(Arrays.toString(prevSmaller(a1))); // [-1, 1, 1, 4, 1, 2]
 
     int[] a2 = { 1, 3, 0, 2, 5 };
-    print(prevSmaller(a2));
+    System.out.println(Arrays.toString(prevSmaller(a2))); // [-1, 1, -1, 0, 2]
   }
 }

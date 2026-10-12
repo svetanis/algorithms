@@ -1,46 +1,49 @@
 package com.svetanis.algorithms.twopointers.closest;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
-import static com.google.common.collect.ImmutableList.copyOf;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.reverse;
-import static com.svetanis.java.base.utils.Print.printLines;
-
-import java.util.List;
+import java.util.Arrays;
 import java.util.TreeSet;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.svetanis.java.base.Pair;
-
+// Ceiling on the right
+//
+// Input: an array of integers.
+// Return: for each position i, the SMALLEST number to the right of i that is >= a[i] --
+// an equal number counts -- or -1 when there is none.
+//
+// The one idea: walk from the right end, keeping every number already passed in a TreeSet.
+// Those are exactly the numbers to the right of i, and TreeSet.ceiling(a[i]) returns the
+// smallest of them that is >= a[i] in O(log n).
+//
+// Siblings -- the same TreeSet lookup:
+//   twopointers.closest.ClosestGreaterValue -- higher() over the WHOLE array, not only the right
+//   twopointers.closest.ClosestSmallerValue -- lower() over the whole array
+//   twopointers.closest.NextGreater         -- the NEAREST larger number on the right, not the
+//                                             smallest, with a stack
+//
+// Time: O(n log n) -- n lookups and inserts in a balanced tree.
+// Space: O(n) for the tree.
 
 public final class CeilingOnRight {
 
-  public static ImmutableList<Pair<Integer, Integer>> ceiling(List<Integer> iterables) {
-    TreeSet<Integer> set = new TreeSet<>();
-    List<Pair<Integer, Integer>> list = newArrayList();
-    List<Integer> reversed = reverse(iterables);
-    
-    for (int element : reversed) {
-      Integer greater = set.ceiling(element);
-      Optional<Integer> optional = greater == null ? absent() : of(greater);
-      int closest = optional.isPresent() ? optional.get() : -1;
-      list.add(Pair.build(element, closest));
-      set.add(element);
+  public static int[] ceiling(int[] a) {
+    int n = a.length;
+    int[] ceiling = new int[n];
+    TreeSet<Integer> set = new TreeSet<>();       // the numbers to the right of i
+    for (int i = n - 1; i >= 0; i--) {            // START at the right end
+      Integer greater = set.ceiling(a[i]);        // FIND the smallest number >= a[i]
+      ceiling[i] = greater == null ? -1 : greater; // RECORD it, -1 when there is none
+      set.add(a[i]);                              // a[i] is to the right of every later i
     }
-    return copyOf(reverse(list));
+    return ceiling;
   }
 
   public static void main(String[] args) {
-    List<Integer> list1 = newArrayList(10, 5, 11, 6, 20, 12);
-    printLines(ceiling(list1));
+    int[] a1 = { 10, 5, 11, 6, 20, 12 };
+    System.out.println(Arrays.toString(ceiling(a1))); // [11, 6, 12, 12, -1, -1]
 
-    List<Integer> list2 = newArrayList(10, 5, 11, 10, 20, 12);
-    printLines(ceiling(list2));
+    int[] a2 = { 10, 5, 11, 10, 20, 12 };
+    System.out.println(Arrays.toString(ceiling(a2))); // [10, 10, 12, 12, -1, -1]
 
-    List<Integer> list3 = newArrayList(50, 20, 200, 100, 30);
-    printLines(ceiling(list3));
-
+    int[] a3 = { 50, 20, 200, 100, 30 };
+    System.out.println(Arrays.toString(ceiling(a3))); // [100, 30, -1, -1, -1]
   }
 }
