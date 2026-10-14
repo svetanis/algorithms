@@ -20,7 +20,7 @@ import java.util.Set;
 //
 // Siblings:
 //   SwapPairsSort -- sorts both and walks them with two pointers
-//   search.binary.FairCandySwap (LC 888) -- the same set lookup on LeetCode, where an
+//   FairCandySwap (LC 888) -- the same set lookup on LeetCode, where an
 //     answer is guaranteed
 //
 // Time: O(n + m) -- the sums, the sets, one lookup per value of a.

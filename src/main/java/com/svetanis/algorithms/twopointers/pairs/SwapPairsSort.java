@@ -21,7 +21,7 @@ import java.util.Arrays;
 //
 // Siblings:
 //   SwapPairsHashing -- a set of b looked up from each value of a, O(n + m)
-//   search.binary.FairCandySwap (LC 888) -- the same set lookup on LeetCode, where an
+//   FairCandySwap (LC 888) -- the same set lookup on LeetCode, where an
 //     answer is guaranteed
 //
 // Time: O(n log n + m log m) -- the sorts; the walk is O(n + m).

@@ -13,7 +13,7 @@ package com.svetanis.algorithms.twopointers.pairs;
 // Siblings:
 //   PairsLessGivenProduct -- the same loop for products, non-negative values only
 //   CountPairsLessGivenDiff -- pairs with difference below k
-//   search.binary.TwoSumLessThanK1099 -- the largest pair sum below k, not the count
+//   TwoSumLessThanK1099 -- the largest pair sum below k, not the count
 //
 // Time: O(n) -- every step drops one number.
 // Space: O(1).
