@@ -1,7 +1,8 @@
 package com.svetanis.algorithms.twopointers.closest;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Deque;
 
 // Maximum of minimums for every window length
 //
@@ -34,31 +35,31 @@ public final class MaxOfMinsStack {
     int[] left = prevSmaller(a);                  // position of the previous smaller, or -1
     int[] right = nextSmaller(a);                 // position of the next smaller, or n
 
-    for (int i = 0; i < n; i++) {
-      int len = right[i] - left[i] - 1;           // the longest window where a[i] is the minimum
+    for (int i = 0; i < n; i++) {                 // WALK: each a[i] as the minimum of its window
+      int len = right[i] - left[i] - 1;           // WIDTH: the longest window where a[i] is the minimum
       result[len] = Math.max(result[len], a[i]);  // RECORD a[i] as a candidate for that length
     }
 
-    for (int i = n - 1; i >= 0; i--) {
+    for (int i = n - 1; i >= 0; i--) {            // WALK: lengths from n - 1 down to 0
       result[i] = Math.max(result[i], result[i + 1]); // FILL: a longer window's answer serves shorter ones
     }
-    return result;
+    return result;                                // RETURN: slot w answers length w; slot 0 is not an answer
   }
 
   public static int[] prevSmaller(int[] a) {
     int n = a.length;
     int[] left = new int[n + 1];                  // slot n is never written
-    Arrays.fill(left, -1);
-    Stack<Integer> stack = new Stack<Integer>();  // positions, their values rising bottom to top
-    for (int i = 0; i < n; i++) {
-      while (!stack.empty() && a[stack.peek()] >= a[i]) {
+    Arrays.fill(left, -1);                        // DEFAULT: -1, no smaller value on the left
+    Deque<Integer> stack = new ArrayDeque<>();    // STACK: positions, their values rising bottom to top
+    for (int i = 0; i < n; i++) {                 // WALK: left to right, a[i] arrives
+      while (!stack.isEmpty() && a[stack.peek()] >= a[i]) {  // STOP: the top is not smaller than a[i]
         stack.pop();                              // DROP: not smaller than a[i], useless from now on
       }
 
       if (!stack.isEmpty()) {
         left[i] = stack.peek();                   // RECORD: the survivor on top is the previous smaller
       }
-      stack.push(i);
+      stack.push(i);                              // PUSH: i may be a later position's smaller value
     }
     return left;
   }
@@ -66,17 +67,17 @@ public final class MaxOfMinsStack {
   private static int[] nextSmaller(int[] a) {
     int n = a.length;
     int[] right = new int[n + 1];                 // slot n is never written
-    Arrays.fill(right, n);
-    Stack<Integer> stack = new Stack<Integer>();  // positions, their values rising bottom to top
-    for (int i = n - 1; i >= 0; i--) {
-      while (!stack.empty() && a[stack.peek()] >= a[i]) {
+    Arrays.fill(right, n);                        // DEFAULT: n, no smaller value on the right
+    Deque<Integer> stack = new ArrayDeque<>();    // STACK: positions, their values rising bottom to top
+    for (int i = n - 1; i >= 0; i--) {            // WALK: right to left, a[i] arrives
+      while (!stack.isEmpty() && a[stack.peek()] >= a[i]) {  // STOP: the top is not smaller than a[i]
         stack.pop();                              // DROP: not smaller than a[i], useless from now on
       }
 
-      if (!stack.empty()) {
+      if (!stack.isEmpty()) {
         right[i] = stack.peek();                  // RECORD: the survivor on top is the next smaller
       }
-      stack.push(i);
+      stack.push(i);                              // PUSH: i may be a later position's smaller value
     }
     return right;
   }

@@ -1,7 +1,8 @@
 package com.svetanis.algorithms.twopointers.closest;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Deque;
 
 // Next greater element, with a stack of (value, position) entries
 //
@@ -28,17 +29,17 @@ public final class NextGreater {
   public static int[] nextGreater(int[] a) {
     int n = a.length;
     int[] greater = new int[n];
-    Arrays.fill(greater, -1);                     // stays -1 when nothing larger follows
+    Arrays.fill(greater, -1);                     // DEFAULT: stays -1 when nothing larger follows
 
-    Stack<int[]> stack = new Stack<>();           // entries {value, position}
-    for (int i = 0; i < n; i++) {
-      while (!stack.isEmpty() && a[i] > stack.peek()[0]) {
+    Deque<int[]> stack = new ArrayDeque<>();      // WAITING: entries {value, position}
+    for (int i = 0; i < n; i++) {                 // WALK: a[i] arrives
+      while (!stack.isEmpty() && a[i] > stack.peek()[0]) {  // STOP: a[i] is strictly larger than the top
         int[] top = stack.pop();                  // FOUND: a[i] is the first number to beat it
         greater[top[1]] = a[i];                   // RECORD in that number's own slot
       }
-      stack.push(new int[] { a[i], i });          // a[i] waits for its own answer
+      stack.push(new int[] { a[i], i });          // WAIT: a[i] waits for its own answer
     }
-    return greater;
+    return greater;                               // RETURN: -1 where nothing larger follows
   }
 
   public static void main(String[] args) {

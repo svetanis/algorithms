@@ -1,7 +1,8 @@
 package com.svetanis.algorithms.twopointers.closest;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Deque;
 
 // Previous smaller element, with a stack of (value, position) entries
 //
@@ -27,17 +28,17 @@ public final class PrevSmaller {
   public static int[] prevSmaller(int[] a) {
     int n = a.length;
     int[] smaller = new int[n];
-    Arrays.fill(smaller, -1);                     // stays -1 when nothing smaller precedes
+    Arrays.fill(smaller, -1);                     // DEFAULT: stays -1 when nothing smaller precedes
 
-    Stack<int[]> stack = new Stack<>();           // entries {value, position}
+    Deque<int[]> stack = new ArrayDeque<>();      // WAITING: entries {value, position}
     for (int i = n - 1; i >= 0; i--) {            // START at the right end
-      while (!stack.isEmpty() && a[i] < stack.peek()[0]) {
+      while (!stack.isEmpty() && a[i] < stack.peek()[0]) {  // STOP: a[i] is strictly smaller than the top
         int[] top = stack.pop();                  // FOUND: a[i] is the nearest smaller on its left
         smaller[top[1]] = a[i];                   // RECORD in that number's own slot
       }
-      stack.push(new int[] { a[i], i });          // a[i] waits for its own answer
+      stack.push(new int[] { a[i], i });          // WAIT: a[i] waits for its own answer
     }
-    return smaller;
+    return smaller;                               // RETURN: -1 where nothing smaller precedes
   }
 
   public static void main(String[] args) {
