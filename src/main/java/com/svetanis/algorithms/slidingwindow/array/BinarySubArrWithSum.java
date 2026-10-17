@@ -1,6 +1,9 @@
 package com.svetanis.algorithms.slidingwindow.array;
 
 // 930. Binary Subarrays With Sum
+//
+// Input: a binary array a (every value 0 or 1) and a target >= 0.
+// Return: how many non-empty subarrays sum to exactly target.
 
 // count subarrays summing to EXACTLY target. exactly-K is not a
 // window: shrinking a valid window drops you to target-1, so there
@@ -26,11 +29,21 @@ package com.svetanis.algorithms.slidingwindow.array;
 // contrast CountSubArraysKDistinct, where atMost is a standalone
 // helper: there the +1 must be present, because that helper can be
 // called on its own and would otherwise be wrong by n.
+//
+// Time: O(n) -- one pass; each of the three indices only ever moves
+//   forward, so it is O(n) despite the inner loops
+// Space: O(1) -- two running sums and three indices
+//
+// Siblings: no other file solves 930.
+//   hashmap/CountSubArraysKDistinct (992) is the same subtraction
+//     written as two calls to a named atMost helper.
+//   prefixsum/CountSubArraysGivenSum (560) counts sum == target with
+//     a map of earlier prefix sums; it also works when values are
+//     negative, where no window does.
+//   CountSubArrsSumLessThanK is one of the two windows here on its
+//     own, counting sum < k.
 
 public final class BinarySubArrWithSum {
-	// Time complexity: O(n) -- one pass; each of the three indices
-	// only ever moves forward, so it is O(n) despite the inner loops
-	// Aux Space: O(1)
 
 	public static int countSubArrs(int[] a, int target) {
 		int sum1 = 0, sum2 = 0;
@@ -38,15 +51,15 @@ public final class BinarySubArrWithSum {
 		int right = 0, count = 0;
 		int n = a.length;
 		while(right < n) {
-			sum1 += a[right];
-			sum2 += a[right];
-			while(left1 <= right && sum1 > target) {
+			sum1 += a[right]; // ADD to the "sum <= target" window
+			sum2 += a[right]; // ADD to the "sum < target" window
+			while(left1 <= right && sum1 > target) { // SHRINK while sum1 > target
 				sum1 -= a[left1++];
 			}
-			while(left2 <= right && sum2 >= target) {
+			while(left2 <= right && sum2 >= target) { // SHRINK while sum2 >= target
 				sum2 -= a[left2++];
 			}
-			// atMost(target) - atMost(target-1), for windows ending
+			// COUNT: atMost(target) - atMost(target-1), for windows ending
 			// at 'right'. no +1: see the derivation above.
 			count += left2 - left1;
 			right++;

@@ -5,6 +5,7 @@ package com.svetanis.algorithms.slidingwindow.array;
 // delete exactly one element, then return the length of the
 // longest run of 1s in what remains. the deletion is mandatory,
 // even when the array is all 1s.
+// takes a binary array a (only 0s and 1s); an empty array returns 0.
 
 // a block can become all 1s after one deletion iff it holds AT MOST
 // ONE 0 -- delete the 0, or delete any 1 if there is no 0. two 0s
@@ -12,8 +13,21 @@ package com.svetanis.algorithms.slidingwindow.array;
 
 // two solutions: slidingWindow names the block it KEEPS, by its two
 // endpoints; prefixSuffix names the element it DELETES, by its index.
-// they count the same surviving elements. worked through, with a
-// trace, in leetcode/sliding-window.md.
+// they count the same surviving elements.
+
+// Time: O(n) for both -- the window's two ends each move forward at
+// most n times; prefixSuffix makes three passes of n.
+// Space: slidingWindow O(1) -- a zero count and two indices;
+// prefixSuffix O(n) -- the two run-length arrays.
+
+// Siblings, the same window with a different budget of 0s:
+//   MaximizeConsecutiveOnesII (487) -- flip at most one 0 instead of
+//     deleting one element, so it measures right - left + 1.
+//   MaximizeConsecutiveOnesSubmit (1004) -- flip at most k 0s.
+//   MaximizeConsecutiveOnes -- k flips, and returns where the block
+//     starts as well as its length.
+//   twopointers.dups.MaxConsecutiveOnes (485) -- no flips, no
+//     deletion: the longest run as it stands.
 
 public final class LongestSubArrAfterDeletingOneElement {
 
@@ -28,9 +42,9 @@ public final class LongestSubArrAfterDeletingOneElement {
     int max = 0;
     for (int right = 0; right < a.length; right++) {
       if (a[right] == 0) {
-        zeros++;
+        zeros++; // ADD: a 0 entering
       }
-      while (zeros > 1) {
+      while (zeros > 1) { // SHRINK: while two 0s; a 1 leaving changes nothing
         if (a[left] == 0) {
           zeros--;
         }
@@ -40,7 +54,7 @@ public final class LongestSubArrAfterDeletingOneElement {
       // block we keep, and exactly one of its elements is deleted --
       // the 0 if there is one, otherwise a 1. dropping the +1 pays
       // for that deletion, so the all-1s case needs no special case.
-      max = Math.max(max, right - left);
+      max = Math.max(max, right - left); // MEASURE: the block minus its one deleted element
     }
     return max;
   }
@@ -67,7 +81,7 @@ public final class LongestSubArrAfterDeletingOneElement {
   private static int[] prefix(int[] a) {
     int n = a.length;
     int[] prefix = new int[n];
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; i++) { // START at 1: nothing comes before index 0
       if (a[i - 1] == 1) {
         prefix[i] = prefix[i - 1] + 1;
       }
@@ -79,7 +93,7 @@ public final class LongestSubArrAfterDeletingOneElement {
   private static int[] suffix(int[] a) {
     int n = a.length;
     int[] suffix = new int[n];
-    for (int i = n - 2; i >= 0; i--) {
+    for (int i = n - 2; i >= 0; i--) { // START at n - 2: nothing comes after index n - 1
       if (a[i + 1] == 1) {
         suffix[i] = suffix[i + 1] + 1;
       }
