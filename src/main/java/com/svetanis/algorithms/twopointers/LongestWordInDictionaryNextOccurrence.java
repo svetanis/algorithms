@@ -4,46 +4,56 @@ import java.util.Arrays;
 import java.util.List;
 
 // 524. Longest Word in Dictionary through Deleting
-
-// the scan version is LongestWordInDictionary.java, and it is the one
-// to write first. this file is the follow-up: "the dictionary is huge
-// and s is fixed -- can you do better?"
-
-// next[i][c] answers "starting at index i, where is the next c?" in one
-// read, so matching a candidate never touches s again. building it is
-// O(26n); each candidate then costs O(word.length()) instead of O(s.length())
+//
+// Input: a string s and a list of candidate words, all lowercase.
+// Return: the longest candidate that is a subsequence of s; on a tie in length, the
+// lexicographically smallest; "" when none is.
+//
+// The scan version is LongestWordInDictionary.java, and it is the one to write first.
+// This file is the follow-up: "the dictionary is huge and s is fixed -- can you do
+// better?"
+//
+// The one idea: next[i][c] answers "starting at index i, where is the next c?" in one
+// read, so matching a candidate never touches s again. Building it is O(26n); each
+// candidate then costs O(word.length()) instead of O(s.length()), and a candidate
+// that fails stops at its first letter with no next occurrence.
+//
+// Two methods, the same table:
+//   longestWord       -- skips a candidate that cannot beat the current answer before
+//                        testing it; the skip pays off when candidates MATCH
+//   longestWordNoSkip -- tests every candidate; kept so the two speedups can be timed
+//                        apart -- the table pays off when candidates FAIL
+// Sibling: twopointers.LongestWordInDictionary -- scans s once per candidate, O(1) space.
+//
+// Time: O(26n + L), n = s.length(), L = total length of the dictionary.
+// Space: O(26n) -- the table, one row of 26 per position of s, plus one.
 
 public final class LongestWordInDictionaryNextOccurrence {
-	// Time Complexity: O(26n + L), n = s.length(), L = total dictionary length
-	// Space Complexity: O(26n)
 
-	private static final int ALPHABET = 26;
+	private static final int ALPHABET = 26;   // lowercase English, per the constraints
 
 	public static String longestWord(String s, List<String> list) {
-		int[][] next = nextOccurrence(s);
+		int[][] next = nextOccurrence(s); // BUILD once: s is fixed
 		int n = s.length();
-		String result = "";
+		String result = "";               // START: "" until something matches
 		for (String word : list) {
 			if (cannotWin(word, result)) {
-				continue;
+				continue;                 // SKIP: decided without touching s
 			}
 			if (isSubSeq(word, next, n)) {
-				result = word;
+				result = word;            // RECORD: it already beats result
 			}
 		}
 		return result;
 	}
 
-	// the same table, without the skip -- kept so the two speedups can be
-	// measured apart. they help in opposite cases: the skip needs candidates
-	// to MATCH, the table needs them to FAIL
 	public static String longestWordNoSkip(String s, List<String> list) {
-		int[][] next = nextOccurrence(s);
+		int[][] next = nextOccurrence(s); // BUILD once: s is fixed
 		int n = s.length();
 		String result = "";
 		for (String word : list) {
 			if (isSubSeq(word, next, n) && beats(word, result)) {
-				result = word;
+				result = word;            // RECORD: a match that beats result
 			}
 		}
 		return result;
@@ -54,24 +64,24 @@ public final class LongestWordInDictionaryNextOccurrence {
 	private static int[][] nextOccurrence(String s) {
 		int n = s.length();
 		int[][] next = new int[n + 1][ALPHABET];
-		Arrays.fill(next[n], n); // past the end, nothing occurs
-		for (int i = n - 1; i >= 0; i--) {
-			next[i] = next[i + 1].clone(); // all still reachable from i
-			next[i][s.charAt(i) - 'a'] = i; // and this one letter is closer
+		Arrays.fill(next[n], n);            // START: past the end, nothing occurs
+		for (int i = n - 1; i >= 0; i--) {  // FILL right to left: i needs i + 1
+			next[i] = next[i + 1].clone();  // COPY: all still reachable from i
+			next[i][s.charAt(i) - 'a'] = i; // WRITE: and this one letter is closer
 		}
 		return next;
 	}
 
 	private static boolean isSubSeq(String word, int[][] next, int n) {
-		int pos = 0;
+		int pos = 0;                                  // START: the front of s
 		for (int i = 0; i < word.length(); i++) {
-			int at = next[pos][word.charAt(i) - 'a'];
+			int at = next[pos][word.charAt(i) - 'a']; // JUMP: one read finds the next match
 			if (at == n) {
-				return false; // this letter never appears again
+				return false;                         // STOP: this letter never appears again
 			}
-			pos = at + 1; // continue strictly after what we consumed
+			pos = at + 1;                             // MOVE: continue strictly after what we consumed
 		}
-		return true;
+		return true;                                  // FOUND: every letter is placed
 	}
 
 	// longer wins; equal length is broken lexicographically, smallest first
@@ -90,14 +100,14 @@ public final class LongestWordInDictionaryNextOccurrence {
 	public static void main(String[] args) {
 		String s = "abpcplea";
 		List<String> list = Arrays.asList("ale", "apple", "monkey", "plea");
-		System.out.println(longestWord(s, list)); // apple
+		System.out.println(longestWord(s, list));       // apple
 		System.out.println(longestWordNoSkip(s, list)); // apple
 
 		List<String> list1 = Arrays.asList("a", "b", "c");
-		System.out.println(longestWord(s, list1)); // a
+		System.out.println(longestWord(s, list1));       // a
 		System.out.println(longestWordNoSkip(s, list1)); // a
 
-		System.out.println("[" + longestWord("abc", Arrays.asList("zz")) + "]"); // []
-		System.out.println("[" + longestWord("abc", Arrays.asList()) + "]"); // []
+		System.out.println("[%s]".formatted(longestWord("abc", List.of("zz")))); // []
+		System.out.println("[%s]".formatted(longestWord("abc", List.of()))); // []
 	}
 }
