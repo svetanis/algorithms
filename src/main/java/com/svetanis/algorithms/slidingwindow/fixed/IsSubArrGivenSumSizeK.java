@@ -1,26 +1,36 @@
 package com.svetanis.algorithms.slidingwindow.fixed;
 
-import com.svetanis.java.base.utils.Arrays;
-
-// given an array, an integer K and a Sum
-// check if there exists a subarray of size K
-// which sum equals to the given sum
+// Subarray of size k with a given sum -- no LeetCode number; source unknown
+//
+// Given an array, an integer k and a sum, check if there exists a subarray of size k
+// whose sum equals the given sum. Returns true or false. Assumes 1 <= k <= a.length: a
+// larger k, or an empty array, throws ArrayIndexOutOfBoundsException.
+//
+// One step of a fixed window changes two numbers: a[i] enters on the right and a[i - k]
+// leaves k places behind it. So the next window's sum is the last one edited by those two
+// numbers, not rebuilt from k additions, and the first window that hits target answers.
+//
+// Time: O(n) -- k additions build the first window, then one edit per remaining index
+// Space: O(1) -- one running sum
+//
+// Sibling: GivenSumSubArrSizeK is the same method, line for line.
 
 public final class IsSubArrGivenSumSizeK {
 
 	public static boolean sum(int[] a, int k, int target) {
-		// Time Complexity: O(n)
-		// Space Complexity: O(1)
 		int n = a.length;
-		int sum = Arrays.sum(a, k);
+		int sum = 0;
+		for (int i = 0; i < k; i++) { // BUILD: the first window, a[0..k-1]
+			sum += a[i];
+		}
 
-		if (sum == target) {
+		if (sum == target) { // STOP: the first window hits target
 			return true;
 		}
 
 		for (int i = k; i < n; i++) {
-			sum += a[i] - a[i - k];
-			if (sum == target) {
+			sum += a[i] - a[i - k]; // IN a[i], OUT a[i - k]
+			if (sum == target) { // STOP: the window ending at i hits target
 				return true;
 			}
 		}

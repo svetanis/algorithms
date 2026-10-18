@@ -1,6 +1,20 @@
 package com.svetanis.algorithms.slidingwindow.fixed;
 
 // 1423. Maximum Points You Can Obtain from Cards
+//
+// Takes the cards' points as a (each at least 1) and k, 1 <= k <= a.length. Cards are taken
+// one at a time from either end of the row, k cards in all. Returns the largest total of the
+// cards taken.
+//
+// Whatever is taken from the two ends, the cards left behind are one unbroken block of
+// n - k cards in the middle. So the most that can be taken is the total minus the least that
+// can be left behind, and the block left behind is a fixed window of size n - k.
+//
+// Time: maxScore O(n) -- one pass for the total, then each card enters the window once and
+//   leaves once; maxScoreTwoPointers O(k) -- it reads only the k cards at each end
+// Space: O(1) for both -- a few running sums
+//
+// No other file solves 1423; the two methods below are its two solutions.
 
 public final class MaxScore {
 
@@ -13,19 +27,19 @@ public final class MaxScore {
 		int n = a.length;
 		int totalScore = 0;
 		for (int i = 0; i < n; i++) {
-			totalScore += a[i];
+			totalScore += a[i]; // COUNT: every card
 		}
 		if (k >= n) {
-			return totalScore;
+			return totalScore; // RETURN: every card is taken, no block is left behind
 		}
 		int left = 0;
 		int max = 0;
 		int score = 0;
 		for (int right = 0; right < n; right++) {
-			score += a[right];
-			if (right - left + 1 == n - k) {
-				max = Math.max(max, totalScore - score);
-				score -= a[left];
+			score += a[right]; // IN: the block LEFT BEHIND grows by a[right]
+			if (right - left + 1 == n - k) { // the block holds n - k cards
+				max = Math.max(max, totalScore - score); // RECORD: what was taken = total - what is left
+				score -= a[left]; // OUT
 				left++;
 			}
 		}
@@ -40,15 +54,15 @@ public final class MaxScore {
 		int left = 0;
 		int leftScore = 0;
 		for (left = 0; left < k; left++) {
-			leftScore += a[left];
+			leftScore += a[left]; // BUILD: all k cards from the left end
 		}
 		int max = leftScore;
 		int right = n - 1;
 		int rightScore = 0;
 		for (left = k - 1; left >= 0; left--) {
-			leftScore -= a[left];
-			rightScore += a[right--];
-			max = Math.max(max, leftScore + rightScore);
+			leftScore -= a[left]; // OUT: give back the innermost card from the left
+			rightScore += a[right--]; // IN: take one more card from the right end
+			max = Math.max(max, leftScore + rightScore); // RECORD
 		}
 		return max;
 	}

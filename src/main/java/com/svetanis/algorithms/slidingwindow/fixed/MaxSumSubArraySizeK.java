@@ -5,23 +5,33 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// Maximum sum subarray of size k -- no LeetCode number; source unknown
+//
 // Given an array of positive numbers and a positive number ‘k’, 
 // find the maximum sum of any contiguous subarray of size ‘k’.
+// Returns that sum, or -1 when the list is shorter than k. A sum past 2^31 - 1 wraps.
+//
+// One step of a fixed window changes two numbers: list[i] enters on the right and
+// list[i - k] leaves k places behind it, so the sum is edited, not rebuilt.
+//
+// Time: O(n) -- k additions build the first window, then one edit per remaining index
+// Space: O(1) -- the running sum and the best sum
+//
+// Siblings: MaxAverageSubArraySubmit (643) is the same loop over an int[], dividing the
+// best sum by k, with no k > n guard. MaxAverageSubArray also returns where the window is.
 
 public final class MaxSumSubArraySizeK {
-	// Time Complexity: O(n)
-	// Aux Space: O(1)
 
 	public static int maxSum(int k, List<Integer> list) {
 		int n = list.size();
 		if (n < k) {
-			return -1;
+			return -1; // RETURN: no window of size k fits
 		}
-		int max = sum(list, k);
+		int max = sum(list, k); // BUILD: the first window, list[0..k-1]
 		int sum = max;
 		for (int i = k; i < n; i++) {
-			sum += list.get(i) - list.get(i - k);
-			max = max(max, sum);
+			sum += list.get(i) - list.get(i - k); // IN list[i], OUT list[i - k]
+			max = max(max, sum); // RECORD
 		}
 		return max;
 	}
