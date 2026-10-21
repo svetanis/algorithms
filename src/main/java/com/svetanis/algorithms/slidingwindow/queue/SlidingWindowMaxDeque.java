@@ -1,55 +1,72 @@
 package com.svetanis.algorithms.slidingwindow.queue;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.utils.Print.print;
-
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-
-// Given an array and an integer k, 
-// find the maximum for each and 
-// every contiguous subarray of size k.
+// 239. Sliding Window Maximum
+//
+// An array a and a window size w, 1 <= w <= a.length. Returns the maximum of every window of
+// w neighbours, from left to right: a.length - w + 1 numbers.
+//
+// A maximum cannot be taken out when it leaves the window, so keep every number that could
+// still become one: an older number <= the newcomer never can, because the newcomer is at least
+// as big and stays in the window longer. The deque holds indexes; their values decrease from
+// front to back, so the front is the window's maximum, and the front leaves once it slides out.
+//
+// This version records the PREVIOUS window at the top of each step, so it needs a loop that
+// builds the first window before, and one more record after the loop.
+//
+// Siblings, same problem:
+//   SlidingWindowMaxSubmit         the same deque in one loop, recording the current window;
+//                                  returns int[]; the version to prefer
+//   SlidingWindowMaxPriorityQueue  a max-heap of (value, index) instead of the deque; O(n log n)
 
 public final class SlidingWindowMaxDeque {
 
-	private static ImmutableList<Integer> subArrayMax(int[] a, int w) {
-		// Time complexity: O(n);
-		// Auxiliary Space: O(k)
+	private static List<Integer> subArrayMax(int[] a, int w) {
+		// Time complexity: O(n), each index joins the deque once and leaves it at most once
+		// Auxiliary Space: O(w), the deque holds indexes of one window;
+		// the returned list holds n - w + 1 numbers
 
-		List<Integer> list = newArrayList();
+		List<Integer> list = new ArrayList<>();
 		Deque<Integer> dq = new ArrayDeque<>();
 		for (int i = 0; i < w; ++i) {
-			windowMax(dq, a, i);
+			windowMax(dq, a, i); // BUILD: the first window
 		}
 
 		for (int i = w; i < a.length; ++i) {
-			// max element of prev window
+			// RECORD: max element of prev window, a[i - w .. i - 1]
 			list.add(a[dq.peekFirst()]);
 
-			// remove the elements
-			// which are out of this window
+			// DROP: the index which is out of this window
 			while (!dq.isEmpty() && i - w + 1 > dq.peekFirst()) {
 				dq.pollFirst();
 			}
 			windowMax(dq, a, i);
 		}
-		// max element of last window
+		// RECORD: max element of last window
 		list.add(a[dq.peekFirst()]);
-		return newList(list);
+		return list;
 	}
 
 	private static void windowMax(Deque<Integer> dq, int[] a, int i) {
-		// remove elements that are less than the
-		// current element since they are not useful
+		// THROW: older elements that are <= the current element,
+		// they can never be a maximum again
 		while (!dq.isEmpty() && a[dq.getLast()] <= a[i]) {
 			dq.pollLast();
 		}
-		// add current element's index to the deque
+		// JOIN: the current element's index
 		dq.addLast(i);
+	}
+
+	private static void print(List<Integer> list) {
+		StringBuilder sb = new StringBuilder();
+		for (int value : list) {
+			sb.append(value).append(' ');
+		}
+		System.out.println(sb);
 	}
 
 	public static void main(String[] args) {
