@@ -1,24 +1,31 @@
 package com.svetanis.algorithms.slidingwindow.string.anagram;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.utils.Print.print;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.ImmutableList;
-import com.svetanis.java.base.Pair;
-
 // 438. Find All Anagrams in a String
-
-// Given a string and a pattern, find all anagrams 
-// of the pattern in the given string.
+//
+// A string s and a pattern p. Returns, in increasing order, the start index of every substring
+// of s that is a rearrangement of p: the same letters, each as many times.
+//
+// Such a substring has exactly p.length() letters, so the window has a fixed size. The map says
+// how many more of each pattern letter the window still needs, and goes negative when the
+// window holds a spare. matched counts the distinct pattern letters whose need is 0 or less.
+// When matched reaches map.size(), no pattern letter is missing; and since the window is no
+// longer than the pattern, it cannot hold anything extra either -- it is a rearrangement.
+//
+// Siblings:
+//   StringAnagramsSubmit (same problem) two int[26] count tables, the window seeded one letter
+//                        short and compared with Arrays.equals at every step; lowercase only
+//   ContainsAnagram      (LC 567) the same window, stops at the first match
+//   CountAnagrams        the same window, counts the matches
 
 public final class StringAnagrams {
-	// Time complexity: O(n)
+	// Time complexity: O(n + m), each letter of s enters the window once and leaves once;
+	// building the map reads p once
+	// Space complexity: O(m), one map entry per distinct letter of p, plus the returned list
 
 	public static List<Integer> anagrams(String s, String p) {
 		int n = s.length();
@@ -29,19 +36,19 @@ public final class StringAnagrams {
 		for (int right = 0; right < n; right++) {
 			char end = s.charAt(right);
 			if (map.containsKey(end)) {
-				map.put(end, map.get(end) - 1);
+				map.put(end, map.get(end) - 1); // IN: one fewer of end still needed
 				if (map.get(end) == 0) {
-					matched++;
+					matched++; // COUNT: end's need is met
 				}
 			}
 			if (matched == map.size()) {
-				list.add(left);
+				list.add(left); // RECORD: the window's start, before it moves
 			}
 			if (right >= p.length() - 1) {
-				char start = s.charAt(left++);
+				char start = s.charAt(left++); // OUT: the window is full, its oldest letter leaves
 				if (map.containsKey(start)) {
 					if (map.get(start) == 0) {
-						matched--;
+						matched--; // start's need was exactly met, and now it is short by one
 					}
 					map.put(start, map.get(start) + 1);
 				}
@@ -58,22 +65,26 @@ public final class StringAnagrams {
 		return map;
 	}
 
-	public static void main(String[] args) {
-		ImmutableList<Pair<String, String>> pairs = pairs();
-		for (Pair<String, String> pair : pairs) {
-			print(anagrams(pair.getLeft(), pair.getRight()));
+	private static void print(List<Integer> list) {
+		StringBuilder sb = new StringBuilder();
+		for (int value : list) {
+			sb.append(value).append(' ');
 		}
+		System.out.println(sb);
 	}
 
-	private static ImmutableList<Pair<String, String>> pairs() {
-		List<Pair<String, String>> list = newArrayList();
-		list.add(Pair.build("ppqp", "pq")); // 1, 2
-		list.add(Pair.build("abbcabc", "abc")); // 2, 3, 4
-		list.add(Pair.build("cbaebabacd", "abc")); // 0, 6
-		list.add(Pair.build("abab", "ab")); // 0, 1, 2
-		list.add(Pair.build("BACDGABCDA", "ABCD")); // 0, 5, 6
-		list.add(Pair.build("AAABABAA", "AABA")); // 0, 1, 4
-		return newList(list);
+	public static void main(String[] args) {
+		String[][] pairs = {
+				{ "ppqp", "pq" }, // 1, 2
+				{ "abbcabc", "abc" }, // 2, 3, 4
+				{ "cbaebabacd", "abc" }, // 0, 6
+				{ "abab", "ab" }, // 0, 1, 2
+				{ "BACDGABCDA", "ABCD" }, // 0, 5, 6
+				{ "AAABABAA", "AABA" } // 0, 1, 4
+		};
+		for (String[] pair : pairs) {
+			print(anagrams(pair[0], pair[1]));
+		}
 	}
 
 }

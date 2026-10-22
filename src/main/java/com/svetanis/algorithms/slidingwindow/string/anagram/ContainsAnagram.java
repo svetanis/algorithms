@@ -1,16 +1,32 @@
 package com.svetanis.algorithms.slidingwindow.string.anagram;
 
-import static com.svetanis.java.base.utils.Maps.freqMap;
-
+import java.util.HashMap;
 import java.util.Map;
 
-// Given a string and a pattern, 
-// find out if the string contains any permutation of the pattern.
+// 567. Permutation in String
+//
+// A string str and a pattern pat. Returns true if some substring of str is a rearrangement of
+// pat: the same letters, each as many times. (LeetCode's checkInclusion(s1, s2) takes the
+// pattern first; this method takes the text first.)
+//
+// Such a substring has exactly pat.length() letters, so the window has a fixed size. The map
+// says how many more of each pattern letter the window still needs, and goes negative when the
+// window holds a spare. matched counts the distinct pattern letters whose need is 0 or less.
+// When matched reaches map.size(), no pattern letter is missing; and since the window is no
+// longer than the pattern, it cannot hold anything extra either -- it is a rearrangement.
+//
+// Siblings, the same window:
+//   CountAnagrams        counts every such substring instead of stopping at the first
+//   StringAnagrams       (LC 438) lists the start of every such substring
+//   StringAnagramsSubmit (LC 438) two int[26] count tables compared with Arrays.equals
+// Same problem, LeetCode's signature: slidingwindow/string/PermutationInString, two int[26] tables.
 
 public final class ContainsAnagram {
 
 	public static boolean contains(String str, String pat) {
-		// Time complexity: O(n)
+		// Time complexity: O(n + m), each letter of str enters the window once and leaves once;
+		// building the map reads pat once
+		// Space complexity: O(m), one map entry per distinct letter of pat
 
 		int n = str.length();
 		int left = 0;
@@ -20,21 +36,21 @@ public final class ContainsAnagram {
 		for (int right = 0; right < n; right++) {
 			char end = str.charAt(right);
 			if (map.containsKey(end)) {
-				map.put(end, map.get(end) - 1);
+				map.put(end, map.get(end) - 1); // IN: one fewer of end still needed
 				if (map.get(end) == 0) {
-					matched++;
+					matched++; // COUNT: end's need is met
 				}
 			}
 
 			if (matched == map.size()) {
-				return true;
+				return true; // RETURN: every pattern letter met in a window of pat's length
 			}
 
 			if (right >= pat.length() - 1) {
-				char start = str.charAt(left++);
+				char start = str.charAt(left++); // OUT: the window is full, its oldest letter leaves
 				if (map.containsKey(start)) {
 					if (map.get(start) == 0) {
-						matched--;
+						matched--; // start's need was exactly met, and now it is short by one
 					}
 					map.put(start, map.get(start) + 1);
 				}
@@ -43,13 +59,21 @@ public final class ContainsAnagram {
 		return false;
 	}
 
+	private static Map<Character, Integer> freqMap(char[] chars) {
+		Map<Character, Integer> map = new HashMap<>();
+		for (char c : chars) {
+			map.put(c, map.getOrDefault(c, 0) + 1);
+		}
+		return map;
+	}
+
 	public static void main(String[] args) {
 		String str = "coding interview questions";
 		String pat = "weivretni";
-		System.out.println(contains(str, pat));
-		System.out.println(contains("oidbcaf", "abc"));
-		System.out.println(contains("odicf", "dc"));
-		System.out.println(contains("bcdxabcdy", "bcdyabcdx"));
-		System.out.println(contains("aaacb", "abc"));
+		System.out.println(contains(str, pat)); // true
+		System.out.println(contains("oidbcaf", "abc")); // true
+		System.out.println(contains("odicf", "dc")); // false
+		System.out.println(contains("bcdxabcdy", "bcdyabcdx")); // true
+		System.out.println(contains("aaacb", "abc")); // true
 	}
 }
