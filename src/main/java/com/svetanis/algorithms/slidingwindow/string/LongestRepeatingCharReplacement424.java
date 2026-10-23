@@ -10,11 +10,25 @@ import java.util.Map;
 // letter, at most k times. Return the length of the longest
 // substring containing a single repeated letter.
 
+// The one idea: in a window, keep the most frequent letter and replace
+// every other one, so the window costs (size - most frequent count)
+// replacements. Adding a letter can push that over k; losing letters
+// from the left brings it back. count is the largest count ever seen
+// and is never lowered, so after a shrink the window can be one that
+// is not really affordable -- but only at a length already recorded.
+// A longer window needs some letter's real count to beat count, and
+// that raises count to the true value.
+
 // Same algorithm as MaxUnivalSubStrLenAfterKReplacements,
 // which states the problem over a lowercase alphabet.
+// The two methods here differ only in the counts: a map, or an
+// int[26] indexed c - 'A'.
+
+// Time: O(n) -- each letter enters the window once and leaves at most
+//   once.
+// Space: O(1) -- at most 26 counts, in the map or in the array.
 
 public final class LongestRepeatingCharReplacement424 {
-	// Time complexity: O(n)
 
 	// the window is valid while (size - most frequent letter) <= k,
 	// because every other letter in it has to be replaced
@@ -26,14 +40,14 @@ public final class LongestRepeatingCharReplacement424 {
 		Map<Character, Integer> map = new HashMap<>();
 		for (int right = 0; right < s.length(); right++) {
 			char c = s.charAt(right);
-			map.put(c, map.getOrDefault(c, 0) + 1);
+			map.put(c, map.getOrDefault(c, 0) + 1); // ADD
 			count = Math.max(count, map.get(c));
-			while (right - left + 1 - count > k) {
+			while (right - left + 1 - count > k) { // SHRINK: while more than k letters need replacing
 				char front = s.charAt(left);
 				map.put(front, map.get(front) - 1);
 				left++;
 			}
-			max = Math.max(max, right - left + 1);
+			max = Math.max(max, right - left + 1); // MEASURE
 		}
 		return max;
 	}
@@ -48,17 +62,17 @@ public final class LongestRepeatingCharReplacement424 {
 		int[] a = new int[26];
 		for (int right = 0; right < s.length(); right++) {
 			char c = s.charAt(right);
-			a[c - 'A']++;
+			a[c - 'A']++; // ADD
 			count = Math.max(count, a[c - 'A']);
-			// 'if', not 'while': the window never has to shrink, only
-			// slide. count is allowed to go stale, because a smaller
-			// window can never beat the best one already recorded.
-			if (right - left + 1 - count > k) {
+			// this 'while' runs at most once: adding one letter puts the
+			// window at most one over k, and since count is never lowered,
+			// one letter leaving brings it back.
+			while (right - left + 1 - count > k) { // SHRINK: while more than k letters need replacing
 				char front = s.charAt(left);
 				a[front - 'A']--;
 				left++;
 			}
-			max = Math.max(max, right - left + 1);
+			max = Math.max(max, right - left + 1); // MEASURE
 		}
 		return max;
 	}

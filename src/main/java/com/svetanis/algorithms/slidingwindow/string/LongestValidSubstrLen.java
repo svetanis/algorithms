@@ -14,27 +14,42 @@ import java.util.Set;
 // return the length of the longest valid substring
 // a substr is a contiguous sequence of chars in a string
 // possibly empty
+// The method only looks for forbidden words of at most 10 characters
+// (the limit LeetCode states); a longer forbidden word is never found.
+
+// The one idea: the window left..right is kept valid. A new character at
+// right can only create forbidden words that END at right, so only the
+// suffixes of the window ending there need checking -- at most 10 of them,
+// none starting before left. Checking from the shortest suffix up, the
+// first forbidden one found starts furthest right; every window that still
+// holds its first character holds the whole word, so left jumps just past
+// that character. Then left..right is the longest valid window ending at
+// right.
+
+// Siblings: none -- no other file in the repo solves 2781.
+//   LongestDistinctSubStrLenOptimized (LeetCode 3) jumps left the same way.
+
+// Time: O(n * L * L) with L = 10 -- at most L suffixes per character, each
+//   copied and hashed in up to L steps; plus one pass over forbidden to build
+//   the set.
+// Space: O(F) -- the set of forbidden words, F being their total length.
 
 public final class LongestValidSubstrLen {
-	// Time complexity: O(n)
 
 	public static int longestValidSubstrLen(String s, List<String> forbidden) {
 		int max = 0;
 		int left = 0;
 		Set<String> set = new HashSet<>(forbidden);
 		for (int right = 0; right < s.length(); right++) {
-			// check substrings within the current window [left, right]
+			// suffixes index..right, shortest first: at most 10 characters, none before left
 			for (int index = right; index > Math.max(right - 10, left - 1); index--) {
 				String substr = s.substring(index, right + 1);
-				// if forbidden substring is found within the window
 				if (set.contains(substr)) {
-					// move the start index after the forbidden substring
-					left = index + 1;
-					break;
+					left = index + 1; // JUMP: past the forbidden word's first character
+					break; // STOP: a longer forbidden suffix starts earlier, so this jump already cuts it off
 				}
 			}
-			// max length so far
-			max = Math.max(max, right - left + 1);
+			max = Math.max(max, right - left + 1); // MEASURE: no forbidden word in left..right
 		}
 		return max;
 	}
