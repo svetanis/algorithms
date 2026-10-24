@@ -2,22 +2,34 @@ package com.svetanis.algorithms.greedy;
 
 // 134. Gas Station -- the forward scan, twice
 //
-// The greedy claim: if the tank first goes negative on arriving at station f,
-// then NO station from the current start through f can be the answer. Every
-// partial sum before f was >= 0, so a later start inside that stretch only
-// skips non-negative ground and arrives at f with no more fuel. So the scan
-// jumps straight to f + 1 -- one pass, not n.
+// Input: gas[i] -- the fuel waiting at station i; cost[i] -- the fuel it takes to drive from
+// station i to the next one, and the last station leads back to station 0. The car starts at one
+// station with an empty tank, fills up at every station it reaches, and must drive the whole
+// circle once. Returns the station to start from, or -1 if no start makes it round. On LeetCode:
+// 1 <= n <= 10^5, 0 <= gas[i], cost[i] <= 10^4, and when a start exists it is the only one.
 //
-// Both methods below make that same argument. startFused is startTwoPass with
-// the two passes run in one loop.
+// The one idea: if the tank first goes negative on arriving at station f, then NO station from
+// the current start through f can be the answer. Every partial sum before f was >= 0, so a later
+// start inside that stretch only skips ground that added fuel or cost none, and arrives at f with
+// no more fuel. So the scan jumps straight to f + 1 -- one pass, not n. What is left at the end is
+// one candidate, and whether it works is a separate question: a start exists exactly when the
+// total gas is at least the total cost. The candidate reaches the end of the array with fuel in
+// hand; the stretches it skipped lose, together, less than that whenever the totals allow it, and
+// inside them the tank is lowest at the end of each stretch -- so the drive back round to the
+// candidate never runs dry.
 //
-// The other two algorithms for this problem, in this package:
+// Both methods make that same argument. startTwoPass checks the totals in one loop and finds the
+// candidate in a second; startFused runs the two in one loop.
+//
+// Time: O(n) -- both methods: startTwoPass two passes, startFused one.
+// Space: O(1) -- both methods.
+// Every sum stays within 10^5 * 10^4 = 10^9 in size, which fits an int.
+//
+// Siblings, in this package:
 //   GasStationBackwardWindow -- a window extended BACKWARD, a different claim
 //   GasStationDoubledSweep   -- a 2n sweep with a restart latch, no total at all
 
 public final class GasStationForwardScan {
-	// Time Complexity: O(n) -- both methods
-	// Space Complexity: O(1) -- both methods
 
 	// The readable one. Pass 1 answers "is it possible at all?" and pass 2
 	// answers "where does it start?", and keeping them apart is what makes this
@@ -40,13 +52,13 @@ public final class GasStationForwardScan {
 				start = i + 1; // then start..i is all dead
 				fuel = 0; // and the new candidate starts empty
 			} else {
-				fuel += gas[i] - cost[i];
+				fuel += gas[i] - cost[i]; // DRIVE: the tank on arriving at i + 1
 			}
 		}
-		// pass 2 alone is NOT a solution: it always ends holding some index and
-		// never discovers that none of them works. Deleting pass 1 makes it
-		// answer 1 on gas = {0,1}, cost = {2,0}, where no start completes
-		return start;
+		// pass 2 always ends holding some index, possible or not; pass 1 is what
+		// says it works. On gas = {0,1}, cost = {2,0} pass 2 ends holding 1, and
+		// no start completes the circle
+		return start; // RETURN: the candidate, which pass 1 guaranteed
 	}
 
 	// startTwoPass's two passes fused into one, which is why it is the shortest
@@ -60,9 +72,9 @@ public final class GasStationForwardScan {
 		for (int i = 0; i < n; i++) {
 			total += gas[i] - cost[i]; // never reset -- the yes/no test
 			sum += gas[i] - cost[i]; // reset at every failure -- this candidate's tank
-			if (sum < 0) { // `< 0`, NOT `<= 0`: a tank of exactly
-				start = i + 1; // zero arrived with precisely enough.
-				sum = 0; // `<=` returns n, one past the end
+			if (sum < 0) { // `< 0`: a tank of exactly zero
+				start = i + 1; // arrived with precisely enough,
+				sum = 0; // so that candidate lives on
 			}
 		}
 		return total >= 0 ? start : -1; // `start` means nothing until total says yes
@@ -79,8 +91,8 @@ public final class GasStationForwardScan {
 		System.out.println(startTwoPass(gas1, cost1)); // -1
 		System.out.println(startFused(gas1, cost1)); // -1
 
-		// exactly enough on arrival is a SUCCESS, not a failure: the reset test
-		// has to be `< 0`. A `<= 0` version answers 2, which is not a station
+		// exactly enough on arrival is a success: from station 0 the tank is 0 on
+		// reaching station 1, and station 0 is the answer
 		int[] gas2 = { 2, 0 };
 		int[] cost2 = { 0, 2 };
 		System.out.println(startFused(gas2, cost2)); // 0
