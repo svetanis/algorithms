@@ -24,8 +24,8 @@ public final class MaxPopulationYear {
 		int year = 0;
 		int current = 0;
 		for (int i = 0; i < population.length; i++) {
-			current += population[i]; // people alive in the year 1950 + i
-			if (current > max) { // strictly more, so a tie keeps the earlier year
+			current += population[i]; // SUM: people alive in the year 1950 + i
+			if (current > max) { // PEAK: strictly more, so a tie keeps the earlier year
 				max = current;
 				year = i;
 			}
@@ -38,8 +38,8 @@ public final class MaxPopulationYear {
 		for (int[] log : logs) {
 			int bi = log[0] - OFFSET;
 			int di = log[1] - OFFSET;
-			a[bi]++;
-			a[di]--; // not alive in the year of death
+			a[bi]++; // MARK: alive from the birth year
+			a[di]--; // MARK: not alive in the year of death
 		}
 		return a;
 	}

@@ -73,7 +73,7 @@ public final class RectangleAreaIIStrips {
 		for (int[] rectangle : rectangles) {
 			int x1 = rectangle[0], y1 = rectangle[1];
 			int x2 = rectangle[2], y2 = rectangle[3];
-			if (x1 <= left && x2 >= right) { // covers the whole strip
+			if (x1 <= left && x2 >= right) { // COVERS the whole strip
 				stretches.add(new int[] { y1, y2 });
 			}
 		}
@@ -81,7 +81,7 @@ public final class RectangleAreaIIStrips {
 	}
 
 	private static long coveredHeight(List<int[]> stretches) {
-		if (stretches.isEmpty()) { // a strip nothing covers
+		if (stretches.isEmpty()) { // EMPTY: a strip nothing covers
 			return 0;
 		}
 		stretches.sort((a, b) -> Integer.compare(a[0], b[0])); // SORT by y1

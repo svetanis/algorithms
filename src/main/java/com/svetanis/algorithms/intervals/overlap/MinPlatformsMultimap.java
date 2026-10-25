@@ -38,17 +38,17 @@ public final class MinPlatformsMultimap {
 
     int max = 0;
     int count = 0;
-    for (List<Character> marks : events.values()) { // times in increasing order
+    for (List<Character> marks : events.values()) { // WALK: times in increasing order
       // every arrival at t is counted, and the peak read, before any departure at t
-      count += frequency(marks, ARRIVAL);
-      max = max(max, count);
-      count -= frequency(marks, DEPARTURE);
+      count += frequency(marks, ARRIVAL); // ARRIVE: all of this time's arrivals
+      max = max(max, count); // PEAK: read before any departure at this time
+      count -= frequency(marks, DEPARTURE); // DEPART: only then
     }
     return max;
   }
 
   private static Map<Integer, List<Character>> events(int[] in, int[] out) {
-    Map<Integer, List<Character>> events = new TreeMap<>(); // a multimap: one time, many marks
+    Map<Integer, List<Character>> events = new TreeMap<>(); // MULTIMAP: one time, many marks
     for (int i = 0; i < in.length; i++) {
       events.computeIfAbsent(in[i], k -> new ArrayList<>()).add(ARRIVAL);
       events.computeIfAbsent(out[i], k -> new ArrayList<>()).add(DEPARTURE);

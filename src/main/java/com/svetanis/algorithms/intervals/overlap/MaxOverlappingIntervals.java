@@ -29,13 +29,13 @@ public final class MaxOverlappingIntervals {
 		int max = 0;
 		int active = 0; // intervals open at the current point
 		List<Point> points = points(intervals);
-		for (Point point : points) {
+		for (Point point : points) { // WALK left to right
 			if (point.type == 's') {
-				active++;
+				active++; // OPEN
 			} else {
-				active--;
+				active--; // CLOSE
 			}
-			max = Math.max(max, active);
+			max = Math.max(max, active); // PEAK
 		}
 		return max;
 	}
@@ -43,10 +43,10 @@ public final class MaxOverlappingIntervals {
 	private static List<Point> points(int[][] intervals) {
 		List<Point> list = new ArrayList<>();
 		for (int[] interval : intervals) {
-			list.add(new Point(interval[0], 's'));
-			list.add(new Point(interval[1], 'e'));
+			list.add(new Point(interval[0], 's')); // MARK the start
+			list.add(new Point(interval[1], 'e')); // MARK the end
 		}
-		Collections.sort(list);
+		Collections.sort(list); // SORT by position, starts first on a tie
 		return list;
 	}
 
@@ -73,7 +73,7 @@ public final class MaxOverlappingIntervals {
 		@Override
 		public int compareTo(Point other) {
 			if (this.value == other.value) {
-				return Integer.compare(other.type, this.type); // 's' > 'e', reversed: starts first, inclusive
+				return Integer.compare(other.type, this.type); // TIE: 's' > 'e', reversed: starts first, inclusive
 			}
 			return Integer.compare(this.value, other.value);
 		}

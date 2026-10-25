@@ -28,7 +28,7 @@ public final class MaxGuestsTwoArrays {
   public static int[] count(int[] in, int[] out) {
     int n = in.length;
 
-    sort(in);
+    sort(in); // SORT each on its own: a count does not need the pairing
     sort(out);
 
     int i = 1;
@@ -36,16 +36,16 @@ public final class MaxGuestsTwoArrays {
     int current = 1; // in[0] is counted: the earliest entry is no later than any exit
     int max = 1;
     int time = in[0]; // throws on an empty register
-    while (i < n && j < n) {
-      if (in[i] <= out[j]) { // tie: entry first, the leaving guest is still present
+    while (i < n && j < n) { // WALK: the earlier of the next entry and the next exit
+      if (in[i] <= out[j]) { // ENTER first on a tie: the leaving guest is still present
         current++;
-        if (current > max) { // strictly more, so the earliest time of the peak is kept
+        if (current > max) { // PEAK: strictly more, so the earliest time of the peak is kept
           max = current;
-          time = in[i];
+          time = in[i]; // RECORD when
         }
         i++;
       } else {
-        current--;
+        current--; // LEAVE
         j++;
       }
     }

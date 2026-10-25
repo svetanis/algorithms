@@ -31,15 +31,17 @@ public final class MaxGuestsPriorityQueue {
   public static int maxGuests(List<Interval> intervals) {
     int max = 0;
     List<Interval> sorted = new ArrayList<>(intervals); // a copy: the caller's list keeps its order
-    sorted.sort((a, b) -> Integer.compare(a.start, b.start));
-    PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.end, b.end)); // leaves first on top
+    sorted.sort((a, b) -> Integer.compare(a.start, b.start)); // SORT by entry
+    // HEAP: leaves first on top
+    PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.end, b.end));
 
     for (Interval interval : sorted) {
-      while (!pq.isEmpty() && interval.start > pq.peek().end) { // left before, not at, this entry
+      // LEAVE: every guest who left before, not at, this entry
+      while (!pq.isEmpty() && interval.start > pq.peek().end) {
         pq.poll();
       }
-      pq.offer(interval);
-      max = max(max, pq.size()); // guests present at this entry time
+      pq.offer(interval); // ENTER
+      max = max(max, pq.size()); // PEAK: guests present at this entry time
     }
     return max;
   }

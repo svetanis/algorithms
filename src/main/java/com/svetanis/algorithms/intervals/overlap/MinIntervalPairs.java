@@ -33,8 +33,8 @@ public final class MinIntervalPairs {
 
 	public static int[] minInterval(int[][] intervals, int[] queries) {
 		int n = queries.length;
-		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // by start
-		int[][] pairs = sortQueries(queries); // { value, original position }, by value
+		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT: intervals by start
+		int[][] pairs = sortQueries(queries); // SORT: { value, original position }, by value
 		int[] answer = new int[n];
 		Arrays.fill(answer, -1); // stays -1 for a query no interval contains
 		PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0])); // { size, right }, smallest size on top

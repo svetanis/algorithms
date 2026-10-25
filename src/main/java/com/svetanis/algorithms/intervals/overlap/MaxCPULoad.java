@@ -31,15 +31,17 @@ public final class MaxCPULoad {
 		int max = 0;
 		int load = 0; // total load of the jobs in the heap
 		List<Job> sorted = new ArrayList<>(jobs); // a copy: the caller's list keeps its order
-		sorted.sort((a, b) -> Integer.compare(a.start, b.start));
-		PriorityQueue<Job> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.end, b.end)); // first to end on top
+		sorted.sort((a, b) -> Integer.compare(a.start, b.start)); // SORT by start
+		// HEAP: first to end on top
+		PriorityQueue<Job> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.end, b.end));
 		for (Job job : sorted) {
-			while (!pq.isEmpty() && job.start > pq.peek().end) { // ended before, not at, this start
+			// STOP: every job that ended before, not at, this start
+			while (!pq.isEmpty() && job.start > pq.peek().end) {
 				load -= pq.poll().load;
 			}
-			pq.offer(job);
+			pq.offer(job); // START
 			load += job.load;
-			max = max(max, load); // total load at this start time
+			max = max(max, load); // PEAK: total load at this start time
 		}
 		return max;
 	}
@@ -77,7 +79,7 @@ public final class MaxCPULoad {
 
 		@Override
 		public String toString() {
-			return "[" + start + ", " + end + ", " + load + "]";
+			return "[%d, %d, %d]".formatted(start, end, load);
 		}
 	}
 }

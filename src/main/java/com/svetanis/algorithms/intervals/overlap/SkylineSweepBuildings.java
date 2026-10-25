@@ -38,14 +38,14 @@ public final class SkylineSweepBuildings {
 	// Space Complexity: O(n), the stops and the heap
 
 	public static List<List<Integer>> skyline(int[][] buildings) {
-		Arrays.sort(buildings, (a, b) -> Integer.compare(a[0], b[0])); // PUT ON needs left-edge order
-		List<Integer> stops = new ArrayList<>(); // every left AND right edge
+		Arrays.sort(buildings, (a, b) -> Integer.compare(a[0], b[0])); // SORT: PUT ON needs left-edge order
+		List<Integer> stops = new ArrayList<>(); // STOPS: every left AND right edge
 		for (int[] building : buildings) {
 			stops.add(building[0]);
 			stops.add(building[1]);
 		}
 		Collections.sort(stops);
-		PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(b[2], a[2])); // tallest on top
+		PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(b[2], a[2])); // PILE: tallest on top
 		int added = 0; // buildings already put on the heap
 		int lastHeight = 0; // height of the last key point written; the ground before the first
 		List<List<Integer>> answer = new ArrayList<>();

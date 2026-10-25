@@ -23,13 +23,13 @@ public final class MinMeetingRoomsDifferenceArray {
 		int n = 1000010; // one slot per time; every start and end must be below this
 		int[] a = new int[n];
 		for (int[] interval : intervals) {
-			a[interval[0]]++;
-			a[interval[1]]--; // gone at its end time, so a meeting starting then does not clash
+			a[interval[0]]++; // MARK: in progress from its start
+			a[interval[1]]--; // MARK: gone at its end, so a meeting starting then does not clash
 		}
 		int max = a[0];
 		for (int i = 1; i < n; i++) {
-			a[i] += a[i - 1]; // a[i] becomes the number of meetings in progress at i
-			max = Math.max(max, a[i]);
+			a[i] += a[i - 1]; // SUM: a[i] becomes the number of meetings in progress at i
+			max = Math.max(max, a[i]); // PEAK
 		}
 		return max;
 	}

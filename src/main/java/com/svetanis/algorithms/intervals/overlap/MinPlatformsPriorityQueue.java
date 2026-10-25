@@ -31,14 +31,16 @@ public final class MinPlatformsPriorityQueue {
   public static int minPlatforms(List<Interval> intervals) {
     int min = 0;
     List<Interval> sorted = new ArrayList<>(intervals); // a copy: the caller's list keeps its order
-    sorted.sort((a, b) -> Integer.compare(a.start, b.start));
-    PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.end, b.end)); // leaves first on top
+    sorted.sort((a, b) -> Integer.compare(a.start, b.start)); // SORT by arrival
+    // HEAP: leaves first on top
+    PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.end, b.end));
     for (Interval interval : sorted) {
-      while (!pq.isEmpty() && interval.start > pq.peek().end) { // left before, not at, this arrival
+      // DEPART: every train that left before, not at, this arrival
+      while (!pq.isEmpty() && interval.start > pq.peek().end) {
         pq.poll();
       }
-      pq.offer(interval);
-      min = max(min, pq.size()); // trains standing at this arrival time
+      pq.offer(interval); // ARRIVE
+      min = max(min, pq.size()); // PEAK: trains standing at this arrival time
     }
     return min;
   }

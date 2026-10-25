@@ -16,6 +16,9 @@ import static java.lang.Math.max;
 // the number of trains standing at the station at t, and the largest running total is the
 // answer. Putting the -1 one minute late is what keeps a departing train counted at the minute
 // another train arrives.
+//
+// The same count other ways: MinPlatformsTwoArrays, MinPlatformsMultimap,
+// MinPlatformsPriorityQueue and MaxOverlappingIntervals.
 
 public final class MinPlatformsDifferenceArray {
   // Time Complexity: O(n + T), T = latest departure; one pass over the trains, one over the clock
@@ -26,19 +29,19 @@ public final class MinPlatformsDifferenceArray {
       return 0;
     }
 
-    // slots 0 .. latest departure + 1, so the last release has a slot to land in
+    // SLOTS: 0 .. latest departure + 1, so the last release has a slot to land in
     int[] marks = new int[latest(out) + 2];
 
     for (int i = 0; i < in.length; i++) {
-      marks[in[i]]++;       // a train arrives: one more platform in use
-      marks[out[i] + 1]--;  // its platform is free only AFTER its departure minute
+      marks[in[i]]++;       // ARRIVE: one more platform in use
+      marks[out[i] + 1]--;  // DEPART: its platform is free only AFTER its departure minute
     }
 
     int standing = 0;
     int max = 0;
     for (int mark : marks) {
-      standing += mark;
-      max = max(max, standing);
+      standing += mark; // SUM: trains standing at this minute
+      max = max(max, standing); // PEAK
     }
     return max;
   }

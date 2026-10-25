@@ -32,19 +32,19 @@ public final class MinPlatformsTwoArrays {
       return 0;
     }
 
-    sort(in);
+    sort(in); // SORT each on its own: a count does not need the pairing
     sort(out);
 
     int i = 1;
     int j = 0;
     int current = 1; // in[0] is counted: the earliest arrival is no later than any departure
     int max = 1;
-    while (i < n && j < n) { // once arrivals run out, current can only fall
-      if (in[i] <= out[j]) { // tie: arrival first, the departing train still holds a platform
-        max = max(max, ++current);
+    while (i < n && j < n) { // WALK: once arrivals run out, current can only fall
+      if (in[i] <= out[j]) { // ARRIVE first on a tie: the departing train still holds a platform
+        max = max(max, ++current); // PEAK
         i++;
       } else {
-        current--;
+        current--; // DEPART
         j++;
       }
     }

@@ -50,15 +50,16 @@ public final class MinMeetingRoomsHeap {
 		if (intervals.length == 0) {
 			return 0;
 		}
-		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT by start
 		PriorityQueue<Integer> pq = new PriorityQueue<>(); // one free-at time per room
 		for (int[] interval : intervals) {
-			if (!pq.isEmpty() && pq.peek() <= interval[0]) { // that room is free: reuse it
+			// FREE: an if, at most one room -- the one this meeting reuses
+			if (!pq.isEmpty() && pq.peek() <= interval[0]) {
 				pq.poll();
 			}
-			pq.offer(interval[1]);
+			pq.offer(interval[1]); // BOOK: reused room or new
 		}
-		return pq.size(); // rooms opened
+		return pq.size(); // RETURN: rooms opened, the heap never shrinks
 	}
 
 	public static void main(String[] args) {
