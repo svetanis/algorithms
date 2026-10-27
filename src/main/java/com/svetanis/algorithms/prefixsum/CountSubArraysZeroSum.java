@@ -6,25 +6,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// given an array, return the number of
-// subarrays whose sum is equal to zero
+// Count the subarrays with sum zero -- no LeetCode number; source unknown
+//
+// Input: a list nums, negatives and zeros allowed. Returns the number of subarrays whose sum is 0.
+// No constraints are given; the method assumes every running sum fits in an int and the count
+// fits in an int.
+//
+// The one idea: the running sum after index i is the total of nums[0 .. i]. The numbers from
+// start + 1 to i add up to (running sum at i) - (running sum at start), which is 0 exactly when the
+// two running sums are equal. One map entry is one running-sum value and how many earlier prefixes
+// had it; each of them starts one zero-sum subarray ending at i. The seed 0 -> 1 is the empty
+// prefix before index 0, so a subarray that starts at index 0 is counted the same way.
+//
+// Time: O(n) -- one pass, one lookup and one update per number, O(1) on average
+// Space: O(n) -- at most n + 1 distinct running sums
+//
+// Siblings: CountSubArraysGivenSum (560) is this method for any target; with target 0 its lookup
+// key sum - target becomes sum. AllZeroSumSubarrays returns the subarrays themselves.
 
 public final class CountSubArraysZeroSum {
-	// Time Complexity: O(n)
-	// Space Complexity: O(n)
 
 	public static int subarraySum(List<Integer> nums) {
-		Map<Integer, Integer> map = new HashMap<>();
-		map.put(0, 1);
+		Map<Integer, Integer> map = new HashMap<>(); // MAP: running sum -> how many prefixes had it
+		map.put(0, 1); // SEED: the empty prefix
 		int sum = 0;
 		int count = 0;
 		for (int i = 0; i < nums.size(); i++) {
-			sum += nums.get(i);
+			sum += nums.get(i); // PREFIX: the total of nums[0 .. i]
 			if (map.containsKey(sum)) {
-				count += map.get(sum);
+				count += map.get(sum); // RECORD: one subarray per earlier equal sum
 			}
 			int freq = map.getOrDefault(sum, 0);
-			map.put(sum, freq + 1);
+			map.put(sum, freq + 1); // ADD after the lookup, so a subarray is never empty
 		}
 		return count;
 	}
