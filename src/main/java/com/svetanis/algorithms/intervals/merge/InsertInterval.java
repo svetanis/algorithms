@@ -37,43 +37,43 @@ public final class InsertInterval {
     int n = intervals.length;
     List<int[]> list = new ArrayList<>();
     // add all intervals that come before the new interval
-    while (i < n && intervals[i][1] < interval[0]) { // <: touching merges
+    while (i < n && intervals[i][1] < interval[0]) { // BEFORE; <: touching merges
       list.add(intervals[i]);
       i++;
     }
     // merge all intervals that overlap with new interval
-    while (i < n && intervals[i][0] <= interval[1]) { // <=: touching merges
+    while (i < n && intervals[i][0] <= interval[1]) { // ABSORB; <=: touching merges
       int start = Math.min(intervals[i][0], interval[0]);
       int end = Math.max(intervals[i][1], interval[1]);
       interval[0] = start;
       interval[1] = end;
       i++;
     }
-    list.add(interval); // insert new interval
-    while (i < n) { // add all the remaining intervals
+    list.add(interval); // INSERT: the new interval, widened by all it absorbed
+    while (i < n) { // AFTER: add all the remaining intervals
       list.add(intervals[i++]);
     }
     return list.toArray(new int[list.size()][]);
   }
 
   public static List<List<Integer>> insertLists(List<List<Integer>> intervals, List<Integer> interval) {
-    intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0))); // by start
+    intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0))); // SORT: by start
     List<List<Integer>> list = new ArrayList<>();
     int i = 0;
     int n = intervals.size();
     // add all intervals that come before the new interval
-    while (i < n && intervals.get(i).get(1) < interval.get(0)) { // <: touching merges
+    while (i < n && intervals.get(i).get(1) < interval.get(0)) { // BEFORE; <: touching merges
       list.add(intervals.get(i));
       i++;
     }
     // merge all intervals that overlap with new interval
-    while (i < n && intervals.get(i).get(0) <= interval.get(1)) { // <=: touching merges
+    while (i < n && intervals.get(i).get(0) <= interval.get(1)) { // ABSORB; <=: touching merges
       interval.set(0, Math.min(intervals.get(i).get(0), interval.get(0)));
       interval.set(1, Math.max(intervals.get(i).get(1), interval.get(1)));
       i++;
     }
-    list.add(interval); // insert new interval
-    while (i < n) { // add all the remaining intervals
+    list.add(interval); // INSERT: the new interval, widened by all it absorbed
+    while (i < n) { // AFTER: add all the remaining intervals
       list.add(intervals.get(i++));
     }
     return list;
@@ -83,18 +83,18 @@ public final class InsertInterval {
     List<Interval> list = new ArrayList<>();
     int i = 0;
     // copy all intervals that come before the new interval
-    while (i < intervals.size() && intervals.get(i).end < interval.start) { // <: touching merges
+    while (i < intervals.size() && intervals.get(i).end < interval.start) { // BEFORE; <: touching merges
       list.add(intervals.get(i));
       i++;
     }
     // merge all intervals that overlap with new interval
-    while (i < intervals.size() && intervals.get(i).start <= interval.end) { // <=: touching merges
+    while (i < intervals.size() && intervals.get(i).start <= interval.end) { // ABSORB; <=: touching merges
       interval.start = Math.min(interval.start, intervals.get(i).start);
       interval.end = Math.max(interval.end, intervals.get(i).end);
       i++;
     }
-    list.add(interval); // insert new interval
-    while (i < intervals.size()) { // add all remaining intervals
+    list.add(interval); // INSERT: the new interval, widened by all it absorbed
+    while (i < intervals.size()) { // AFTER: add all remaining intervals
       list.add(intervals.get(i++));
     }
     return list;

@@ -39,25 +39,25 @@ public final class DisjointIntervals {
 		private final TreeMap<Integer, int[]> map = new TreeMap<>();
 
 		public void addNum(int value) {
-			Integer left = map.floorKey(value); // range immediately before the new value
-			Integer right = map.ceilingKey(value); // range immediately after the new value
+			Integer left = map.floorKey(value); // FIND: range immediately before the new value
+			Integer right = map.ceilingKey(value); // FIND: range immediately after the new value
 			boolean notNull = left != null && right != null;
 			if (notNull && map.get(left)[1] + 1 == value && map.get(right)[0] - 1 == value) {
-				map.get(left)[1] = map.get(right)[1]; // the value fills the gap: join the two
-				map.remove(right);
+				map.get(left)[1] = map.get(right)[1]; // JOIN: the value fills the gap
+				map.remove(right); // JOIN: right now lies inside left
 			} else if (left != null && value <= map.get(left)[1] + 1) {
-				map.get(left)[1] = Math.max(value, map.get(left)[1]); // grow the left range at its end
+				map.get(left)[1] = Math.max(value, map.get(left)[1]); // GROW: the left range at its end
 			} else if (right != null && value >= map.get(right)[0] - 1) {
-				map.get(right)[0] = Math.min(value, map.get(right)[0]); // grow the right range; its key stays inside
+				map.get(right)[0] = Math.min(value, map.get(right)[0]); // GROW: the right range; its key stays inside
 			} else {
-				map.put(value, new int[] { value, value });
+				map.put(value, new int[] { value, value }); // NEW: a range of one number
 			}
 		}
 
 		public int[][] getIntervals() {
 			int[][] intervals = new int[map.size()][2];
 			int i = 0;
-			for (int[] interval : map.values()) {
+			for (int[] interval : map.values()) { // COPY: key order is range order
 				intervals[i++] = interval;
 			}
 			return intervals;
@@ -68,23 +68,23 @@ public final class DisjointIntervals {
 		private final TreeMap<Integer, Interval> map = new TreeMap<>();
 
 		public void addNum(int value) {
-			Integer left = map.floorKey(value); // range immediately before the new value
-			Integer right = map.ceilingKey(value); // range immediately after the new value
+			Integer left = map.floorKey(value); // FIND: range immediately before the new value
+			Integer right = map.ceilingKey(value); // FIND: range immediately after the new value
 			boolean notNull = left != null && right != null;
 			if (notNull && map.get(left).end + 1 == value && map.get(right).start - 1 == value) {
-				map.get(left).end = map.get(right).end; // the value fills the gap: join the two
-				map.remove(right);
+				map.get(left).end = map.get(right).end; // JOIN: the value fills the gap
+				map.remove(right); // JOIN: right now lies inside left
 			} else if (left != null && value <= map.get(left).end + 1) {
-				map.get(left).end = Math.max(value, map.get(left).end); // grow the left range at its end
+				map.get(left).end = Math.max(value, map.get(left).end); // GROW: the left range at its end
 			} else if (right != null && value >= map.get(right).start - 1) {
-				map.get(right).start = Math.min(value, map.get(right).start); // grow the right range; its key stays inside
+				map.get(right).start = Math.min(value, map.get(right).start); // GROW: the right range; its key stays inside
 			} else {
-				map.put(value, new Interval(value, value));
+				map.put(value, new Interval(value, value)); // NEW: a range of one number
 			}
 		}
 
 		public List<Interval> getIntervals() {
-			return new ArrayList<>(map.values());
+			return new ArrayList<>(map.values()); // COPY: key order is range order
 		}
 	}
 

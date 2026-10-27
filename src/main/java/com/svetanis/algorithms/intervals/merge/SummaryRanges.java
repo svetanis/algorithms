@@ -23,14 +23,14 @@ public final class SummaryRanges {
 		List<String> intervals = new ArrayList<>();
 		int end = 0;
 		for (int start = 0; start < n;) {
-			end = start;
+			end = start; // START: a run of one number
 			// end + 1 < n is checked first; since a is increasing, a[end] + 1 can only wrap past
 			// the largest int at the last index, which that check already stops
-			while (end + 1 < n && a[end + 1] == a[end] + 1) {
+			while (end + 1 < n && a[end + 1] == a[end] + 1) { // GROW: the next number is one more
 				end++;
 			}
-			intervals.add(interval(a, start, end));
-			start = end + 1;
+			intervals.add(interval(a, start, end)); // RECORD: a[start..end] is a whole run
+			start = end + 1; // NEXT: the next run begins after this one
 		}
 		return intervals;
 	}

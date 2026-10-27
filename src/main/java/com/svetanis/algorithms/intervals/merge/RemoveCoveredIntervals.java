@@ -27,16 +27,16 @@ public final class RemoveCoveredIntervals {
 	// Space Complexity: O(n), the sort's temporary buffer
 
 	public static int removeCoveredIntervals(int[][] intervals) {
-		// equal starts: longer first, so the longer one is prev when the shorter one is checked
+		// SORT: equal starts longer first, so the longer one is prev when the shorter one is checked
 		Arrays.sort(intervals, (a, b) -> a[0] != b[0]
 				? Integer.compare(a[0], b[0]) // by start
 				: Integer.compare(b[1], a[1])); // equal starts: longer first (b before a)
 		int count = 1;
-		int[] prev = intervals[0]; // throws on an empty array
+		int[] prev = intervals[0]; // HOLD: the largest end so far; throws on an empty array
 		for (int i = 1; i < intervals.length; i++) {
 			int[] interval = intervals[i];
-			if (prev[1] < interval[1]) { // <: an equal end is covered
-				count++;
+			if (prev[1] < interval[1]) { // TEST; <: an equal end is covered
+				count++; // COUNT: nothing before it reaches this far
 				prev = interval;
 			}
 		}

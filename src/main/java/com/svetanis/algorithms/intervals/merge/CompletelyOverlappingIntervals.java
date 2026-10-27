@@ -12,6 +12,8 @@ import com.svetanis.algorithms.intervals.Interval;
 // intervals is a list of Interval in any order, and it is not changed. Returns true when some
 // interval [a, b] sits inside another [c, d], that is c <= a and b <= d. Sharing an endpoint
 // still counts: [1, 3] lies inside [1, 7], and two identical intervals lie inside each other.
+// There is no LC number, and where the problem came from was not recorded, so that rule is this
+// file's own and has not been checked against a source.
 //
 // Sort by start, and among equal starts put the longer interval first. Walk the sorted list and
 // compare each end with the end just before it. If an end fails to move forward, that interval
@@ -35,13 +37,13 @@ public final class CompletelyOverlappingIntervals {
 
   public static boolean isOverlap(List<Interval> intervals) {
     List<Interval> sorted = new ArrayList<>(intervals); // a copy: the caller's list keeps its order
-    sorted.sort(BY_START_THEN_LONGEST);
-    for (int i = 1; i < sorted.size(); i++) {
+    sorted.sort(BY_START_THEN_LONGEST); // SORT: by start, equal starts longer first
+    for (int i = 1; i < sorted.size(); i++) { // WALK: each end against the end before it
       int right = sorted.get(i).end;
       int prev = sorted.get(i - 1).end;
       // starts are non-decreasing, so an end that fails to advance means
       // this interval sits entirely inside the one before it
-      if (right <= prev) {
+      if (right <= prev) { // TEST; <=: an equal end still lies inside
         return true;
       }
     }

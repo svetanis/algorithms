@@ -38,18 +38,18 @@ public final class MergeIntervals {
   // Space Complexity: O(n), the output and the sort's buffer (and the sorted copy in mergeIntervals)
 
   public static int[][] merge(int[][] intervals) {
-    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // by start
+    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT: by start
     List<int[]> list = new ArrayList<>();
-    list.add(intervals[0]); // throws on an empty array
+    list.add(intervals[0]); // OPEN: the first row is the first run; throws on an empty array
     for (int i = 1; i < intervals.length; i++) {
       int start = intervals[i][0];
       int end = intervals[i][1];
       int[] prev = list.get(list.size() - 1);
       // overlapping: extend the last interval
-      if (start <= prev[1]) { // <=: touching intervals merge
-        prev[1] = Math.max(prev[1], end); // a contained interval must not shorten the run
+      if (start <= prev[1]) { // TEST; <=: touching intervals merge
+        prev[1] = Math.max(prev[1], end); // EXTEND: a contained interval must not shorten the run
       } else {
-        list.add(intervals[i]);
+        list.add(intervals[i]); // OPEN: a new run; the one before it is finished
       }
     }
     return list.toArray(new int[list.size()][]);
@@ -78,18 +78,18 @@ public final class MergeIntervals {
   }
 
   public static List<List<Integer>> mergeLists(List<List<Integer>> intervals) {
-    intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0))); // by start
+    intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0))); // SORT: by start
     List<List<Integer>> list = new ArrayList<>();
-    list.add(intervals.get(0)); // throws on an empty list
+    list.add(intervals.get(0)); // OPEN: the first row is the first run; throws on an empty list
     for (int i = 1; i < intervals.size(); i++) {
       List<Integer> prev = list.get(list.size() - 1);
       List<Integer> curr = intervals.get(i);
-      if (curr.get(0) <= prev.get(1)) { // <=: touching intervals merge
-        int end = Math.max(prev.get(1), curr.get(1)); // a contained interval must not shorten the run
+      if (curr.get(0) <= prev.get(1)) { // TEST; <=: touching intervals merge
+        int end = Math.max(prev.get(1), curr.get(1)); // EXTEND: a contained interval must not shorten the run
         prev.set(1, end);
         list.set(list.size() - 1, prev); // a no-op: prev is already that element
       } else {
-        list.add(curr);
+        list.add(curr); // OPEN: a new run; the one before it is finished
       }
     }
     return list;
@@ -101,24 +101,24 @@ public final class MergeIntervals {
     }
     List<Interval> list = new ArrayList<>();
     List<Interval> sorted = new ArrayList<>(intervals); // a copy: the caller's list keeps its order
-    sorted.sort((a, b) -> Integer.compare(a.start, b.start));
+    sorted.sort((a, b) -> Integer.compare(a.start, b.start)); // SORT: by start
     Iterator<Interval> iter = sorted.iterator();
     Interval interval = iter.next();
-    int start = interval.start;
+    int start = interval.start; // HOLD: the run so far, starting as the first interval
     int end = interval.end;
     while (iter.hasNext()) {
       Interval next = iter.next();
       int left = next.start;
       int right = next.end;
-      if (left <= end) { // <=: touching intervals merge
-        end = Math.max(end, right); // a contained interval must not shorten the run
+      if (left <= end) { // TEST; <=: touching intervals merge
+        end = Math.max(end, right); // EXTEND: a contained interval must not shorten the run
       } else {
-        list.add(new Interval(start, end));
+        list.add(new Interval(start, end)); // CLOSE: no later interval can reach back to it
         start = left;
         end = right;
       }
     }
-    list.add(new Interval(start, end)); // the last run is never closed inside the loop
+    list.add(new Interval(start, end)); // LAST: the run still held is never closed inside the loop
     return list;
   }
 

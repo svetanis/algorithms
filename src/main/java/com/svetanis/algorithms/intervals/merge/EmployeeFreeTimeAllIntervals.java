@@ -37,39 +37,42 @@ public final class EmployeeFreeTimeAllIntervals {
 		PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.start, b.start));
 		for (List<Interval> intervals : schedule) {
 			for (Interval interval : intervals) {
-				pq.offer(interval);
+				pq.offer(interval); // PILE: every interval, whoever it belongs to
 			}
 		}
 		// the furthest end reached so far, kept in an int so that no Interval of the
 		// caller is ever written to
 		int end = pq.poll().end; // throws on an empty schedule
 		while (!pq.isEmpty()) {
-			Interval curr = pq.poll();
-			if (curr.start > end) { // >: touching intervals leave no free time
+			Interval curr = pq.poll(); // POLL: the earliest start not yet taken
+			if (curr.start > end) { // GAP; >: touching intervals leave no free time
 				list.add(new Interval(end, curr.start));
 			}
-			end = Math.max(end, curr.end); // an interval inside earlier work must not pull end back
+			end = Math.max(end, curr.end); // EXTEND: an interval inside earlier work must not pull end back
 		}
 		return list;
 	}
 
 	public static List<Interval> eft2(List<List<Interval>> schedule) {
+		// PILE: every interval, whoever it belongs to
 		List<Interval> intervals = new ArrayList<>();
 		for (List<Interval> employee : schedule) {
 			for (Interval interval : employee) {
 				intervals.add(interval);
 			}
 		}
+		// SORT: by start
 		Collections.sort(intervals, (a, b) -> Integer.compare(a.start, b.start));
+		// WALK: end = the furthest end so far; a start past end is a GAP [end, start]
 		int end = intervals.get(0).end; // throws on an empty schedule
-		List<Interval> list = new ArrayList<>();
+		List<Interval> gaps = new ArrayList<>();
 		for (Interval interval : intervals) { // the first one is compared with itself: no change
-			if (interval.start > end) { // >: touching intervals leave no free time
-				list.add(new Interval(end, interval.start));
+			if (interval.start > end) { // GAP; >: touching intervals leave no free time
+				gaps.add(new Interval(end, interval.start));
 			}
-			end = Math.max(end, interval.end);
+			end = Math.max(end, interval.end); // on every interval, so end never moves back
 		}
-		return list;
+		return gaps;
 	}
 
 	public static void main(String[] args) {
@@ -77,7 +80,7 @@ public final class EmployeeFreeTimeAllIntervals {
 		schedule0.add(Arrays.asList(new Interval(1, 3), new Interval(6, 7)));
 		schedule0.add(Arrays.asList(new Interval(2, 4)));
 		schedule0.add(Arrays.asList(new Interval(2, 5), new Interval(9, 12)));
-		System.out.println(eft(schedule0)); // [5,6], [7,9]
+		System.out.println(eft(schedule0)); // [[5, 6], [7, 9]]
 
 		List<List<Interval>> schedule1 = new ArrayList<>();
 		schedule1.add(asList(new Interval(1, 3), new Interval(5, 6)));

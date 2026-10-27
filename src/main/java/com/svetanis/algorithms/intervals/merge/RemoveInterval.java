@@ -26,13 +26,13 @@ public final class RemoveInterval {
 		for (int[] interval : intervals) {
 			int start = interval[0];
 			int end = interval[1];
-			if (start >= tbre || end <= tbrs) { // half-open: sharing an endpoint shares no point
+			if (start >= tbre || end <= tbrs) { // KEEP; half-open: sharing an endpoint shares no point
 				list.add(Arrays.asList(start, end));
 			} else {
-				if (start < tbrs) { // a piece survives before the removed part
+				if (start < tbrs) { // BEFORE: a piece survives before the removed part
 					list.add(Arrays.asList(start, tbrs));
 				}
-				if (end > tbre) { // a piece survives after the removed part
+				if (end > tbre) { // AFTER: a piece survives after the removed part
 					list.add(Arrays.asList(tbre, end));
 				}
 			}

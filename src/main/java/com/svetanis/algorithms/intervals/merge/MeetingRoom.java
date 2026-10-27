@@ -32,11 +32,11 @@ public final class MeetingRoom {
   // Space Complexity: O(n), the sort's buffer (and the sorted copy in canAttendIntervals)
 
   public static boolean canAttend(int[][] intervals) {
-    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // by start
+    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT: by start
     for (int i = 1; i < intervals.length; i++) {
       int[] prev = intervals[i - 1];
       int[] curr = intervals[i];
-      if (prev[1] > curr[0]) { // >: ending exactly when the next starts is fine
+      if (prev[1] > curr[0]) { // TEST; >: ending exactly when the next starts is fine
         return false;
       }
     }
@@ -44,11 +44,11 @@ public final class MeetingRoom {
   }
 
   public static boolean canAttendLists(List<List<Integer>> intervals) {
-    intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0))); // by start
+    intervals.sort((i1, i2) -> Integer.compare(i1.get(0), i2.get(0))); // SORT: by start
     for (int i = 1; i < intervals.size(); i++) {
       List<Integer> prev = intervals.get(i - 1);
       List<Integer> curr = intervals.get(i);
-      if (prev.get(1) > curr.get(0)) { // >: ending exactly when the next starts is fine
+      if (prev.get(1) > curr.get(0)) { // TEST; >: ending exactly when the next starts is fine
         return false;
       }
     }
@@ -57,9 +57,9 @@ public final class MeetingRoom {
 
   public static boolean canAttendIntervals(List<Interval> intervals) {
     List<Interval> sorted = new ArrayList<>(intervals); // a copy: the caller's list keeps its order
-    sorted.sort((a, b) -> Integer.compare(a.start, b.start));
+    sorted.sort((a, b) -> Integer.compare(a.start, b.start)); // SORT: by start
     for (int i = 1; i < sorted.size(); i++) {
-      if (sorted.get(i).start < sorted.get(i - 1).end) { // <: touching is not a conflict
+      if (sorted.get(i).start < sorted.get(i - 1).end) { // TEST; <: touching is not a conflict
         return false; // two appointments overlap
       }
     }

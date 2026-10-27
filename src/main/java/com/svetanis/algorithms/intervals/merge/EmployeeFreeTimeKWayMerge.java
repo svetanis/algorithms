@@ -13,9 +13,9 @@ import com.svetanis.algorithms.intervals.Interval;
 // 759. Employee Free Time
 //
 // schedule holds one list per employee of the intervals that employee works, each with
-// start < end; each list is sorted by start and has no two overlapping intervals, and the code
-// relies on that. Returns, sorted, the intervals of positive length inside the span of the
-// schedule when no employee works. Two working intervals that only touch leave no free time
+// start < end; each list is sorted by start and has no two overlapping intervals; the code
+// relies only on the sorting. Returns, sorted, the intervals of positive length inside the
+// span of the schedule when no employee works. Two working intervals that only touch leave no free time
 // between them. The caller's intervals are not changed. Every employee is assumed to have at
 // least one interval; an empty list throws. LC guarantees 1 to 50 employees with 1 to 50
 // intervals each, 0 <= start < end <= 10^8.
@@ -38,17 +38,17 @@ public final class EmployeeFreeTimeKWayMerge {
 
 	public static List<Interval> eft(List<List<Interval>> schedule) {
 		List<Interval> list = new ArrayList<>();
-		PriorityQueue<EmployeeInterval> pq = epq(schedule);
-		Interval prev = pq.peek().interval; // the first poll compares it with itself: no change
+		PriorityQueue<EmployeeInterval> pq = epq(schedule); // SEED: each employee's first interval
+		Interval prev = pq.peek().interval; // HOLD; the first poll compares it with itself: no change
 		while (!pq.isEmpty()) {
-			EmployeeInterval top = pq.poll(); // earliest start among intervals not yet taken
+			EmployeeInterval top = pq.poll(); // POLL: earliest start among intervals not yet taken
 			Interval eti = top.interval;
 			// if prev interval is not overlapping with
 			// the next interval, save a free interval
-			if (prev.end < eti.start) { // <: touching intervals leave no free time
+			if (prev.end < eti.start) { // GAP; <: touching intervals leave no free time
 				list.add(new Interval(prev.end, eti.start));
 				prev = eti;
-			} else if (prev.end < eti.end) {
+			} else if (prev.end < eti.end) { // EXTEND: this one reaches further
 				// overlapping intervals, update the prev interval
 				prev = eti;
 			}
@@ -59,7 +59,7 @@ public final class EmployeeFreeTimeKWayMerge {
 			if (top.intIndex < intervals.size() - 1) {
 				int next = top.intIndex + 1;
 				Interval interval = intervals.get(next);
-				pq.offer(new EmployeeInterval(interval, tei, next));
+				pq.offer(new EmployeeInterval(interval, tei, next)); // PUSH
 			}
 		}
 		return list;
@@ -71,7 +71,7 @@ public final class EmployeeFreeTimeKWayMerge {
 		PriorityQueue<EmployeeInterval> pq = new PriorityQueue<>(eic);
 		for (int i = 0; i < schedule.size(); i++) {
 			Interval interval = schedule.get(i).get(0); // throws for an employee with no intervals
-			pq.offer(new EmployeeInterval(interval, i, 0));
+			pq.offer(new EmployeeInterval(interval, i, 0)); // SEED: one entry per employee
 		}
 		return pq;
 	}
@@ -81,7 +81,7 @@ public final class EmployeeFreeTimeKWayMerge {
 		schedule0.add(Arrays.asList(new Interval(1, 3), new Interval(6, 7)));
 		schedule0.add(Arrays.asList(new Interval(2, 4)));
 		schedule0.add(Arrays.asList(new Interval(2, 5), new Interval(9, 12)));
-		System.out.println(eft(schedule0)); // [5,6], [7,9]
+		System.out.println(eft(schedule0)); // [[5, 6], [7, 9]]
 
 		List<List<Interval>> schedule1 = new ArrayList<>();
 		schedule1.add(asList(new Interval(1, 3), new Interval(5, 6)));
