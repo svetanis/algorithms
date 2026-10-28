@@ -12,24 +12,25 @@ import java.util.Deque;
 // today minus that day: previous greater, walked left to right. A stream has no array, so each
 // stack entry carries its own price, and the class counts the days itself. With no higher day,
 // prev is -1 and today - (-1) counts every day so far. OnlineStockSpan901 stores each day's
-// span instead of its number and adds up the spans it pops.
+// span instead of its number and adds up the spans it pops. StockSpan is this same walk over a
+// whole array of prices, where the array position is the day number.
 
 public final class OnlineStockSpan901PrevGreater {
   // Time Complexity: O(1) amortized per call, each day is pushed once and popped at most once
   // Space Complexity: O(n) for the stack
 
-  private final Deque<Day> stack = new ArrayDeque<>(); // prices strictly falling to the top
-  private int index = 0; // today's day number
+  private final Deque<Day> stack = new ArrayDeque<>(); // STACK: prices strictly falling to the top
+  private int index = 0; // DAY: today's day number
 
   public int next(int price) {
-    while (!stack.isEmpty() && stack.peek().price() <= price) { // equal prices count too
-      stack.pop(); // inside today's span, so it can never stop a later count
+    while (!stack.isEmpty() && stack.peek().price() <= price) { // POP: equal prices count too
+      stack.pop(); // DISCARD: inside today's span, so it can never stop a later count
     }
-    int prev = stack.isEmpty() ? -1 : stack.peek().index(); // the nearest higher day
-    int span = index - prev;
-    stack.push(new Day(price, index)); // it might stop a later day's count
-    index++;
-    return span;
+    int prev = stack.isEmpty() ? -1 : stack.peek().index(); // STOPPER: the nearest higher day
+    int span = index - prev; // ANSWER: the days after prev, up to today
+    stack.push(new Day(price, index)); // PUSH: it might stop a later day's count
+    index++; // NEXT: the next call is the next day
+    return span; // RETURN
   }
 
   // a day's price, and its number for the subtraction

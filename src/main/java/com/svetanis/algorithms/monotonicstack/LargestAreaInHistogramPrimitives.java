@@ -7,13 +7,14 @@ import java.util.Deque;
 // 84. Largest Rectangle in Histogram
 //
 // Bars of width 1 stand side by side. Return the area of the largest rectangle that fits
-// inside them.
+// inside them. heights[i] is the height of bar i, 0 or more; the answer is an int.
 //
 // Every rectangle is as tall as its shortest bar, so give each bar the widest rectangle it is
 // the shortest bar of. That rectangle stretches until the nearest strictly shorter bar on each
 // side: the previous smaller and the next smaller. Both walls are outside the rectangle, so the
 // width is right - left - 1, with -1 for no wall on the left and n for none on the right.
 // LargestAreaInHistogramSubmit finds both walls in a single pass.
+// LargestAreaInHistogram stores no walls: it measures a bar's rectangle when the bar is popped.
 
 public final class LargestAreaInHistogramPrimitives {
 	// Time Complexity: O(n), three passes, every position pushed once and popped at most once per pass
@@ -22,14 +23,14 @@ public final class LargestAreaInHistogramPrimitives {
 
 	public static int maxArea(int[] heights) {
 		int n = heights.length;
-		int[] left = previousSmaller(heights); // the left wall of each bar's rectangle, -1 = none
-		int[] right = nextSmaller(heights); // the right wall, n = none
-		int max = 0;
-		for (int i = 0; i < n; i++) {
-			int width = right[i] - left[i] - 1; // strictly between the walls
-			max = Math.max(max, heights[i] * width); // bar i is the shortest inside, so it sets the height
+		int[] left = previousSmaller(heights); // LEFT: the left wall of each bar's rectangle, -1 = none
+		int[] right = nextSmaller(heights); // RIGHT: the right wall, n = none
+		int max = 0; // ANSWER: the largest area so far
+		for (int i = 0; i < n; i++) { // WALK: bar i, the shortest bar of its rectangle
+			int width = right[i] - left[i] - 1; // WIDTH: strictly between the walls
+			max = Math.max(max, heights[i] * width); // MEASURE: bar i is the shortest inside, so it sets the height
 		}
-		return max;
+		return max; // RETURN: the largest rectangle
 	}
 
 	// left to right, the wall is behind the walk: read what survived, after the while
@@ -37,30 +38,30 @@ public final class LargestAreaInHistogramPrimitives {
 		int n = a.length;
 		int[] prev = new int[n];
 		Deque<Integer> stack = new ArrayDeque<>(); // positions that might still be a wall
-		for (int i = 0; i < n; i++) {
-			while (!stack.isEmpty() && a[stack.peek()] >= a[i]) { // an equal bar is not a wall
-				stack.pop();
+		for (int i = 0; i < n; i++) { // WALK: bar i arrives
+			while (!stack.isEmpty() && a[stack.peek()] >= a[i]) { // DROP: an equal bar is not a wall
+				stack.pop(); // POP: not shorter than i, so never a wall for i or any later bar
 			}
-			prev[i] = stack.isEmpty() ? -1 : stack.peek();
-			stack.push(i);
+			prev[i] = stack.isEmpty() ? -1 : stack.peek(); // RECORD: push time, the survivor is i's wall, -1 for none
+			stack.push(i); // PUSH: i may be the wall of a later bar
 		}
-		return prev;
+		return prev; // RETURN: every bar's left wall
 	}
 
 	// left to right, the wall is ahead of the walk: written inside, into the popped bar's cell
 	private static int[] nextSmaller(int[] a) {
 		int n = a.length;
 		int[] next = new int[n];
-		Arrays.fill(next, n); // never popped: nothing shorter to the right, the rectangle runs to the edge
+		Arrays.fill(next, n); // START: never popped: nothing shorter to the right, the rectangle runs to the edge
 		Deque<Integer> stack = new ArrayDeque<>(); // positions still waiting for a wall
-		for (int i = 0; i < n; i++) {
-			while (!stack.isEmpty() && a[i] < a[stack.peek()]) { // strict: an equal bar is not a wall
-				int index = stack.pop();
-				next[index] = i;
+		for (int i = 0; i < n; i++) { // WALK: bar i arrives
+			while (!stack.isEmpty() && a[i] < a[stack.peek()]) { // STOP: strict: an equal bar is not a wall
+				int index = stack.pop(); // POP: i is the first shorter bar after it
+				next[index] = i; // RECORD: pop time, i is the popped bar's wall
 			}
-			stack.push(i);
+			stack.push(i); // WAIT: i waits for its right wall
 		}
-		return next;
+		return next; // RETURN: every bar's right wall
 	}
 
 	public static void main(String[] args) {

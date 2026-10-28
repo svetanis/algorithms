@@ -23,33 +23,33 @@ public final class RemoveKDigitsDeque {
 	// Space Complexity: O(n) for the stack and the result
 
 	public static String removeKDigits(String num, int k) {
-		Deque<Integer> stack = new ArrayDeque<>(); // the kept digits; bottom = front of the number
-		for (int i = 0; i < num.length(); i++) {
-			int digit = num.charAt(i) - '0';
-			while (!stack.isEmpty() && k > 0 && digit < stack.peek()) { // a deletion is owed and it helps
-				stack.pop(); // pop = delete: the new digit slides into its place
-				k--; // only a real deletion spends k
+		Deque<Integer> stack = new ArrayDeque<>(); // STACK: the kept digits; bottom = front of the number
+		for (int i = 0; i < num.length(); i++) { // WALK: the next digit arrives
+			int digit = num.charAt(i) - '0'; // DIGIT: its value
+			while (!stack.isEmpty() && k > 0 && digit < stack.peek()) { // CHECK: a deletion is owed and it helps
+				stack.pop(); // DROP: pop = delete: the new digit slides into its place
+				k--; // SPEND: only a real deletion spends k
 			}
-			stack.push(digit);
+			stack.push(digit); // KEEP: the digit goes on top
 		}
-		while (!stack.isEmpty() && k > 0) { // still owed: the kept digits never fall,
-			stack.pop(); // so the largest are on top, the end of the number
-			k--;
+		while (!stack.isEmpty() && k > 0) { // END: still owed: the kept digits never fall,
+			stack.pop(); // DROP: so the largest are on top, the end of the number
+			k--; // SPEND: one deletion used
 		}
-		return frontToBack(stack);
+		return frontToBack(stack); // RETURN: the kept digits, front to back
 	}
 
 	// reads the stack from the bottom, the front of the number, dropping leading zeros
 	private static String frontToBack(Deque<Integer> stack) {
-		StringBuilder sb = new StringBuilder();
-		while (!stack.isEmpty()) {
-			int digit = stack.pollLast(); // the tail is the bottom: the front of the number
-			if (sb.length() == 0 && digit == 0) {
-				continue; // a leading zero: taken off the stack, not written
+		StringBuilder sb = new StringBuilder(); // RESULT: the digits written so far
+		while (!stack.isEmpty()) { // READ: bottom to top
+			int digit = stack.pollLast(); // TAKE: the tail is the bottom: the front of the number
+			if (sb.length() == 0 && digit == 0) { // ZERO: nothing written yet, and the digit is 0
+				continue; // SKIP: a leading zero: taken off the stack, not written
 			}
-			sb.append(digit);
+			sb.append(digit); // WRITE: the next digit of the answer
 		}
-		return sb.length() == 0 ? "0" : sb.toString(); // everything deleted is the number 0
+		return sb.length() == 0 ? "0" : sb.toString(); // RETURN: everything deleted is the number 0
 	}
 
 	public static void main(String[] args) {

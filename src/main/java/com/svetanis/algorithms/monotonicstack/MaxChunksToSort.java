@@ -3,27 +3,27 @@ package com.svetanis.algorithms.monotonicstack;
 // 769. Max Chunks To Make Sorted
 //
 // arr is a permutation of 0..n-1. Split it into the most chunks such that sorting each chunk
-// on its own, then joining them, gives the whole array sorted.
+// on its own, then joining them, gives the whole array sorted. Return that number of chunks.
 //
 // No stack is needed here: a chunk can end at i exactly when the largest value so far is i,
 // because then positions 0..i hold exactly the values 0..i. MaxChunksToSortII drops the
 // permutation guarantee and needs the stack.
 
 public final class MaxChunksToSort {
-  // Time Complexity: O(n)
-  // Space Complexity: O(1)
+  // Time Complexity: O(n), one pass
+  // Space Complexity: O(1), two counters
 
   public static int maxChunks(int[] arr) {
     int n = arr.length;
-    int largest = 0;
-    int chunks = 0;
-    for (int i = 0; i < n; i++) {
-      largest = Math.max(largest, arr[i]);
-      if (largest == i) { // 0..i are all here: a chunk can end
-        chunks++;
+    int largest = 0; // START: the largest value in 0..i
+    int chunks = 0; // ANSWER: the chunks that can end so far
+    for (int i = 0; i < n; i++) { // WALK: arr[i] arrives
+      largest = Math.max(largest, arr[i]); // RAISE: the largest value in 0..i
+      if (largest == i) { // CUT: 0..i are all here: a chunk can end
+        chunks++; // COUNT: one more chunk
       }
     }
-    return chunks;
+    return chunks; // RETURN: the most chunks
   }
 
   public static void main(String[] args) {

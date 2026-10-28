@@ -11,25 +11,31 @@ import java.util.Deque;
 // The stack holds one entry per chunk: its largest value, never falling from bottom to top.
 // A value smaller than some chunk's maximum must be sorted into that chunk, so every chunk
 // whose maximum exceeds it merges into one, which keeps the largest maximum among them.
+//
+// Input: an array of integers arr, duplicates allowed. Returns: the largest number of chunks.
+//
+// Siblings:
+//   MaxChunksToSort -- 769, arr is a permutation of 0..n-1, so a running maximum is enough
+//                      and no stack is needed
 
 public final class MaxChunksToSortII {
 	// Time Complexity: O(n), every value is pushed once and popped at most once
-	// Space Complexity: O(n) for the stack
+	// Space Complexity: O(n) for the stack, one entry per chunk when arr is already sorted
 
 	public static int maxChunks(int[] arr) {
-		Deque<Integer> stack = new ArrayDeque<>(); // one maximum per chunk
-		for (int value : arr) {
-			if (stack.isEmpty() || stack.peek() <= value) {
-				stack.push(value); // a new chunk, whose maximum is value
+		Deque<Integer> stack = new ArrayDeque<>(); // CHUNKS: one maximum per chunk
+		for (int value : arr) { // WALK: value arrives
+			if (stack.isEmpty() || stack.peek() <= value) { // NEW: no chunk maximum exceeds value
+				stack.push(value); // PUSH: a new chunk, whose maximum is value
 			} else {
-				int chunkMax = stack.pop(); // the maximum of the chunk value merges into
-				while (!stack.isEmpty() && stack.peek() > value) {
-					stack.pop(); // absorb every chunk whose maximum exceeds value
+				int chunkMax = stack.pop(); // MERGE: the maximum of the chunk value merges into
+				while (!stack.isEmpty() && stack.peek() > value) { // ABSORB: this chunk's maximum exceeds value too
+					stack.pop(); // POP: absorb every chunk whose maximum exceeds value
 				}
-				stack.push(chunkMax); // the merged chunk keeps the largest maximum
+				stack.push(chunkMax); // PUSH: the merged chunk keeps the largest maximum
 			}
 		}
-		return stack.size();
+		return stack.size(); // RETURN: one entry per chunk
 	}
 
 	public static void main(String[] args) {
