@@ -6,28 +6,26 @@ import java.util.Map;
 import java.util.Set;
 
 // 291. Word Pattern II
-
-// given a pattern and a string s,
-// find if s follows the same pattern.
-// Here follow means a full match, 
-// such that there is a bijection between 
-// a letter in pattern and a non-empty word in s. 
-// Specifically:
-
-// A string s is considered to match a pattern 
-// if we can associate each character in pattern 
-// with a non-empty string in s such that the 
-// concatenation of the strings, in the order they 
-// appear in pattern, exactly makes up s. 
-// The mapping must be bijective, which means two 
-// conditions must be met: first, no two different 
-// characters in pattern can map to the same substring in s, 
-// and second, each character must map to exactly one substring 
-// (and not multiple different substrings at different instances).
+//
+// Input: a pattern p of letters and a string s. Returns whether s can be cut into non-empty
+// pieces, one per letter of p in order, so that the same letter always has the same piece and
+// different letters have different pieces. On LeetCode: 1 <= p.length, s.length <= 20, both made
+// of lowercase letters.
+//
+// The one idea: the only free choice is where each new letter's piece ends. Walk the pattern from
+// the left with a position in s. One call is a letter of p (index) and the place in s where its
+// piece starts. If the letter already has a piece, that piece must be exactly what s shows here;
+// if it has none, try every length for its piece, except a piece another letter already owns
+// (the second half of "different letters, different pieces"). map holds letter -> piece, set the
+// pieces handed out; both are undone when a try fails. The cut is also dropped as soon as the
+// letters left need more characters than s has left, one character each at least.
+//
+// Time: O(n^m) paths, each node O(n^2) -- a letter that is new tries up to n lengths, so at most
+// n^m paths; every node scans up to n ends and builds a piece of up to n characters at each.
+// Space: O(m + n) -- the recursion is m deep; map and set hold at most m pieces, which are
+// disjoint parts of s, so n characters in all.
 
 public final class WordPatternBacktracking {
-	// Time Complexity: O(n^m)
-	// Space Complexity: O(m + n^2)
 
 	public static boolean wordPattern(String p, String s) {
 		Set<String> set = new HashSet<>();
@@ -35,30 +33,30 @@ public final class WordPatternBacktracking {
 		return dfs(p, 0, s, 0, set, map);
 	}
 
-	private static boolean dfs(String p, int index, String s, int start, 
+	private static boolean dfs(String p, int index, String s, int start,
 			Set<String> set, Map<Character, String> map) {
 		int m = p.length();
 		int n = s.length();
-		if (index == m && start == n) {
+		if (index == m && start == n) { // BASE: pattern and string used up together
 			return true;
 		}
-		if (start == n || index == m || n - start < m - index) {
+		if (start == n || index == m || n - start < m - index) { // CUT: one side ran out, or too few characters left
 			return false;
 		}
 		char c = p.charAt(index);
-		for (int end = start + 1; end <= n; end++) {
+		for (int end = start + 1; end <= n; end++) { // TRY: the piece for c is s[start, end)
 			String word = s.substring(start, end);
-			if (map.getOrDefault(c, "").equals(word)) {
+			if (map.getOrDefault(c, "").equals(word)) { // REUSE: c already owns exactly this piece
 				if (dfs(p, index + 1, s, end, set, map)) {
 					return true;
 				}
-			} else if (!map.containsKey(c) && !set.contains(word)) {
-				map.put(c, word);
+			} else if (!map.containsKey(c) && !set.contains(word)) { // NEW: c has no piece, and nobody owns this one
+				map.put(c, word); // ASSIGN
 				set.add(word);
 				if (dfs(p, index + 1, s, end, set, map)) {
 					return true;
 				}
-				map.remove(c);
+				map.remove(c); // UNDO
 				set.remove(word);
 			}
 		}
@@ -69,5 +67,6 @@ public final class WordPatternBacktracking {
 		System.out.println(wordPattern("aba", "catdogcat")); // true
 
 		System.out.println(wordPattern("abab", "redblueredblue")); // true
+		System.out.println(wordPattern("aabb", "xyzabcxzyabc")); // false
 	}
 }
