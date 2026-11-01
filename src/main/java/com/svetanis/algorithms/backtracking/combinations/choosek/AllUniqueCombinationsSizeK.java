@@ -5,22 +5,27 @@ import java.util.List;
 
 // 77. Combinations
 //
-// Given two integers n and k, return every combination of k numbers chosen from 1 .. n, in any
-// order. [1, 2] and [2, 1] are the same combination.
+// Input: n and k. Returns every combination of k numbers chosen from 1 .. n, in any order; [1, 2]
+// and [2, 1] are the same combination. On LeetCode: 1 <= n <= 20, 1 <= k <= n.
 //
-// Two methods, the same answers in the same order:
-//   combinations             start-index: the loop tries every number from index on, and the
-//                            next call starts at i + 1, so numbers only grow along a combination
+// The one idea: one call holds the numbers chosen so far (combination) and the smallest number
+// still allowed (index). A combination is recorded only when it holds k numbers; the smaller ones on the
+// way are not answers here, which is what makes this Combinations rather than Subsets. Two methods,
+// the same answers in the same order:
+//   combinations             start-index: the loop tries every number from index on, and the next
+//                            call starts at i + 1, so numbers only grow along a combination
 //   combinationsTakeOrSkip   take-or-skip: decide each number in turn, take it or not
-// Both record a combination only when it holds k numbers; the smaller ones on the way are not
-// answers here, which is what makes this Combinations rather than Subsets.
+//
+// Time: O(2^n + k * C(n, k)) -- the tree holds every set of up to k numbers, at most 2^n, and each
+// of the C(n, k) answers is copied in k steps.
+// Space: O(n) besides the output -- the recursion depth (at most k for combinations, n for
+// combinationsTakeOrSkip) and the combination being built.
+//
+// Siblings: AllUniqueCombinationsSizeKFromArray is the same start-index loop over a list that may
+// repeat. CombinationIterator builds the same combinations of letters. SubsetsBacktracking is the
+// same loop recording every call, not only the full-size ones.
 
 public final class AllUniqueCombinationsSizeK {
-	// Time Complexity: O(2^n + k * C(n, k)), the tree holds every set of up to k numbers, at most
-	// 2^n, and each of the C(n, k) answers is copied in k steps
-	// Space Complexity: O(n) besides the output, the recursion depth -- at most k for
-	// combinations, n for combinationsTakeOrSkip -- and the combination being built
-
 	public static List<List<Integer>> combinations(int n, int k) {
 		List<Integer> combination = new ArrayList<>();
 		List<List<Integer>> combinations = new ArrayList<>();
@@ -35,9 +40,9 @@ public final class AllUniqueCombinationsSizeK {
 			return;
 		}
 		for (int i = index; i <= n; i++) {
-			combination.add(i); // choose
-			dfs(n, k, i + 1, combination, combinations); // i + 1: only larger numbers follow
-			combination.remove(combination.size() - 1); // undo
+			combination.add(i); // CHOOSE
+			dfs(n, k, i + 1, combination, combinations); // RECURSE: i + 1, larger only
+			combination.remove(combination.size() - 1); // UNDO
 		}
 	}
 
@@ -49,16 +54,16 @@ public final class AllUniqueCombinationsSizeK {
 
 	private static void takeOrSkip(int n, int k, int index, //
 			List<Integer> combination, List<List<Integer>> combinations) {
-		if (combination.size() == k) { // full before running out of numbers: one answer
+		if (combination.size() == k) { // RECORD: full before running out of numbers: one answer
 			combinations.add(new ArrayList<>(combination));
 			return;
 		}
-		if (index > n) { // every number decided and still short of k: not an answer
+		if (index > n) { // BASE: every number decided and still short of k: not an answer
 			return;
 		}
 		combination.add(index); // TAKE index
 		takeOrSkip(n, k, index + 1, combination, combinations);
-		combination.remove(combination.size() - 1); // SKIP index: undo the take
+		combination.remove(combination.size() - 1); // SKIP index: UNDO the take
 		takeOrSkip(n, k, index + 1, combination, combinations);
 	}
 

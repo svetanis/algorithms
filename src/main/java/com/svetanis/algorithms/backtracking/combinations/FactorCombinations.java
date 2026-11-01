@@ -5,22 +5,26 @@ import java.util.List;
 
 // 254. Factor Combinations
 //
-// Given an integer n, return every way to write it as a product of two or more factors, each
-// factor from 2 to n - 1, in any order. 12 gives [2, 6], [2, 2, 3], [3, 4]; 1 and a prime give [].
+// Input: n. Returns every way to write n as a product of two or more factors, each from 2 to n - 1,
+// in any order: 12 gives [2, 6], [2, 2, 3], [3, 4]; 1 and a prime give []. On LeetCode: 1 <= n <=
+// 10^7.
 //
-// Start-index backtracking, where the "index" is the smallest factor still allowed. Each call
-// holds the factors chosen so far and the part of n still to split, rest. Writing rest itself as
-// the last factor finishes one answer, so every call below the first records one. Then it tries
-// each factor f of rest, from the last factor chosen upward, while f * f <= rest: factors only
-// grow along an answer, so [2, 6] is made and [6, 2] never is, and the part left, rest / f, is
-// never smaller than f. The first call records nothing, because n alone is not a product.
+// The one idea: one call holds the factors chosen so far (chosen) and the part of n still to split
+// (rest). Writing rest itself as the last factor finishes one answer, so every call below the first
+// records one. Then the call tries each factor f of rest, from the last factor chosen upward, while
+// f * f <= rest: factors only grow along an answer, so [2, 6] is made and [6, 2] never is, and the
+// part left, rest / f, is never smaller than f. The first call records nothing, because n alone is
+// not a product.
+//
+// Time: O(sqrt(n) * A) -- A answers, one call each; each call's loop runs at most sqrt(n) turns;
+// copying an answer adds its length, at most log2(n). Counted: n = 9,999,991 (a prime) takes 3,161
+// turns; n = 8,648,640 takes 88,579 calls for 88,578 answers and 630,008 turns.
+// Space: O(log n) besides the output -- an answer has at most log2(n) factors, so the recursion is
+// never deeper than that.
+//
+// Siblings: none for 254.
 
 public final class FactorCombinations {
-	// Time Complexity: O(sqrt(n) * A), A answers, one call each, each call's loop at most
-	// sqrt(n) turns; copying an answer adds its length, at most log2(n)
-	// Space Complexity: O(log n) besides the output, an answer has at most log2(n) factors,
-	// so the recursion is never deeper than that
-
 	public static List<List<Integer>> factors(int n) {
 		List<List<Integer>> combinations = new ArrayList<>();
 		dfs(n, 2, new ArrayList<>(), combinations);
@@ -29,17 +33,17 @@ public final class FactorCombinations {
 
 	private static void dfs(int rest, int minFactor, //
 			List<Integer> chosen, List<List<Integer>> combinations) {
-		if (chosen.size() > 0) { // n alone is not an answer: at least one factor split off first
+		if (chosen.size() > 0) { // RECORD: n alone is no answer; one factor split off first
 			List<Integer> combination = new ArrayList<>(chosen);
-			combination.add(rest); // rest as the last, largest factor
+			combination.add(rest); // RECORD: rest closes the answer as the last, largest factor
 			combinations.add(combination);
 		}
-		// f * f <= rest: the part left, rest / f, is at least f, so factors keep growing
+		// WALK f * f <= rest: the part left, rest / f, is at least f, so factors keep growing
 		for (int factor = minFactor; factor * factor <= rest; factor++) {
 			if (rest % factor == 0) {
-				chosen.add(factor); // choose
-				dfs(rest / factor, factor, chosen, combinations); // the next factor is at least this one
-				chosen.remove(chosen.size() - 1); // undo
+				chosen.add(factor); // CHOOSE
+				dfs(rest / factor, factor, chosen, combinations); // RECURSE: next factor >= this one
+				chosen.remove(chosen.size() - 1); // UNDO
 			}
 		}
 	}

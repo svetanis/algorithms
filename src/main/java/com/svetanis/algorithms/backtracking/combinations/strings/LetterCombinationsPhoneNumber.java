@@ -7,41 +7,43 @@ import java.util.Map;
 
 // 17. Letter Combinations of a Phone Number
 //
-// Given a string of digits 2-9, return every string of letters it could spell on a phone keypad,
-// one letter per digit, in any order: "23" gives [ad, ae, af, bd, be, bf, cd, ce, cf].
+// Input: a string of digits. Returns every string of letters it could spell on a phone keypad, one
+// letter per digit, in any order: "23" gives [ad, ae, af, bd, be, bf, cd, ce, cf]; no digits give
+// []. On LeetCode: 0 <= digits.length <= 4, each digit '2' to '9'.
 //
-// LC 17 is in this folder three times: the same problem, the same answers in the same order,
-// written three ways. They differ only in how the letters chosen so far are carried:
+// The one idea: no recursion. combinations holds every combination of the digits seen so far, one
+// string each. The loop is SubsetsCopyAndAdd's: start from one empty string, and for each digit
+// build the next list from the current one, extending every string by every letter of that digit.
+// After digit i the list holds every combination of the first i digits.
+//
+// Time: O(n * 4^n) -- at most 4 letters per digit, so at most 4^n strings of n letters.
+// Space: O(n * 4^n) -- the current and the next list.
+//
+// Siblings: LC 17 is in this folder three times, the same answers in the same order; they differ
+// only in how the letters chosen so far are carried:
 //   LetterCombinationsBackTracking  one StringBuilder shared by every call: append a letter,
 //                                   recurse, then delete it again
 //   LetterCombinationsRecursive     a new String each call (prefix + letter): nothing to undo
-//   LetterCombinationsPhoneNumber   (this file) no recursion: a list of every combination so
-//                                   far, extended by every letter of the next digit
-// The loop here is SubsetsCopyAndAdd's: start from one empty string, and for each digit build
-// the next list from the current one. After digit i the list holds every combination of the
-// first i digits.
+//   LetterCombinationsPhoneNumber   (this file) no recursion: extend the list digit by digit
 
 public final class LetterCombinationsPhoneNumber {
-	// Time Complexity: O(n * 4^n), at most 4 letters per digit, so at most 4^n strings of n letters
-	// Space Complexity: O(n * 4^n), the current and the next list
-
 	private final static Map<Character, String> DIGITS = build();
 
 	public static List<String> combinations(String digits) {
 		List<String> combinations = new ArrayList<>();
-		if (digits.length() == 0) { // no digits: no combinations, not one empty one
+		if (digits.length() == 0) { // BASE: no digits, no combinations, not one empty one
 			return combinations;
 		}
-		combinations.add(""); // the one combination of no digits, the one every other grows from
-		for (char digit : digits.toCharArray()) {
+		combinations.add(""); // BASE: the one combination of no digits
+		for (char digit : digits.toCharArray()) { // WALK: one digit per turn
 			String letters = DIGITS.get(digit);
-			List<String> next = new ArrayList<>(); // every combination one digit longer
+			List<String> next = new ArrayList<>(); // NEXT: every combination one digit longer
 			for (String combination : combinations) {
 				for (char letter : letters.toCharArray()) {
-					next.add(combination + letter);
+					next.add(combination + letter); // EXTEND by this letter
 				}
 			}
-			combinations = next; // the shorter ones are no longer answers
+			combinations = next; // SWAP: the shorter ones are no longer answers
 		}
 		return combinations;
 	}

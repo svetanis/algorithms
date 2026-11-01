@@ -7,23 +7,26 @@ import java.util.Map;
 
 // 17. Letter Combinations of a Phone Number
 //
-// Given a string of digits 2-9, return every string of letters it could spell on a phone keypad,
-// one letter per digit, in any order: "23" gives [ad, ae, af, bd, be, bf, cd, ce, cf].
+// Input: a string of digits. Returns every string of letters it could spell on a phone keypad, one
+// letter per digit, in any order: "23" gives [ad, ae, af, bd, be, bf, cd, ce, cf]; no digits give
+// []. On LeetCode: 0 <= digits.length <= 4, each digit '2' to '9'.
 //
-// LC 17 is in this folder three times: the same problem, the same answers in the same order,
-// written three ways. They differ only in how the letters chosen so far are carried:
-//   LetterCombinationsBackTracking  (this file) one StringBuilder shared by every call: append a
-//                                   letter, recurse, then delete it again
+// The one idea: BinaryStringsOfLengthN's one choice per position, with the choices at each position
+// read from the keypad instead of always being 0 and 1. One call holds the letters chosen so far
+// (sb); the digit it decides is digits.charAt(sb.length()). The StringBuilder is shared by every
+// call: append a letter, recurse, then delete it again.
+//
+// Time: O(n * 4^n) -- at most 4 letters per digit, so at most 4^n strings of n letters.
+// Space: O(n) besides the output -- the recursion depth and the StringBuilder.
+//
+// Siblings: LC 17 is in this folder three times, the same answers in the same order; they differ
+// only in how the letters chosen so far are carried:
+//   LetterCombinationsBackTracking  (this file) one StringBuilder shared by every call
 //   LetterCombinationsRecursive     a new String each call (prefix + letter): nothing to undo
 //   LetterCombinationsPhoneNumber   no recursion: a list of every combination so far, extended
 //                                   by every letter of the next digit
-// It is BinaryStringsOfLengthN's one choice per position, with the choices at each position read
-// from the keypad instead of always being 0 and 1.
 
 public final class LetterCombinationsBackTracking {
-	// Time Complexity: O(n * 4^n), at most 4 letters per digit, so at most 4^n strings of n letters
-	// Space Complexity: O(n) besides the output, the recursion depth and the StringBuilder
-
 	private final Map<Character, String> map = build();
 
 	private String digits;
@@ -31,7 +34,7 @@ public final class LetterCombinationsBackTracking {
 	public List<String> combinations(String digits) {
 		this.digits = digits;
 		List<String> list = new ArrayList<>();
-		if (digits.isEmpty()) { // no digits: no combinations, not one empty one
+		if (digits.isEmpty()) { // BASE: no digits, no combinations, not one empty one
 			return list;
 		}
 		dfs(new StringBuilder(), list);
@@ -40,16 +43,16 @@ public final class LetterCombinationsBackTracking {
 
 	// index is redundant and derived from sb.length
 	private void dfs(StringBuilder sb, List<String> list) {
-		if (sb.length() == digits.length()) { // a letter for every digit
-			list.add(sb.toString()); // a copy: sb keeps changing
+		if (sb.length() == digits.length()) { // BASE: a letter for every digit
+			list.add(sb.toString()); // RECORD: a copy, sb keeps changing
 			return;
 		}
 
 		char next = digits.charAt(sb.length()); // the digit for the position being filled
-		for (char c : map.get(next).toCharArray()) { // the choices for this position
-			sb.append(c); // choose
+		for (char c : map.get(next).toCharArray()) { // WALK: the choices for this position
+			sb.append(c); // CHOOSE
 			dfs(sb, list);
-			sb.deleteCharAt(sb.length() - 1); // undo, or the next letter lands after this one
+			sb.deleteCharAt(sb.length() - 1); // UNDO, or the next letter lands after this one
 		}
 	}
 

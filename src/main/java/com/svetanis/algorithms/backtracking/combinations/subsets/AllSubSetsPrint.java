@@ -1,20 +1,23 @@
 package com.svetanis.algorithms.backtracking.combinations.subsets;
 
-// Print every subset of a string of distinct characters
+// Print every subset of a string of distinct characters (not a LeetCode problem)
 //
-// Given a string, print each of its subsets on its own line, the empty one included (as an empty
-// line). Nothing is returned.
+// Input: a string of distinct characters (assumed length at most about 20). Prints each of its
+// subsets on its own line, the empty one included (as an empty line). Returns nothing.
 //
-// Take-or-skip: decide each character in turn, first skipping it, then taking it. out is a fixed
-// buffer of n slots and k is how many of them are filled. Taking writes the character into out[k]
-// and passes k + 1; skipping passes k unchanged. Nothing is removed afterwards, because the
-// caller's k never counted that slot -- the next write simply overwrites it.
+// The one idea: take-or-skip. One call decides character i of the input; out is a fixed buffer of n
+// slots and k is how many of them are filled, so out[0..k-1] is the subset so far. Taking
+// writes the character into out[k] and passes k + 1; skipping passes k unchanged. Nothing is removed
+// afterwards, because the caller's k never counted that slot -- the next write simply overwrites
+// it.
+//
+// Time: O(n * 2^n) -- 2^n leaves, each printing up to n characters.
+// Space: O(n) -- the buffer and the recursion depth.
+//
+// Siblings: AllSubSetsGivenSum is the same walk, printing only the subsets with a given sum.
+// SubsetsBacktracking, SubsetsBitmask and SubsetsCopyAndAdd return the subsets of 78 as lists.
 
 public final class AllSubSetsPrint {
-
-  // Time Complexity: O(n * 2^n), 2^n leaves, each printing up to n characters
-  // Space Complexity: O(n), the buffer and the recursion depth
-
   public static void subset(String str) {
     int n = str.length();
     char[] out = new char[n];
@@ -22,13 +25,13 @@ public final class AllSubSetsPrint {
   }
 
   private static void subset(char[] in, int i, char[] out, int k) {
-    if (i == in.length) { // every character decided: out[0..k-1] is one subset
-      System.out.println(new String(out, 0, k)); // only the k filled slots
+    if (i == in.length) { // BASE: every character decided: out[0..k-1] is one subset
+      System.out.println(new String(out, 0, k)); // PRINT: only the k filled slots
       return;
     }
-    // skip in[i]: k is unchanged
+    // SKIP in[i]: k is unchanged
     subset(in, i + 1, out, k);
-    // take in[i]: write it into the next free slot
+    // TAKE in[i]: write it into the next free slot
     out[k] = in[i];
     subset(in, i + 1, out, k + 1);
   }

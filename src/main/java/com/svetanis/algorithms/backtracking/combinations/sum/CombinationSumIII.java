@@ -5,22 +5,26 @@ import java.util.List;
 
 // 216. Combination Sum III
 //
-// Find every combination of k numbers that sums to n, using only the numbers 1 to 9, each at
-// most once. No combination twice; any order.
+// Input: k and n. Returns every combination of k numbers that sums to n, using only the numbers 1
+// to 9, each at most once. No combination twice; any order. On LeetCode: 2 <= k <= 9, 1 <= n <= 60.
 //
-// Two methods, the same answers:
+// The one idea: one call holds the numbers chosen so far (combination) and their sum. Two methods,
+// the same answers:
 //   combinationSum           start-index over 1..9: the next call starts at candidate + 1, so
 //                            numbers only grow along a combination; it records a combination
 //                            only when both the sum and the count are right
 //   combinationSumTakeOrSkip take-or-skip: decide each number 1..9 in turn, counting the sum down
 //                            to 0; it stops early once the number is bigger than what is left
 //                            or k numbers are already taken
+//
+// Time: O(k * 2^9) -- at most 2^9 = 512 sets of the numbers 1..9, each answer copied in k steps; a
+// constant, whatever k and n are.
+// Space: O(k) besides the output -- the recursion depth and the combination built.
+//
+// Siblings: CombinationSumII is the same start-index loop over given candidates;
+// AllUniqueCombinationsSizeK is the loop with a count and no sum.
 
 public final class CombinationSumIII {
-	// Time Complexity: O(k * 2^9), at most 2^9 = 512 sets of the numbers 1..9, each answer copied
-	// in k steps -- a constant, whatever k and n are
-	// Space Complexity: O(k) besides the output, the recursion depth and the combination built
-
 	public static List<List<Integer>> combinationSum(int k, int n) {
 		List<List<Integer>> combinations = new ArrayList<>();
 		List<Integer> combination = new ArrayList<>();
@@ -30,15 +34,15 @@ public final class CombinationSumIII {
 
 	private static void dfs(int target, int index, int sum, int k, //
 			List<Integer> combination, List<List<Integer>> combinations) {
-		if (sum == target && combination.size() == k) { // both must hold
+		if (sum == target && combination.size() == k) { // RECORD: both must hold
 			combinations.add(new ArrayList<>(combination));
 			return;
 		}
 		for (int candidate = index; candidate <= 9; candidate++) {
-			if (sum + candidate <= target && combination.size() < k) { // room in sum and in count
-				combination.add(candidate); // choose
-				dfs(target, candidate + 1, sum + candidate, k, combination, combinations); // larger next
-				combination.remove(combination.size() - 1); // undo
+			if (sum + candidate <= target && combination.size() < k) { // PRUNE: room in sum and count
+				combination.add(candidate); // CHOOSE
+				dfs(target, candidate + 1, sum + candidate, k, combination, combinations); // RECURSE: larger next
+				combination.remove(combination.size() - 1); // UNDO
 			}
 		}
 	}
@@ -53,18 +57,18 @@ public final class CombinationSumIII {
 	// left: how much of n is still to reach
 	private static void takeOrSkip(int index, int left, int k, //
 			List<Integer> combination, List<List<Integer>> combinations) {
-		if (left == 0) { // the sum is reached; an answer only with exactly k numbers
+		if (left == 0) { // RECORD: the sum is reached, an answer only with exactly k numbers
 			if (combination.size() == k) {
 				combinations.add(new ArrayList<>(combination));
 			}
 			return;
 		}
-		if (index > 9 || index > left || combination.size() >= k) { // nothing more can fit
+		if (index > 9 || index > left || combination.size() >= k) { // BASE: nothing more can fit
 			return;
 		}
 		combination.add(index); // TAKE index
 		takeOrSkip(index + 1, left - index, k, combination, combinations);
-		combination.remove(combination.size() - 1); // SKIP index: undo the take
+		combination.remove(combination.size() - 1); // SKIP index: UNDO the take
 		takeOrSkip(index + 1, left, k, combination, combinations);
 	}
 
