@@ -8,14 +8,24 @@ import java.util.List;
 import java.util.Set;
 
 // 139. Word Break
-
-// given a string and a list of words
-// determine if the string can be 
-// constructed from concatenating 
-// words from the list of words
-// a word can be used multiple times
-
-// see more examples in com.svetanis.algorithms.dp.wordbreak
+//
+// Input: a string s and a list of words (1 <= s.length <= 300, 1 <= words.length <= 1000, each
+// word 1 to 20 lowercase letters, all different). Returns true if s can be cut into pieces that
+// are each a word of the list; a word can be used any number of times.
+//
+// The one idea: one call answers "can the part of s from index to the end be built from words?".
+// It tries every word that the rest of s starts with, and asks the same question from the index
+// just after that word. Reaching the end of s means success. Nothing is remembered, so the same
+// index is reached again by every way of cutting the front of s into words, and a string like
+// "aaaa...ab" with words "a", "aa", ... takes exponential time.
+//
+// Time: O(m^n) -- m words tried at each of up to n positions deep, no cache.
+// Space: O(n^2) -- the recursion is up to n deep, and each frame holds its own copy of the rest of
+// s (the prefix variable).
+//
+// Siblings: WordBreakMemoization caches the answer per index. More versions are in
+// com.svetanis.algorithms.dp.wordbreak. dfs2 tries every prefix of the rest of s against a set
+// of words instead of every word against the rest of s; main does not call it.
 
 public final class WordBreakBacktracking {
 
@@ -25,19 +35,19 @@ public final class WordBreakBacktracking {
 
 	private static boolean dfs(int index, String s, List<String> dict) {
 		// Time Complexity: O(m^n)
-		if (index == s.length()) {
+		if (index == s.length()) { // BASE: the whole string is cut into words
 			return true;
 		}
 		boolean result = false;
 		for (String word : dict) {
 			// a zero-length word leaves `index` where it was, so the same state
 			// recurses forever
-			if (word.isEmpty()) {
+			if (word.isEmpty()) { // SKIP: an empty word makes no progress
 				continue;
 			}
 			String prefix = s.substring(index);
-			if (startsWith(prefix, word)) {
-				result = result || dfs(index + word.length(), s, dict);
+			if (startsWith(prefix, word)) { // TAKE: this word fits at index
+				result = result || dfs(index + word.length(), s, dict); // WALK: on from after it
 			}
 		}
 		return result;
@@ -58,10 +68,10 @@ public final class WordBreakBacktracking {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(wbb("aab", asList("a", "c")));
-		System.out.println(wbb("aab", asList("a", "aa", "b")));
-		System.out.println(wbb("iamsuperlady", dictionary()));
-		// an empty dictionary word used to recurse until the stack ran out
+		System.out.println(wbb("aab", asList("a", "c"))); // false
+		System.out.println(wbb("aab", asList("a", "aa", "b"))); // true
+		System.out.println(wbb("iamsuperlady", dictionary())); // true
+		// an empty dictionary word is skipped, so it cannot recurse forever
 		System.out.println(wbb("aab", asList("a", "", "b"))); // true
 	}
 }
