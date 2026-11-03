@@ -2,7 +2,6 @@ package com.svetanis.algorithms.backtracking.aggregation.memoization;
 
 import static com.svetanis.algorithms.dp.wordbreak.Dictionary.dictionary;
 import static java.util.Arrays.asList;
-import static org.apache.commons.lang3.StringUtils.startsWith;
 
 import java.util.List;
 import java.util.Set;
@@ -20,8 +19,8 @@ import java.util.Set;
 // "aaaa...ab" with words "a", "aa", ... takes exponential time.
 //
 // Time: O(m^n) -- m words tried at each of up to n positions deep, no cache.
-// Space: O(n^2) -- the recursion is up to n deep, and each frame holds its own copy of the rest of
-// s (the prefix variable).
+// Space: O(n) -- the recursion is up to n deep. s.startsWith(word, index) compares the word with s
+// in place, from index on, so no frame copies the rest of s.
 //
 // Siblings: WordBreakMemoization caches the answer per index. More versions are in
 // com.svetanis.algorithms.dp.wordbreak. dfs2 tries every prefix of the rest of s against a set
@@ -34,7 +33,6 @@ public final class WordBreakBacktracking {
 	}
 
 	private static boolean dfs(int index, String s, List<String> dict) {
-		// Time Complexity: O(m^n)
 		if (index == s.length()) { // BASE: the whole string is cut into words
 			return true;
 		}
@@ -45,8 +43,7 @@ public final class WordBreakBacktracking {
 			if (word.isEmpty()) { // SKIP: an empty word makes no progress
 				continue;
 			}
-			String prefix = s.substring(index);
-			if (startsWith(prefix, word)) { // TAKE: this word fits at index
+			if (s.startsWith(word, index)) { // TAKE: this word fits at index, compared in place
 				result = result || dfs(index + word.length(), s, dict); // WALK: on from after it
 			}
 		}

@@ -2,7 +2,6 @@ package com.svetanis.algorithms.backtracking.aggregation.memoization;
 
 import static com.svetanis.algorithms.dp.wordbreak.Dictionary.dictionary;
 import static java.util.Arrays.asList;
-import static org.apache.commons.lang3.StringUtils.startsWith;
 
 import java.util.List;
 import java.util.Set;
@@ -11,8 +10,7 @@ import java.util.Set;
 //
 // Input: a string s and a list of words (1 <= s.length <= 300, 1 <= words.length <= 1000, each
 // word 1 to 20 lowercase letters, all different). Returns true if s can be cut into pieces that
-// are each a word of the list; a word can be used any number of times. The code trims the rest of
-// s before comparing, which changes nothing for lowercase letters.
+// are each a word of the list; a word can be used any number of times.
 //
 // The one idea: one call answers "can the part of s from index to the end be built from words?".
 // One cell of memo holds that answer for one index -- null while it has not been asked, then true
@@ -20,10 +18,10 @@ import java.util.Set;
 // route to the same index reads the cell instead of searching again. Index n (the end of s) is
 // the success case, which is why the memo has n + 1 cells.
 //
-// Time: O(n^2 * m) -- n indexes, each tries m words, and each try copies and compares up to n
-// letters of the rest of s.
-// Space: O(n^2) -- the memo is O(n), but each of up to n frames on the stack holds its own copy of
-// the rest of s (the prefix variable).
+// Time: O(n * m * L) -- n indexes, each tries m words, and each try compares at most L letters,
+// the word's length (L <= 20), in place in s.
+// Space: O(n) -- the memo's n + 1 cells and a recursion up to n deep. s.startsWith(word, index)
+// copies nothing.
 //
 // Siblings: WordBreakBacktracking is the same recursion with no memo, so it is exponential. More
 // versions are in com.svetanis.algorithms.dp.wordbreak. dfs2 tries every prefix of the rest of s
@@ -38,9 +36,6 @@ public final class WordBreakMemoization {
 	}
 
 	private static boolean dfs(int index, String s, Boolean[] memo, List<String> dict) {
-		// Time Complexity: O(n^2 * m)
-		// Space Complexity: O(n^2) -- see the header
-
 		// base case BEFORE the memo lookup: the lookup reads memo[index],
 		// so it must not run at an index the base case exists to stop at
 		if (index == s.length()) { // BASE: the whole string is cut into words
@@ -58,8 +53,7 @@ public final class WordBreakMemoization {
 			if (word.isEmpty()) { // SKIP: an empty word makes no progress
 				continue;
 			}
-			String prefix = s.substring(index).trim();
-			if (startsWith(prefix, word)) { // TAKE: this word fits at index
+			if (s.startsWith(word, index)) { // TAKE: this word fits at index, compared in place
 				result = result || dfs(index + word.length(), s, memo, dict); // WALK: on from after it
 			}
 		}

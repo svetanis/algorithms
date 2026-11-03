@@ -21,9 +21,8 @@ import java.util.List;
 // about 2/3 * 2^n character comparisons for n = 10 to 16) and copying the partitions O(n) each.
 // Space: O(n) for the recursion and the current piece list, besides the output.
 //
-// Siblings -- the same problem and the same backtracking: string.palindrome.AllPalindromicPartitions
-// tests each piece through a shared helper; dp.palindrome.PalindromePartitions reads each test from
-// a palindrome table filled first.
+// Sibling -- the same problem: dp.palindrome.PalindromePartitions reads each test from a palindrome
+// table filled first.
 
 public final class AllPalindromicPartitions {
 

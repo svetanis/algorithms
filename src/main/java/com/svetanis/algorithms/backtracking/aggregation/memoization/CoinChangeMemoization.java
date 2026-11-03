@@ -13,8 +13,8 @@ import java.util.List;
 // amount of times. if amount can't be made
 // up by any combination of the coins, return 0
 
-// Correct and fast -- 2 ms at LC 518's ceiling
-// ({1,2,5}, amount 5000) -- but still not submittable, which is not obvious:
+// Correct and fast -- at most n * amount states -- but risky to submit,
+// which is not obvious:
 // `sum` climbs one coin at a time, so the recursion is amount / min(coin)
 // deep, up to 5000 frames at LC 518's limits. It survives a default JVM
 // stack and throws StackOverflowError on a smaller one, so the failure looks
@@ -25,8 +25,8 @@ public final class CoinChangeMemoization {
 	// Time Complexity: O(n^2 * amount) -- NOT O(n * amount). There are
 	// n * amount states, one per (index, sum), and each one runs a loop over
 	// the coins from index onward. O(n * amount) counts the states and forgets
-	// the loop inside one. Measured with the amount held fixed: doubling n
-	// multiplies the work by ~3.7, not by 2.
+	// the loop inside one. With the amount held fixed, doubling n
+	// multiplies the work by about 4, not by 2.
 	// The take-or-leave form -- dp/coins/CoinChangeMemoization.java -- has the
 	// same n * amount states with O(1) work in each, so it really is O(n * amount).
 	// Space Complexity: O(n * amount)
@@ -39,20 +39,20 @@ public final class CoinChangeMemoization {
 
 	private static int dfs(int amount, int sum, int index, 
 			Integer[][] memo, List<Integer> coins) {
-		if (sum == amount) {
+		if (sum == amount) { // BASE: the coins taken so far make the amount exactly
 			return 1;
 		}
-		if (memo[index][sum] != null) {
+		if (memo[index][sum] != null) { // LOOKUP: this (index, sum) was counted before
 			return memo[index][sum];
 		}
 		int count = 0;
-		for (int i = index; i < coins.size(); i++) {
+		for (int i = index; i < coins.size(); i++) { // WALK: coins from index on, so each multiset is built in one order
 			int coin = coins.get(i);
-			if (sum + coin <= amount) {
-				count += dfs(amount, sum + coin, i, memo, coins);
+			if (sum + coin <= amount) { // SKIP a coin that would pass the amount
+				count += dfs(amount, sum + coin, i, memo, coins); // TAKE: coin i; stay at i, so it can be taken again
 			}
 		}
-		memo[index][sum] = count;
+		memo[index][sum] = count; // RECORD: the count for this (index, sum)
 		return count;
 	}
 

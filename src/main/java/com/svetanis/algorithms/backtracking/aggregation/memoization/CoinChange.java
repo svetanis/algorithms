@@ -14,15 +14,15 @@ import java.util.List;
 // up by any combination of the coins, return 0
 
 // This is the teaching version: correct, but not
-// submittable -- no memoization, so {1,2,5} with amount 5000 takes ~7 s.
+// submittable -- no memoization, so at LC 518's limits it does not finish in time.
 // The exponential cost is the point; CoinChangeMemoization.java next door
 // is the fix, and dp/coins/ carries the iterative rewrites.
 
 public final class CoinChange {
 	// Time Complexity: O(C(amount + n, n)) -- the loop visits exactly one node per
 	// distinct non-decreasing coin sequence whose sum is at most the amount, which is
-	// the number of multisets of coins. Measured on {1,2,5}: doubling the amount
-	// multiplies the nodes by ~7.4, converging on 2^n. Exponential in n.
+	// the number of multisets of coins. For n fixed coins that grows like amount^n / n!,
+	// so doubling the amount multiplies the nodes by about 2^n. Exponential in n.
 	// Space Complexity: O(amount) stack -- `sum` climbs by one coin per frame, so the
 	// depth is amount / min(coin)
 
@@ -31,14 +31,14 @@ public final class CoinChange {
 	}
 
 	private static int dfs(int amount, int sum, int index, List<Integer> coins) {
-		if (sum == amount) {
+		if (sum == amount) { // BASE: the coins taken so far make the amount exactly
 			return 1;
 		}
 		int count = 0;
-		for (int i = index; i < coins.size(); i++) {
+		for (int i = index; i < coins.size(); i++) { // WALK: coins from index on, so each multiset is built in one order
 			int coin = coins.get(i);
-			if (sum + coin <= amount) {
-				count += dfs(amount, sum + coin, i, coins);
+			if (sum + coin <= amount) { // SKIP a coin that would pass the amount
+				count += dfs(amount, sum + coin, i, coins); // TAKE: coin i; stay at i, so it can be taken again
 			}
 		}
 		return count;
