@@ -1,23 +1,27 @@
 package com.svetanis.algorithms.bits.xor;
 
 // 136. Single Number
-
-// in a non-empty array of integers,
-// every number appears twice except
-// for one, find that single number
-
-// XOR of two same numbers returns zero
-// XOR with zero returns the same number
-// and the order does not matter, so every
-// pair cancels wherever its two copies are
+//
+// Input: a non-empty int array in which every number appears twice except one, which appears once.
+// Returns that one. On LeetCode: 1 <= nums.length <= 3 * 10^4, -3 * 10^4 <= nums[i] <= 3 * 10^4.
+//
+// The one idea: ^ of a number with itself is 0, ^ with 0 leaves a number as it is, and the order of
+// the ^s does not matter. So ^ every number together: each pair cancels wherever its two copies
+// stand, and the single is all that is left. Negatives too -- ^ works slot by slot, sign included.
+//
+// Time: O(n) -- one pass.
+// Space: O(1) -- one int.
+//
+// Siblings: SingleNumberII (137) has the others three times each, SingleNumberIII (260) has two
+// singles.
 
 public final class SingleNumber {
 	// Time Complexity: O(n)
 
 	public static int single(int[] a) {
 		int xor = 0;
-		for (int num : a) {
-			xor = xor ^ num; // pairs cancel, the single is left
+		for (int num : a) { // WALK every number
+			xor = xor ^ num; // CANCEL: pairs cancel, the single is left
 		}
 		return xor;
 	}

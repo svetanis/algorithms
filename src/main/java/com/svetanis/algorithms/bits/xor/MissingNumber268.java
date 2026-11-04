@@ -1,11 +1,19 @@
 package com.svetanis.algorithms.bits.xor;
 
 // 268. Missing Number
-
-// given an array containing n
-// distinct numbers in the range [0, n]
-// return the only number in the range
-// that is missing from the array
+//
+// Input: an int array of n distinct numbers, each from 0 to n. Exactly one number of 0 .. n is not
+// in it. Returns that number. On LeetCode: 1 <= n <= 10^4, 0 <= nums[i] <= n, all distinct.
+//
+// The one idea: ^ of a number with itself is 0, ^ with 0 leaves a number as it is, and the order of
+// the ^s does not matter. So ^ together every number from 0 to n and every number of the array:
+// each present number appears twice and cancels, and the missing one is all that is left. The index
+// loop covers 0 .. n - 1, so xor starts at n.
+//
+// Time: O(n) -- two passes.
+// Space: O(1) -- one int.
+//
+// Siblings: MissingNumber is the CSES version, with the numbers 1 .. n.
 
 public final class MissingNumber268 {
   // Time Complexity: O(n)
@@ -13,17 +21,17 @@ public final class MissingNumber268 {
 
   public static int single(int[] a) {
     int n = a.length;
-    int xor = n; // n itself, which the loop below does not reach
+    int xor = n; // START: n itself, which the loop below does not reach
     // xor all numbers from 0 to n
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) { // ALL: 0 .. n - 1
       xor = xor ^ i;
     }
     // xor all numbers in a[]
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) { // PRESENT: each cancels its copy
       xor = xor ^ a[i];
     }
     // every present number met its copy; the missing one is left
-    return xor;
+    return xor; // RETURN
   }
 
 
