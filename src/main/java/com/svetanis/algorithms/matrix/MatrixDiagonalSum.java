@@ -1,18 +1,27 @@
 package com.svetanis.algorithms.matrix;
 
 // 1572. Matrix Diagonal Sum
+//
+// Input: g -- a square n x n matrix. Returns the sum of the primary diagonal (top-left to
+// bottom-right) and the secondary diagonal (top-right to bottom-left), a cell on both counted
+// once. On LeetCode: 1 <= n <= 100, 1 <= mat[i][j] <= 100.
+//
+// The one idea: each row holds exactly one cell of each diagonal -- row r holds (r, r) on the
+// primary and (r, n - 1 - r) on the secondary. Add both. They are the same cell only when
+// r == n - 1 - r, the middle row of an odd n, and then it is added once.
+//
+// Time: O(n) -- two cells per row.
+// Space: O(1).
 
 public final class MatrixDiagonalSum {
-	// Time Complexity: O(n)
-	// Space Complexity: O(1)
 
 	public int diagonalSum(int[][] g) {
 		int n = g.length;
 		int sum = 0;
 		for (int row = 0; row < n; row++) {
-			int col = n - row - 1;
-			sum += g[row][row];
-			if (row != col) {
+			int col = n - row - 1; // SECONDARY diagonal's cell in this row
+			sum += g[row][row]; // PRIMARY
+			if (row != col) { // SKIP the centre the second time
 				sum += g[row][col];
 			}
 		}
