@@ -15,8 +15,10 @@ import com.svetanis.algorithms.intervals.Interval;
 // at 10. Meetings are handed out in order of start time: each takes the lowest-numbered free
 // room. If no room is free, it waits for the room that frees up first (the lowest number
 // among rooms freeing at the same time) and then runs for its original length. Returns the
-// room that held the most meetings; on a tie, the lowest room number.
+// room that held the most meetings; on a tie, the lowest room number. On LeetCode:
+// 1 <= n <= 100, 1 <= meetings.length <= 10^5, 0 <= start < end <= 5 * 10^5.
 //
+// The one idea:
 // Two heaps. free holds the numbers of the free rooms, smallest on top. busy holds one entry
 // per occupied room: its number and the time it becomes free, earliest time on top, lowest
 // number among equal times. Before placing a meeting, every busy room that is free by its
@@ -33,19 +35,20 @@ import com.svetanis.algorithms.intervals.Interval;
 //                                    comparator lambda -- quicker to write under pressure
 // Variable names match between the two: free, busy, count, meeting, released, room, next,
 // endTime, roomNum.
+//
+// Time: O(n + m log m + m log n) -- sorting the m meetings, then at most four heap operations per
+// meeting on heaps of at most n rooms.
+// Space: O(n + m) -- the sorted copy of the meetings and the two heaps.
 
 public final class MostBookedMeetingRoom {
-	// Time Complexity: O(n + m log m + m log n), sorting the m meetings, then at most four heap
-	// operations per meeting on heaps of at most n rooms
-	// Space Complexity: O(n + m), the sorted copy of the meetings and the two heaps
 
 	public static int mostBooked(int n, int[][] meetings) {
 		List<Interval> intervals = intervals(meetings);
 		List<Interval> sorted = new ArrayList<>(intervals); // a copy, in order of start time
 		sorted.sort((a, b) -> Integer.compare(a.start, b.start)); // SORT
 		Queue<Integer> free = free(n);
-		int[] count = counts(n, sorted, free);
-		return mostBooked(count);
+		int[] count = counts(n, sorted, free); // COUNT: meetings held, per room
+		return mostBooked(count); // RETURN: the busiest room
 	}
 
 	// ANSWER: the room with the largest count
@@ -56,7 +59,7 @@ public final class MostBookedMeetingRoom {
 				roomNum = i;
 			}
 		}
-		return roomNum;
+		return roomNum; // RETURN
 	}
 
 	private static int[] counts(int n, List<Interval> sorted, Queue<Integer> free) {
@@ -82,24 +85,24 @@ public final class MostBookedMeetingRoom {
 			}
 			count[room] += 1; // COUNT
 		}
-		return count;
+		return count; // RETURN: per room
 	}
 
 	// FREE ROOMS: at the start every room is free
 	private static Queue<Integer> free(int n) {
 		Queue<Integer> free = new PriorityQueue<>();
 		for (int i = 0; i < n; i++) {
-			free.offer(i);
+			free.offer(i); // FREE: every room, lowest number on top
 		}
-		return free;
+		return free; // RETURN
 	}
 
 	private static List<Interval> intervals(int[][] meetings) {
 		List<Interval> list = new ArrayList<>();
 		for (int[] meeting : meetings) {
-			list.add(new Interval(meeting[0], meeting[1]));
+			list.add(new Interval(meeting[0], meeting[1])); // WRAP: one Interval per meeting
 		}
-		return list;
+		return list; // RETURN: in the caller's order
 	}
 
 	public static void main(String[] args) {

@@ -12,8 +12,9 @@ import com.svetanis.algorithms.intervals.Interval;
 //
 // Takes intervals [start, end] in any order. Returns the fewest intervals that cover the same
 // points, sorted by start. Intervals are closed, so two that only touch, [1, 4] and [4, 5], merge
-// into [1, 5].
+// into [1, 5]. On LeetCode: 1 <= intervals.length <= 10^4, 0 <= start <= end <= 10^4.
 //
+// The one idea: one run is a stretch of merged intervals still open to growing at its end.
 // Once the intervals are sorted by start, the next one either starts at or before the run's end,
 // and then it belongs to the run and can only push the run's end further; or it starts after the
 // run's end, and since every later interval starts later still, nothing can join the run any more,
@@ -32,10 +33,15 @@ import com.svetanis.algorithms.intervals.Interval;
 //
 // "Kept as the last answer row" widens that row in place. "Held in start and end" adds the run
 // only once it is finished, so it needs one more add after the loop for the run still held.
+//
+// Time: O(n log n) -- the sort; the scan after it is one pass.
+// Space: O(n) -- the output and the sort's buffer (and the sorted copy in mergeIntervals).
+//
+// Siblings: none for 56 outside this file; the four methods above differ in the form the
+// intervals arrive in and in where the run is kept. InsertInterval (57) runs the same merge for one
+// new interval into a sorted list, with no sort.
 
 public final class MergeIntervals {
-  // Time Complexity: O(n log n), the sort; the scan after it is one pass
-  // Space Complexity: O(n), the output and the sort's buffer (and the sorted copy in mergeIntervals)
 
   public static int[][] merge(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT: by start
@@ -52,7 +58,7 @@ public final class MergeIntervals {
         list.add(intervals[i]); // OPEN: a new run; the one before it is finished
       }
     }
-    return list.toArray(new int[list.size()][]);
+    return list.toArray(new int[list.size()][]); // RETURN
   }
 
   // HOLD one merged run in start and end; TEST each next row against it, never against the row
@@ -74,7 +80,7 @@ public final class MergeIntervals {
       }
     }
     merged.add(new int[] { start, end }); // LAST: the run still held never got a CLOSE
-    return merged.toArray(new int[merged.size()][]);
+    return merged.toArray(new int[merged.size()][]); // RETURN
   }
 
   public static List<List<Integer>> mergeLists(List<List<Integer>> intervals) {
@@ -148,7 +154,7 @@ public final class MergeIntervals {
   private static List<List<Integer>> lists(int[][] rows) {
     List<List<Integer>> list = new ArrayList<>();
     for (int[] row : rows) {
-      list.add(new ArrayList<>(List.of(row[0], row[1])));
+      list.add(new ArrayList<>(List.of(row[0], row[1]))); // COPY: mutable, mergeLists widens rows
     }
     return list;
   }
@@ -156,7 +162,7 @@ public final class MergeIntervals {
   private static List<Interval> intervals(int[][] rows) {
     List<Interval> list = new ArrayList<>();
     for (int[] row : rows) {
-      list.add(new Interval(row[0], row[1]));
+      list.add(new Interval(row[0], row[1])); // WRAP: one Interval per row
     }
     return list;
   }

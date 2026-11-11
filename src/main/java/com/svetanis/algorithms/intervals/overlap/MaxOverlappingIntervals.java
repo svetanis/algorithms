@@ -11,19 +11,22 @@ import java.util.List;
 // in time." [[1, 2], [2, 4], [3, 6]] gives 2, and [[1, 8], [2, 5], [5, 6], [3, 7]] gives 4 -- all
 // four contain 5, so an interval ending at x and one starting at x DO overlap. An empty array gives 0.
 //
+// The one idea:
 // Each interval becomes two points on the number line: an 's' point at its start and an 'e' point
 // at its end. The points are sorted by position and walked from left to right with active = the
 // number of intervals open right now: +1 at an 's', -1 at an 'e'. The largest value active reaches
 // is the answer. At the same position every 's' comes before every 'e', so an interval that starts
 // at x is counted before one that ends at x is closed -- the inclusive reading.
 //
+// Time: O(n log n) -- sorting the 2n points.
+// Space: O(n) -- the list of points.
+//
+// Siblings: none for this problem.
 // The same count other ways: MinPlatformsTwoArrays, MinPlatformsDifferenceArray,
 // MinPlatformsMultimap and MinPlatformsPriorityQueue (trains, inclusive too). MinMeetingRoomsHeap
 // and its siblings count the half-open [start, end), where touching intervals do not overlap.
 
 public final class MaxOverlappingIntervals {
-	// Time Complexity: O(n log n), sorting the 2n points
-	// Space Complexity: O(n), the list of points
 
 	public static int maxOverlap(int[][] intervals) {
 		int max = 0;
@@ -37,7 +40,7 @@ public final class MaxOverlappingIntervals {
 			}
 			max = Math.max(max, active); // PEAK
 		}
-		return max;
+		return max; // RETURN
 	}
 
 	private static List<Point> points(int[][] intervals) {

@@ -10,23 +10,30 @@ import com.svetanis.algorithms.intervals.Interval;
 
 // Minimum number of railway platforms so no train waits.
 //
+// Not a LeetCode problem; a GeeksforGeeks one.
+//
 // Each interval is one train: start = arrival time, end = departure time, start <= end. Returns
 // the fewest platforms that give every train a platform from its arrival to its departure. A
 // train holds its platform at both of those moments, so when one train departs at the same
 // time another arrives, the two cannot share a platform.
 //
+// The one idea:
 // This version keeps the trains themselves, not separate counts. One heap entry is a train
 // standing at the station right now; the one that departs first is on top. Trains are taken
 // in order of arrival. When a train arrives, every train that departed strictly earlier
 // leaves the heap. What remains, plus the new train, are the trains standing at the station
 // at this arrival time, each on its own platform. The largest such number is the answer.
 //
+// Time: O(n log n) -- the sort; each train enters and leaves the heap once.
+// Space: O(n) -- the sorted copy and the heap.
+//
+// Siblings: MinPlatformsTwoArrays sorts the arrivals and the departures apart;
+// MinPlatformsDifferenceArray marks one slot per minute and does not sort; MinPlatformsMultimap
+// groups the marks by time in a TreeMap.
 // The same count other ways: MinPlatformsTwoArrays, MinPlatformsDifferenceArray,
 // MinPlatformsMultimap and MaxOverlappingIntervals.
 
 public final class MinPlatformsPriorityQueue {
-  // Time Complexity: O(n log n), the sort; each train enters and leaves the heap once
-  // Space Complexity: O(n), the sorted copy and the heap
 
   public static int minPlatforms(List<Interval> intervals) {
     int min = 0;
@@ -42,7 +49,7 @@ public final class MinPlatformsPriorityQueue {
       pq.offer(interval); // ARRIVE
       min = max(min, pq.size()); // PEAK: trains standing at this arrival time
     }
-    return min;
+    return min; // RETURN: 0 when there are no trains
   }
 
   public static void main(String[] args) {

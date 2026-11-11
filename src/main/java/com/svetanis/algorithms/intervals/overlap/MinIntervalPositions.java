@@ -10,8 +10,12 @@ import java.util.PriorityQueue;
 // intervals[i] = { left, right } is the closed interval [left, right]; its size is
 // right - left + 1, the number of whole numbers in it. For each query, the answer is the
 // size of the smallest interval with left <= query <= right, or -1 if no interval contains it.
-// Returns the answers in the order of the queries. Sorts the caller's intervals in place.
+// Returns the answers in the order of the queries. Sorts the caller's intervals in place. On
+// LeetCode: 1 <= intervals.length, queries.length <= 10^5, 1 <= left <= right <= 10^7,
+// 1 <= queries[j] <= 10^7.
 //
+// The one idea: one heap entry is one interval that has started by the current query, held as
+// { size, right }, smallest size on top.
 // Two orders do two jobs. Intervals sorted by start decide WHEN an interval enters the heap:
 // one index j only moves forward, so each interval enters exactly once. The heap, ordered by
 // size, decides WHICH interval is read. An interval must not enter before the walk reaches its
@@ -22,14 +26,16 @@ import java.util.PriorityQueue;
 // this query cannot contain a later one. Only the top is checked; an ended interval lower down
 // is never read until it reaches the top, and then the same loop throws it out.
 //
+// Time: O(n log n + m log m) -- the two sorts; each interval enters and leaves the heap at most
+// once.
+// Space: O(n + m) -- the heap and the sorted positions.
+//
+// Siblings:
 // This version sorts the positions 0 .. n - 1 by the query value at each, so positions[i] is
 // where the i-th smallest query sits. The sibling MinIntervalPairs sorts { value, position }
 // pairs instead; the walk is the same.
 
 public final class MinIntervalPositions {
-	// Time Complexity: O(n log n + m log m), the two sorts; each interval enters and leaves the
-	// heap at most once
-	// Space Complexity: O(n + m), the heap and the sorted positions
 
 	public static int[] minInterval(int[][] intervals, int[] queries) {
 		int n = queries.length;

@@ -15,6 +15,7 @@ import com.svetanis.algorithms.intervals.Interval;
 // There is no LC number, and where the problem came from was not recorded, so that rule is this
 // file's own and has not been checked against a source.
 //
+// The one idea: after one sort, each interval is compared only with the one just before it.
 // Sort by start, and among equal starts put the longer interval first. Walk the sorted list and
 // compare each end with the end just before it. If an end fails to move forward, that interval
 // starts no earlier than its neighbour and ends no later, so it lies inside it. If every end
@@ -23,12 +24,14 @@ import com.svetanis.algorithms.intervals.Interval;
 // start; but among equal starts the longer comes first, so that later one would end no later,
 // and the ends would not all have moved forward.
 //
+// Time: O(n log n) -- the sort; the scan after it is one pass.
+// Space: O(n) -- the sorted copy.
+//
+// Siblings: none for this problem.
 // RemoveCoveredIntervals (LC 1288) sorts the same way and asks a different question: not whether
 // any interval lies inside another, but how many do not.
 
 public final class CompletelyOverlappingIntervals {
-  // Time Complexity: O(n log n), the sort; the scan after it is one pass
-  // Space Complexity: O(n), the sorted copy
 
   // equal starts: longer first, so a shorter one comes right after the one that contains it
   private static final Comparator<Interval> BY_START_THEN_LONGEST = (a, b) -> a.start != b.start
@@ -47,7 +50,7 @@ public final class CompletelyOverlappingIntervals {
         return true;
       }
     }
-    return false;
+    return false; // RETURN: every end moved forward
   }
 
   public static void main(String[] args) {

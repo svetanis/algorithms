@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 // The time at which the most guests are at a party, and how many.
 //
+// Not a LeetCode problem; a GeeksforGeeks one.
+//
 // in[i] and out[i] are the entry and exit times of guest i, in[i] <= out[i], not sorted, at
 // least one guest. Returns { most guests present at once, earliest time that many are
 // present }. A guest is present at both the entry and the exit time, so a guest leaving at t
@@ -13,17 +15,21 @@ import java.util.Arrays;
 // moment; this reading is the one MinPlatformsTwoArrays states outright, so the two files agree.
 // Sorts both arrays in place.
 //
+// The one idea: one entry of each sorted array is one moment a guest enters, or one moment a
+// guest leaves; which guest it was is not needed.
 // This is the same walk as MinPlatformsTwoArrays, and it also reports the time. Entries and exits
 // are sorted separately and walked together, always taking the earlier of the next entry and the
 // next exit. The guests present at any moment are the entries so far minus the exits so far;
 // current is that number. It only rises at an entry, so the time of the peak is the entry
 // time at which current first reaches its largest value.
 //
+// Time: O(n log n) -- the two sorts; the walk after them is one pass.
+// Space: O(1) -- beyond the sort, both arrays are sorted in place.
+//
+// Siblings:
 // MaxGuestsPriorityQueue keeps the guests themselves on a heap, and so reports the count only.
 
 public final class MaxGuestsTwoArrays {
-  // Time Complexity: O(n log n), the two sorts; the walk after them is one pass
-  // Space Complexity: O(1) beyond the sort, both arrays are sorted in place
 
   public static int[] count(int[] in, int[] out) {
     int n = in.length;
@@ -49,7 +55,7 @@ public final class MaxGuestsTwoArrays {
         j++;
       }
     }
-    return new int[] { max, time };
+    return new int[] { max, time }; // RETURN: { how many, earliest when }
   }
 
   public static void main(String[] args) {

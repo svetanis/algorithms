@@ -10,9 +10,12 @@ import com.svetanis.algorithms.intervals.Interval;
 //
 // Takes intervals [start, end], no two overlapping, and one new interval. Returns every interval
 // sorted by start, with the new one merged with all it overlaps. Intervals are closed, so one that
-// only touches the new one is merged into it. The new interval is widened in place and is itself
-// the merged entry in the answer.
+// only touches the new one is merged into it. insert widens the new interval in two local variables
+// and leaves both arguments unchanged; insertLists and insertIntervals widen it in place, and it is
+// itself the merged entry in their answers. On LeetCode: 0 <= intervals.length <= 10^4,
+// 0 <= start <= end <= 10^5 for every interval and for the new one, intervals sorted by start.
 //
+// The one idea: each old interval lands in exactly one of three groups, and one index walks them.
 // In sorted order the old intervals fall into three groups that follow one another. First, those
 // that end before the new one starts: they are copied as they are. Next, those that start at or
 // before the new one's end: each of these also ends at or after its start, because the first group
@@ -26,34 +29,35 @@ import com.svetanis.algorithms.intervals.Interval;
 //   insertLists      List<List<Integer>>, List<Integer>    in any order: the list is sorted in place
 //                                                          first, since non-overlapping is not sorted
 //   insertIntervals  List<Interval>, Interval              sorted by start; the list is not changed
+//
+// Time: O(n) -- the three loops together pass over the input once; insertLists adds the
+// O(n log n) sort.
+// Space: O(n) -- the output.
+//
+// Siblings: none for 57 outside this file; the three methods above differ only in the form the
+// intervals arrive in.
 
 public final class InsertInterval {
-  // Time Complexity: O(n), the three loops together pass over the input once; insertLists adds
-  // the O(n log n) sort
-  // Space Complexity: O(n), the output
 
-  public static int[][] insert(int[][] intervals, int[] interval) {
-    int i = 0;
+  public static int[][] insert(int[][] intervals, int[] newInterval) {
+    List<int[]> result = new ArrayList<>();
+    int i = 0; // walks intervals once: each loop starts where the one before stopped
     int n = intervals.length;
-    List<int[]> list = new ArrayList<>();
-    // add all intervals that come before the new interval
-    while (i < n && intervals[i][1] < interval[0]) { // BEFORE; <: touching merges
-      list.add(intervals[i]);
+    while (i < n && intervals[i][1] < newInterval[0]) { // BEFORE: ends before the new one starts; <: touching merges
+      result.add(intervals[i++]);
+    }
+    int start = newInterval[0]; // the new interval, widened by each one it absorbs
+    int end = newInterval[1];
+    while (i < n && intervals[i][0] <= end) { // ABSORB: starts at or before the new end; <=: touching merges
+      start = Math.min(start, intervals[i][0]);
+      end = Math.max(end, intervals[i][1]);
       i++;
     }
-    // merge all intervals that overlap with new interval
-    while (i < n && intervals[i][0] <= interval[1]) { // ABSORB; <=: touching merges
-      int start = Math.min(intervals[i][0], interval[0]);
-      int end = Math.max(intervals[i][1], interval[1]);
-      interval[0] = start;
-      interval[1] = end;
-      i++;
+    result.add(new int[] { start, end }); // INSERT: once, after the loop -- nothing left can widen it
+    while (i < n) { // AFTER: every one left starts after the new end
+      result.add(intervals[i++]);
     }
-    list.add(interval); // INSERT: the new interval, widened by all it absorbed
-    while (i < n) { // AFTER: add all the remaining intervals
-      list.add(intervals[i++]);
-    }
-    return list.toArray(new int[list.size()][]);
+    return result.toArray(new int[0][]);
   }
 
   public static List<List<Integer>> insertLists(List<List<Integer>> intervals, List<Integer> interval) {
@@ -76,7 +80,7 @@ public final class InsertInterval {
     while (i < n) { // AFTER: add all the remaining intervals
       list.add(intervals.get(i++));
     }
-    return list;
+    return list; // RETURN
   }
 
   public static List<Interval> insertIntervals(List<Interval> intervals, Interval interval) {
@@ -97,7 +101,7 @@ public final class InsertInterval {
     while (i < intervals.size()) { // AFTER: add all remaining intervals
       list.add(intervals.get(i++));
     }
-    return list;
+    return list; // RETURN
   }
 
   public static void main(String[] args) {
@@ -116,7 +120,7 @@ public final class InsertInterval {
   private static List<List<Integer>> lists(int[][] rows) {
     List<List<Integer>> list = new ArrayList<>();
     for (int[] row : rows) {
-      list.add(new ArrayList<>(List.of(row[0], row[1])));
+      list.add(new ArrayList<>(List.of(row[0], row[1]))); // COPY: one mutable row per interval
     }
     return list;
   }
@@ -124,7 +128,7 @@ public final class InsertInterval {
   private static List<Interval> intervals(int[][] rows) {
     List<Interval> list = new ArrayList<>();
     for (int[] row : rows) {
-      list.add(new Interval(row[0], row[1]));
+      list.add(new Interval(row[0], row[1])); // WRAP: one Interval per row
     }
     return list;
   }

@@ -6,45 +6,50 @@ import java.util.List;
 
 import com.svetanis.algorithms.intervals.Interval;
 
-// Pick the most activities one person can do, one at a time.
+// Activity Selection -- not a LeetCode problem; GeeksforGeeks' "Activity Selection": pick the
+// most activities one person can do, one at a time.
 //
-// Takes a list of activities, each with a start and a finish time, in any order. Returns the
-// chosen activities, ordered by finish time. An activity can follow the last chosen one only if
-// it starts STRICTLY AFTER that one finishes: one starting at the exact moment the previous
-// finishes cannot be taken. Empty input gives an empty list.
+// Input: a list of activities, each with a start and a finish time, start <= finish, in any
+// order; the list is not changed. Returns the chosen activities, ordered by finish time. An
+// activity can follow the last chosen one only if it starts STRICTLY AFTER that one finishes: one
+// starting at the exact moment the previous finishes cannot be taken. Empty input gives an empty
+// list. The statement asks only for how many; the size of the returned list is that number.
 //
-// Look at the activity that finishes first. Some best answer starts with it: take any best
-// answer and swap its first activity for this one. The swap is safe, because this one finishes
-// no later, so everything that came after in that answer still starts after it. Once it is
-// taken, every activity that starts at or before its finish is ruled out, and what is left is the
-// same problem on fewer activities. So: sort by finish time, take the first, then walk the list
-// and take each activity that starts after the finish of the last one taken.
+// The one idea: one Interval is one activity, [start, finish]. Look at the activity that finishes
+// first. Some best answer starts with it: take any best answer and swap its first activity for
+// this one. The swap is safe, because this one finishes no later, so everything that came after in
+// that answer still starts after it. Once it is taken, every activity that starts at or before its
+// finish is ruled out, and what is left is the same problem on fewer activities. So: sort by
+// finish time, take the first, then walk the list and take each activity that starts after the
+// finish of the last one taken.
 //
-// Same greedy as NonOverlappingIntervals (LC 435), where touching intervals do not clash, so its
-// test is >= and it returns a count; and MinNumOfArrowsToBurstBalloons (LC 452), whose test is this
-// file's strict > -- the fewest arrows equals the most activities chosen here.
+// Time: O(n log n) -- the sort; the walk after it is one pass.
+// Space: O(n) -- the sorted copy and the chosen list.
+//
+// Siblings: none for this problem. Same greedy as NonOverlappingIntervals (LC 435), where touching
+// intervals do not clash, so its test is >= and it returns a count; and
+// MinNumOfArrowsToBurstBalloons (LC 452), whose test is this file's strict > -- the fewest arrows
+// equals the most activities chosen here.
 
 public final class ActivitySelection {
-  // Time Complexity: O(n log n), the sort; the walk after it is one pass
-  // Space Complexity: O(n), the sorted copy and the chosen list
 
   public static List<Interval> activities(List<Interval> intervals) {
-    if (intervals.isEmpty()) {
+    if (intervals.isEmpty()) { // EMPTY: no first activity to take
       return new ArrayList<>();
     }
     // sorted here, not assumed: the greedy is only correct in finish-time order
     List<Interval> sorted = new ArrayList<>(intervals); // a copy: the caller's list keeps its order
-    sorted.sort((a, b) -> Integer.compare(a.end, b.end));
+    sorted.sort((a, b) -> Integer.compare(a.end, b.end)); // SORT by finish
 
     List<Interval> list = new ArrayList<>();
-    list.add(sorted.get(0));
+    list.add(sorted.get(0)); // FIRST: the earliest finish is always taken
     for (int i = 1; i < sorted.size(); i++) {
       // strictly after: starting at the previous finish is a clash
-      if (sorted.get(i).start > list.get(list.size() - 1).end) {
-        list.add(sorted.get(i));
-      }
+      if (sorted.get(i).start > list.get(list.size() - 1).end) { // TEST: > the last taken finish
+        list.add(sorted.get(i)); // TAKE: it becomes the last taken
+      } // SKIP: clashes with the last taken, which finishes no later
     }
-    return list;
+    return list; // RETURN: in finish order
   }
 
   public static void main(String[] args) {
@@ -62,7 +67,7 @@ public final class ActivitySelection {
   private static List<Interval> build(int[] start, int[] end) {
     List<Interval> list = new ArrayList<>();
     for (int i = 0; i < start.length; i++) {
-      list.add(new Interval(start[i], end[i]));
+      list.add(new Interval(start[i], end[i])); // PAIR: starts and finishes come apart
     }
     return list;
   }

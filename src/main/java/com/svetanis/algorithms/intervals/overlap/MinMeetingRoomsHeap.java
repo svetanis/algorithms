@@ -9,8 +9,9 @@ import java.util.PriorityQueue;
 // one meeting). Returns the fewest rooms that hold every meeting with no two meetings in one room at
 // the same time. A meeting occupies [start, end): it has left its room at its end time, so a meeting
 // ending at 10 and one starting at 10 can use the same room. Both methods sort the caller's array in
-// place.
+// place. On LeetCode: 1 <= intervals.length <= 10^4, 0 <= start < end <= 10^6.
 //
+// The one idea:
 // Meetings are taken in order of start time, and the heap holds one entry per room in use: the time
 // that room becomes free, the soonest on top. Two variations of the same walk:
 //
@@ -23,13 +24,15 @@ import java.util.PriorityQueue;
 // A while with the size read only at the end is wrong: [[0,3],[2,4],[6,10]] drains the heap to 1
 // after the peak of 2.
 //
+// Time: O(n log n) -- the sort; one or two heap operations per meeting.
+// Space: O(n) -- the heap.
+//
+// Siblings:
 // The same count other ways: MinMeetingRoomsTwoArrays sorts the starts and the ends apart;
 // MinMeetingRoomsDifferenceArray marks +1/-1 in one slot per time. MinPlatformsTwoArrays and its
 // siblings answer the same question when a departure at t still holds its platform at t.
 
 public final class MinMeetingRoomsHeap {
-	// Time Complexity: O(n log n), the sort; one or two heap operations per meeting
-	// Space Complexity: O(n), the heap
 
 	public static int minMeetingRooms(int[][] intervals) {
 		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT by start
@@ -43,11 +46,11 @@ public final class MinMeetingRoomsHeap {
 			pq.offer(end); // BOOK: always, reused room or new
 			highest = Math.max(highest, pq.size()); // PEAK: the while can shrink the heap
 		}
-		return highest;
+		return highest; // RETURN
 	}
 
 	public static int roomsOpened(int[][] intervals) {
-		if (intervals.length == 0) {
+		if (intervals.length == 0) { // EMPTY: no rooms opened
 			return 0;
 		}
 		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT by start
@@ -63,10 +66,10 @@ public final class MinMeetingRoomsHeap {
 	}
 
 	public static void main(String[] args) {
-		int[][][] cases = { { { 0, 30 }, { 5, 10 }, { 15, 20 } }, // 2
-				{ { 7, 10 }, { 2, 4 } }, // 1
-				{ { 5, 10 }, { 10, 15 } }, // 1: freed at 10, free at 10
-				{ { 0, 3 }, { 2, 4 }, { 6, 10 } } }; // 2: the while drains to 1 after the peak
+		int[][][] cases = { { { 0, 30 }, { 5, 10 }, { 15, 20 } }, // 2 2
+				{ { 7, 10 }, { 2, 4 } }, // 1 1
+				{ { 5, 10 }, { 10, 15 } }, // 1 1: freed at 10, free at 10
+				{ { 0, 3 }, { 2, 4 }, { 6, 10 } } }; // 2 2: the while drains to 1 after the peak
 		for (int[][] c : cases) {
 			System.out.println(minMeetingRooms(c) + " " + roomsOpened(c));
 		}

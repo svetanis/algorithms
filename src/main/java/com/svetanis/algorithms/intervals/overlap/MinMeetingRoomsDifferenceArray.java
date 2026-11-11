@@ -5,19 +5,23 @@ package com.svetanis.algorithms.intervals.overlap;
 // Input: intervals[i] = { start, end } of meeting i, start < end. Returns the fewest rooms that hold
 // every meeting with no two meetings in one room at the same time. A meeting occupies [start, end),
 // so a meeting ending at 10 and one starting at 10 can use the same room. Every time must lie in
-// [0, 1000010), which LC's 0 <= start < end <= 10^6 keeps.
+// [0, 1000010), which LC's 0 <= start < end <= 10^6 keeps; LC also has
+// 1 <= intervals.length <= 10^4.
 //
+// The one idea:
 // One slot a[t] per time t. Each meeting puts +1 at its start and -1 at its end. Adding the slots up
 // from left to right, the running total at t is the number of meetings in progress at t (the -1
 // sits on the end itself, so a meeting has left by then). The largest running total is the answer.
 //
+// Time: O(n + T) -- T = 1,000,010 slots added up on every call.
+// Space: O(T) -- the slot array.
+//
+// Siblings:
 // The same count other ways: MinMeetingRoomsHeap keeps the free time of each room in use;
 // MinMeetingRoomsTwoArrays sorts the starts and the ends apart. This one needs no sort, and pays
 // for it with a pass over every slot whatever n is.
 
 public final class MinMeetingRoomsDifferenceArray {
-	// Time Complexity: O(n + T), T = 1,000,010 slots added up on every call
-	// Space Complexity: O(T), the slot array
 
 	public static int minMeetingRooms(int[][] intervals) {
 		int n = 1000010; // one slot per time; every start and end must be below this
@@ -31,7 +35,7 @@ public final class MinMeetingRoomsDifferenceArray {
 			a[i] += a[i - 1]; // SUM: a[i] becomes the number of meetings in progress at i
 			max = Math.max(max, a[i]); // PEAK
 		}
-		return max;
+		return max; // RETURN
 	}
 
 	public static void main(String[] args) {

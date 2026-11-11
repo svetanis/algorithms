@@ -7,14 +7,18 @@ package com.svetanis.algorithms.intervals.overlap;
 // people alive; on a tie, the earliest such year. All of this is LC's statement, with at least
 // one person and at most 100.
 //
+// The one idea:
 // One slot a[y] per year, y counted from 1950. Each person puts +1 in the birth year and -1
 // in the death year. Adding the slots up from 1950 onward, the running total at year y is the
 // number of people alive in y: everyone born by y, minus everyone who died by y. The year
 // where the running total is largest is the answer.
+//
+// Time: O(n + Y) -- Y = 101 years; one pass over the people, one over the years.
+// Space: O(Y) -- for the year slots.
+//
+// Siblings: none for 1854. MinMeetingRoomsDifferenceArray marks the same +1 / -1 on a clock.
 
 public final class MaxPopulationYear {
-	// Time Complexity: O(n + Y), Y = 101 years; one pass over the people, one over the years
-	// Space Complexity: O(Y) for the year slots
 
 	private static final int OFFSET = 1950; // slot 0 is the year 1950
 
@@ -30,7 +34,7 @@ public final class MaxPopulationYear {
 				year = i;
 			}
 		}
-		return year + OFFSET;
+		return year + OFFSET; // RETURN: slot back to a calendar year
 	}
 
 	private static int[] population(int[][] logs) {
@@ -41,7 +45,7 @@ public final class MaxPopulationYear {
 			a[bi]++; // MARK: alive from the birth year
 			a[di]--; // MARK: not alive in the year of death
 		}
-		return a;
+		return a; // RETURN: the marks, not yet added up
 	}
 
 	public static void main(String[] args) {

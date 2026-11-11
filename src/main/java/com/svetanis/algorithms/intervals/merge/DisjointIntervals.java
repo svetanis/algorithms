@@ -13,8 +13,10 @@ import com.svetanis.algorithms.intervals.Interval;
 // returns every number seen so far as closed ranges [start, end] of consecutive integers, sorted,
 // with no two ranges overlapping or touching. The returned entries are the class's own objects.
 // Numbers must stay clear of the int limits: end + 1 and start - 1 are computed and must not wrap
-// around, which LC's 0 <= value <= 10^4 ensures.
+// around, which LC's 0 <= value <= 10^4 ensures. LC also makes at most 3 * 10^4 calls in all, at
+// most 10^2 of them to getIntervals.
 //
+// The one idea: one map entry is one range of consecutive numbers, keyed by a number inside it.
 // map holds the ranges. The key of a range is the number that first created it; the range may
 // later grow in both directions, but its key always stays inside it, so the keys are in the same
 // order as the ranges. For a new value, left is the range with the largest key at or below it and
@@ -29,11 +31,15 @@ import com.svetanis.algorithms.intervals.Interval;
 //   class        a range is     getIntervals returns
 //   OfArrays     int[] {s, e}   int[][] (LC)
 //   OfIntervals  Interval       List<Interval>
+//
+// Time: addNum O(log m) -- m ranges stored, a few lookups in a balanced tree map; getIntervals
+// O(m) -- one copy of the ranges.
+// Space: O(m) -- one map entry per range.
+//
+// Siblings: none for 352 outside this file; OfArrays and OfIntervals differ only in how a range
+// is held.
 
 public final class DisjointIntervals {
-	// Time Complexity: addNum: O(log m), m ranges stored, a few lookups in a balanced tree map;
-	// getIntervals: O(m), one copy of the ranges
-	// Space Complexity: O(m), one map entry per range
 
 	public static final class OfArrays {
 		private final TreeMap<Integer, int[]> map = new TreeMap<>();
@@ -60,7 +66,7 @@ public final class DisjointIntervals {
 			for (int[] interval : map.values()) { // COPY: key order is range order
 				intervals[i++] = interval;
 			}
-			return intervals;
+			return intervals; // RETURN: the map's own arrays, not copies
 		}
 	}
 

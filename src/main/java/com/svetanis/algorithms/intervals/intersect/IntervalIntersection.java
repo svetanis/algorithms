@@ -8,12 +8,15 @@ import com.svetanis.algorithms.intervals.Interval;
 
 // 986. Interval List Intersections
 //
-// Takes two lists of closed intervals [start, end] (both ends included). Within each list the
+// Input: two lists of closed intervals [start, end] (both ends included). Within each list the
 // intervals are disjoint and sorted by start; either list may be empty. Returns every stretch
 // covered by both lists, sorted by start. Intervals that only touch share a single point:
-// [1, 3] and [3, 5] give [3, 3].
+// [1, 3] and [3, 5] give [3, 3]. On LeetCode: 0 <= firstList.length, secondList.length <= 1000,
+// firstList.length + secondList.length >= 1, 0 <= start < end <= 10^9, and within a list each end
+// is below the next start.
 //
-// The shared part of two intervals begins once both have begun and ends as soon as either ends:
+// The one idea: one round looks at two intervals, the current one of each list. The shared part
+// of two intervals begins once both have begun and ends as soon as either ends:
 //   start = max(a.start, b.start)
 //   end = min(a.end, b.end)
 // and it exists only if start <= end -- whichever of the two starts first. Keep one index in each
@@ -29,10 +32,14 @@ import com.svetanis.algorithms.intervals.Interval;
 //                          pair the two tests agree. They differ only on a malformed interval
 //                          (start > end): [0, 1] against [1, 0] passes the four booleans, and
 //                          start <= end rejects it.
+//
+// Time: O(n + m) -- each round moves one of the two indices forward; no sort.
+// Space: O(n + m) -- the output.
+//
+// Siblings: none; the two methods above are this file's two forms of one walk. MeetingScheduler
+// (1229) makes the same walk over two people's free slots and stops at the first long enough.
 
 public final class IntervalIntersection {
-  // Time Complexity: O(n + m), each round moves one of the two indices forward; no sort
-  // Space Complexity: O(n + m) for the output
 
   public static int[][] intersection(int[][] firstList, int[][] secondList) {
     int n = firstList.length;
@@ -60,10 +67,10 @@ public final class IntervalIntersection {
   public static List<Interval> intersectionFourTests(List<Interval> list1, List<Interval> list2) {
     int n = list1.size();
     int m = list2.size();
-    int i = 0;
+    int i = 0; // POINT: one index per list
     int j = 0;
     List<Interval> list = new ArrayList<>();
-    while (i < n && j < m) {
+    while (i < n && j < m) { // STOP: either list used up
       Interval interval1 = list1.get(i);
       Interval interval2 = list2.get(j);
       // overlap: interval1 starts inside interval2, or interval2 starts inside interval1
@@ -71,18 +78,18 @@ public final class IntervalIntersection {
       boolean two = interval1.start <= interval2.end;
       boolean three = interval2.start >= interval1.start;
       boolean four = interval2.start <= interval1.end;
-      if ((one && two) || (three && four)) {
-        int start = Math.max(interval1.start, interval2.start);
-        int end = Math.min(interval1.end, interval2.end);
-        list.add(new Interval(start, end));
+      if ((one && two) || (three && four)) { // TEST: one start lies inside the other interval
+        int start = Math.max(interval1.start, interval2.start); // SHARE: both have begun
+        int end = Math.min(interval1.end, interval2.end); //        either has ended
+        list.add(new Interval(start, end)); // KEEP
       }
-      if (interval1.end < interval2.end) { // move past the one that ends first
+      if (interval1.end < interval2.end) { // RETIRE: move past the one that ends first
         i++;
       } else {
         j++;
       }
     }
-    return list;
+    return list; // RETURN
   }
 
   public static void main(String[] args) {

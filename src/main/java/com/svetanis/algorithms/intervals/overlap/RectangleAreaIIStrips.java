@@ -13,8 +13,10 @@ import java.util.Set;
 // Each rectangle is { x1, y1, x2, y2 }, bottom-left corner (x1, y1) and top-right corner
 // (x2, y2). Returns the total area covered by at least one rectangle, a spot covered by
 // several rectangles counting once, modulo 10^9 + 7. At most 200 rectangles, coordinates up to
-// 10^9.
+// 10^9. On LeetCode: 1 <= rectangles.length <= 200, 0 <= every coordinate <= 10^9, x1 <= x2 and
+// y1 <= y2.
 //
+// The one idea:
 // Every x1 and every x2 is a boundary, because the covered height can only change where some
 // rectangle begins or ends along x. Neighbouring boundaries bound a strip, and inside one strip
 // the covered height is the same all the way across, so the strip adds width * covered height.
@@ -28,15 +30,17 @@ import java.util.Set;
 //
 // Example, [[0,0,2,2], [1,0,2,3], [1,0,3,1]]: boundaries 0 1 2 3, strip heights 2 3 1, area 6.
 //
+// Time: O(n^2 log n) -- at most 2n - 1 strips, each checking n rectangles and sorting at most n
+// stretches.
+// Space: O(n) -- for the boundaries and one strip's stretches.
+//
+// Siblings:
 // This version re-checks every rectangle for every strip, which the 200-rectangle limit allows.
 // The sibling RectangleAreaII in data-structures (todo/tree/segment) opens and closes the
 // rectangles as sorted events and keeps the covered height in a segment tree, for when there
 // are too many rectangles to re-check.
 
 public final class RectangleAreaIIStrips {
-	// Time Complexity: O(n^2 log n), at most 2n - 1 strips, each checking n rectangles and
-	// sorting at most n stretches
-	// Space Complexity: O(n) for the boundaries and one strip's stretches
 
 	private static final int MOD = 1_000_000_007;
 
@@ -65,7 +69,7 @@ public final class RectangleAreaIIStrips {
 			set.add(rectangle[0]); // where something begins
 			set.add(rectangle[2]); // where something ends -- a boundary too
 		}
-		return new ArrayList<>(set);
+		return new ArrayList<>(set); // RETURN: each boundary once, not yet sorted
 	}
 
 	private static List<int[]> stretches(int left, int right, int[][] rectangles) {
@@ -77,7 +81,7 @@ public final class RectangleAreaIIStrips {
 				stretches.add(new int[] { y1, y2 });
 			}
 		}
-		return stretches;
+		return stretches; // RETURN: the y-stretches over this strip
 	}
 
 	private static long coveredHeight(List<int[]> stretches) {
@@ -99,7 +103,7 @@ public final class RectangleAreaIIStrips {
 			}
 		}
 		total += end - start; // LAST
-		return total;
+		return total; // RETURN: the covered height
 	}
 
 	public static void main(String[] args) {

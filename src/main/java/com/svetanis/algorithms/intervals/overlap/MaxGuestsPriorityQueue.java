@@ -10,11 +10,14 @@ import com.svetanis.algorithms.intervals.Interval;
 
 // The most guests at a party at the same time.
 //
+// Not a LeetCode problem; a GeeksforGeeks one.
+//
 // Each interval is one guest: start = entry time, end = exit time, start <= end. Returns the
 // largest number of guests present at the same moment, but not that moment. A guest is
 // present at both the entry and the exit time, so a guest leaving at t and one arriving at t
 // are both counted at t. An empty list gives 0.
 //
+// The one idea:
 // This version keeps the guests themselves, not separate counts, and so cannot also say when
 // the peak happens. One heap entry is a guest at the party right now; the one who leaves
 // first is on top. Guests are taken in order of entry. When a guest enters, every guest who
@@ -22,11 +25,13 @@ import com.svetanis.algorithms.intervals.Interval;
 // present at this entry time. The count only rises when someone enters, so the largest of
 // these heap sizes is the answer.
 //
+// Time: O(n log n) -- the sort; each guest enters and leaves the heap once.
+// Space: O(n) -- the sorted copy and the heap.
+//
+// Siblings:
 // MaxGuestsTwoArrays sorts the entries and exits apart, and so can also report the time.
 
 public final class MaxGuestsPriorityQueue {
-  // Time Complexity: O(n log n), the sort; each guest enters and leaves the heap once
-  // Space Complexity: O(n), the sorted copy and the heap
 
   public static int maxGuests(List<Interval> intervals) {
     int max = 0;
@@ -43,7 +48,7 @@ public final class MaxGuestsPriorityQueue {
       pq.offer(interval); // ENTER
       max = max(max, pq.size()); // PEAK: guests present at this entry time
     }
-    return max;
+    return max; // RETURN
   }
 
   public static void main(String[] args) {

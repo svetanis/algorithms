@@ -10,8 +10,11 @@ import java.util.PriorityQueue;
 // intervals[i] = { left, right } is the closed interval [left, right]; its size is
 // right - left + 1, the number of whole numbers in it. For each query, the answer is the
 // size of the smallest interval with left <= query <= right, or -1 if no interval contains it.
-// Returns the answers in the order of the queries. Sorts the caller's intervals in place.
+// Returns the answers in the order of the queries. Sorts the caller's intervals in place. On
+// LeetCode: 1 <= intervals.length, queries.length <= 10^5, 1 <= left <= right <= 10^7,
+// 1 <= queries[j] <= 10^7.
 //
+// The one idea:
 // The queries are answered from smallest to largest, not in the order given, and each
 // remembers its original position so its answer lands there. One heap entry is an interval
 // that starts at or before the current query, stored as { size, right }, smallest size on
@@ -23,13 +26,15 @@ import java.util.PriorityQueue;
 // top stay in the heap until they reach the top; they do no harm there because only the top
 // is ever read.
 //
+// Time: O(n log n + m log m) -- the two sorts; each interval enters and leaves the heap at most
+// once.
+// Space: O(n + m) -- the heap and the sorted pairs.
+//
+// Siblings:
 // This version sorts { value, position } pairs. The sibling MinIntervalPositions sorts the
 // positions 0 .. n - 1 by the query value at each; the walk is the same.
 
 public final class MinIntervalPairs {
-	// Time Complexity: O(n log n + m log m), the two sorts; each interval enters and leaves the
-	// heap at most once
-	// Space Complexity: O(n + m), the heap and the sorted pairs
 
 	public static int[] minInterval(int[][] intervals, int[] queries) {
 		int n = queries.length;
@@ -56,17 +61,17 @@ public final class MinIntervalPairs {
 				answer[position] = pq.peek()[0];
 			}
 		}
-		return answer;
+		return answer; // RETURN: in the order the queries were given
 	}
 
 	private static int[][] sortQueries(int[] queries) {
 		int n = queries.length;
 		int[][] pairs = new int[n][2];
 		for (int i = 0; i < n; i++) {
-			pairs[i][0] = queries[i];
-			pairs[i][1] = i;
+			pairs[i][0] = queries[i]; // PAIR: the value ...
+			pairs[i][1] = i; // ... and where its answer goes
 		}
-		Arrays.sort(pairs, (p1, p2) -> Integer.compare(p1[0], p2[0]));
+		Arrays.sort(pairs, (p1, p2) -> Integer.compare(p1[0], p2[0])); // SORT by value
 		return pairs;
 	}
 

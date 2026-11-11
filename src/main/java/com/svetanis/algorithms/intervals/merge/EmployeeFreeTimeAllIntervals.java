@@ -18,19 +18,22 @@ import com.svetanis.algorithms.intervals.Interval;
 // The caller's intervals are not changed. At least one interval is assumed; an empty schedule
 // throws. LC guarantees 1 to 50 employees with 1 to 50 intervals each, 0 <= start < end <= 10^8.
 //
+// The one idea: one interval is one stretch someone works, whoever it belongs to.
 // Who works does not matter, only whether anyone does, so all the intervals go into one sequence
 // ordered by start. end is the latest moment reached by any interval taken so far. When the next
 // interval starts after end, nobody works between end and its start: every interval taken so far
 // has finished by end, and every interval not yet taken starts no earlier than this one. So
 // [end, start] is free time. eft orders the intervals with a heap, eft2 with a sort.
 //
+// Time: eft, eft2: O(n log n) -- n intervals in all, each offered to and polled from a heap that
+// holds all of them, or sorted once.
+// Space: O(n) -- the heap or the combined list, and the output.
+//
+// Siblings:
 // EmployeeFreeTimeKWayMerge reaches the same order without putting every interval in the heap at
 // once: it keeps one entry per employee and relies on each employee's list being sorted.
 
 public final class EmployeeFreeTimeAllIntervals {
-	// Time Complexity: eft, eft2: O(n log n), n intervals in all, each offered to and polled from
-	// a heap that holds all of them, or sorted once
-	// Space Complexity: O(n), the heap or the combined list, and the output
 
 	public static List<Interval> eft(List<List<Interval>> schedule) {
 		List<Interval> list = new ArrayList<>();
@@ -50,7 +53,7 @@ public final class EmployeeFreeTimeAllIntervals {
 			}
 			end = Math.max(end, curr.end); // EXTEND: an interval inside earlier work must not pull end back
 		}
-		return list;
+		return list; // RETURN: the gaps, in order of start
 	}
 
 	public static List<Interval> eft2(List<List<Interval>> schedule) {

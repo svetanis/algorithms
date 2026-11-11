@@ -12,6 +12,7 @@ import java.util.Arrays;
 // 0 <= start < end <= 10^5; it writes them half-open, [start, end), which gives the same covering
 // test.
 //
+// The one idea: one interval is kept or covered, and only the largest end before it decides which.
 // Sort by start, and among equal starts put the longer interval first. Then an interval can only
 // be covered by one that comes before it: a later one starts no earlier, and with the same start
 // it is shorter. Every earlier one starts no later, so the interval is covered exactly when some
@@ -19,12 +20,14 @@ import java.util.Arrays;
 // prev is the interval holding that largest end. An interval that ends further than prev is not
 // covered: it is counted and becomes prev.
 //
+// Time: O(n log n) -- the sort; the scan after it is one pass.
+// Space: O(n) -- the sort's temporary buffer.
+//
+// Siblings: none for 1288.
 // CompletelyOverlappingIntervals sorts the same way to ask only whether any interval lies inside
 // another.
 
 public final class RemoveCoveredIntervals {
-	// Time Complexity: O(n log n), the sort; the scan after it is one pass
-	// Space Complexity: O(n), the sort's temporary buffer
 
 	public static int removeCoveredIntervals(int[][] intervals) {
 		// SORT: equal starts longer first, so the longer one is prev when the shorter one is checked
@@ -37,10 +40,10 @@ public final class RemoveCoveredIntervals {
 			int[] interval = intervals[i];
 			if (prev[1] < interval[1]) { // TEST; <: an equal end is covered
 				count++; // COUNT: nothing before it reaches this far
-				prev = interval;
+				prev = interval; // HOLD: it now has the largest end
 			}
 		}
-		return count;
+		return count; // RETURN: the intervals nothing covers
 	}
 
 	public static void main(String[] args) {

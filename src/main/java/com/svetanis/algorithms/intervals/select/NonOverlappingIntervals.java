@@ -5,14 +5,16 @@ import java.util.Arrays;
 
 // 435. Non-overlapping Intervals
 //
-// Takes intervals as [start, end] with start < end, as LC guarantees
+// Input: intervals as [start, end] with start < end, as LC guarantees
 // (-5 * 10^4 <= start < end <= 5 * 10^4, 1 <= n <= 10^5). Returns the fewest intervals to remove
 // so that no two of the rest overlap. Two intervals that only touch, like [1, 2] and [2, 3], do
 // not overlap. Needs at least one interval: both methods read intervals[0] and throw on an empty
 // array, since LC 435 guarantees one. "What about empty input?" is the usual follow-up: say so
 // when asked. Both sort the input array in place.
 //
-// Removing the fewest is the same as keeping the most. Look at the interval that ends first. Some
+// The one idea: one row is one interval, and the walk carries one number, the end of the last
+// interval kept. Removing the fewest is the same as keeping the most. Look at the interval that
+// ends first. Some
 // best set of kept intervals includes it: take any best set and swap its first interval for this
 // one, which ends no later, so it clashes with nothing the swapped one did not. Keeping it rules
 // out every interval that starts before its end. So sort by end, keep the first, then walk the list
@@ -25,13 +27,15 @@ import java.util.Arrays;
 // n; count counts the removed ones directly. Every interval after the first is either kept or
 // removed, so the two always agree.
 //
-// Same greedy as ActivitySelection, where an interval must start strictly after the last one
-// chosen and the chosen intervals are returned, and MinNumOfArrowsToBurstBalloons (LC 452), which
-// uses that same strict test because an arrow at a shared end bursts both balloons.
+// Time: O(n log n) -- the sort; the walk after it is one pass.
+// Space: O(1) -- beyond the sort, which works on the input array.
+//
+// Siblings: none for 435 beyond the two methods above. Same greedy as ActivitySelection, where an
+// interval must start strictly after the last one chosen and the chosen intervals are returned,
+// and MinNumOfArrowsToBurstBalloons (LC 452), which uses that same strict test because an arrow at
+// a shared end bursts both balloons.
 
 public final class NonOverlappingIntervals {
-  // Time Complexity: O(n log n), the sort; the walk after it is one pass
-  // Space Complexity: O(1) beyond the sort, which works on the input array
 
   public static int nonOverlappingIntervals(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1])); // SORT by END: ending first leaves the most room
@@ -49,7 +53,7 @@ public final class NonOverlappingIntervals {
 
   public static int count(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1])); // SORT by END
-    int overlaps = 0;
+    int overlaps = 0; // removed so far
     int end = intervals[0][1]; // FIRST: kept
     for (int i = 1; i < intervals.length; i++) {
       int start = intervals[i][0];
@@ -59,7 +63,7 @@ public final class NonOverlappingIntervals {
         overlaps++; // SKIP: clashes with the last kept one, which ends no later -- remove this one
       }
     }
-    return overlaps;
+    return overlaps; // RETURN: removed, counted directly
   }
 
   public static void main(String[] args) {

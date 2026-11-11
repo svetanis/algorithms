@@ -15,6 +15,7 @@ import com.svetanis.algorithms.intervals.Interval;
 // overlap. Educative's examples: [[1,4],[2,5],[7,9]] false, [[6,7],[2,4],[8,12]] true,
 // [[4,5],[2,3],[3,6]] false.
 //
+// The one idea: once sorted by start, each meeting is compared only with the one right after it.
 // Sort by start. If two meetings overlap at all, then some meeting overlaps the one right after it
 // in sorted order: when meeting A overlaps a later-starting meeting C, the meeting B that comes
 // right after A starts no earlier than A and no later than C, so B also starts before A ends.
@@ -26,10 +27,14 @@ import com.svetanis.algorithms.intervals.Interval;
 //   canAttend           int[][] (LC)           is sorted in place
 //   canAttendLists      List<List<Integer>>    is sorted in place
 //   canAttendIntervals  List<Interval>         is not changed: a sorted copy is checked
+//
+// Time: O(n log n) -- the sort; the scan after it is one pass.
+// Space: O(n) -- the sort's buffer (and the sorted copy in canAttendIntervals).
+//
+// Siblings: none for 252 outside this file; the three methods above differ only in the form the
+// meetings arrive in. MinMeetingRoomsHeap and its siblings (253) count the rooms instead.
 
 public final class MeetingRoom {
-  // Time Complexity: O(n log n), the sort; the scan after it is one pass
-  // Space Complexity: O(n), the sort's buffer (and the sorted copy in canAttendIntervals)
 
   public static boolean canAttend(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); // SORT: by start
@@ -82,7 +87,7 @@ public final class MeetingRoom {
   private static List<List<Integer>> lists(int[][] rows) {
     List<List<Integer>> list = new ArrayList<>();
     for (int[] row : rows) {
-      list.add(new ArrayList<>(List.of(row[0], row[1])));
+      list.add(new ArrayList<>(List.of(row[0], row[1]))); // COPY: one mutable row per meeting
     }
     return list;
   }
@@ -90,7 +95,7 @@ public final class MeetingRoom {
   private static List<Interval> intervals(int[][] rows) {
     List<Interval> list = new ArrayList<>();
     for (int[] row : rows) {
-      list.add(new Interval(row[0], row[1]));
+      list.add(new Interval(row[0], row[1])); // WRAP: one Interval per row
     }
     return list;
   }

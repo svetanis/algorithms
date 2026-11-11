@@ -8,6 +8,8 @@ import java.util.PriorityQueue;
 
 // The largest total CPU load at any single moment.
 //
+// Not a LeetCode problem.
+//
 // Each job has a start time, an end time (start <= end) and a CPU load it adds while it runs.
 // Returns the largest sum of loads over the jobs running at the same moment; an empty list gives 0.
 // A job is running at both its start and its end time, so a job ending at t and one starting at t
@@ -15,6 +17,7 @@ import java.util.PriorityQueue;
 // solution removes a job only when the next one starts strictly after it ends, which is the
 // comparison used here.
 //
+// The one idea:
 // The answer is not how many jobs run at once but the sum of their loads, so a running total
 // of loads is kept next to the heap. One heap entry is a job running right now; the one that
 // ends first is on top. load is the sum of the loads of the jobs in the heap. Jobs are taken
@@ -22,10 +25,14 @@ import java.util.PriorityQueue;
 // heap and its load is taken off. What remains, plus the new job, are the jobs running at
 // this start time. The total only rises when a job starts, so its largest value at these
 // moments is the answer.
+//
+// Time: O(n log n) -- the sort; each job enters and leaves the heap once.
+// Space: O(n) -- the sorted copy and the heap.
+//
+// Siblings: none for this problem. MaxGuestsPriorityQueue and MinPlatformsPriorityQueue make the
+// same walk and read the heap's size instead of a total of loads.
 
 public final class MaxCPULoad {
-	// Time Complexity: O(n log n), the sort; each job enters and leaves the heap once
-	// Space Complexity: O(n), the sorted copy and the heap
 
 	public static int maxLoad(List<Job> jobs) {
 		int max = 0;
@@ -43,7 +50,7 @@ public final class MaxCPULoad {
 			load += job.load;
 			max = max(max, load); // PEAK: total load at this start time
 		}
-		return max;
+		return max; // RETURN: 0 when there are no jobs
 	}
 
 	public static void main(String[] args) {
@@ -79,7 +86,7 @@ public final class MaxCPULoad {
 
 		@Override
 		public String toString() {
-			return "[%d, %d, %d]".formatted(start, end, load);
+			return "[%d, %d, %d]".formatted(start, end, load); // PRINT: [start, end, load]
 		}
 	}
 }

@@ -5,11 +5,15 @@ import static java.util.Arrays.sort;
 
 // Minimum number of railway platforms so no train waits.
 //
+// Not a LeetCode problem; a GeeksforGeeks one.
+//
 // in[i] and out[i] are the arrival and departure times of train i, in[i] <= out[i]. Returns the
 // fewest platforms that give every train a platform from its arrival to its departure. A train
 // holds its platform at both of those moments, so when one train departs at the same time
 // another arrives, the two cannot share a platform. Sorts both arrays in place.
 //
+// The one idea: one entry of each sorted array is one arrival time or one departure time; which
+// train it belongs to is not needed.
 // This version sorts the arrivals and the departures separately and walks the two sorted
 // arrays together, always taking the earlier of the next arrival and the next departure. The
 // sorting forgets which departure belongs to which train, and nothing needs it: the number of
@@ -17,18 +21,20 @@ import static java.util.Arrays.sort;
 // current is that number, and its largest value is the answer. On equal times the arrival is
 // taken first, so the departing train is still counted when the new one comes in.
 //
+// Time: O(n log n) -- the two sorts; the walk after them is one pass.
+// Space: O(1) -- beyond the sort, both arrays are sorted in place.
+//
+// Siblings:
 // The same count other ways: MinPlatformsDifferenceArray marks one slot per minute,
 // MinPlatformsMultimap groups the events by time, MinPlatformsPriorityQueue keeps the trains on a
 // heap, and MaxOverlappingIntervals sorts start and end points together. MaxGuestsTwoArrays is
 // this walk that also reports when the peak happens.
 
 public final class MinPlatformsTwoArrays {
-  // Time Complexity: O(n log n), the two sorts; the walk after them is one pass
-  // Space Complexity: O(1) beyond the sort, both arrays are sorted in place
 
   public static int count(int[] in, int[] out) {
     int n = in.length;
-    if (n == 0) {
+    if (n == 0) { // EMPTY: no trains, no platforms
       return 0;
     }
 
@@ -48,7 +54,7 @@ public final class MinPlatformsTwoArrays {
         j++;
       }
     }
-    return max;
+    return max; // RETURN
   }
 
   public static void main(String[] args) {

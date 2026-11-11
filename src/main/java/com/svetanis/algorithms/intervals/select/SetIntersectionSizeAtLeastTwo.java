@@ -5,25 +5,30 @@ import java.util.Arrays;
 
 // 757. Set Intersection Size At Least Two
 //
-// Takes intervals as [start, end] of whole numbers, both ends included, with start < end and
-// start >= 0, as LC guarantees (0 <= start < end <= 10^8). Returns the size of the smallest set of
-// whole numbers that has at least two numbers inside every interval. Sorts the input array in
-// place.
+// Input: intervals as [start, end] of whole numbers, both ends included, with start < end and
+// start >= 0, as LC guarantees (0 <= start < end <= 10^8, 1 <= intervals.length <= 3000). Returns
+// the size of the smallest set of whole numbers that has at least two numbers inside every
+// interval. Sorts the input array in place.
 //
-// Walk the intervals in order of end. lower and upper are the two largest numbers chosen so far,
-// lower < upper. Every chosen number is at most upper, and upper is an earlier end, so it is at
-// most the current end. So how many chosen numbers fall inside the current interval depends only
-// on where its start is: at or below lower, both lower and upper are inside and nothing is added;
-// above upper, none is, and two are added; in between, only upper is, and one is added. A new
-// number is always taken as far right as possible (end, then end - 1), because every later
-// interval ends no earlier, so a number further right is inside at least as many of them.
+// The one idea: one row is one interval that must hold two chosen numbers. Walk the intervals in
+// order of end. lower and upper are the two largest numbers chosen so far, lower < upper. Every
+// chosen number is at most upper, and upper is an earlier end, so it is at most the current end.
+// So how many chosen numbers fall inside the current interval depends only on where its start is:
+// at or below lower, both lower and upper are inside and nothing is added; above upper, none is,
+// and two are added; in between, only upper is, and one is added. A new number is always taken as
+// far right as possible (end, then end - 1), because every later interval ends no earlier, so a
+// number further right is inside at least as many of them.
+//
+// Time: O(n log n) -- the sort; the walk after it is one pass.
+// Space: O(1) -- beyond the sort, which works on the input array.
+//
+// Siblings: none for 757. MinNumOfArrowsToBurstBalloons is the one-number form: one arrow inside
+// every balloon, placed at the end of the balloon that ends first.
 
 public final class SetIntersectionSizeAtLeastTwo {
-	// Time Complexity: O(n log n), the sort; the walk after it is one pass
-	// Space Complexity: O(1) beyond the sort, which works on the input array
 
 	public static int minSize(int[][] intervals) {
-		// by end; on a tied end, the larger start first, so the narrower interval chooses its
+		// SORT by end; on a tied end, the larger start first, so the narrower interval chooses its
 		// numbers and the wider one with the same end finds both already inside it
 		Arrays.sort(intervals, (a, b) -> a[1] != b[1]
 				? Integer.compare(a[1], b[1]) // by end
@@ -34,20 +39,20 @@ public final class SetIntersectionSizeAtLeastTwo {
 		for (int[] interval : intervals) {
 			int start = interval[0];
 			int end = interval[1];
-			if (start <= lower) { // lower and upper are both inside: covered
+			if (start <= lower) { // SKIP: lower and upper are both inside, covered
 				continue;
 			}
-			if (start > upper) { // no chosen number inside: take the two rightmost
+			if (start > upper) { // TAKE TWO: no chosen number inside, take the two rightmost
 				count += 2;
 				lower = end - 1;
 				upper = end;
-			} else { // only upper is inside: add end as the second
+			} else { // TAKE ONE: only upper is inside, add end as the second
 				count += 1;
 				lower = upper;
 				upper = end;
 			}
 		}
-		return count;
+		return count; // RETURN: the size of the set
 	}
 
 	public static void main(String[] args) {

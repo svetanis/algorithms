@@ -20,6 +20,7 @@ import com.svetanis.algorithms.intervals.Interval;
 // least one interval; an empty list throws. LC guarantees 1 to 50 employees with 1 to 50
 // intervals each, 0 <= start < end <= 10^8.
 //
+// The one idea:
 // One heap entry, an EmployeeInterval, is one interval together with which employee it belongs
 // to and its position in that employee's list. The heap holds at most one entry per employee:
 // that employee's earliest interval not yet taken. Because each list is sorted, the entry with
@@ -28,13 +29,15 @@ import com.svetanis.algorithms.intervals.Interval;
 // start while the heap stays at k entries or fewer. prev is the interval taken so far that
 // reaches furthest. When the next interval starts after prev ends, nobody works in between.
 //
+// Time: O(n log k) -- n intervals in all, k employees; each interval is offered and polled once,
+// on a heap that never holds more than one interval per employee.
+// Space: O(k) -- for the heap, plus O(n) for the output.
+//
+// Siblings:
 // EmployeeFreeTimeAllIntervals puts every interval into one heap, or one sorted list, instead, and
 // so does not need each employee's list to be sorted.
 
 public final class EmployeeFreeTimeKWayMerge {
-	// Time Complexity: O(n log k), n intervals in all, k employees; each interval is offered and
-	// polled once, on a heap that never holds more than one interval per employee
-	// Space Complexity: O(k) for the heap, plus O(n) for the output
 
 	public static List<Interval> eft(List<List<Interval>> schedule) {
 		List<Interval> list = new ArrayList<>();
@@ -62,7 +65,7 @@ public final class EmployeeFreeTimeKWayMerge {
 				pq.offer(new EmployeeInterval(interval, tei, next)); // PUSH
 			}
 		}
-		return list;
+		return list; // RETURN: the gaps, in order of start
 	}
 
 	// initialize priority queue and store first interval from each employee
@@ -73,7 +76,7 @@ public final class EmployeeFreeTimeKWayMerge {
 			Interval interval = schedule.get(i).get(0); // throws for an employee with no intervals
 			pq.offer(new EmployeeInterval(interval, i, 0)); // SEED: one entry per employee
 		}
-		return pq;
+		return pq; // RETURN: at most one entry per employee
 	}
 
 	public static void main(String[] args) {

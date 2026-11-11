@@ -10,8 +10,10 @@ import java.util.PriorityQueue;
 // at 10. Meetings are handed out in order of start time: each takes the lowest-numbered free
 // room. If no room is free, it waits for the room that frees up first (the lowest number
 // among rooms freeing at the same time) and then runs for its original length. Returns the
-// room that held the most meetings; on a tie, the lowest room number.
+// room that held the most meetings; on a tie, the lowest room number. On LeetCode:
+// 1 <= n <= 100, 1 <= meetings.length <= 10^5, 0 <= start < end <= 5 * 10^5.
 //
+// The one idea:
 // Two heaps, because free and busy rooms are chosen by two different orders. free holds room
 // numbers, lowest on top: once a room is free, when it became free no longer matters. busy
 // holds { busy until, room }, earliest on top, lower room on a tie. Every room is in exactly
@@ -25,11 +27,12 @@ import java.util.PriorityQueue;
 //                          for production code, more to type under pressure
 // Variable names match between the two: free, busy, count, meeting, released, room, next,
 // endTime, roomNum.
+//
+// Time: O(n + m * log(m) + m * log(n)) -- sorting the m meetings, then at most four heap
+// operations per meeting on heaps of at most n rooms.
+// Space: O(n) -- the two heaps; the meetings are sorted in place (beyond the sort's own buffer).
 
 public final class MostBookedMeetingRoomPrimitives {
-	// Time complexity: O(n + m * log(m) + m * log(n)), sorting the m meetings, then at most
-	// four heap operations per meeting on heaps of at most n rooms
-	// Auxiliary Space: O(n), the two heaps; the meetings are sorted in place
 
 	public static int mostBooked(int n, int[][] meetings) {
 		// SORT: by start; this is also the rule "the earlier original start gets the room"
@@ -79,7 +82,7 @@ public final class MostBookedMeetingRoomPrimitives {
 				roomNum = i;
 			}
 		}
-		return roomNum;
+		return roomNum; // RETURN
 	}
 
 	public static void main(String[] args) {

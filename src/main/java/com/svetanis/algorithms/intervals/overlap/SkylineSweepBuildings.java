@@ -12,7 +12,10 @@ import java.util.PriorityQueue;
 // [left, right): at x = right it is gone. Returns the outline seen from far away as key points
 // [x, h]: from x onward the outline has height h, up to the next key point. The last key point has
 // height 0, and no two key points in a row have the same height. Sorts the caller's array in place.
+// On LeetCode: 1 <= buildings.length <= 10^4, 0 <= left < right <= 2^31 - 1,
+// 1 <= height <= 2^31 - 1, buildings sorted by left; the sort here makes that order unneeded.
 //
+// The one idea: one heap entry is one whole building that has begun, tallest on top.
 // A key point is written exactly where the tallest standing height changes. The outline can only
 // change at an edge, so the walk stops at every left and every right edge, in order -- a right edge
 // is where the outline can drop. The standing buildings are kept on a max-heap by height. A
@@ -27,15 +30,17 @@ import java.util.PriorityQueue;
 // changed. The read comes after both, so a building ending where another begins at the same height
 // writes nothing between them.
 //
+// Time: O(n log n) -- sorting the buildings and the 2n stops; each building is offered once and
+// polled at most once, O(log n) each.
+// Space: O(n) -- the stops and the heap.
+//
+// Siblings:
 // The same problem three more ways, in todo/interval: SkylineSweepEvents sweeps 2n events with a
 // heap of bare heights and a count of retired ones; SkylinePaint raises every stretch between two
 // edges a building covers, O(n * k); SkylineDivideAndConquer merges two halves' outlines the way
 // merge sort merges two sorted lists.
 
 public final class SkylineSweepBuildings {
-	// Time Complexity: O(n log n), sorting the buildings and the 2n stops; each building is offered
-	// once and polled at most once, O(log n) each
-	// Space Complexity: O(n), the stops and the heap
 
 	public static List<List<Integer>> skyline(int[][] buildings) {
 		Arrays.sort(buildings, (a, b) -> Integer.compare(a[0], b[0])); // SORT: PUT ON needs left-edge order
@@ -63,7 +68,7 @@ public final class SkylineSweepBuildings {
 				answer.add(Arrays.asList(x, height));
 			}
 		}
-		return answer;
+		return answer; // RETURN: the key points, left to right
 	}
 
 	public static void main(String[] args) {

@@ -10,11 +10,14 @@ import java.util.TreeMap;
 
 // Minimum number of railway platforms so no train waits.
 //
+// Not a LeetCode problem; a GeeksforGeeks one.
+//
 // in[i] and out[i] are the arrival and departure times of train i, in[i] <= out[i]. Returns the
 // fewest platforms that give every train a platform from its arrival to its departure. A train
 // holds its platform at both of those moments, so when one train departs at the same time
 // another arrives, the two cannot share a platform.
 //
+// The one idea:
 // This version groups the events by time. One key of the map is a clock time; its value is a
 // list of marks, one per train event at that time, 'a' for an arrival and 'd' for a departure. The
 // distinct times are visited in increasing order with count = trains in the station. At each
@@ -22,13 +25,16 @@ import java.util.TreeMap;
 // taken away, so a train leaving at t is still counted when another arrives at t. Handling a
 // whole time at once also means the order the trains were listed in cannot change the answer.
 //
+// Time: O(n log n) -- the TreeMap keeps the distinct times in order; each mark is counted once.
+// Space: O(n) -- two marks per train.
+//
+// Siblings: MinPlatformsTwoArrays sorts the arrivals and the departures apart;
+// MinPlatformsDifferenceArray marks one slot per minute and does not sort;
+// MinPlatformsPriorityQueue keeps the standing trains on a heap.
 // The same count other ways: MinPlatformsTwoArrays, MinPlatformsDifferenceArray,
 // MinPlatformsPriorityQueue and MaxOverlappingIntervals.
 
 public final class MinPlatformsMultimap {
-  // Time Complexity: O(n log n), the TreeMap keeps the distinct times in order; each mark is
-  // counted once
-  // Space Complexity: O(n), two marks per train
 
   private static final char ARRIVAL = 'a';
   private static final char DEPARTURE = 'd';
@@ -44,16 +50,16 @@ public final class MinPlatformsMultimap {
       max = max(max, count); // PEAK: read before any departure at this time
       count -= frequency(marks, DEPARTURE); // DEPART: only then
     }
-    return max;
+    return max; // RETURN: 0 when there are no trains
   }
 
   private static Map<Integer, List<Character>> events(int[] in, int[] out) {
     Map<Integer, List<Character>> events = new TreeMap<>(); // MULTIMAP: one time, many marks
     for (int i = 0; i < in.length; i++) {
-      events.computeIfAbsent(in[i], k -> new ArrayList<>()).add(ARRIVAL);
-      events.computeIfAbsent(out[i], k -> new ArrayList<>()).add(DEPARTURE);
+      events.computeIfAbsent(in[i], k -> new ArrayList<>()).add(ARRIVAL); // MARK the arrival
+      events.computeIfAbsent(out[i], k -> new ArrayList<>()).add(DEPARTURE); // MARK the departure
     }
-    return events;
+    return events; // RETURN: keys in increasing time
   }
 
   public static void main(String[] args) {
