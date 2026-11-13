@@ -1,15 +1,24 @@
 package com.svetanis.algorithms.string;
 
 // 709. To Lower Case
+//
+// Input: a string s. Returns s with every uppercase letter replaced by its lowercase letter; all
+// other characters stay. On LeetCode: 1 <= s.length <= 100, s is printable ASCII.
+//
+// The one idea: copy the string into a character array, replace each character by its lowercase
+// form, and build a string from the array. Character.toLowerCase changes only uppercase letters,
+// so digits, symbols and lowercase letters pass through unchanged. (By hand, an ASCII uppercase
+// letter becomes lowercase by adding 32.)
+//
+// Time: O(n) -- one pass over n characters.
+// Space: O(n) -- the character array copy; the result string is the same size.
 
 public final class ToLowerCase {
-	// Time Complexity: O(m * n/2)
-	// Space Complexity: O(1)
 
 	public static String toLowerCase(String s) {
 		char[] chars = s.toCharArray();
-		for(int i = 0; i < chars.length; i++) {
-			chars[i] = Character.toLowerCase(chars[i]);
+		for (int i = 0; i < chars.length; i++) { // WALK: every character
+			chars[i] = Character.toLowerCase(chars[i]); // REPLACE with the lowercase form
 		}
 		return new String(chars);
 	}

@@ -4,20 +4,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 // 2284. Sender With Largest Word Count
+//
+// Input: messages[i] -- a message of words separated by single spaces, and senders[i] -- who sent
+// it. A sender's word count is the number of words in all the messages they sent. Returns the
+// sender with the largest word count; if several tie, the one whose name is lexicographically
+// largest (uppercase letters sort before lowercase). On LeetCode: 1 <= messages.length <= 10^4,
+// 1 <= messages[i].length <= 100, 1 <= senders[i].length <= 10.
+//
+// The one idea: one map entry holds one sender's total number of words. A message of w words has
+// w - 1 spaces, so its words are the spaces plus one. Add that to the sender's entry, then scan
+// the entries once, keeping the best sender: a larger count wins, and at an equal count the
+// larger name wins.
+//
+// Time: O(L + k) -- L the total length of the messages, k the number of distinct senders.
+// Space: O(k) -- the map.
 
 public final class SenderWithLargestWordCount {
-	// Time Complexity: O(n * m)
-	// Space Complexity: O(n)
 
 	public static String largestWordCount(String[] messages, String[] senders) {
 		Map<String, Integer> map = counts(messages, senders);
-		String mws = senders[0];
-		for (String key : map.keySet()) {
+		String mws = senders[0]; // mws: the best sender so far
+		for (String key : map.keySet()) { // WALK: every sender
 			int mwc = map.get(mws);
 			int cwc = map.get(key);
-			boolean equals = mwc == cwc && mws.compareTo(key) < 0;
+			boolean equals = mwc == cwc && mws.compareTo(key) < 0; // TIE: the larger name wins
 			if (mwc < cwc || equals) {
-				mws = key;
+				mws = key; // TAKE: key beats the best so far
 			}
 		}
 		return mws;
@@ -27,13 +39,13 @@ public final class SenderWithLargestWordCount {
 		int n = senders.length;
 		Map<String, Integer> map = new HashMap<>();
 		for (int i = 0; i < n; i++) {
-			int count = 1;
+			int count = 1; // a message with no space is one word
 			for (int j = 0; j < messages[i].length(); j++) {
-				if (messages[i].charAt(j) == ' ') {
+				if (messages[i].charAt(j) == ' ') { // each space starts one more word
 					count++;
 				}
 			}
-			map.merge(senders[i], count, Integer::sum);
+			map.merge(senders[i], count, Integer::sum); // ADD: to this sender's total
 		}
 		return map;
 	}

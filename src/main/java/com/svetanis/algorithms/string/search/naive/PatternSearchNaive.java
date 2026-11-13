@@ -1,50 +1,51 @@
 package com.svetanis.algorithms.string.search.naive;
 
-import static com.google.common.collect.ImmutableList.copyOf;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.utils.Print.print;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-import com.svetanis.java.base.Pair;
+// No LeetCode problem: find every occurrence of a pattern in a text (the plain version of 28,
+// which asks only for the first).
+//
+// Input: a text and a pattern. Returns the start index of every place the pattern occurs in the
+// text, in increasing order; occurrences may overlap.
+//
+// The one idea: try every start. A start i can hold the pattern only if the pattern fits, so i
+// runs from 0 to n - m; at each start, compare the pattern with the text letter by letter and
+// stop at the first difference. If all m letters agreed, record i. Nothing is skipped, so
+// overlapping occurrences are all found.
+//
+// Time: O(n * m) -- n = text.length, m = patt.length; n - m + 1 starts, each compared in at most
+// m letters.
+// Space: O(1) -- besides the answer.
+//
+// Siblings: PatternSearchNaiveEfficient skips ahead after a mismatch or a match, which is correct
+// only for a pattern whose letters are all different.
 
 public final class PatternSearchNaive {
 
-  public static ImmutableList<Integer> search(String text, String patt) {
+  public static List<Integer> search(String text, String patt) {
 
     int j;
     int n = text.length();
     int m = patt.length();
 
-    List<Integer> list = newArrayList();
-    // a loop to slide pat[] one by one
-    for (int i = 0; i <= n - m; ++i) {
+    List<Integer> list = new ArrayList<>();
+    for (int i = 0; i <= n - m; ++i) { // WALK: every start where the pattern fits
       for (j = 0; j < m; ++j) {
         if (text.charAt(i + j) != patt.charAt(j)) {
-          break;
+          break; // SKIP: this start fails at the first difference
         }
       }
-      // if pat[0 .. M - 1] == txt[i, i + 1, .... i + m - 1]
-      if (j == m) {
-        list.add(i);
+      if (j == m) { // all m letters agreed
+        list.add(i); // RECORD: the pattern starts at i
       }
     }
-    return newList(list);
+    return list;
   }
 
   public static void main(String[] args) {
-    ImmutableList<Pair<String, String>> pairs = build();
-    for (Pair<String, String> pair : pairs) {
-      print(search(pair.getLeft(), pair.getRight()));
-    }
-  }
-
-  private static ImmutableList<Pair<String, String>> build() {
-    List<Pair<String, String>> list = newArrayList();
-    list.add(Pair.build("AABAACAADAABAAABAA", "AABA"));
-    list.add(Pair.build("ABCEABCDABCEABCD", "ABCD"));
-    return copyOf(list);
+    System.out.println(search("AABAACAADAABAAABAA", "AABA")); // [0, 9, 13]
+    System.out.println(search("ABCEABCDABCEABCD", "ABCD")); // [4, 12]
+    System.out.println(search("AAAA", "AA")); // [0, 1, 2]
   }
 }

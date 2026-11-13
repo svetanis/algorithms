@@ -1,40 +1,37 @@
 package com.svetanis.algorithms.string.reverse;
 
-import static com.google.common.collect.Lists.reverse;
-import static com.svetanis.java.base.Splitters.split;
-
-import java.util.List;
-
-import com.google.common.base.Joiner;
-
 // 151. Reverse Words in a String
-
-// given an input string s, 
-// reverse the order of the words
-
-// a word is defined as a sequence
-// of non-space characters.
-// the words in s will be separated
-// by at least one space
-
-// return a string of the words in
-// reverse order concatenated by a
-// single space
-
-// s may contain leading or trailing 
-// spaces or multiple spaces between 
-// two words. the returned string 
-// should only have a single space 
-// separating the words. don't include
-// any extra spaces
+//
+// Input: a string s of words separated by spaces; s may have leading, trailing or repeated
+// spaces. Returns the words in the opposite order, joined by exactly one space and with no space
+// at either end. On LeetCode: 1 <= s.length <= 10^4, s holds English letters, digits and ' ',
+// and there is at least one word.
+//
+// The one idea: a word is a run of non-space characters. Cut s at every ' ' (leading, trailing and
+// repeated spaces then show up as empty pieces), walk the pieces from the last to the first, skip
+// the empty ones, and put one space before every word but the first.
+//
+// Time: O(n) -- the split reads s once, and the walk visits each piece once.
+// Space: O(n) -- the array of pieces and the result.
+//
+// Siblings: ReverseWordsSubmit trims and splits on runs of spaces, then reverses the list;
+// ReverseWordsInPlace reverses a char[] twice and squeezes the spaces without a list.
 
 public final class ReverseWords {
-	// Time Complexity: O(n)
 
 	public static String reverseWords(String s) {
-		List<String> list = split(' ', s);
-		List<String> reversed = reverse(list);
-		return Joiner.on(" ").join(reversed);
+		String[] pieces = s.split(" "); // SPLIT: spaces are the cuts; extra spaces make empty pieces
+		StringBuilder sb = new StringBuilder();
+		for (int i = pieces.length - 1; i >= 0; i--) { // WALK: last piece first
+			if (pieces[i].isEmpty()) {
+				continue; // SKIP: an empty piece is a repeated or edge space
+			}
+			if (sb.length() > 0) {
+				sb.append(' '); // GLUE: one space between words only
+			}
+			sb.append(pieces[i]);
+		}
+		return sb.toString();
 	}
 
 	public static void main(String[] args) {
