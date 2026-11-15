@@ -4,15 +4,30 @@ import java.util.Arrays;
 import java.util.Random;
 
 // 912. Sort an Array
-
-// Hoare partition: two pointers walk toward each other and swap the pair that is on the
-// wrong side, so copies of the pivot value spread over both halves. The pivot comes from a
-// random index, swapped to the left end: taking it from the right end can return the whole
-// range as the left half, and the recursion would never shrink.
+//
+// Input: a, an array of ints. Returns a, sorted ascending (sorted in place). On LeetCode:
+// 1 <= a.length <= 5 * 10^4, -5 * 10^4 <= a[i] <= 5 * 10^4.
+//
+// The one idea: pick a pivot value, then move numbers so that everything in a[left..split] is at
+// most the pivot and everything in a[split + 1..right] is at least the pivot; then each side is
+// sorted by the same method, and nothing has to cross between them again. The split is a Hoare
+// partition: two pointers walk toward each other, the left one stops on a number that is not
+// smaller than the pivot, the right one on a number that is not larger, and the pair is swapped.
+// Copies of the pivot value therefore spread over both halves, so an array of equal numbers splits
+// in the middle. The pivot comes from a random index, swapped to the left end: with the pivot at
+// the left end the returned split is always below right, so both halves are smaller than the range
+// and the recursion shrinks; taking it from the right end can return the whole range as the left
+// half, and the recursion would never end.
+//
+// Time: O(n log n) on average -- a random pivot gives balanced halves on average; the worst case
+// is O(n^2), with vanishing probability.
+// Space: O(log n) on average -- the recursion.
+//
+// Siblings: QuickSortRandomized and ThreeWayQuickSortNationalFlag split in three blocks, so the
+// equal numbers drop out of the recursion. Partition holds the two-group and three-group splits as
+// a reference.
 
 public final class QuickSortSubmit {
-	// Time Complexity: O(n log n) average
-	// Space Complexity: O(log n) average, the recursion
 
 	private static final Random GENERATOR = new Random();
 
@@ -28,8 +43,8 @@ public final class QuickSortSubmit {
 		int random = randomIndex(left, right);
 		swap(a, random, left); // at the left end, the returned split is always below right
 		int split = partition(a, left, right);
-		quickSort(a, left, split);
-		quickSort(a, split + 1, right);
+		quickSort(a, left, split); // LEFT: at most the pivot
+		quickSort(a, split + 1, right); // RIGHT: at least the pivot
 	}
 
 	// Hoare partition around the pivot a[left]: returns split, with a[left..split] <= pivot
@@ -39,12 +54,12 @@ public final class QuickSortSubmit {
 		int start = left - 1;
 		int end = right + 1;
 		while (start < end) {
-			while (a[++start] < pivot) {
+			while (a[++start] < pivot) { // WALK: right until a number that is not smaller
 			}
-			while (a[--end] > pivot) {
+			while (a[--end] > pivot) { // WALK: left until a number that is not larger
 			}
 			if (start < end) {
-				swap(a, start, end);
+				swap(a, start, end); // SWAP: the pair that is on the wrong side
 			}
 		}
 		return end;

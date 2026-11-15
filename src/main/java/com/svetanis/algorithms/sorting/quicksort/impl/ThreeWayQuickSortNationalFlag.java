@@ -3,15 +3,29 @@ package com.svetanis.algorithms.sorting.quicksort.impl;
 import java.util.Arrays;
 import java.util.Random;
 
-// Quicksort with a three-way partition, the Dutch national flag: smaller than the pivot on
-// the left, equal to it in the middle, larger on the right. The equal block is already in
-// its final place, so only the two outer blocks are sorted next, and an array of equal
-// numbers is one pass. The array is shuffled once first, so that no fixed input, sorted
-// for instance, keeps putting the first element's pivot at one end.
+// Quicksort with a three-way partition, the Dutch national flag -- not a LeetCode submission
+// (LeetCode 912, Sort an Array, is the same task; LeetCode 75, Sort Colors, is the partition alone
+// with three values).
+//
+// Input: a, an array of ints. Sorts a ascending, in place. On LeetCode 912: 1 <= a.length <=
+// 5 * 10^4, -5 * 10^4 <= a[i] <= 5 * 10^4.
+//
+// The one idea: take the pivot a[left] and split the range into three blocks: smaller than the
+// pivot on the left, equal to it in the middle, larger on the right. The equal block is already in
+// its final place, because everything to its left is smaller and everything to its right is
+// larger. So only the two outer blocks are sorted next, each by the same method, and an array of
+// equal numbers is one pass. Taking a[left] as the pivot is bad on sorted input, so the array is
+// shuffled once first, which makes every order equally likely and leaves no fixed input that keeps
+// putting the pivot at one end.
+//
+// Time: O(n log n) on average -- after the shuffle the pivot is random, so the blocks are balanced
+// on average; the worst case is O(n^2), with vanishing probability.
+// Space: O(log n) on average -- the recursion.
+//
+// Siblings: QuickSortRandomized is the same split with a random pivot on every call instead of one
+// shuffle. Partition holds the same split as a reference.
 
 public final class ThreeWayQuickSortNationalFlag {
-  // Time Complexity: O(n log n) average
-  // Space Complexity: O(log n) average, the recursion
 
   private static final Random GENERATOR = new Random();
 
@@ -26,8 +40,8 @@ public final class ThreeWayQuickSortNationalFlag {
       return;
     }
     Block equal = partition(a, left, right);
-    sort(a, left, equal.first() - 1);
-    sort(a, equal.last() + 1, right);
+    sort(a, left, equal.first() - 1); // LEFT: the smaller block
+    sort(a, equal.last() + 1, right); // RIGHT: the larger block
   }
 
   // smaller to the left, equal in the middle, larger to the right, around the pivot a[left]
@@ -38,14 +52,14 @@ public final class ThreeWayQuickSortNationalFlag {
     int larger = right; // where the next larger number goes, from the right end
     while (current <= larger) {
       if (a[current] < pivot) {
-        swap(a, smaller, current);
+        swap(a, smaller, current); // SMALLER: to the left block
         smaller++;
         current++;
       } else if (a[current] > pivot) {
-        swap(a, current, larger); // current not advanced: the value swapped in is unread
+        swap(a, current, larger); // LARGER: to the right block; current not advanced: the swapped-in value is unread
         larger--;
       } else {
-        current++;
+        current++; // EQUAL: stays in the middle
       }
     }
     return new Block(smaller, larger);
@@ -55,7 +69,7 @@ public final class ThreeWayQuickSortNationalFlag {
   private static void shuffle(int[] a) {
     for (int i = a.length - 1; i > 0; i--) {
       int random = GENERATOR.nextInt(i + 1);
-      swap(a, i, random);
+      swap(a, i, random); // SHUFFLE: a random one of a[0..i] goes to index i
     }
   }
 
