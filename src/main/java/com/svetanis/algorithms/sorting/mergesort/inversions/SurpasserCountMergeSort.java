@@ -1,87 +1,86 @@
 package com.svetanis.algorithms.sorting.mergesort.inversions;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.svetanis.java.base.collect.Lists.newList;
-import static com.svetanis.java.base.utils.Print.print;
-import static java.util.Arrays.copyOf;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-import com.google.common.collect.ImmutableList;
-import com.svetanis.java.base.Pair;
 
-// given an array of distinct integers, 
-// for each element find its surpasser count
-// i.e. count the number of elements to the
-// right that are greater than that element
+// Surpasser count of each element (GeeksforGeeks; no LeetCode number)
+//
+// Takes an array a of distinct integers. Returns, for each position i, its surpasser count: how many
+// elements after position i are larger than a[i]. The answer is in a's order; a is not changed.
+//
+// Count the opposite first: how many elements after a[i] are smaller. That is what a merge sees.
+// While merging two sorted halves, count is how many right-half elements have been taken so far,
+// and every one of them is smaller than the left-half element being taken now and came after it in
+// the array. Adding count to that element at each merge it takes part in totals all the smaller
+// elements after it. Then, of the n - 1 - i elements after position i, the rest are larger:
+//   surpasser = (n - 1 - i) - smaller
+// The totals are kept by value, which is why the values must be distinct.
+//
+// The same merge as InversionsCountNewBuffer, which adds the count up for the whole array instead
+// of keeping it per element. LC 315, Count of Smaller Numbers After Self, asks for the smaller
+// counts themselves; its solutions are in com.svetanis.algorithms.todo.bit.
 
 public final class SurpasserCountMergeSort {
+	// Time: O(n log n) -- log n levels of merging, each level touching every element once
+	// Space: O(n) -- the copy, the map and the largest merge buffer
 
-  public static ImmutableList<Pair<Integer, Integer>> surpasser(int[] a) {
-    int n = a.length;
-    Map<Integer, Integer> map = newHashMap();
-    int[] copy = copyOf(a, n);
-    mergeSort(copy, 0, n - 1, map);
-    return pairs(a, map);
-  }
+	public static int[] surpasser(int[] a) {
+		int n = a.length;
+		Map<Integer, Integer> smaller = new HashMap<>(); // COUNT: value -> smaller elements after it
+		int[] copy = Arrays.copyOf(a, n); // COPY: the merge sorts this one; a keeps its order
+		mergeSort(copy, 0, n - 1, smaller); // SORT: fills smaller as a side effect
+		int[] surpasser = new int[n];
+		for (int i = 0; i < n; i++) { // WALK every position, the last one too: its answer is 0
+			// DEFAULT: an element never in a left half (the last one) collected nothing
+			surpasser[i] = n - 1 - i - smaller.getOrDefault(a[i], 0);
+		}
+		return surpasser;
+	}
 
-  private static ImmutableList<Pair<Integer, Integer>> pairs(int[] a, Map<Integer, Integer> map) {
-    int n = a.length;
-    List<Pair<Integer, Integer>> list = newArrayList();
-    for (int i = 0; i < n - 1; i++) {
-      int superpasser = n - 1 - i - map.get(a[i]);
-      list.add(Pair.build(a[i], superpasser));
-    }
-    return newList(list);
-  }
+	private static void mergeSort(int[] a, int left, int right, Map<Integer, Integer> smaller) {
+		if (right > left) {
+			int mid = left + (right - left) / 2;
+			mergeSort(a, left, mid, smaller);
+			mergeSort(a, mid + 1, right, smaller);
+			merge(a, left, mid + 1, right, smaller);
+		}
+	}
 
-  private static void mergeSort(int[] a, int left, int right, Map<Integer, Integer> map) {
-    // Time Complexity: O(n log n)
+	// mid here is the first index of the right half: the left half is left..mid - 1
+	private static void merge(int[] a, int left, int mid, int right, Map<Integer, Integer> smaller) {
+		int count = 0; // COUNT: right-half elements taken so far, each smaller than what is left on the left
+		int i = left; // i is index for left subarray
+		int j = mid; // j is index for right subarray
+		int k = 0; // k is index for merged array
 
-    if (right > left) {
-      int mid = left + (right - left) / 2;
-      mergeSort(a, left, mid, map);
-      mergeSort(a, mid + 1, right, map);
-      merge(a, left, mid + 1, right, map);
-    }
-  }
+		int[] temp = new int[right - left + 1]; // BUFFER: the size of this range, not of the whole array
+		while (i <= mid - 1 && j <= right) {
+			if (a[i] <= a[j]) {
+				smaller.merge(a[i], count, Integer::sum); // RECORD: a[i] goes now, count smaller ones came after it
+				temp[k++] = a[i++];
+			} else {
+				temp[k++] = a[j++]; // TAKE from the right half
+				count++;
+			}
+		}
 
-  private static void merge(int[] a, int left, int mid, int right, Map<Integer, Integer> map) {
-    int count = 0;
-    int i = left; // i is index for left subarray
-    int j = mid; // i is index for right subarray
-    int k = left; // i is index for resultant merged subarray
+		while (i <= mid - 1) { // DRAIN left: every right-half element was smaller than these
+			smaller.merge(a[i], count, Integer::sum);
+			temp[k++] = a[i++];
+		}
 
-    int[] temp = new int[mid + right];
-    while ((i <= mid - 1) && (j <= right)) {
-      if (a[i] <= a[j]) {
-    	int freq = map.getOrDefault(a[i], 0);
-    	map.put(a[i], freq + count);
-        temp[k++] = a[i++];
-      } else {
-        temp[k++] = a[j++];
-        count++;
-      }
-    }
+		while (j <= right) { // DRAIN right
+			temp[k++] = a[j++];
+		}
 
-    while (i <= mid - 1) {
-   	  int freq = map.getOrDefault(a[i], 0);
-      map.put(a[i], freq + count);
-      temp[k++] = a[i++];
-    }
+		for (i = left; i <= right; i++) { // COPY BACK the merged range
+			a[i] = temp[i - left];
+		}
+	}
 
-    while (j <= right) {
-      temp[k++] = a[j++];
-    }
-
-    for (i = left; i <= right; i++) {
-      a[i] = temp[i];
-    }
-  }
-
-  public static void main(String[] args) {
-    // int[] a = {2, 4, 1, 3, 5};
-    int[] a = { 2, 7, 5, 3, 0, 8, 1 };
-    print(surpasser(a));
-  }
+	public static void main(String[] args) {
+		int[] a = { 2, 7, 5, 3, 0, 8, 1 };
+		System.out.println(Arrays.toString(surpasser(a))); // [4, 1, 1, 1, 2, 0, 0]
+	}
 }
