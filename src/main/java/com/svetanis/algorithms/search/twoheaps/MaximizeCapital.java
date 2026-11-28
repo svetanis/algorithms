@@ -1,52 +1,65 @@
 package com.svetanis.algorithms.search.twoheaps;
 
+import static java.util.Comparator.comparingInt;
+
+import java.util.OptionalInt;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-// given a set of investment projects
-// with their respective profits,
-// find the most profitable projects.
-
-// given an initial capital and are 
-// allowed to invest only in a fixed
-// number of projects. 
-
-// the goal is to choose projects 
-// that give the maximum profit
+// 502. IPO, under the name Maximize Capital
+//
+// Project i needs c[i] capital to start and adds p[i] to the capital when it finishes. Start
+// with capital init and take at most k distinct projects, one after another. Returns the largest
+// final capital. On LeetCode: n and k up to 10^5, capital up to 10^9, p[i] between 0 and 10^4,
+// and the answer fits in an int.
+//
+// Profits are never negative, so the capital never falls and taking the most profitable
+// affordable project is always safe. Two heaps of project indexes on two different keys: min by
+// capital (not affordable yet), max by profit (affordable now). Each round UNLOCKs everything the
+// capital covers, then TAKEs the top of max; a round with nothing affordable STOPs the loop.
+//
+// Siblings, same problem:
+//   IPO  the same two heaps over Project objects with named fields, so the unlock test reads
+//        .capital and cannot compare an index against money; parameters (k, w, profit, capital)
 
 public final class MaximizeCapital {
+	// Time complexity: O(n * log(n)), every index is pushed into min once, moved to max at most
+	// once and taken at most once; a round that takes nothing ends the loop
+	// Auxiliary Space: O(n), the two heaps hold each index at most once between them
 
 	public static int maximize(int[] c, int[] p, int k, int init) {
-		// Time Complexity: O(n * log n + k * log n)
-		// Space Complexity: O(n)
+		// both heaps hold project INDEXES; the comparators
+		// are what make one of them ordered by capital and
+		// the other by profit
+		Queue<Integer> min = new PriorityQueue<>(comparingInt(i -> c[i]));
+		Queue<Integer> max = new PriorityQueue<>(comparingInt((Integer i) -> p[i]).reversed());
 
-		Queue<Integer> min = new PriorityQueue<>((i, j) -> c[i] - c[j]);
-		Queue<Integer> max = new PriorityQueue<>((i, j) -> p[j] - p[i]);
-
-		// add all capitals to min-heap s.t.
-		// we can select a project with the
-		// smallest capital requirement
+		// WAITING: every project, smallest capital first
 		for (int i = 0; i < c.length; i++) {
 			min.add(i);
 		}
-		int total = init + add(min, max, p, init);
-		for (int i = 1; i < k; i++) {
-			total += add(min, max, p, total);
+		int total = init;
+		for (int i = 0; i < k; i++) {
+			OptionalInt profit = add(min, max, c, p, total);
+			// STOP: nothing affordable now, and nothing ever will be, because total did not grow
+			if (!profit.isPresent()) {
+				break;
+			}
+			// TAKE: the most profitable affordable project
+			total += profit.getAsInt();
 		}
 		return total;
 	}
 
-	private static int add(Queue<Integer> min, Queue<Integer> max, int[] p, int target) {
-		// go through the top projects of the min heap and
-		// filter the projects that can be completed within
-		// our available capital. insert the profits of all
-		// these projects into a max-heap, s.t. we can choose
-		// a project with the max profit
-		while (!min.isEmpty() && min.peek() <= target) {
+	private static OptionalInt add(Queue<Integer> min, Queue<Integer> max, int[] c, int[] p,
+			int target) {
+		// UNLOCK: every project the capital now covers -- c[min.peek()], because min.peek() is an
+		// index; a while, not an if, because one profit can pass several capitals
+		while (!min.isEmpty() && c[min.peek()] <= target) {
 			max.add(min.poll());
 		}
-		// select the top project of the max heap for investment
-		return p[max.poll()];
+		// PICK: the largest profit among the affordable projects, or empty when there is none
+		return max.isEmpty() ? OptionalInt.empty() : OptionalInt.of(p[max.poll()]);
 	}
 
 	public static void main(String[] args) {
